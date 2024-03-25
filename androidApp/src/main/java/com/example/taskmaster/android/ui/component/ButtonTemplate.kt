@@ -26,6 +26,7 @@ import com.example.taskmaster.android.R
 fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float) {
     Button(
         onClick = { /*TODO*/ }, modifier = Modifier
+            .padding(top = 20.dp)
             .width(width.dp)
             .height(31.dp)
             .fillMaxSize(), colors = ButtonDefaults.buttonColors(

@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.screens
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -14,6 +15,7 @@ import com.taskmaster.state.ItemProjectState
 fun ProjectScreen(navController: NavController) {
     LazyColumn(modifier = Modifier
         .padding(horizontal = 14.dp)) {
+        item { Spacer(modifier = Modifier.padding(top = 26.dp)) }
         itemsIndexed(
             listOf(
                 ItemProjectState("Сайт Nissan", 72, 4),

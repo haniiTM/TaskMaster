@@ -28,7 +28,7 @@ fun TaskDescription(description: String) {
     var descriptionTask by remember { mutableStateOf(description) }
     Column(
         modifier = Modifier
-            .padding(horizontal = 14.dp)
+            .padding(start = 14.dp, top = 26.dp, end = 14.dp)
             .clip(shape = RoundedCornerShape(25.dp))
             .background(Color.White)
     ) {

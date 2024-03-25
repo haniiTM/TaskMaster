@@ -15,7 +15,7 @@ fun CalculationTimeButton() {
     Button(
         onClick = { /*TODO*/ },
         modifier = Modifier
-            .padding(14.dp),
+            .padding(start = 14.dp, end = 14.dp, top = 26.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color.Black
