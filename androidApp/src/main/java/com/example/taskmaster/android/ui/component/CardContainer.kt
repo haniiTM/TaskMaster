@@ -18,10 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.taskmaster.state.ItemProjectState
 
 @Composable
-fun CardContainer(title: String, buttonTitle: String) {
+fun CardContainer(title: String, buttonTitle: String, navController: NavController) {
     Box(
         modifier = Modifier
             .padding(top = 20.dp, start = 14.dp, end = 14.dp)
@@ -52,7 +53,7 @@ fun CardContainer(title: String, buttonTitle: String) {
                         ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
                     )
                 ) { _, item ->
-                    ItemProject(item = item, context = LocalContext.current)
+                    ItemProject(item = item, context = LocalContext.current, navController = navController)
                 }
             }
             BoxButton(buttonTitle)

@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,6 +37,7 @@ fun TaskDescription(description: String) {
             onValueChange = { descriptionTask = it },
             modifier = Modifier
                 .height(130.dp)
+                .fillMaxWidth()
                 .border(
                     BorderStroke(width = 1.dp, color = Color.Black),
                     shape = RoundedCornerShape(25.dp)

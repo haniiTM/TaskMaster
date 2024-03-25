@@ -1,21 +1,36 @@
 package com.example.taskmaster.android.ui.screens
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.taskmaster.android.ui.component.CardContainer
+import com.example.taskmaster.android.ui.component.ProjectCard
+import com.taskmaster.state.ItemProjectState
 
 @Composable
 fun ProjectScreen(navController: NavController) {
-    LazyColumn() {
+    LazyColumn(modifier = Modifier
+        .padding(horizontal = 14.dp)) {
         itemsIndexed(
             listOf(
-                "Задачи" to "Добавить задачу",
-                "Выполнено" to "Перенести задачу"
+                ItemProjectState("Сайт Nissan", 72, 4),
+                ItemProjectState("Мобильное приложение Alabuga Tech", 72, 4),
+                ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
+                ItemProjectState("Сайт Nissan", 72, 4),
+                ItemProjectState("Мобильное приложение Alabuga Tech", 72, 4),
+                ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
+                ItemProjectState("Сайт Nissan", 72, 4),
+                ItemProjectState("Мобильное приложение Alabuga Tech", 72, 4),
+                ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
+                ItemProjectState("Сайт Nissan", 72, 4),
+                ItemProjectState("Мобильное приложение Alabuga Tech", 72, 4),
+                ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
             )
-        ) { _, (title, buttonTitle) ->
-            CardContainer(title = title, buttonTitle = buttonTitle)
+        ) { _, item ->
+            ProjectCard(item = item , navController = navController)
         }
     }
 }

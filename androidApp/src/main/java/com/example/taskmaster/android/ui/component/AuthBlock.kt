@@ -41,7 +41,6 @@ fun AuthBlock(navController: NavController) {
     val interactionSource = remember { MutableInteractionSource() }
     var userLogin by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
-    TaskInfoBlock()
     Box(modifier = Modifier.clip(shape = RoundedCornerShape(10.dp))) {
         Column(
             modifier = Modifier

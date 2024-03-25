@@ -2,5 +2,7 @@
     <string name="app_name">Task Master</string>
     <string name="title_auth">Авторизация</string>
     <string name="title_projects">Проекты</string>
+    <string name="title_project_task">Задачи проекта</string>
+    <string name="title_project_subtask">Подзадачи</string>
     <string name="title_activity_main">MainActivity</string>
 </resources>

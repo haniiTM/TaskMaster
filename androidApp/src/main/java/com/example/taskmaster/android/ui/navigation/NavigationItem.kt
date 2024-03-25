@@ -11,5 +11,7 @@ sealed class NavigationItem(
 ) {
     object Auth : NavigationItem("auth", R.string.title_auth, null)
     object Projects : NavigationItem("projects", R.string.title_projects, null)
+    object ProjectTask : NavigationItem("projectTask", R.string.title_project_task, null)
+    object ProjectSubTask : NavigationItem("projectSubTask", R.string.title_project_subtask, null)
 
 }
