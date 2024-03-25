@@ -9,8 +9,28 @@
 import SwiftUI
 
 struct LoginScreen: View {
+    @State private var loginTextFieldState = ""
+    @State private var passwordTextFieldState = ""
+    
+    private let loginTextFieldTitle = "Login"
+    private let passwordTextFieldTitle = "Password"
+    private let loginButtonTitle = "Log In"
+    
     var body: some View {
-        Text("hello there")
+        LoginScreenBody()
+    }
+    
+    private func LoginScreenBody() -> some View {
+        VStack {
+            Logo()
+            
+            TextField(loginTextFieldTitle, text: $loginTextFieldState)
+            TextField(passwordTextFieldTitle, text: $passwordTextFieldState)
+            
+            Button(loginButtonTitle) {
+                
+            }
+        }
     }
 }
 
