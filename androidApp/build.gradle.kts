@@ -1,3 +1,8 @@
+val koin = "3.2.0"
+val napier = "2.4.0"
+val navigation = "2.4.0-alpha02"
+val accompanist = "0.20.0"
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
@@ -44,5 +49,12 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation("io.insert-koin:koin-android:${koin}")
+    implementation("io.insert-koin:koin-androidx-compose:${koin}")
+    implementation("io.github.aakira:napier:${napier}")
+    implementation("androidx.navigation:navigation-compose:${navigation}")
+    implementation("com.google.accompanist:accompanist-navigation-animation:${accompanist}")
+
+
     debugImplementation(libs.compose.ui.tooling)
 }
