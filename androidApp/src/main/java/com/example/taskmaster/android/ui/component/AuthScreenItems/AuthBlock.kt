@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component
+package com.example.taskmaster.android.ui.component.AuthScreenItems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource

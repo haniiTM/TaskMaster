@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component
+package com.example.taskmaster.android.ui.component.ProjectTemplate
 
 import android.content.Context
 import android.os.Build

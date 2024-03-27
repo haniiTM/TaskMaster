@@ -1,7 +1,6 @@
-package com.example.taskmaster.android.ui.component
+package com.example.taskmaster.android.ui.component.CommonTemplate
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,14 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.taskmaster.android.R
+import androidx.navigation.NavController
 
 @Composable
-fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float) {
+fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, navController: NavController) {
     Button(
-        onClick = { /*TODO*/ }, modifier = Modifier
+        onClick = { navController.navigate("taskInfo") }, modifier = Modifier
             .padding(top = 20.dp)
             .width(width.dp)
             .height(31.dp)
@@ -43,18 +41,5 @@ fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Fl
                 alignment = Alignment.CenterEnd
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun ButtonTemplatePreview() {
-    Box(modifier = Modifier.padding(10.dp)) {
-        ButtonTemplate(
-            text = "John",
-            width = 232,
-            iconItem = R.drawable.arrow_circle_right_icon,
-            rotateAngle = 0f
-        )
     }
 }

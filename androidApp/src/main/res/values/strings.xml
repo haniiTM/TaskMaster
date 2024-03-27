@@ -4,5 +4,8 @@
     <string name="title_projects">Проекты</string>
     <string name="title_project_task">Задачи проекта</string>
     <string name="title_project_subtask">Подзадачи</string>
+    <string name="title_task_info">Информация по задаче</string>
+    <string name="title_task_labor_cost_list">Трудозатраты по задаче</string>
+    <string name="title_calculation_of_labor_costs">Расчет трудозатрат по проекту</string>
     <string name="title_activity_main">MainActivity</string>
 </resources>

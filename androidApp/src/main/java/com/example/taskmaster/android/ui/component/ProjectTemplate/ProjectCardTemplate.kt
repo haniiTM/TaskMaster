@@ -1,9 +1,5 @@
-package com.example.taskmaster.android.ui.component
+package com.example.taskmaster.android.ui.component.ProjectTemplate
 
-import android.content.Context
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,21 +14,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.taskmaster.android.R
 import com.taskmaster.state.ItemProjectState
-import me.saket.swipe.SwipeAction
-import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun ProjectCard(item: ItemProjectState, navController: NavController) {

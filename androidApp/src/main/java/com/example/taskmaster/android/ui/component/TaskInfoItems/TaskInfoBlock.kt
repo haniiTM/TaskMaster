@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component
+package com.example.taskmaster.android.ui.component.TaskInfoItems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,13 +30,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.CommonTemplate.InfoBlockButtonTemplate
 
 @Composable
-fun TaskInfoBlock() {
+fun TaskInfoBlock(navController: NavController) {
     val members by remember {
         mutableStateOf(4)
     }
@@ -159,7 +160,7 @@ fun TaskInfoBlock() {
                 }
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate("taskLaborCostList") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(32.dp),
@@ -183,10 +184,4 @@ fun TaskInfoBlock() {
             Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
         }
     }
-}
-
-@Preview
-@Composable
-fun TaskInfoBlockPreview() {
-    TaskInfoBlock()
 }

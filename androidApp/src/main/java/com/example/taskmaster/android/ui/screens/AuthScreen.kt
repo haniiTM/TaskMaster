@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
-import com.example.taskmaster.android.ui.component.AuthBlock
+import com.example.taskmaster.android.ui.component.AuthScreenItems.AuthBlock
 
 
 @Composable
