@@ -18,11 +18,13 @@ class AuthRepositoryImpl constructor(
     private val accessTokenDao: AccessTokenDao
 ) : AuthRepository {
 
-    override suspend fun fetchUserToken(login: String, password: String) {
+    override suspend fun fetchUserToken(login: String, password: String): Boolean {
         val accessTokenDto = apiService.fetchUserToken(login, password)
-        val responseEntity = accessTokenDto?.toEntity()
-
-        saveUserToken(accessToken = responseEntity!!)
+        if(accessTokenDto != null){
+            val responseEntity = accessTokenDto?.toEntity()
+            saveUserToken(accessToken = responseEntity!!)
+        }
+        return accessTokenDto != null;
     }
 
     override suspend fun getUserToken(): Flow<AccessToken?> {
