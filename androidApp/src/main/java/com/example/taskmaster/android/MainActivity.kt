@@ -1,40 +1,41 @@
 package com.example.taskmaster.android
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.*
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.taskmaster.Greeting
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.example.taskmaster.android.ui.navigation.Navigation
+import com.taskmaster.ui.theme.TaskMasterTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    GreetingView(Greeting().greet())
-                }
+            TaskMasterTheme {
+                MainScreen()
             }
         }
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@ExperimentalFoundationApi
+@ExperimentalAnimationApi
 @Composable
-fun GreetingView(text: String) {
-    Text(text = text)
-}
+private fun MainScreen() {
+    val navController = rememberAnimatedNavController()
 
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        GreetingView("Hello, Android!")
+    Scaffold(
+        bottomBar = {}
+    ) {
+        Navigation(
+            navController = navController,
+        )
     }
 }

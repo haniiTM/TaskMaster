@@ -42,7 +42,10 @@ dependencies {
     implementation(projects.shared)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
+    implementation("me.saket.swipe:swipe:1.2.0")
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation ("com.google.accompanist:accompanist-navigation-animation:0.20.0")
     debugImplementation(libs.compose.ui.tooling)
 }
