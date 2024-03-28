@@ -34,10 +34,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthBlock(navController: NavController) {
+fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewModel()) {
+    var isValid = false
+
     val interactionSource = remember { MutableInteractionSource() }
     var userLogin by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
@@ -100,7 +104,15 @@ fun AuthBlock(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             Button(
-                onClick = { navController.navigate("projects") }, modifier = Modifier
+                onClick = {
+                    viewModel.dataToken(userLogin, userPassword).observeForever { success ->
+                        isValid = success
+                        if (success) {
+                            navController.navigate("projects")
+                        }
+                    }
+                },
+                    modifier = Modifier
                     .width(278.dp)
                     .height(40.dp), colors = ButtonDefaults.buttonColors(
                     Color.White
