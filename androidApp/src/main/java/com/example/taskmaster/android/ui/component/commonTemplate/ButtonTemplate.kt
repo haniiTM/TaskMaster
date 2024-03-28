@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component.CommonTemplate
+package com.example.taskmaster.android.ui.component.commonTemplate
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues

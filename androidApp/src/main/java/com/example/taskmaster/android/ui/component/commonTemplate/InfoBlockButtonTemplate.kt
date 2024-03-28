@@ -1,8 +1,9 @@
-package com.example.taskmaster.android.ui.component.CommonTemplate
+package com.example.taskmaster.android.ui.component.commonTemplate
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -51,7 +52,7 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
         mutableStateOf(param)
     }
     Button(
-        onClick = { openDialog = true },
+        onClick = { },
         modifier = Modifier
             .fillMaxWidth()
             .height(32.dp),
@@ -59,12 +60,12 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
         shape = RoundedCornerShape(0),
         contentPadding = PaddingValues(horizontal = 12.dp)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            if (avatar > 0) {
+        if (avatar > 0) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(
                     text = "$categoryText: $paramItem",
                     color = Color.Black,
@@ -81,7 +82,15 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
                             CircleShape
                         )
                 )
-            } else {
+            }
+        } else {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { openDialog = true },
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(
                     text = "$categoryText:",
                     color = Color.Black,
@@ -99,11 +108,12 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
             }
         }
     }
-    if (openDialog){
+    if (openDialog) {
         Dialog(onDismissRequest = { openDialog = !openDialog }) {
             TextField(
                 value = paramItem.toString(),
-                onValueChange = { paramItem = it
+                onValueChange = {
+                    paramItem = it
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number

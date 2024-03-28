@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.taskmaster.android.ui.component.TaskInfoItems.TaskInfoBlock
+import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 
 @Composable
 fun TaskInfoScreen(navController: NavController){

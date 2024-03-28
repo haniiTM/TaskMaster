@@ -7,5 +7,7 @@
     <string name="title_task_info">Информация по задаче</string>
     <string name="title_task_labor_cost_list">Трудозатраты по задаче</string>
     <string name="title_calculation_of_labor_costs">Расчет трудозатрат по проекту</string>
+    <string name="notification_subtitle">На вас была назначена задача.</string>
+    <string name="notification_text">Пожалуйста, укажите, сколько времени вы готовы потратить ежедневно на данную задачу. Примите требуемые действия в задачах, отмеченных данным индикатором.</string>
     <string name="title_activity_main">MainActivity</string>
 </resources>

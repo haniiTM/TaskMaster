@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.taskmaster.android.ui.component.ProjectTemplate.CalculationTimeButton
-import com.example.taskmaster.android.ui.component.ProjectTemplate.CardContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.CalculationTimeButton
+import com.example.taskmaster.android.ui.component.projectTemplate.CardContainer
 
 @Composable
 fun ProjectTaskScreen(navController: NavController) {

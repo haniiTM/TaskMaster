@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component.TaskInfoItems
+package com.example.taskmaster.android.ui.component.taskInfoItems
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

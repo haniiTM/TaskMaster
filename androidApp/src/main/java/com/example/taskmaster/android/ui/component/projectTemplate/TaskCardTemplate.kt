@@ -1,7 +1,6 @@
-package com.example.taskmaster.android.ui.component.ProjectTemplate
+package com.example.taskmaster.android.ui.component.projectTemplate
 
 import android.content.Context
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.compose.foundation.background
@@ -21,6 +20,10 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -28,22 +31,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
 import com.taskmaster.state.ItemProjectState
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun ItemProject(item: ItemProjectState, context: Context, navController: NavController) {
+    var showDialog by remember {
+        mutableStateOf(false)
+    }
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     val delete = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-            } else {
-                TODO("VERSION.SDK_INT < O")
-            }
+            VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+        showDialog = true
         vibrator.cancel()
         vibrator.vibrate(vibrationEffect1)
     }, icon = {
@@ -57,11 +62,7 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
     )
     val done = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-            } else {
-                TODO("VERSION.SDK_INT < O")
-            }
+            VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
         vibrator.cancel()
         vibrator.vibrate(vibrationEffect1)
     }, icon = {
@@ -73,6 +74,11 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
         )
     }, background = com.taskmaster.ui.theme.Lime
     )
+    if ( showDialog ){
+        Dialog(onDismissRequest = { showDialog = !showDialog }) {
+            ActionNotificationTemplate( onConfirmation = { showDialog = !showDialog }, onDismissRequest = { showDialog = !showDialog }, title = "Удаление задачи")
+        }
+    }
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -80,7 +86,8 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
         modifier = Modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(25.dp)).clickable { navController.navigate("projectSubTask") }
+            .clip(shape = RoundedCornerShape(25.dp))
+            .clickable { navController.navigate("projectSubTask") }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),

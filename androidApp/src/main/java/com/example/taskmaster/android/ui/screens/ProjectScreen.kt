@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.taskmaster.android.ui.component.ProjectTemplate.ProjectCard
+import com.example.taskmaster.android.ui.component.projectTemplate.ProjectCard
 import com.taskmaster.state.ItemProjectState
 
 @Composable

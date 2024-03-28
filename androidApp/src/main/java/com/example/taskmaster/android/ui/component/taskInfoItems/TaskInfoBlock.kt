@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component.TaskInfoItems
+package com.example.taskmaster.android.ui.component.taskInfoItems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
-import com.example.taskmaster.android.ui.component.CommonTemplate.InfoBlockButtonTemplate
+import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
 
 @Composable
 fun TaskInfoBlock(navController: NavController) {
