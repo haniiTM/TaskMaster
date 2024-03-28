@@ -27,4 +27,6 @@ val DarPurple = Color(0xFF211950)
 val Lime = Color(0xFF57D75C)
 @Stable
 val Crayola = Color(0xFF8CA0E9)
+@Stable
+val PlaceHolder = Color(0xFFBEBEC0)
 

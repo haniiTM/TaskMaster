@@ -24,7 +24,7 @@ import androidx.navigation.NavController
 fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, navController: NavController) {
     Button(
         onClick = { navController.navigate("taskInfo") }, modifier = Modifier
-            .padding(top = 20.dp)
+            .padding(top = 20.dp, bottom = 20.dp)
             .width(width.dp)
             .height(31.dp)
             .fillMaxSize(), colors = ButtonDefaults.buttonColors(

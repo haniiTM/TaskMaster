@@ -25,7 +25,7 @@ import com.taskmaster.state.ItemProjectState
 fun CardContainer(title: String, buttonTitle: String, navController: NavController) {
     Box(
         modifier = Modifier
-            .padding(top = 20.dp, start = 14.dp, end = 14.dp)
+            .padding(bottom = 20.dp, start = 14.dp, end = 14.dp)
             .clip(shape = RoundedCornerShape(25.dp))
             .fillMaxWidth()
             .background(com.taskmaster.ui.theme.Gray1),
@@ -39,7 +39,7 @@ fun CardContainer(title: String, buttonTitle: String, navController: NavControll
             )
             LazyColumn(
                 modifier = Modifier
-                    .padding(horizontal = 14.dp)
+                    .padding(start = 14.dp, end = 14.dp, bottom = 14.dp)
                     .clip(shape = RoundedCornerShape(25.dp))
                     .heightIn(min = 232.dp, max = 345.dp)
             ) {
@@ -56,7 +56,9 @@ fun CardContainer(title: String, buttonTitle: String, navController: NavControll
                     ItemProject(item = item, context = LocalContext.current, navController = navController)
                 }
             }
-            BoxButton(buttonTitle)
+            if (buttonTitle != ""){
+                BoxButton(buttonTitle)
+            }
         }
 
     }

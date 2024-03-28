@@ -17,7 +17,7 @@ fun ProjectTaskScreen(navController: NavController) {
         itemsIndexed(
             listOf(
                 "Задачи" to "Добавить задачу",
-                "Выполнено" to "Перенести задачу"
+                "Выполнено" to ""
             )
         ) { _, (title, buttonTitle) ->
             CardContainer(

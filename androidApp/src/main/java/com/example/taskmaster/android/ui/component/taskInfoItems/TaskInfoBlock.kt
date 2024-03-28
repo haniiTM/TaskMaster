@@ -20,6 +20,7 @@ import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -39,7 +40,7 @@ import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButto
 @Composable
 fun TaskInfoBlock(navController: NavController) {
     val members by remember {
-        mutableStateOf(4)
+        mutableIntStateOf(4)
     }
     val allocatedTime by remember {
         mutableStateOf("4:00")
@@ -53,14 +54,21 @@ fun TaskInfoBlock(navController: NavController) {
     var taskStatus by remember {
         mutableStateOf("Новая")
     }
-    var taskStatusList =
+    val taskStatusList =
         listOf("В работе", "Заблокирована", "Решена", "Нужен отклик", "Закрыта", "Отклонена")
     val taskTitle by remember {
         mutableStateOf("Изучение семантики языка")
     }
+    val taskCategoryList =
+        listOf("Backend", "Frontend", "QA", "DevOps", "DB Dev")
+    var taskCategory by remember {
+        mutableStateOf("")
+    }
     val linearGradient =
         Brush.verticalGradient(listOf(Color.White, com.taskmaster.ui.theme.Crayola))
-    var expanded by remember { mutableStateOf(false) }
+    var statusExpanded by remember { mutableStateOf(false) }
+    var categoryExpanded by remember { mutableStateOf(false) }
+
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -71,7 +79,7 @@ fun TaskInfoBlock(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(224.dp)
+                    .height(256.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -99,7 +107,67 @@ fun TaskInfoBlock(navController: NavController) {
                 InfoBlockButtonTemplate(categoryText = "Оценка времени", param = allocatedTime)
                 InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = wastedTime)
                 Button(
-                    onClick = { expanded = true },
+                    onClick = { categoryExpanded = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    shape = RoundedCornerShape(0),
+                    contentPadding = PaddingValues(horizontal = 12.dp)
+                ) {
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Категория:",
+                                color = Color.Black,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Text(
+                                text = taskCategory,
+                                color = Color.Black,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            DropdownMenu(
+                                expanded = categoryExpanded,
+                                onDismissRequest = { categoryExpanded = !categoryExpanded },
+                                modifier = Modifier
+                                    .fillMaxWidth(.67f)
+                                    .height(185.dp)
+                            ) {
+                                taskCategoryList.forEach { item ->
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            categoryExpanded = false
+                                            taskCategory = item
+                                        },
+                                        text = {
+                                            Text(
+                                                text = item,
+                                                fontWeight = FontWeight.Normal
+                                            )
+                                        },
+                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                    )
+                                }
+
+                            }
+                        }
+                    }
+                }
+                Button(
+                    onClick = { statusExpanded = true },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(32.dp),
@@ -132,8 +200,8 @@ fun TaskInfoBlock(navController: NavController) {
                                 .fillMaxWidth()
                         ) {
                             DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = !expanded },
+                                expanded = statusExpanded,
+                                onDismissRequest = { statusExpanded = !statusExpanded },
                                 modifier = Modifier
                                     .fillMaxWidth(.67f)
                                     .height(185.dp)
@@ -141,7 +209,7 @@ fun TaskInfoBlock(navController: NavController) {
                                 taskStatusList.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
-                                            expanded = false
+                                            statusExpanded = false
                                             taskStatus = item
                                         },
                                         text = {
