@@ -1,17 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DevTyme</string>
-    <string name="title_login">Login</string>
-    <string name="title_home">Home</string>
-    <string name="title_webview">Webview</string>
-    <string name="profile_image">Profile image</string>
-    <string name="title_daily_goal">Daily Goal</string>
-    <string name="title_weekly_progress">Weekly Progress</string>
-    <string name="title_work_overview">Work Overview</string>
-    <string name="title_projects">Projects</string>
-    <string name="title_languages">Languages</string>
-
-    <string name="set_daily_goal">Set Daily Goal</string>
-    <string name="set">Set</string>
-    <string name="cancel">Cancel</string>
+    <string name="app_name">Task Master</string>
+    <string name="title_auth">Авторизация</string>
+    <string name="title_projects">Проекты</string>
+    <string name="title_project_task">Задачи проекта</string>
+    <string name="title_project_subtask">Подзадачи</string>
+    <string name="title_task_info">Информация по задаче</string>
+    <string name="title_task_labor_cost_list">Трудозатраты по задаче</string>
+    <string name="title_calculation_of_labor_costs">Расчет трудозатрат по проекту</string>
+    <string name="notification_subtitle">На вас была назначена задача.</string>
+    <string name="notification_text">Пожалуйста, укажите, сколько времени вы готовы потратить ежедневно на данную задачу. Примите требуемые действия в задачах, отмеченных данным индикатором.</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
