@@ -48,7 +48,7 @@ import com.example.taskmaster.android.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewTaskWindow(/*navController: NavController*/) {
+fun NewTaskWindow() {
     val interactionSource = remember { MutableInteractionSource() }
     var taskTitle by remember {
         mutableStateOf("")
@@ -238,7 +238,7 @@ fun NewTaskWindow(/*navController: NavController*/) {
                     }
                 }
                 Button(
-                    onClick = { /*navController.navigate("taskLaborCostList")*/ },
+                    onClick = {},
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(35.dp),
@@ -249,17 +249,6 @@ fun NewTaskWindow(/*navController: NavController*/) {
                     Text(text = "Создать", color = Color.Black)
                 }
             }
-        }
-        Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .padding(vertical = 24.dp)
-                .width(168.dp)
-                .height(33.dp),
-            colors = ButtonDefaults.buttonColors(Color.White),
-            contentPadding = PaddingValues(horizontal = 1.dp)
-        ) {
-            Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
         }
     }
 }
