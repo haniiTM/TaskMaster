@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.authScreenItems
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,9 +26,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -37,14 +43,16 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewModel()) {
     var isValid = false
-
+    var context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
     var userLogin by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Box(modifier = Modifier.clip(shape = RoundedCornerShape(10.dp))) {
         Column(
             modifier = Modifier
@@ -85,8 +93,27 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                     .background(color = Color.White)
                     .height(40.dp)
                     .width(278.dp),
+                singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions( onDone = {
+                    viewModel.dataToken(userLogin, userPassword).observeForever { success ->
+                        isValid = success
+                        if (success) {
+                            navController.navigate("projects")
+                        } else {
+                            userLogin = ""
+                            userPassword = ""
+                            Toast.makeText(
+                                context,
+                                "Неверный логин или пароль",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    keyboardController?.hide()
+                }),
                 decorationBox = @Composable { innerTextField ->
                     TextFieldDefaults.TextFieldDecorationBox(
                         value = userPassword,
@@ -109,10 +136,18 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                         isValid = success
                         if (success) {
                             navController.navigate("projects")
+                        } else {
+                            userLogin = ""
+                            userPassword = ""
+                            Toast.makeText(
+                                context,
+                                "Неверный логин или пароль",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 },
-                    modifier = Modifier
+                modifier = Modifier
                     .width(278.dp)
                     .height(40.dp), colors = ButtonDefaults.buttonColors(
                     Color.White
