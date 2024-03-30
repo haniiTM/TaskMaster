@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.domain.models.ItemProjectState
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
-import com.taskmaster.state.ItemProjectState
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 

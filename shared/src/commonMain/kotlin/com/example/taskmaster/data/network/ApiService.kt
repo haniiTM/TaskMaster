@@ -5,5 +5,7 @@ import com.example.taskmaster.data.network.models.TaskDTO
 
 interface ApiService {
     suspend fun fetchUserToken(login: String, password: String): AccessTokenDto?
-    suspend fun fetchTaskDto(): TaskDTO?
+    suspend fun fetchProject(): MutableList<TaskDTO?>
+    suspend fun fetchTask(idProj: Number): MutableList<TaskDTO?>
 }
+
