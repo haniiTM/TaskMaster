@@ -23,8 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.taskmaster.state.ItemProjectState
-
+import com.example.taskmaster.domain.models.ItemProjectState
 @Composable
 fun ProjectCard(item: ItemProjectState, navController: NavController) {
     ElevatedCard(

@@ -50,28 +50,55 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
-    override suspend fun fetchTaskDto(): TaskDTO? {
+    override suspend fun fetchProject(): MutableList<TaskDTO?> {
         return try {
-            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/project")
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/task")
             if (response.status.isSuccess()) {
-                println("Server returned TaskDTO: ${response.body<TaskDTO>()}")
-                response.body<TaskDTO>()
+                val projects = response.body<MutableList<TaskDTO?>>()
+                println("Server returned projects: ${projects}")
+                projects
             } else {
                 println("Server returned error status: ${response.status}")
-                null
+                mutableListOf() // возвращаем пустой список
             }
         } catch (e: ServerResponseException) {
             println("500 error: ${e.message}")
-            null
+            mutableListOf()
         } catch (e: ClientRequestException) {
             println("400 error: ${e.message}")
-            null
+            mutableListOf()
         } catch (e: RedirectResponseException) {
             println("300 error: ${e.message}")
-            null
+            mutableListOf()
         } catch (e: Exception) {
             println("Error: ${e.message}")
-            null
+            mutableListOf()
+        }
+    }
+
+    override suspend fun fetchTask(idProj: Number): MutableList<TaskDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/downtask/${idProj}")
+            if (response.status.isSuccess()) {
+                val tasks = response.body<MutableList<TaskDTO?>>()
+                println("Server returned projects: ${tasks}")
+                tasks
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
         }
     }
 

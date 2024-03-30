@@ -7,7 +7,6 @@ import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.ApiServiceImpl
 import com.example.taskmaster.data.network.utils.TokenInterceptor
 import com.example.taskmaster.domain.repositories.AuthRepository
-import com.example.taskmaster.domain.repositories.TaskRepository
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
