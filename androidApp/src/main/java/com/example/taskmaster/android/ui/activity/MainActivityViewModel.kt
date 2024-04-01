@@ -29,8 +29,7 @@ class MainActivityViewModel constructor(private val authRepository: AuthReposito
                 val tok = authRepository.fetchUserToken("admin", "admin123")
                 Napier.e("tok: ${tok}")
 
-                val task: TaskDTO? = authRepository.fetchTask().firstOrNull()
-                println("task123${task}")
+
 
                 val response = authRepository.getUserToken()
                 response.collectLatest {

@@ -19,10 +19,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.taskmaster.state.ItemProjectState
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.domain.models.ItemProjectState
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun CardContainer(title: String, buttonTitle: String, navController: NavController) {
+fun CardContainer(title: String, buttonTitle: String, navController: NavController, viewModel: TaskViewModel = getViewModel()) {
+//    viewModel.getTask(item.id) // Нужно вставить id проекта
+//
+//    val tasks = viewModel.stateTask.value.itemTaskState
     Box(
         modifier = Modifier
             .padding(bottom = 20.dp, start = 14.dp, end = 14.dp)
@@ -45,12 +50,12 @@ fun CardContainer(title: String, buttonTitle: String, navController: NavControll
             ) {
                 itemsIndexed(
                     listOf(
-                        ItemProjectState("Сайт Nissan", 72, 4),
-                        ItemProjectState("Мобильное приложение Alabuga Tech", 72, 4),
-                        ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
-                        ItemProjectState("Сайт Nissan", 72, 4),
-                        ItemProjectState("Мобильное приложение Alabuga Tech", 72, 4),
-                        ItemProjectState("Мобильное приложение Chudnoi perets", 72, 4),
+                        ItemProjectState(1,"Сайт Nissan", 72, 4),
+                        ItemProjectState(2,"Мобильное приложение Alabuga Tech", 72, 4),
+                        ItemProjectState(3,"Мобильное приложение Chudnoi perets", 72, 4),
+                        ItemProjectState(4,"Сайт Nissan", 72, 4),
+                        ItemProjectState(5,"Мобильное приложение Alabuga Tech", 72, 4),
+                        ItemProjectState(6,"Мобильное приложение Chudnoi perets", 72, 4),
                     )
                 ) { _, item ->
                     ItemProject(item = item, context = LocalContext.current, navController = navController)
