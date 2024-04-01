@@ -23,7 +23,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.domain.models.ItemProjectState
+
 @Composable
 fun ProjectCard(item: ItemProjectState, navController: NavController) {
     ElevatedCard(
@@ -34,7 +36,7 @@ fun ProjectCard(item: ItemProjectState, navController: NavController) {
             .padding(vertical = 8.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate("projectTask") }
+            .clickable { navController.navigate(NavigationItem.ProjectTask.passId(id = item.id.toInt())) }
     ) {
         Box {
             Row(

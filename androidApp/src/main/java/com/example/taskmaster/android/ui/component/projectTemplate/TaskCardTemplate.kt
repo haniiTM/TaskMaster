@@ -34,13 +34,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
-import com.example.taskmaster.domain.models.ItemProjectState
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
+import com.example.taskmaster.data.network.models.TaskDTO
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun ItemProject(item: ItemProjectState, context: Context, navController: NavController) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -102,7 +102,7 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
-                            text = item.projectTitle,
+                            text = item.name,
                             modifier = Modifier.width(226.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1,
@@ -111,13 +111,13 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Время на выполнение: " + item.projectTimeLeft.toString(),
+                            text = "Время на выполнение: " + item.scope.toString(),
                             fontSize = 14.sp,
                             color = Color.Black
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Участники: " + item.projectMemberCount.toString(),
+                            text = "Участники: " + item.userCount.toString(),
                             fontSize = 14.sp,
                             color = Color.Black
                         )
