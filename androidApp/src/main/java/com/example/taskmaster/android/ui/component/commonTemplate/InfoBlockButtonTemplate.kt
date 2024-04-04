@@ -16,12 +16,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,8 +45,6 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
     var openDialog by remember {
         mutableStateOf(false)
     }
-
-    val state = rememberTimePickerState()
     var paramItem by remember {
         mutableStateOf(param)
     }
@@ -57,7 +55,7 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
             .height(32.dp),
         colors = ButtonDefaults.buttonColors(Color.White),
         shape = RoundedCornerShape(0),
-        contentPadding = PaddingValues(horizontal = 12.dp)
+        contentPadding = PaddingValues(horizontal = 12.dp),
     ) {
         if (avatar > 0) {
             Row(
@@ -107,6 +105,12 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
             }
         }
     }
+    Divider (
+        color = Color.Black,
+        modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+    )
     if (openDialog) {
         Dialog(onDismissRequest = { openDialog = !openDialog }) {
             TextField(

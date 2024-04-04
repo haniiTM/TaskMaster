@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,7 +22,7 @@ fun LaborCostList() {
             .padding(start = 14.dp, top = 26.dp, end = 14.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(15.dp))
-            .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
+            .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(15.dp))
             .background(Color.White)
     ) {
         Column {

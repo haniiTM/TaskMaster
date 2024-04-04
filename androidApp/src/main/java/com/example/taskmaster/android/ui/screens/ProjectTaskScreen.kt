@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -11,7 +12,7 @@ import com.example.taskmaster.android.ui.component.projectTemplate.CalculationTi
 import com.example.taskmaster.android.ui.component.projectTemplate.CardContainer
 
 @Composable
-fun ProjectTaskScreen(navController: NavController) {
+fun ProjectTaskScreen(navController: NavController, id: Int?) {
     LazyColumn(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         item{ CalculationTimeButton() }
         itemsIndexed(
@@ -23,8 +24,10 @@ fun ProjectTaskScreen(navController: NavController) {
             CardContainer(
                 title = title,
                 buttonTitle = buttonTitle,
-                navController = navController
+                navController = navController,
+                id = id
             )
+            Log.d("id", navController.toString())
         }
     }
 }

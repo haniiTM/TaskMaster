@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.authScreenItems.AuthBlock
 
-
 @Composable
 fun AuthScreen(navController: NavController) {
     Column(

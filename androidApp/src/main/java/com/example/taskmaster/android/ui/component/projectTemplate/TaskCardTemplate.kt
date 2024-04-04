@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,12 +36,12 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
-import com.taskmaster.state.ItemProjectState
+import com.example.taskmaster.data.network.models.TaskDTO
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun ItemProject(item: ItemProjectState, context: Context, navController: NavController) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -58,7 +59,7 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
             tint = Color.Black,
             contentDescription = null
         )
-    }, background = com.taskmaster.ui.theme.LightRed
+    }, background = MaterialTheme.colorScheme.surface
     )
     val done = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
@@ -72,7 +73,7 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
             tint = Color.Black,
             contentDescription = null
         )
-    }, background = com.taskmaster.ui.theme.Lime
+    }, background = MaterialTheme.colorScheme.surfaceVariant
     )
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
@@ -102,7 +103,7 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
-                            text = item.projectTitle,
+                            text = item.name,
                             modifier = Modifier.width(226.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1,
@@ -111,13 +112,13 @@ fun ItemProject(item: ItemProjectState, context: Context, navController: NavCont
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Время на выполнение: " + item.projectTimeLeft.toString(),
+                            text = "Время на выполнение: " + item.scope.toString(),
                             fontSize = 14.sp,
                             color = Color.Black
                         )
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Участники: " + item.projectMemberCount.toString(),
+                            text = "Участники: " + item.userCount.toString(),
                             fontSize = 14.sp,
                             color = Color.Black
                         )
