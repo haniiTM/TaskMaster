@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +31,7 @@ fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Fl
             .height(31.dp)
             .fillMaxSize(), colors = ButtonDefaults.buttonColors(
             Color.White
-        ), shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(15.dp, 0.dp)
+        ), shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(15.dp, 0.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         Text(text = text, color = Color.Black)
         if (iconItem > 0) {

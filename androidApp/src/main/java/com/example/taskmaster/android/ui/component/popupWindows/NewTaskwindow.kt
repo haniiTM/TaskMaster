@@ -17,11 +17,13 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -45,6 +47,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.theme.PlaceHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +62,7 @@ fun NewTaskWindow(/*navController: NavController*/) {
         mutableStateOf("")
     }
     val linearGradient =
-        Brush.verticalGradient(listOf(Color.White, com.taskmaster.ui.theme.Crayola))
+        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     var categoryExpanded by remember { mutableStateOf(false) }
 
 
@@ -82,7 +85,7 @@ fun NewTaskWindow(/*navController: NavController*/) {
                 ) {
                     Text(
                         text = "Новая задача",
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 12.dp)
@@ -181,7 +184,7 @@ fun NewTaskWindow(/*navController: NavController*/) {
                             if (taskCategory == "") {
                                 Text(
                                     text = "Выбор категории",
-                                    color = com.taskmaster.ui.theme.PlaceHolder,
+                                    color = PlaceHolder,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
                                 )
@@ -237,6 +240,12 @@ fun NewTaskWindow(/*navController: NavController*/) {
                         }
                     }
                 }
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 Button(
                     onClick = { /*navController.navigate("taskLaborCostList")*/ },
                     modifier = Modifier

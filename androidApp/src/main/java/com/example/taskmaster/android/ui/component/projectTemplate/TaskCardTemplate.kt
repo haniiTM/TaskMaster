@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,7 +59,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
             tint = Color.Black,
             contentDescription = null
         )
-    }, background = com.taskmaster.ui.theme.LightRed
+    }, background = MaterialTheme.colorScheme.surface
     )
     val done = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
@@ -72,7 +73,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
             tint = Color.Black,
             contentDescription = null
         )
-    }, background = com.taskmaster.ui.theme.Lime
+    }, background = MaterialTheme.colorScheme.surfaceVariant
     )
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {

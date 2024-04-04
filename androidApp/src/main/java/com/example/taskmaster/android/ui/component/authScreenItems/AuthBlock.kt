@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -23,6 +25,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -95,6 +98,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 onValueChange = { userLogin = it },
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp, 5.dp))
+                    .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(5.dp, 5.dp))
                     .background(color = Color.White)
                     .height(40.dp)
                     .width(278.dp),
@@ -122,6 +126,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 onValueChange = { userPassword = it },
                 modifier = Modifier
                     .background(color = Color.White)
+                    .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline))
                     .height(40.dp)
                     .width(278.dp),
                 singleLine = true,
@@ -213,7 +218,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                     }
                 },
                 modifier = Modifier
-                    .width(278.dp)
+                    .width(278.dp).border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(bottomEnd = 5.dp, bottomStart = 5.dp))
                     .height(40.dp), colors = ButtonDefaults.buttonColors(
                     Color.White
                 ), shape = RoundedCornerShape(bottomEnd = 5.dp, bottomStart = 5.dp)
