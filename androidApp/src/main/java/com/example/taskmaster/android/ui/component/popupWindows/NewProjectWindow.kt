@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -34,11 +35,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewProjectWindow() {
     val linearGradient =
-        Brush.verticalGradient(listOf(Color.White, com.taskmaster.ui.theme.Crayola))
+        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     val interactionSource = remember { MutableInteractionSource() }
     var projectTitle by remember {
         mutableStateOf("")
@@ -63,7 +65,7 @@ fun NewProjectWindow() {
                 ) {
                     Text(
                         text = "Новый проект",
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 12.dp)

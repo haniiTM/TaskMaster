@@ -21,6 +21,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -45,6 +46,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.theme.PlaceHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +61,7 @@ fun NewLaborCostWindow() {
         mutableStateOf("")
     }
     val linearGradient =
-        Brush.verticalGradient(listOf(Color.White, com.taskmaster.ui.theme.Crayola))
+        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     var categoryExpanded by remember { mutableStateOf(false) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -81,7 +83,7 @@ fun NewLaborCostWindow() {
                 ) {
                     Text(
                         text = "Новая трудозатрата",
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 12.dp)
@@ -182,7 +184,7 @@ fun NewLaborCostWindow() {
                             if (laborCostCategory == "") {
                                 Text(
                                     text = "Выбор деятельности",
-                                    color = com.taskmaster.ui.theme.PlaceHolder,
+                                    color = PlaceHolder,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
                                 )

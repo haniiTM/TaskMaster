@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
-import com.example.taskmaster.android.ui.theme.Crayola
 
 @Composable
 fun TaskInfoBlock(navController: NavController) {
@@ -70,7 +69,7 @@ fun TaskInfoBlock(navController: NavController) {
         mutableStateOf("")
     }
     val linearGradient =
-        Brush.verticalGradient(listOf(Color.White, Crayola))
+        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
 
@@ -98,7 +97,7 @@ fun TaskInfoBlock(navController: NavController) {
                 ) {
                     Text(
                         text = taskTitle,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(horizontal = 12.dp)
