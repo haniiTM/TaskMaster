@@ -1,6 +1,8 @@
 package com.example.taskmaster.android.ui.component.taskInfoItems
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,8 +16,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
+import com.example.taskmaster.android.ui.theme.Crayola
 
 @Composable
 fun TaskInfoBlock(navController: NavController) {
@@ -65,7 +70,7 @@ fun TaskInfoBlock(navController: NavController) {
         mutableStateOf("")
     }
     val linearGradient =
-        Brush.verticalGradient(listOf(Color.White, com.taskmaster.ui.theme.Crayola))
+        Brush.verticalGradient(listOf(Color.White, Crayola))
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
 
@@ -75,11 +80,15 @@ fun TaskInfoBlock(navController: NavController) {
             modifier = Modifier
                 .padding(horizontal = 38.dp)
                 .clip(shape = RoundedCornerShape(15.dp))
+                .border(
+                    BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                    shape = RoundedCornerShape(15.dp)
+                )
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(256.dp)
+                    .height(264.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -95,6 +104,12 @@ fun TaskInfoBlock(navController: NavController) {
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 InfoBlockButtonTemplate(
                     categoryText = "Участники",
                     param = members,
@@ -155,10 +170,11 @@ fun TaskInfoBlock(navController: NavController) {
                                         text = {
                                             Text(
                                                 text = item,
-                                                fontWeight = FontWeight.Normal
+                                                fontWeight = FontWeight.Normal,
+                                                color = Color.Black
                                             )
                                         },
-                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                        colors = MenuDefaults.itemColors(textColor = Color.White)
                                     )
                                 }
 
@@ -166,6 +182,12 @@ fun TaskInfoBlock(navController: NavController) {
                         }
                     }
                 }
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 Button(
                     onClick = { statusExpanded = true },
                     modifier = Modifier
@@ -215,10 +237,11 @@ fun TaskInfoBlock(navController: NavController) {
                                         text = {
                                             Text(
                                                 text = item,
-                                                fontWeight = FontWeight.Normal
+                                                fontWeight = FontWeight.Normal,
+                                                color = Color.Black
                                             )
                                         },
-                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                        colors = MenuDefaults.itemColors(textColor = Color.White)
                                     )
                                 }
 
@@ -226,7 +249,12 @@ fun TaskInfoBlock(navController: NavController) {
                         }
                     }
                 }
-
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 Button(
                     onClick = { navController.navigate("taskLaborCostList") },
                     modifier = Modifier
@@ -247,7 +275,8 @@ fun TaskInfoBlock(navController: NavController) {
                 .width(168.dp)
                 .height(33.dp),
             colors = ButtonDefaults.buttonColors(Color.White),
-            contentPadding = PaddingValues(horizontal = 1.dp)
+            contentPadding = PaddingValues(horizontal = 1.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
         ) {
             Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
         }

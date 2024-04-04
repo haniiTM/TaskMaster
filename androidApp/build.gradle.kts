@@ -55,6 +55,7 @@ dependencies {
     implementation("io.github.aakira:napier:${napier}")
     implementation("androidx.navigation:navigation-compose:${navigation}")
     implementation("com.google.accompanist:accompanist-navigation-animation:${accompanist}")
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
 
     //implementation(libs.androidx.navigation.runtime.ktx)

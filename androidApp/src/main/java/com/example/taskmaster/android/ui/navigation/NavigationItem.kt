@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.taskmaster.android.R
 
+const val PROJECT_TASK_ARGUMENT_KEY = "id"
 sealed class NavigationItem(
     val route: String,
     @StringRes val title: Int,
@@ -11,7 +12,11 @@ sealed class NavigationItem(
 ) {
     object Auth : NavigationItem("auth", R.string.title_auth, null)
     object Projects : NavigationItem("projects", R.string.title_projects, null)
-    object ProjectTask : NavigationItem("projectTask", R.string.title_project_task, null)
+    object ProjectTask : NavigationItem("projectTask/{$PROJECT_TASK_ARGUMENT_KEY}", R.string.title_project_task, null) {
+        fun passId(id: Int): String {
+            return route.replace("{$PROJECT_TASK_ARGUMENT_KEY}", id.toString())
+        }
+    }
     object ProjectSubTask : NavigationItem("projectSubTask", R.string.title_project_subtask, null)
     object TaskInfo : NavigationItem("taskInfo", R.string.title_task_info, null)
     object TaskLaborCostList : NavigationItem("taskLaborCostList", R.string.title_task_labor_cost_list, null)

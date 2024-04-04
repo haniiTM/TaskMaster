@@ -1,6 +1,8 @@
 package com.example.taskmaster.android.ui.component.projectTemplate
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,7 +26,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.domain.models.ItemProjectState
+
 @Composable
 fun ProjectCard(item: ItemProjectState, navController: NavController) {
     ElevatedCard(
@@ -34,7 +39,8 @@ fun ProjectCard(item: ItemProjectState, navController: NavController) {
             .padding(vertical = 8.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate("projectTask") }
+            .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(25.dp))
+            .clickable { navController.navigate(NavigationItem.ProjectTask.passId(id = item.id.toInt())) }
     ) {
         Box {
             Row(
