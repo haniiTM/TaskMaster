@@ -52,7 +52,7 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
 
     override suspend fun fetchProject(): MutableList<TaskDTO?> {
         return try {
-            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/task")
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/project")
             if (response.status.isSuccess()) {
                 val projects = response.body<MutableList<TaskDTO?>>()
                 println("Server returned projects: ${projects}")
