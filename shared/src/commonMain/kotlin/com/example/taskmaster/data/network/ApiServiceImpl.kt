@@ -2,6 +2,7 @@ package com.example.taskmaster.data.network
 
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.TaskDTO
+import com.example.taskmaster.data.network.models.TypeOfActivityDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -11,10 +12,14 @@ import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.readText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 @Serializable
 data class LoginRequest(val login: String, val password: String)
@@ -102,5 +107,16 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
-
+    override suspend fun fetchTypeOfActivity(): MutableList<TypeOfActivityDTO?> {
+        val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/type_of_activity")
+        if (response.status.isSuccess()) {
+            val json = response.bodyAsText()
+            val typeActiv = Json.decodeFromString<MutableList<TypeOfActivityDTO?>>(json)
+            println("Server returned typeActiv: ${typeActiv}")
+            return typeActiv
+        } else {
+            println("Server returned error status: ${response.status}")
+            return  mutableListOf() // возвращаем пустой список
+        }
+    }
 }
