@@ -36,6 +36,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
 import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -96,8 +97,8 @@ fun Header(text: String, iconItem: Int, actionIcons: List<Int>, navController: N
                             DropdownMenuItem(
                                 onClick = {
                                     selectedItemIndex = index
-                                    if (index == 2) { // Если выбран пункт "Выйти"
-                                        shouldNavigateToAuth = true // Установить флаг для перехода на экран авторизации
+                                    if (index == 2) {
+                                        shouldNavigateToAuth = true
                                     } else {
                                         showDialog = true
                                     }
@@ -136,7 +137,7 @@ fun Header(text: String, iconItem: Int, actionIcons: List<Int>, navController: N
                 }
                 if (shouldNavigateToAuth) {
                     LaunchedEffect(Unit) {
-                        navController.navigate("auth")
+                        navController.popBackStack(NavigationItem.Auth.route, inclusive = false, saveState = false)
                     }
                 }
             }
