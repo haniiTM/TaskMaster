@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
@@ -64,7 +62,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
         }
     }
 
-    Box(modifier = Modifier.clip(shape = RoundedCornerShape(10.dp))) {
+    Box {
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -80,7 +78,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 iconVisible = false,
                 roundedAngle = 5
             )
-            Spacer(modifier = Modifier.height(20.dp))
             AuthTextBox(
                 value = userPassword,
                 onValueChange = { newValue -> userPassword = newValue },
@@ -91,7 +88,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 iconVisible = true,
                 roundedAngle = 0
             )
-            Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
                     if (isInternetConnected) {
