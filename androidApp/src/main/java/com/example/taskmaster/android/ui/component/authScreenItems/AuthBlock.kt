@@ -70,7 +70,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 .align(Alignment.Center)
                 .padding(10.dp)
         ) {
-            // Для логина - без иконки
             AuthTextBox(
                 value = userLogin,
                 onValueChange = { newValue -> userLogin = newValue },
@@ -82,8 +81,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 roundedAngle = 5
             )
             Spacer(modifier = Modifier.height(20.dp))
-
-            // Для пароля - скрытие символов
             AuthTextBox(
                 value = userPassword,
                 onValueChange = { newValue -> userPassword = newValue },
@@ -94,7 +91,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 iconVisible = true,
                 roundedAngle = 0
             )
-
             Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
