@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -47,17 +46,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.android.ui.theme.PlaceHolder
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewTaskWindow() {
+fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewModel = getViewModel()) {
+    viewModel.getTypeActivity()
+    val typeActivity = viewModel.state.value.itemState
     val interactionSource = remember { MutableInteractionSource() }
     var taskTitle by remember {
         mutableStateOf("")
     }
-    val taskCategoryList =
-        listOf("Backend", "Frontend", "QA", "DevOps", "DB Dev")
     var taskCategory by remember {
         mutableStateOf("")
     }
@@ -220,17 +221,19 @@ fun NewTaskWindow() {
                                     .fillMaxWidth(.67f)
                                     .height(185.dp)
                             ) {
-                                taskCategoryList.forEach { item ->
+                                typeActivity.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
                                             categoryExpanded = false
-                                            taskCategory = item
+                                            taskCategory = item!!.name
                                         },
                                         text = {
-                                            Text(
-                                                text = item,
-                                                fontWeight = FontWeight.Normal
-                                            )
+                                            if (item != null) {
+                                                Text(
+                                                    text = item.name,
+                                                    fontWeight = FontWeight.Normal
+                                                )
+                                            }
                                         },
                                         colors = MenuDefaults.itemColors(textColor = Color.Black)
                                     )
