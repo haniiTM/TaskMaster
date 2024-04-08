@@ -16,7 +16,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,29 +42,27 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
-import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.android.ui.theme.PlaceHolder
-import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewModel = getViewModel()) {
-    viewModel.getTypeActivity()
-    val typeActivity = viewModel.state.value.itemState
+fun NewLaborCostWindow() {
     val interactionSource = remember { MutableInteractionSource() }
     var taskTitle by remember {
         mutableStateOf("")
     }
-    var taskCategory by remember {
+    val laborCostCategoryList =
+        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Дизайн")
+    var laborCostCategory by remember {
         mutableStateOf("")
     }
     val linearGradient =
         Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     var categoryExpanded by remember { mutableStateOf(false) }
-
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -85,7 +82,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                         .height(35.dp), contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Новая задача",
+                        text = "Новая трудозатрата",
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
@@ -110,11 +107,12 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White
                             ),
+                            trailingIcon = { Icon(painter = painterResource(id = R.drawable.calendar_icon), contentDescription = "")},
                             singleLine = true,
-                            contentPadding = PaddingValues(horizontal = 10.dp),
+                            contentPadding = PaddingValues(start = 10.dp),
                             visualTransformation = VisualTransformation.None,
                             interactionSource = interactionSource,
-                            placeholder = { Text("Название задачи") })
+                            placeholder = { Text("Дата") })
                     }
                 )
                 BasicTextField(
@@ -139,7 +137,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                             contentPadding = PaddingValues(horizontal = 10.dp),
                             visualTransformation = VisualTransformation.None,
                             interactionSource = interactionSource,
-                            placeholder = { Text("Зависит от задачи: номер") })
+                            placeholder = { Text("Комментарий") })
                     }
                 )
                 BasicTextField(
@@ -157,14 +155,15 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                             value = taskTitle,
                             innerTextField = innerTextField,
                             enabled = true,
+                            trailingIcon = { Icon(painter = painterResource(id = R.drawable.clock_icon), contentDescription = "")},
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White
                             ),
                             singleLine = true,
-                            contentPadding = PaddingValues(horizontal = 10.dp),
+                            contentPadding = PaddingValues(start = 10.dp),
                             visualTransformation = VisualTransformation.None,
                             interactionSource = interactionSource,
-                            placeholder = { Text("Временная оценка") })
+                            placeholder = { Text("Затраченное время") })
                     }
                 )
                 Button(
@@ -182,9 +181,9 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                             modifier = Modifier.fillMaxSize(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            if (taskCategory == "") {
+                            if (laborCostCategory == "") {
                                 Text(
-                                    text = "Выбор категории",
+                                    text = "Выбор деятельности",
                                     color = PlaceHolder,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
@@ -197,13 +196,13 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                                 )
                             } else {
                                 Text(
-                                    text = "Категория:",
+                                    text = "Деятельность:",
                                     color = Color.Black,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal
                                 )
                                 Text(
-                                    text = taskCategory,
+                                    text = laborCostCategory,
                                     color = Color.Black,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal
@@ -221,19 +220,17 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                                     .fillMaxWidth(.67f)
                                     .height(185.dp)
                             ) {
-                                typeActivity.forEach { item ->
+                                laborCostCategoryList.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
                                             categoryExpanded = false
-                                            taskCategory = item!!.name
+                                            laborCostCategory = item
                                         },
                                         text = {
-                                            if (item != null) {
-                                                Text(
-                                                    text = item.name,
-                                                    fontWeight = FontWeight.Normal
-                                                )
-                                            }
+                                            Text(
+                                                text = item,
+                                                fontWeight = FontWeight.Normal
+                                            )
                                         },
                                         colors = MenuDefaults.itemColors(textColor = Color.Black)
                                     )
@@ -243,12 +240,6 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                         }
                     }
                 }
-                Divider(
-                    color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier
-                        .height(1.dp)
-                        .fillMaxWidth()
-                )
                 Button(
                     onClick = {},
                     modifier = Modifier
@@ -263,4 +254,10 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun pr(){
+    NewLaborCostWindow()
 }
