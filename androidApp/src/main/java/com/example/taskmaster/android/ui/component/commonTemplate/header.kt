@@ -130,8 +130,12 @@ fun Header(text: String, iconItem: Int, actionIcons: List<Int>, navController: N
                 if (showDialog) {
                     Dialog(onDismissRequest = { showDialog = false }) {
                         when (selectedItemIndex) {
-                            0 -> SearchPopUpWindow(onDismissRequest = {})
-                            1 -> NewProjectWindow()
+                            0 -> SearchPopUpWindow(onDismissRequest = {
+                                showDialog = !showDialog
+                            })
+                            1 -> NewProjectWindow(onDismissRequest = {
+                                showDialog = !showDialog
+                            })
                         }
                     }
                 }
@@ -141,11 +145,6 @@ fun Header(text: String, iconItem: Int, actionIcons: List<Int>, navController: N
                     }
                 }
             }
-        }
-    }
-    if (showDialog) {
-        Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            NewProjectWindow()
         }
     }
 }

@@ -36,7 +36,7 @@ import com.example.taskmaster.android.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthTextBox(
+fun UnifiedTextBox(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,
@@ -44,7 +44,9 @@ fun AuthTextBox(
     interactionSource: MutableInteractionSource,
     keyboardType: KeyboardType,
     iconVisible: Boolean,
-    roundedAngle : Int
+    roundedAngle : Int,
+    spacer : Int,
+    borderWidth: Int
 ) {
     var passwordVisible by remember { mutableStateOf(passwordVisibleValue) }
 
@@ -53,7 +55,7 @@ fun AuthTextBox(
         onValueChange = onValueChange,
         modifier = Modifier
             .clip(shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
-            .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
+            .border(BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
             .background(color = Color.White)
             .height(40.dp)
             .width(278.dp),
@@ -102,5 +104,5 @@ fun AuthTextBox(
             )
         }
     )
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(modifier = Modifier.height(spacer.dp))
 }
