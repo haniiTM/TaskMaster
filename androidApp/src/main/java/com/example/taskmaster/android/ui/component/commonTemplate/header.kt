@@ -40,7 +40,13 @@ import com.example.taskmaster.android.ui.navigation.NavigationItem
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun Header(text: String, iconItem: Int, actionIcons: List<Int>, navController: NavController) {
+fun Header(
+    text: String,
+    iconItem: Int,
+    actionIcons: List<Int>,
+    navController: NavController,
+    update: () -> Unit
+) {
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -117,35 +123,41 @@ fun Header(text: String, iconItem: Int, actionIcons: List<Int>, navController: N
                                     textColor = if (isLastItem) Color.Red else Color.Black
                                 )
                             )
-                            if(index <= 1)
-                            Divider(
-                                color = MaterialTheme.colorScheme.outline,
-                                modifier = Modifier
-                                    .height(1.dp)
-                                    .fillMaxWidth()
-                            )
+                            if (index <= 1)
+                                Divider(
+                                    color = MaterialTheme.colorScheme.outline,
+                                    modifier = Modifier
+                                        .height(1.dp)
+                                        .fillMaxWidth()
+                                )
                         }
                     }
                 }
                 if (showDialog) {
                     Dialog(onDismissRequest = { showDialog = false }) {
                         when (selectedItemIndex) {
-                            0 -> SearchPopUpWindow(onDismissRequest = {})
-                            1 -> NewProjectWindow()
+                            0 -> SearchPopUpWindow(onDismissRequest = {
+                                showDialog = !showDialog
+                            })
+
+                            1 -> NewProjectWindow(
+                                onDismissRequest = {
+                                    showDialog = !showDialog
+                                }
+                            )
                         }
                     }
                 }
                 if (shouldNavigateToAuth) {
                     LaunchedEffect(Unit) {
-                        navController.popBackStack(NavigationItem.Auth.route, inclusive = false, saveState = false)
+                        navController.popBackStack(
+                            NavigationItem.Auth.route,
+                            inclusive = false,
+                            saveState = false
+                        )
                     }
                 }
             }
-        }
-    }
-    if (showDialog) {
-        Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            NewProjectWindow()
         }
     }
 }

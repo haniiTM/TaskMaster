@@ -1,14 +1,14 @@
 package com.example.taskmaster.android.ui.screens.task_screen
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.TaskDTO
-import kotlinx.coroutines.launch
-import androidx.lifecycle.ViewModel
-import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.domain.models.ItemProjectState
-import androidx.compose.runtime.State
+import kotlinx.coroutines.launch
 
 
 class TaskViewModel constructor( private val apiService: ApiService) : ViewModel()
@@ -65,6 +65,7 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
             } catch(e: Exception) {
                 println("Exception in createProject ${e}")
             }
+            getProject()
         }
     }
 

@@ -28,7 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.taskmaster.android.ui.component.commonTemplate.AuthTextBox
+import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
@@ -68,7 +68,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 .align(Alignment.Center)
                 .padding(10.dp)
         ) {
-            AuthTextBox(
+            UnifiedTextBox(
                 value = userLogin,
                 onValueChange = { newValue -> userLogin = newValue },
                 placeholder = "Логин",
@@ -76,9 +76,11 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 interactionSource = remember { MutableInteractionSource() },
                 keyboardType = KeyboardType.Email,
                 iconVisible = false,
-                roundedAngle = 5
+                roundedAngle = 5,
+                spacer = 20,
+                borderWidth = 1
             )
-            AuthTextBox(
+            UnifiedTextBox(
                 value = userPassword,
                 onValueChange = { newValue -> userPassword = newValue },
                 placeholder = "Пароль",
@@ -86,7 +88,9 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 interactionSource = remember { MutableInteractionSource() },
                 keyboardType = KeyboardType.Password,
                 iconVisible = true,
-                roundedAngle = 0
+                roundedAngle = 0,
+                spacer = 20,
+                borderWidth = 1
             )
             Button(
                 onClick = {
