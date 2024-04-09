@@ -1,6 +1,7 @@
 package com.example.taskmaster.data.network
 
 import com.example.taskmaster.data.network.models.AccessTokenDto
+import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
 import io.ktor.client.HttpClient
@@ -141,6 +142,33 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } else {
             println("Server returned error status: ${response.status}")
             return  mutableListOf() // возвращаем пустой список
+        }
+    }
+
+    override suspend fun fetchStatus(): MutableList<StatusDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/status")
+            if (response.status.isSuccess()) {
+                val json = response.bodyAsText()
+                val status = Json.decodeFromString<MutableList<StatusDTO?>>(json)
+                println("Server returned status: ${status}")
+                status
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
         }
     }
 }

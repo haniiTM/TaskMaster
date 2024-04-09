@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -40,9 +41,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
+import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun TaskInfoBlock(navController: NavController) {
+fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = getViewModel()) {
+    LaunchedEffect(key1 = true) {
+        viewModel.getStatus()
+    }
+
+
     val members by remember {
         mutableIntStateOf(4)
     }
@@ -227,18 +236,22 @@ fun TaskInfoBlock(navController: NavController) {
                                     .fillMaxWidth(.67f)
                                     .height(185.dp)
                             ) {
-                                taskStatusList.forEach { item ->
+                                viewModel.state.value.itemState.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
                                             statusExpanded = false
-                                            taskStatus = item
+                                            if (item != null) {
+                                                taskStatus = item.name
+                                            }
                                         },
                                         text = {
-                                            Text(
-                                                text = item,
-                                                fontWeight = FontWeight.Normal,
-                                                color = Color.Black
-                                            )
+                                            if (item != null) {
+                                                Text(
+                                                    text = item.name,
+                                                    fontWeight = FontWeight.Normal,
+                                                    color = Color.Black
+                                                )
+                                            }
                                         },
                                         colors = MenuDefaults.itemColors(textColor = Color.White)
                                     )
