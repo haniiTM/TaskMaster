@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,8 +34,9 @@ fun CardContainer(
     id: Int?,
     viewModel: TaskViewModel = getViewModel()
 ) {
-    viewModel.getTask(id!!.toInt()) // Нужно вставить id проекта
-
+    LaunchedEffect(key1 = true) {
+        viewModel.getTask(id!!.toInt())
+    }
     val tasks = viewModel.stateTask.value.itemTaskState
     Box(
         modifier = Modifier

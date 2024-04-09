@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -16,7 +17,9 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getViewModel()) {
-    viewModel.getProject()
+    LaunchedEffect(key1 = true) {
+        viewModel.getProject()
+    }
     val projects = viewModel.state.value.itemProjectState
     LazyColumn(modifier = Modifier.padding(horizontal = 14.dp)) {
         item {

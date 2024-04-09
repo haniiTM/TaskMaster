@@ -27,6 +27,7 @@ import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +54,9 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewModel = getViewModel()) {
-    viewModel.getTypeActivity()
+    LaunchedEffect(key1 = true) {
+        viewModel.getTypeActivity()
+    }
     val typeActivity = viewModel.state.value.itemState
     val interactionSource = remember { MutableInteractionSource() }
     var taskTitle by remember {
