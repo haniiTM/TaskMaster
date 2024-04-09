@@ -34,11 +34,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewProjectWindow() {
+fun NewProjectWindow(viewModel: TaskViewModel = getViewModel()) {
     val linearGradient =
         Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     val interactionSource = remember { MutableInteractionSource() }
@@ -55,7 +57,7 @@ fun NewProjectWindow() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp)
+                    .height(105.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -97,7 +99,7 @@ fun NewProjectWindow() {
                     }
                 )
                 Button(
-                    onClick = {},
+                    onClick = {viewModel.createProject(projectTitle)},
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(35.dp),
