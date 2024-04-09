@@ -8,6 +8,8 @@ interface ApiService {
     suspend fun fetchUserToken(login: String, password: String): AccessTokenDto?
     suspend fun fetchProject(): MutableList<TaskDTO?>
     suspend fun fetchTask(idProj: Number): MutableList<TaskDTO?>
+
+    suspend fun createProject(nameProject: String)
     suspend fun fetchTypeOfActivity(): MutableList<TypeOfActivityDTO?>
 }
 

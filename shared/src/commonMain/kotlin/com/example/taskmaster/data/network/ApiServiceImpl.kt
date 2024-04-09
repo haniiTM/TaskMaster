@@ -107,6 +107,30 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
+    override suspend fun createProject(nameProject: String){
+        try {
+            val project = TaskDTO()
+            project.name = nameProject
+            val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/task") {
+                contentType(ContentType.Application.Json)
+                setBody(project)
+            }
+            if (response.status.isSuccess()) {
+                println("Server create project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
     override suspend fun fetchTypeOfActivity(): MutableList<TypeOfActivityDTO?> {
         val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/type_of_activity")
         if (response.status.isSuccess()) {

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 class TaskDTO(
     var id: Int?,
-    val name: String, // Название проекта, задачи/подзадачи
+    var name: String, // Название проекта, задачи/подзадачи
     var status: Int?, // Id статуса
     val start_date: String?, // Дата начала
     var scope: Int?, // Общее кол-во часов на выполнение

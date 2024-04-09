@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +28,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewProjectWindow(onDismissRequest: () -> Unit) {
+fun NewProjectWindow(onDismissRequest: () -> Unit, viewModel: TaskViewModel = getViewModel()) {
     val linearGradient =
-        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
-    val interactionSource = remember { MutableInteractionSource() }
+        Brush.verticalGradient(
+            listOf(
+                MaterialTheme.colorScheme.onPrimary,
+                MaterialTheme.colorScheme.onSecondary
+            )
+        )
     var projectTitle by remember {
         mutableStateOf("")
     }
-
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -70,7 +73,7 @@ fun NewProjectWindow(onDismissRequest: () -> Unit) {
                     value = projectTitle,
                     onValueChange = { newValue -> projectTitle = newValue },
                     placeholder = "Название проекта",
-                    passwordVisibleValue = false,
+                    passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
                     keyboardType = KeyboardType.Text,
                     iconVisible = false,
@@ -79,7 +82,10 @@ fun NewProjectWindow(onDismissRequest: () -> Unit) {
                     borderWidth = 0
                 )
                 Button(
-                    onClick = {onDismissRequest()},
+                    onClick = {
+                        onDismissRequest()
+                        viewModel.createProject(projectTitle)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),

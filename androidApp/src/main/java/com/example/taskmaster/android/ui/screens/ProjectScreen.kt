@@ -20,6 +20,7 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
     LaunchedEffect(key1 = true) {
         viewModel.getProject()
     }
+
     val projects = viewModel.state.value.itemProjectState
     LazyColumn(modifier = Modifier.padding(horizontal = 14.dp)) {
         item {
@@ -31,7 +32,8 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
                     R.drawable.add_project_icon,
                     R.drawable.exit_icon
                 ),
-                navController
+                navController,
+                update = {viewModel.getProject()}
             )
             Spacer(modifier = Modifier.padding(top = 26.dp))
         }
