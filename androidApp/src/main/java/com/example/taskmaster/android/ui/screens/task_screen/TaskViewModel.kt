@@ -57,6 +57,17 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         }
     }
 
+    // Функция для получения задач/подзадач
+    fun createProject(nameProject: String) {
+        viewModelScope.launch {
+            try {
+                apiService.createProject(nameProject)
+            } catch(e: Exception) {
+                println("Exception in createProject ${e}")
+            }
+        }
+    }
+
     data class ItemTaskStates (
         val itemTaskState: MutableList<TaskDTO?> = mutableListOf(),
         val isLoading: Boolean = false
