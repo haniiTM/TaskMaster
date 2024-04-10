@@ -138,7 +138,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     decorationBox = @Composable { innerTextField ->
                         TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskTitle,
+                            value = taskDependence,
                             innerTextField = innerTextField,
                             enabled = true,
                             colors = TextFieldDefaults.textFieldColors(
@@ -163,7 +163,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     decorationBox = @Composable { innerTextField ->
                         TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskTitle,
+                            value = taskAllocatedTime,
                             innerTextField = innerTextField,
                             enabled = true,
                             colors = TextFieldDefaults.textFieldColors(

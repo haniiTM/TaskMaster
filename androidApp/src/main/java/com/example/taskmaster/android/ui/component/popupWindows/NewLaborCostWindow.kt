@@ -57,7 +57,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
     var comment by remember {
         mutableStateOf("")
     }
-    var spendedTime by remember {
+    var spendTime by remember {
         mutableStateOf("")
     }
     val laborCostCategoryList =
@@ -100,7 +100,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     )
                 }
                 BasicTextField(
-                    value = "Дата: $date",
+                    value = date,
                     onValueChange = { date = it },
                     modifier = Modifier
                         .background(color = Color.White)
@@ -127,7 +127,8 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                             singleLine = true,
                             contentPadding = PaddingValues(start = 10.dp),
                             visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource)
+                            interactionSource = interactionSource,
+                            prefix = { Text(text = "Дата: ", color = Color.Black) })
                     }
                 )
                 BasicTextField(
@@ -156,8 +157,8 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     }
                 )
                 BasicTextField(
-                    value = "Затрачено: $spendedTime",
-                    onValueChange = { spendedTime = it },
+                    value = spendTime,
+                    onValueChange = { spendTime = it },
                     modifier = Modifier
                         .background(color = Color.White)
                         .height(35.dp)
@@ -167,7 +168,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     decorationBox = @Composable { innerTextField ->
                         TextFieldDefaults.TextFieldDecorationBox(
-                            value = spendedTime,
+                            value = spendTime,
                             innerTextField = innerTextField,
                             enabled = true,
                             trailingIcon = {
@@ -183,7 +184,8 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                             singleLine = true,
                             contentPadding = PaddingValues(start = 10.dp),
                             visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource)
+                            interactionSource = interactionSource,
+                            prefix = { Text(text = "Затрачено: ", color = Color.Black) })
                     }
                 )
                 Button(
@@ -198,7 +200,9 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     Column {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxSize().padding(end = 5.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(end = 5.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             if (laborCostCategory == "") {
