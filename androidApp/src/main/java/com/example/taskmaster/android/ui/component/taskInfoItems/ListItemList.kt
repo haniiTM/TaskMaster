@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LaborCostList() {
+fun ListItemList() {
     Box(
         modifier = Modifier
             .padding(start = 14.dp, top = 26.dp, end = 14.dp)
@@ -26,9 +26,9 @@ fun LaborCostList() {
             .background(Color.White)
     ) {
         Column {
-            LaborCostItem()
-            LaborCostItem()
-            LaborCostItem()
+            ListItem()
+            ListItem()
+            ListItem()
         }
     }
 }

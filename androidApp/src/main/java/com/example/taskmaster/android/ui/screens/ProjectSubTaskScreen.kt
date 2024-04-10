@@ -16,9 +16,9 @@ import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
 fun ProjectSubTaskScreen(navController: NavController) {
     LazyColumn(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         item {
-            ButtonTemplate(text = "Название задачи", width = 232, rotateAngle = 0f, navController = navController, iconItem = R.drawable.arrow_circle_right_icon)
+            ButtonTemplate(text = "Название задачи", width = 232, rotateAngle = 0f, navController = navController, iconItem = R.drawable.arrow_circle_right_icon, route = "taskInfo")
             TaskDescription(description = "Подзадачи какой-то задачи, какого-то проекта")
-            ButtonTemplate(text = "Вложения", width = 232, rotateAngle = 0f, navController = navController)
+            ButtonTemplate(text = "Вложения", width = 232, rotateAngle = 0f, navController = navController, route = "attachmentsList")
         }
         itemsIndexed(
             listOf(

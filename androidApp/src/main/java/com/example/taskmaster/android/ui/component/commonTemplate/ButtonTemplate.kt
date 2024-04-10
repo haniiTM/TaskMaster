@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, navController: NavController) {
+fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, navController: NavController, route: String) {
     Button(
-        onClick = { navController.navigate("taskInfo") }, modifier = Modifier
+        onClick = { navController.navigate(route) }, modifier = Modifier
             .padding(top = 20.dp, bottom = 20.dp)
             .width(width.dp)
             .height(31.dp)

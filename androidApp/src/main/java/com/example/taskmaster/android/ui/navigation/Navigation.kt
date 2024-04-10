@@ -9,12 +9,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.taskmaster.android.ui.screens.AttachmentsListScreen
 import com.example.taskmaster.android.ui.screens.CalculationOfLaborCosts
 import com.example.taskmaster.android.ui.screens.ProjectScreen
 import com.example.taskmaster.android.ui.screens.ProjectSubTaskScreen
 import com.example.taskmaster.android.ui.screens.ProjectTaskScreen
 import com.example.taskmaster.android.ui.screens.TaskInfoScreen
-import com.example.taskmaster.android.ui.screens.TaskLaborCostList
+import com.example.taskmaster.android.ui.screens.TaskLaborCostListScreen
 import com.taskmaster.ui.screens.AuthScreen
 
 @ExperimentalFoundationApi
@@ -50,8 +51,11 @@ fun Navigation(navController: NavHostController) {
         composable(route = NavigationItem.TaskInfo.route) {
             TaskInfoScreen(navController = navController)
         }
-        composable(route = NavigationItem.TaskLaborCostList.route) {
-            TaskLaborCostList(navController = navController)
+        composable(route = NavigationItem.TaskLaborCostListScreen.route) {
+            TaskLaborCostListScreen(navController = navController)
+        }
+        composable(route = NavigationItem.AttachmentsListScreen.route) {
+            AttachmentsListScreen(navController = navController)
         }
         composable(route = NavigationItem.CalculationOfLaborCosts.route) {
             CalculationOfLaborCosts(navController = navController)

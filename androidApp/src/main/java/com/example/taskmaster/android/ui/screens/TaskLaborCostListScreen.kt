@@ -2,9 +2,9 @@ package com.example.taskmaster.android.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.taskmaster.android.ui.component.taskInfoItems.LaborCostList
+import com.example.taskmaster.android.ui.component.taskInfoItems.ListItemList
 
 @Composable
-fun TaskLaborCostList(navController: NavController){
-    LaborCostList()
+fun TaskLaborCostListScreen(navController: NavController){
+    ListItemList()
 }
