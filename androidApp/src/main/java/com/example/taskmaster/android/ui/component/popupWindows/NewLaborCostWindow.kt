@@ -16,6 +16,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,17 +43,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
-import com.example.taskmaster.android.ui.theme.PlaceHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewLaborCostWindow() {
+fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
-    var taskTitle by remember {
+    var date by remember {
+        mutableStateOf("")
+    }
+    var comment by remember {
+        mutableStateOf("")
+    }
+    var spendedTime by remember {
         mutableStateOf("")
     }
     val laborCostCategoryList =
@@ -61,7 +66,12 @@ fun NewLaborCostWindow() {
         mutableStateOf("")
     }
     val linearGradient =
-        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
+        Brush.verticalGradient(
+            listOf(
+                MaterialTheme.colorScheme.onPrimary,
+                MaterialTheme.colorScheme.onSecondary
+            )
+        )
     var categoryExpanded by remember { mutableStateOf(false) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -90,8 +100,8 @@ fun NewLaborCostWindow() {
                     )
                 }
                 BasicTextField(
-                    value = taskTitle,
-                    onValueChange = { taskTitle = it },
+                    value = "Дата: $date",
+                    onValueChange = { date = it },
                     modifier = Modifier
                         .background(color = Color.White)
                         .height(35.dp)
@@ -101,23 +111,28 @@ fun NewLaborCostWindow() {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     decorationBox = @Composable { innerTextField ->
                         TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskTitle,
+                            value = date,
                             innerTextField = innerTextField,
                             enabled = true,
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White
                             ),
-                            trailingIcon = { Icon(painter = painterResource(id = R.drawable.calendar_icon), contentDescription = "")},
+                            trailingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.calendar_icon),
+                                    contentDescription = "",
+                                    tint = Color.Black
+                                )
+                            },
                             singleLine = true,
                             contentPadding = PaddingValues(start = 10.dp),
                             visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource,
-                            placeholder = { Text("Дата") })
+                            interactionSource = interactionSource)
                     }
                 )
                 BasicTextField(
-                    value = taskTitle,
-                    onValueChange = { taskTitle = it },
+                    value = comment,
+                    onValueChange = { comment = it },
                     modifier = Modifier
                         .background(color = Color.White)
                         .height(35.dp)
@@ -127,7 +142,7 @@ fun NewLaborCostWindow() {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     decorationBox = @Composable { innerTextField ->
                         TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskTitle,
+                            value = comment,
                             innerTextField = innerTextField,
                             enabled = true,
                             colors = TextFieldDefaults.textFieldColors(
@@ -141,8 +156,8 @@ fun NewLaborCostWindow() {
                     }
                 )
                 BasicTextField(
-                    value = taskTitle,
-                    onValueChange = { taskTitle = it },
+                    value = "Затрачено: $spendedTime",
+                    onValueChange = { spendedTime = it },
                     modifier = Modifier
                         .background(color = Color.White)
                         .height(35.dp)
@@ -152,18 +167,23 @@ fun NewLaborCostWindow() {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     decorationBox = @Composable { innerTextField ->
                         TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskTitle,
+                            value = spendedTime,
                             innerTextField = innerTextField,
                             enabled = true,
-                            trailingIcon = { Icon(painter = painterResource(id = R.drawable.clock_icon), contentDescription = "")},
+                            trailingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.clock_icon),
+                                    contentDescription = "",
+                                    tint = Color.Black
+                                )
+                            },
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color.White
                             ),
                             singleLine = true,
                             contentPadding = PaddingValues(start = 10.dp),
                             visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource,
-                            placeholder = { Text("Затраченное время") })
+                            interactionSource = interactionSource)
                     }
                 )
                 Button(
@@ -178,13 +198,13 @@ fun NewLaborCostWindow() {
                     Column {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize().padding(end = 5.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             if (laborCostCategory == "") {
                                 Text(
                                     text = "Выбор деятельности",
-                                    color = PlaceHolder,
+                                    color = Color.Black,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
                                 )
@@ -192,7 +212,7 @@ fun NewLaborCostWindow() {
                                     painter = painterResource(id = R.drawable.arrow_circle_right_icon),
                                     contentDescription = "",
                                     modifier = Modifier.rotate(90f),
-                                    tint = Color.Black
+                                    tint = Color.Black,
                                 )
                             } else {
                                 Text(
@@ -209,39 +229,40 @@ fun NewLaborCostWindow() {
                                 )
                             }
                         }
-                        Box(
+                        DropdownMenu(
+                            expanded = categoryExpanded,
+                            onDismissRequest = { categoryExpanded = !categoryExpanded },
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .fillMaxWidth(.61f)
+                                .height(185.dp)
+                                .background(Color.White)
                         ) {
-                            DropdownMenu(
-                                expanded = categoryExpanded,
-                                onDismissRequest = { categoryExpanded = !categoryExpanded },
-                                modifier = Modifier
-                                    .fillMaxWidth(.67f)
-                                    .height(185.dp)
-                            ) {
-                                laborCostCategoryList.forEach { item ->
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            categoryExpanded = false
-                                            laborCostCategory = item
-                                        },
-                                        text = {
-                                            Text(
-                                                text = item,
-                                                fontWeight = FontWeight.Normal
-                                            )
-                                        },
-                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
-                                    )
-                                }
-
+                            laborCostCategoryList.forEach { item ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        categoryExpanded = false
+                                        laborCostCategory = item
+                                    },
+                                    text = {
+                                        Text(
+                                            text = item,
+                                            fontWeight = FontWeight.Normal
+                                        )
+                                    },
+                                    colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                )
                             }
                         }
                     }
                 }
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 Button(
-                    onClick = {},
+                    onClick = { onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(35.dp),
@@ -254,10 +275,4 @@ fun NewLaborCostWindow() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun pr(){
-    NewLaborCostWindow()
 }

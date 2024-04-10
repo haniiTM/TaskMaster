@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.android.ui.theme.ShadowGray
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -38,11 +39,14 @@ fun CardContainer(
         viewModel.getTask(id!!.toInt())
     }
     val tasks = viewModel.stateTask.value.itemTaskState
-    Box(
+    Box(contentAlignment = Alignment.TopCenter,
         modifier = Modifier
             .padding(bottom = 20.dp, start = 14.dp, end = 14.dp)
             .clip(shape = RoundedCornerShape(25.dp))
-            .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(25.dp))
+            .border(
+                BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                shape = RoundedCornerShape(25.dp)
+            )
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primaryContainer),
     ) {
@@ -53,19 +57,32 @@ fun CardContainer(
                 fontSize = 18.sp,
                 color = Color.Black
             )
-            LazyColumn(
-                modifier = Modifier
+            if (tasks.isEmpty()) {
+                Box(contentAlignment = Alignment.Center,
+                    modifier = Modifier
                     .padding(start = 14.dp, end = 14.dp, bottom = 14.dp)
                     .clip(shape = RoundedCornerShape(25.dp))
-                    .heightIn(min = 232.dp, max = 345.dp)
-            ) {
-                itemsIndexed(tasks){ _, item ->
-                    if (item != null) {
-                        ItemProject(
-                            item = item,
-                            context = LocalContext.current,
-                            navController = navController
-                        )
+                    .heightIn(min = 232.dp, max = 345.dp).fillMaxWidth().background(ShadowGray)){
+                    Text(
+                        text = "Задачи отсутствуют",
+                        color = Color.Black)
+                }
+
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(start = 7.dp, end = 14.dp, bottom = 7.dp)
+                        .clip(shape = RoundedCornerShape(25.dp))
+                        .heightIn(min = 232.dp, max = 345.dp).background(ShadowGray)
+                ) {
+                    itemsIndexed(tasks) { _, item ->
+                        if (item != null) {
+                            ItemProject(
+                                item = item,
+                                context = LocalContext.current,
+                                navController = navController
+                            )
+                        }
                     }
                 }
             }

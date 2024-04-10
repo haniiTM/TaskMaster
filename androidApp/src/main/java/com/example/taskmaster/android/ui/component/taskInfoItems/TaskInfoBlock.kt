@@ -38,11 +38,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
+import com.example.taskmaster.android.ui.component.popupWindows.NewLaborCostWindow
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
-import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -67,8 +68,6 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
     var taskStatus by remember {
         mutableStateOf("Новая")
     }
-    val taskStatusList =
-        listOf("В работе", "Заблокирована", "Решена", "Нужен отклик", "Закрыта", "Отклонена")
     val taskTitle by remember {
         mutableStateOf("Изучение семантики языка")
     }
@@ -76,6 +75,9 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
         listOf("Backend", "Frontend", "QA", "DevOps", "DB Dev")
     var taskCategory by remember {
         mutableStateOf("")
+    }
+    var showDialog by remember {
+        mutableStateOf(false)
     }
     val linearGradient =
         Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
@@ -166,7 +168,9 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                                 expanded = categoryExpanded,
                                 onDismissRequest = { categoryExpanded = !categoryExpanded },
                                 modifier = Modifier
-                                    .fillMaxWidth(.67f)
+                                    .fillMaxWidth(.61f)
+                                    .height(185.dp)
+                                    .background(Color.White)
                                     .height(185.dp)
                             ) {
                                 taskCategoryList.forEach { item ->
@@ -233,8 +237,9 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                                 expanded = statusExpanded,
                                 onDismissRequest = { statusExpanded = !statusExpanded },
                                 modifier = Modifier
-                                    .fillMaxWidth(.67f)
+                                    .fillMaxWidth(.61f)
                                     .height(185.dp)
+                                    .background(Color.White)
                             ) {
                                 viewModel.state.value.itemState.forEach { item ->
                                     DropdownMenuItem(
@@ -281,7 +286,7 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
             }
         }
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { showDialog = true },
             modifier = Modifier
                 .padding(vertical = 24.dp)
                 .width(168.dp)
@@ -291,6 +296,11 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
         ) {
             Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
+        }
+        if (showDialog){
+            Dialog(onDismissRequest = { showDialog = !showDialog}) {
+                NewLaborCostWindow(onDismissRequest = {showDialog = !showDialog})
+            }
         }
     }
 }

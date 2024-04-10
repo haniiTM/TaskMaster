@@ -62,6 +62,12 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
     var taskTitle by remember {
         mutableStateOf("")
     }
+    var taskDependence by remember {
+        mutableStateOf("")
+    }
+    var taskAllocatedTime by remember {
+        mutableStateOf("")
+    }
     var taskCategory by remember {
         mutableStateOf("")
     }
@@ -121,8 +127,8 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     }
                 )
                 BasicTextField(
-                    value = taskTitle,
-                    onValueChange = { taskTitle = it },
+                    value = taskDependence,
+                    onValueChange = { taskDependence = it },
                     modifier = Modifier
                         .background(color = Color.White)
                         .height(35.dp)
@@ -146,8 +152,8 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     }
                 )
                 BasicTextField(
-                    value = taskTitle,
-                    onValueChange = { taskTitle = it },
+                    value = taskAllocatedTime,
+                    onValueChange = { taskAllocatedTime = it },
                     modifier = Modifier
                         .background(color = Color.White)
                         .height(35.dp)
@@ -221,8 +227,8 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                                 expanded = categoryExpanded,
                                 onDismissRequest = { categoryExpanded = !categoryExpanded },
                                 modifier = Modifier
-                                    .fillMaxWidth(.67f)
-                                    .height(185.dp)
+                                    .fillMaxWidth(.61f)
+                                    .height(185.dp).background(Color.White)
                             ) {
                                 typeActivity.forEach { item ->
                                     DropdownMenuItem(
