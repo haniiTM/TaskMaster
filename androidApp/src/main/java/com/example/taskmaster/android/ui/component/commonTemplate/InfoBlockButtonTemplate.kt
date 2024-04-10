@@ -17,7 +17,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -39,7 +38,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) {
     var openDialog by remember {

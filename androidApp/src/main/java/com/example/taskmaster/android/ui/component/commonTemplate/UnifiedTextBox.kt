@@ -32,7 +32,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.taskmaster.android.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,10 +42,12 @@ fun UnifiedTextBox(
     passwordVisibleValue: Boolean,
     interactionSource: MutableInteractionSource,
     keyboardType: KeyboardType,
-    iconVisible: Boolean,
-    roundedAngle : Int,
-    spacer : Int,
-    borderWidth: Int
+    roundedAngle: Int,
+    spacer: Int,
+    borderWidth: Int,
+    icon: Int,
+    changeIcon : Int,
+    prefix: @Composable (String) -> Unit
 ) {
     var passwordVisible by remember { mutableStateOf(passwordVisibleValue) }
 
@@ -55,7 +56,10 @@ fun UnifiedTextBox(
         onValueChange = onValueChange,
         modifier = Modifier
             .clip(shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
-            .border(BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
+            .border(
+                BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline),
+                shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp)
+            )
             .background(color = Color.White)
             .height(40.dp)
             .width(278.dp),
@@ -79,28 +83,27 @@ fun UnifiedTextBox(
                 ),
                 contentPadding = PaddingValues(horizontal = 10.dp),
                 trailingIcon = {
-                    if (iconVisible){
-                        if (passwordVisible) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.crossed_out_eye_icon),
-                                contentDescription = "Toggle Password Visibility",
-                                tint = Color.Black,
-                                modifier = Modifier.clickable {
-                                    passwordVisible = !passwordVisible
-                                }
-                            )
-                        } else {
-                            Icon(
-                                painter = painterResource(id = R.drawable.eye_icon),
-                                contentDescription = "Toggle Password Visibility",
-                                tint = Color.Black,
-                                modifier = Modifier.clickable {
-                                    passwordVisible = !passwordVisible
-                                }
-                            )
-                        }
+                    if (passwordVisible) {
+                        Icon(
+                            painter = painterResource(id = icon),
+                            contentDescription = "Toggle Password Visibility",
+                            tint = Color.Black,
+                            modifier = Modifier.clickable {
+                                passwordVisible = !passwordVisible
+                            }
+                        )
+                    } else {
+                        Icon(
+                            painter = painterResource(id = changeIcon),
+                            contentDescription = "Toggle Password Visibility",
+                            tint = Color.Black,
+                            modifier = Modifier.clickable {
+                                passwordVisible = !passwordVisible
+                            }
+                        )
                     }
-                }
+                },
+                prefix = {prefix}
             )
         }
     )
