@@ -14,6 +14,8 @@ val RoyalBlue = Color(0xFF4F70E9)
 @Stable
 val Gray = Color(0xFFD9D9D9)
 @Stable
+val ShadowGray = Color(0xFFCFCFCF)
+@Stable
 val Black = Color(0xFF000000)
 @Stable
 val White = Color(0xFFFFFFFF)

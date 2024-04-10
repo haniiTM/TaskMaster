@@ -1,9 +1,10 @@
 package com.example.taskmaster.android.ui.screens
 
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -22,24 +23,23 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
     }
 
     val projects = viewModel.state.value.itemProjectState
-    LazyColumn(modifier = Modifier.padding(horizontal = 14.dp)) {
-        item {
-            Header(
-                text = "Все проекты",
-                iconItem = R.drawable.more,
-                actionIcons = listOf(
-                    R.drawable.search1_icon,
-                    R.drawable.add_project_icon,
-                    R.drawable.exit_icon
-                ),
-                navController,
-                update = {viewModel.getProject()}
-            )
-            Spacer(modifier = Modifier.padding(top = 26.dp))
-        }
-        itemsIndexed(projects) { _, item ->
-            if (item != null) {
-                ProjectCard(item = item, navController = navController)
+    Column {
+        Header(
+            text = "Все проекты",
+            iconItem = R.drawable.more,
+            actionIcons = listOf(
+                R.drawable.search1_icon,
+                R.drawable.add_project_icon,
+                R.drawable.exit_icon
+            ),
+            navController,
+            spacer = true)
+        LazyColumn(modifier = Modifier.padding(horizontal = 14.dp), state = rememberLazyListState()
+        ) {
+            itemsIndexed(projects.reversed()) { _, item ->
+                if (item != null) {
+                    ProjectCard(item = item, navController = navController)
+                }
             }
         }
     }

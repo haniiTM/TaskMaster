@@ -21,6 +21,5 @@ sealed class NavigationItem(
     object TaskInfo : NavigationItem("taskInfo", R.string.title_task_info, null)
     object TaskLaborCostListScreen : NavigationItem("taskLaborCostList", R.string.title_task_labor_cost_list, null)
     object AttachmentsListScreen : NavigationItem("attachmentsList", R.string.title_task_labor_cost_list, null)
-
     object CalculationOfLaborCosts : NavigationItem("CalculationOfLaborCosts", R.string.title_calculation_of_labor_costs, null)
 }

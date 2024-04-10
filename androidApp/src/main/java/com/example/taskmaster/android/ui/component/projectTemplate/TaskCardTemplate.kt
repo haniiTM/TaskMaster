@@ -85,7 +85,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
             defaultElevation = 6.dp
         ),
         modifier = Modifier
-            .padding(vertical = 8.dp)
+            .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
             .clickable { navController.navigate("projectSubTask") }

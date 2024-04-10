@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -19,7 +20,7 @@ fun ListItem(){
             .fillMaxWidth()
             .height(45.dp), contentAlignment = Alignment.CenterStart
     ) {
-        Text(text = "Трудозатрата 1", modifier = Modifier.padding(horizontal = 12.dp))
+        Text(text = "Трудозатрата 1", modifier = Modifier.padding(horizontal = 12.dp), color = Color.Black)
     }
     Divider (
         color = MaterialTheme.colorScheme.outline,
