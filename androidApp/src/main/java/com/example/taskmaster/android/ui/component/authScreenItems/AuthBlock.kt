@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.widget.Toast
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -73,9 +72,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 value = userLogin,
                 onValueChange = { newValue -> userLogin = newValue },
                 placeholder = "Логин",
-                passwordVisibleValue = !passwordVisible,
-                interactionSource = remember { MutableInteractionSource() },
-                keyboardType = KeyboardType.Email,
                 roundedAngle = 5,
                 spacer = 20,
                 borderWidth = 1
@@ -85,7 +81,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 onValueChange = { newValue -> userPassword = newValue },
                 placeholder = "Пароль",
                 passwordVisibleValue = passwordVisible,
-                interactionSource = remember { MutableInteractionSource() },
                 keyboardType = KeyboardType.Password,
                 spacer = 20,
                 borderWidth = 1,

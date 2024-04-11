@@ -51,8 +51,6 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
     }
-
-
     val members by remember {
         mutableIntStateOf(4)
     }

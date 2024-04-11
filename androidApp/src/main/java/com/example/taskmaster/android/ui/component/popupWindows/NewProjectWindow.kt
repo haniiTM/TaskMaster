@@ -1,7 +1,6 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,10 +70,7 @@ fun NewProjectWindow(onDismissRequest: () -> Unit, viewModel: TaskViewModel = ge
                 UnifiedTextBox(
                     value = projectTitle,
                     onValueChange = { newValue -> projectTitle = newValue },
-                    placeholder = "Название проекта",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email
+                    placeholder = "Название проекта"
                 )
                 Button(
                     onClick = {
