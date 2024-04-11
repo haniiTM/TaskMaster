@@ -1,7 +1,6 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -96,27 +94,16 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
                 UnifiedTextBox(
                     value = taskTitle,
                     onValueChange = { newValue -> taskTitle = newValue },
-                    placeholder = "Название задачи",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email
+                    placeholder = "Название задачи"
                 )
                 UnifiedTextBox(
                     value = taskDependence,
                     onValueChange = { newValue -> taskDependence = newValue },
-                    placeholder = "",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
                     prefix = { Text(text = "Зависит от задачи: ", color = Color.Black)}
                 )
                 UnifiedTextBox(
                     value = taskAllocatedTime,
                     onValueChange = { newValue -> taskAllocatedTime = newValue },
-                    placeholder = "",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
                     prefix = { Text(text = "Временная оценка: ", color = Color.Black)}
                 )
                 Button(

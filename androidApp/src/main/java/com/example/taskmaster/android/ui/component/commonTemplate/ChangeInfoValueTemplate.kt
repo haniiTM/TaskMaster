@@ -1,7 +1,6 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -69,10 +67,7 @@ fun ChangeInfoValueTemplate(title: String, value: String, placeholder: String, o
                 UnifiedTextBox(
                     value = changeValue,
                     onValueChange = { newValue -> changeValue = newValue },
-                    placeholder = placeholder,
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
+                    placeholder = placeholder
                 )
                 Button(
                     onClick = { onDismissRequest() },

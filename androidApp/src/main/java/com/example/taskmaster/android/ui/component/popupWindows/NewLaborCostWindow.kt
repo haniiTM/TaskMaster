@@ -1,7 +1,6 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,10 +92,6 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                 UnifiedTextBox(
                     value = date,
                     onValueChange = { newValue -> date = newValue },
-                    placeholder = "",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
                     icon = R.drawable.calendar_icon,
                     changeIcon = R.drawable.calendar_icon,
                     prefix = { Text(text = "Дата: ", color = Color.Black) }
@@ -105,18 +99,11 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                 UnifiedTextBox(
                     value = comment,
                     onValueChange = { newValue -> comment = newValue },
-                    placeholder = "Комментарий",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email
+                    placeholder = "Комментарий"
                 )
                 UnifiedTextBox(
                     value = spendTime,
                     onValueChange = { newValue -> spendTime = newValue },
-                    placeholder = "",
-                    passwordVisibleValue = true,
-                    interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
                     icon = R.drawable.clock_icon,
                     changeIcon = R.drawable.clock_icon,
                     prefix = { Text(text = "Затрачено: ", color = Color.Black) }
