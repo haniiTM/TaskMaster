@@ -77,7 +77,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(210.dp)
+                    .height(235.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -99,13 +99,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     placeholder = "Название задачи",
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
-                    roundedAngle = 5,
-                    spacer = 0,
-                    borderWidth = 0,
-                    icon = 0,
-                    changeIcon = 0,
-                    prefix = {}
+                    keyboardType = KeyboardType.Email
                 )
                 UnifiedTextBox(
                     value = taskDependence,
@@ -114,11 +108,6 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
                     keyboardType = KeyboardType.Email,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0,
-                    icon = 0,
-                    changeIcon = 0,
                     prefix = { Text(text = "Зависит от задачи: ", color = Color.Black)}
                 )
                 UnifiedTextBox(
@@ -128,11 +117,6 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
                     keyboardType = KeyboardType.Email,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0,
-                    icon = 0,
-                    changeIcon = 0,
                     prefix = { Text(text = "Временная оценка: ", color = Color.Black)}
                 )
                 Button(
@@ -222,7 +206,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     onClick = {},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(45.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0),
                     contentPadding = PaddingValues(horizontal = 12.dp)

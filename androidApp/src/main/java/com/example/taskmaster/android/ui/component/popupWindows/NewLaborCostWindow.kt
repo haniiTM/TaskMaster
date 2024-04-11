@@ -98,9 +98,6 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
                     keyboardType = KeyboardType.Email,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0,
                     icon = R.drawable.calendar_icon,
                     changeIcon = R.drawable.calendar_icon,
                     prefix = { Text(text = "Дата: ", color = Color.Black) }
@@ -111,13 +108,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     placeholder = "Комментарий",
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Email,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0,
-                    icon = 0,
-                    changeIcon = 0,
-                    prefix = {}
+                    keyboardType = KeyboardType.Email
                 )
                 UnifiedTextBox(
                     value = spendTime,
@@ -126,9 +117,6 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
                     keyboardType = KeyboardType.Email,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0,
                     icon = R.drawable.clock_icon,
                     changeIcon = R.drawable.clock_icon,
                     prefix = { Text(text = "Затрачено: ", color = Color.Black) }

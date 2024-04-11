@@ -38,16 +38,16 @@ import androidx.compose.ui.unit.dp
 fun UnifiedTextBox(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String,
+    placeholder: String = "",
     passwordVisibleValue: Boolean,
     interactionSource: MutableInteractionSource,
     keyboardType: KeyboardType,
-    roundedAngle: Int,
-    spacer: Int,
-    borderWidth: Int,
-    icon: Int,
-    changeIcon : Int,
-    prefix: @Composable (String) -> Unit
+    roundedAngle: Int = 0,
+    spacer: Int = 0,
+    borderWidth: Int = 0,
+    icon: Int = 0,
+    changeIcon : Int = 0,
+    prefix: @Composable (() -> Unit)? = null
 ) {
     var passwordVisible by remember { mutableStateOf(passwordVisibleValue) }
 
@@ -83,27 +83,29 @@ fun UnifiedTextBox(
                 ),
                 contentPadding = PaddingValues(horizontal = 10.dp),
                 trailingIcon = {
-                    if (passwordVisible) {
-                        Icon(
-                            painter = painterResource(id = icon),
-                            contentDescription = "Toggle Password Visibility",
-                            tint = Color.Black,
-                            modifier = Modifier.clickable {
-                                passwordVisible = !passwordVisible
-                            }
-                        )
-                    } else {
-                        Icon(
-                            painter = painterResource(id = changeIcon),
-                            contentDescription = "Toggle Password Visibility",
-                            tint = Color.Black,
-                            modifier = Modifier.clickable {
-                                passwordVisible = !passwordVisible
-                            }
-                        )
+                    if (icon != 0){
+                        if (passwordVisible) {
+                            Icon(
+                                painter = painterResource(id = icon),
+                                contentDescription = "Toggle Password Visibility",
+                                tint = Color.Black,
+                                modifier = Modifier.clickable {
+                                    passwordVisible = !passwordVisible
+                                }
+                            )
+                        } else {
+                            Icon(
+                                painter = painterResource(id = changeIcon),
+                                contentDescription = "Toggle Password Visibility",
+                                tint = Color.Black,
+                                modifier = Modifier.clickable {
+                                    passwordVisible = !passwordVisible
+                                }
+                            )
+                        }
                     }
                 },
-                prefix = {prefix}
+                prefix = prefix
             )
         }
     )

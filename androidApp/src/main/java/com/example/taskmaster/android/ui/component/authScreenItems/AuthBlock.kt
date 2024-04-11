@@ -78,10 +78,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 keyboardType = KeyboardType.Email,
                 roundedAngle = 5,
                 spacer = 20,
-                borderWidth = 1,
-                icon = 0,
-                changeIcon = 0,
-                prefix = {}
+                borderWidth = 1
             )
             UnifiedTextBox(
                 value = userPassword,
@@ -90,12 +87,10 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 passwordVisibleValue = passwordVisible,
                 interactionSource = remember { MutableInteractionSource() },
                 keyboardType = KeyboardType.Password,
-                roundedAngle = 0,
                 spacer = 20,
                 borderWidth = 1,
                 icon = R.drawable.crossed_out_eye_icon,
-                changeIcon = R.drawable.eye_icon,
-                prefix = {}
+                changeIcon = R.drawable.eye_icon
             )
             Button(
                 onClick = {

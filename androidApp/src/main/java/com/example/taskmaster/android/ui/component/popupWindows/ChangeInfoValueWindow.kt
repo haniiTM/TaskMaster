@@ -49,12 +49,8 @@ fun ChangeInfoValueWindow() {
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
                     keyboardType = KeyboardType.Email,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0,
                     icon = R.drawable.clock_icon,
-                    changeIcon = R.drawable.clock_icon,
-                    prefix = {}
+                    changeIcon = R.drawable.clock_icon
                 )
                 Button(
                     onClick = {},

@@ -50,13 +50,7 @@ fun SearchPopUpWindow(onDismissRequest: () -> Unit){
                 placeholder = "Что ищем?",
                 passwordVisibleValue = true,
                 interactionSource = remember { MutableInteractionSource() },
-                keyboardType = KeyboardType.Email,
-                roundedAngle = 0,
-                spacer = 0,
-                borderWidth = 0,
-                icon = 0,
-                changeIcon = 0,
-                prefix = {}
+                keyboardType = KeyboardType.Email
             )
             Button(
                 onClick = { onDismissRequest() },
