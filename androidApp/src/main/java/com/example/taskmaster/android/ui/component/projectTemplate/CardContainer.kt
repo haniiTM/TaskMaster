@@ -36,9 +36,9 @@ fun CardContainer(
     viewModel: TaskViewModel = getViewModel()
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.getTask(id!!.toInt())
+        viewModel.getUnfulfilleddTask(id!!.toInt())
     }
-    val tasks = viewModel.stateTask.value.itemTaskState
+    val tasks = viewModel.stateUnfulfilleddTask.value.itemTaskState
     Box(contentAlignment = Alignment.TopCenter,
         modifier = Modifier
             .padding(bottom = 20.dp, start = 14.dp, end = 14.dp)
