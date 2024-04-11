@@ -46,7 +46,7 @@ import com.example.taskmaster.android.ui.theme.PlaceHolder
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewModel = getViewModel()) {
+fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
     LaunchedEffect(key1 = true) {
         viewModel.getTypeActivity()
     }

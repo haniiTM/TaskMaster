@@ -1,8 +1,6 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,14 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,14 +26,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 
 @Composable
-fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) {
+fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = 0) {
     var openDialog by remember {
         mutableStateOf(false)
     }
@@ -111,28 +104,7 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = -1) 
     )
     if (openDialog) {
         Dialog(onDismissRequest = { openDialog = !openDialog }) {
-            TextField(
-                value = paramItem.toString(),
-                onValueChange = {
-                    paramItem = it
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number
-                ),
-                modifier = Modifier
-                    .border(
-                        BorderStroke(width = 1.dp, color = Color.Black),
-                        shape = RoundedCornerShape(25.dp)
-                    )
-                    .clip(shape = RoundedCornerShape(25.dp)),
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent
-                ),
-                textStyle = LocalTextStyle.current.copy(Color.Black),
-                maxLines = 1
-            )
+            ChangeInfoValueTemplate(title = categoryText, value = param.toString(), placeholder = categoryText, onDismissRequest = { openDialog = !openDialog} )
         }
     }
 }
