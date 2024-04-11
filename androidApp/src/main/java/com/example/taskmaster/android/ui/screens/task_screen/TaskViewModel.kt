@@ -38,24 +38,53 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         }
     }
 
-    private val _stateTask = mutableStateOf(ItemTaskStates())
-    val stateTask: State<ItemTaskStates> = _stateTask
+    private val _stateUnfulfilleddTask = mutableStateOf(ItemUnfulfilleddTaskStates())
+    val stateUnfulfilleddTask: State<ItemUnfulfilleddTaskStates> = _stateUnfulfilleddTask
 
-    // Функция для получения задач/подзадач
-    fun getTask(idProj: Number) {
+    // Функция для получения не выполненных задач/подзадач
+    fun getUnfulfilleddTask(idProj: Number) {
         viewModelScope.launch {
             try {
-                _stateTask.value = stateTask.value.copy(isLoading = true)
-                val data = apiService.fetchTask(idProj)
-                _stateTask.value = stateTask.value.copy(
+                _stateUnfulfilleddTask.value = stateUnfulfilleddTask.value.copy(isLoading = true)
+                val data = apiService.fetchUnfulfilleddTask(idProj)
+                _stateUnfulfilleddTask.value = stateUnfulfilleddTask.value.copy(
                     itemTaskState = data,
                     isLoading = false
                 )
             } catch(e: Exception) {
-                _stateTask.value = stateTask.value.copy(isLoading = false)
+                _stateUnfulfilleddTask.value = stateUnfulfilleddTask.value.copy(isLoading = false)
             }
         }
     }
+
+    data class ItemUnfulfilleddTaskStates (
+        val itemTaskState: MutableList<TaskDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
+
+    private val _stateCompletedTask = mutableStateOf(ItemCompletedTaskStates())
+    val stateCompletedTask: State<ItemCompletedTaskStates> = _stateCompletedTask
+
+    // Функция для получения выполненных задач/подзадач
+    fun getCompletedTask(idProj: Number) {
+        viewModelScope.launch {
+            try {
+                _stateCompletedTask.value = stateCompletedTask.value.copy(isLoading = true)
+                val data = apiService.fetchCompletedTask(idProj)
+                _stateCompletedTask.value = stateCompletedTask.value.copy(
+                    itemTaskState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateCompletedTask.value = stateCompletedTask.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    data class ItemCompletedTaskStates (
+        val itemTaskState: MutableList<TaskDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
 
     // Функция для получения задач/подзадач
     fun createProject(nameProject: String) {
@@ -68,11 +97,6 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
             getProject()
         }
     }
-
-    data class ItemTaskStates (
-        val itemTaskState: MutableList<TaskDTO?> = mutableListOf(),
-        val isLoading: Boolean = false
-    )
 
     data class ItemProjectStates (
         val itemProjectState: MutableList<ItemProjectState?> = mutableListOf(),

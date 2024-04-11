@@ -108,6 +108,58 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
+    override suspend fun fetchCompletedTask(idProj: Number): MutableList<TaskDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/downtask/completed/${idProj}")
+            if (response.status.isSuccess()) {
+                val tasks = response.body<MutableList<TaskDTO?>>()
+                println("Server returned projects: ${tasks}")
+                tasks
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
+    override suspend fun fetchUnfulfilleddTask(idProj: Number): MutableList<TaskDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/downtask/unfulfilled/${idProj}")
+            if (response.status.isSuccess()) {
+                val tasks = response.body<MutableList<TaskDTO?>>()
+                println("Server returned projects: ${tasks}")
+                tasks
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
     override suspend fun createProject(nameProject: String){
         try {
             val project = TaskDTO()
