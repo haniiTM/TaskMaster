@@ -32,21 +32,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.taskmaster.android.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnifiedTextBox(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String,
+    placeholder: String = "",
     passwordVisibleValue: Boolean,
     interactionSource: MutableInteractionSource,
     keyboardType: KeyboardType,
-    iconVisible: Boolean,
-    roundedAngle : Int,
-    spacer : Int,
-    borderWidth: Int
+    roundedAngle: Int = 0,
+    spacer: Int = 0,
+    borderWidth: Int = 0,
+    icon: Int = 0,
+    changeIcon : Int = 0,
+    prefix: @Composable (() -> Unit)? = null
 ) {
     var passwordVisible by remember { mutableStateOf(passwordVisibleValue) }
 
@@ -55,7 +56,10 @@ fun UnifiedTextBox(
         onValueChange = onValueChange,
         modifier = Modifier
             .clip(shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
-            .border(BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
+            .border(
+                BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline),
+                shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp)
+            )
             .background(color = Color.White)
             .height(40.dp)
             .width(278.dp),
@@ -79,10 +83,10 @@ fun UnifiedTextBox(
                 ),
                 contentPadding = PaddingValues(horizontal = 10.dp),
                 trailingIcon = {
-                    if (iconVisible){
+                    if (icon != 0){
                         if (passwordVisible) {
                             Icon(
-                                painter = painterResource(id = R.drawable.crossed_out_eye_icon),
+                                painter = painterResource(id = icon),
                                 contentDescription = "Toggle Password Visibility",
                                 tint = Color.Black,
                                 modifier = Modifier.clickable {
@@ -91,7 +95,7 @@ fun UnifiedTextBox(
                             )
                         } else {
                             Icon(
-                                painter = painterResource(id = R.drawable.eye_icon),
+                                painter = painterResource(id = changeIcon),
                                 contentDescription = "Toggle Password Visibility",
                                 tint = Color.Black,
                                 modifier = Modifier.clickable {
@@ -100,7 +104,8 @@ fun UnifiedTextBox(
                             )
                         }
                     }
-                }
+                },
+                prefix = prefix
             )
         }
     )

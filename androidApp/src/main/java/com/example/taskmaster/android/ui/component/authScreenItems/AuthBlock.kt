@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
 import kotlinx.coroutines.delay
@@ -75,7 +76,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 passwordVisibleValue = !passwordVisible,
                 interactionSource = remember { MutableInteractionSource() },
                 keyboardType = KeyboardType.Email,
-                iconVisible = false,
                 roundedAngle = 5,
                 spacer = 20,
                 borderWidth = 1
@@ -87,10 +87,10 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 passwordVisibleValue = passwordVisible,
                 interactionSource = remember { MutableInteractionSource() },
                 keyboardType = KeyboardType.Password,
-                iconVisible = true,
-                roundedAngle = 0,
                 spacer = 20,
-                borderWidth = 1
+                borderWidth = 1,
+                icon = R.drawable.crossed_out_eye_icon,
+                changeIcon = R.drawable.eye_icon
             )
             Button(
                 onClick = {

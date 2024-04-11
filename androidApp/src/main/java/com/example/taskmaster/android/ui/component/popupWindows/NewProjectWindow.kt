@@ -75,11 +75,7 @@ fun NewProjectWindow(onDismissRequest: () -> Unit, viewModel: TaskViewModel = ge
                     placeholder = "Название проекта",
                     passwordVisibleValue = true,
                     interactionSource = remember { MutableInteractionSource() },
-                    keyboardType = KeyboardType.Text,
-                    iconVisible = false,
-                    roundedAngle = 0,
-                    spacer = 0,
-                    borderWidth = 0
+                    keyboardType = KeyboardType.Email
                 )
                 Button(
                     onClick = {

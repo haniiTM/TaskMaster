@@ -32,7 +32,7 @@ fun NotificationTemplate() {
             .padding(horizontal = 16.dp)
             .clip(shape = RoundedCornerShape(25.dp))
             .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(25.dp))
-            .background(Color.White)
+            .background(gradient)
             .width(292.dp)
             .height(306.dp),
         contentAlignment = Alignment.Center

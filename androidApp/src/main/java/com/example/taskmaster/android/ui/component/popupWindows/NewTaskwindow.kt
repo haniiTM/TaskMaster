@@ -12,20 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,24 +36,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.android.ui.theme.PlaceHolder
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewModel = getViewModel()) {
+fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
     LaunchedEffect(key1 = true) {
         viewModel.getTypeActivity()
     }
     val typeActivity = viewModel.state.value.itemState
-    val interactionSource = remember { MutableInteractionSource() }
     var taskTitle by remember {
         mutableStateOf("")
     }
@@ -85,7 +77,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(210.dp)
+                    .height(235.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -101,80 +93,31 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
-                BasicTextField(
+                UnifiedTextBox(
                     value = taskTitle,
-                    onValueChange = { taskTitle = it },
-                    modifier = Modifier
-                        .background(color = Color.White)
-                        .height(35.dp)
-                        .fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    decorationBox = @Composable { innerTextField ->
-                        TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskTitle,
-                            innerTextField = innerTextField,
-                            enabled = true,
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White
-                            ),
-                            singleLine = true,
-                            contentPadding = PaddingValues(horizontal = 10.dp),
-                            visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource,
-                            placeholder = { Text("Название задачи") })
-                    }
+                    onValueChange = { newValue -> taskTitle = newValue },
+                    placeholder = "Название задачи",
+                    passwordVisibleValue = true,
+                    interactionSource = remember { MutableInteractionSource() },
+                    keyboardType = KeyboardType.Email
                 )
-                BasicTextField(
+                UnifiedTextBox(
                     value = taskDependence,
-                    onValueChange = { taskDependence = it },
-                    modifier = Modifier
-                        .background(color = Color.White)
-                        .height(35.dp)
-                        .fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    decorationBox = @Composable { innerTextField ->
-                        TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskDependence,
-                            innerTextField = innerTextField,
-                            enabled = true,
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White
-                            ),
-                            singleLine = true,
-                            contentPadding = PaddingValues(horizontal = 10.dp),
-                            visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource,
-                            placeholder = { Text("Зависит от задачи: номер") })
-                    }
+                    onValueChange = { newValue -> taskDependence = newValue },
+                    placeholder = "",
+                    passwordVisibleValue = true,
+                    interactionSource = remember { MutableInteractionSource() },
+                    keyboardType = KeyboardType.Email,
+                    prefix = { Text(text = "Зависит от задачи: ", color = Color.Black)}
                 )
-                BasicTextField(
+                UnifiedTextBox(
                     value = taskAllocatedTime,
-                    onValueChange = { taskAllocatedTime = it },
-                    modifier = Modifier
-                        .background(color = Color.White)
-                        .height(35.dp)
-                        .fillMaxWidth(),
-                    singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    decorationBox = @Composable { innerTextField ->
-                        TextFieldDefaults.TextFieldDecorationBox(
-                            value = taskAllocatedTime,
-                            innerTextField = innerTextField,
-                            enabled = true,
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = Color.White
-                            ),
-                            singleLine = true,
-                            contentPadding = PaddingValues(horizontal = 10.dp),
-                            visualTransformation = VisualTransformation.None,
-                            interactionSource = interactionSource,
-                            placeholder = { Text("Временная оценка") })
-                    }
+                    onValueChange = { newValue -> taskAllocatedTime = newValue },
+                    placeholder = "",
+                    passwordVisibleValue = true,
+                    interactionSource = remember { MutableInteractionSource() },
+                    keyboardType = KeyboardType.Email,
+                    prefix = { Text(text = "Временная оценка: ", color = Color.Black)}
                 )
                 Button(
                     onClick = { categoryExpanded = true },
@@ -228,7 +171,8 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                                 onDismissRequest = { categoryExpanded = !categoryExpanded },
                                 modifier = Modifier
                                     .fillMaxWidth(.61f)
-                                    .height(185.dp).background(Color.White)
+                                    .height(185.dp)
+                                    .background(Color.White)
                             ) {
                                 typeActivity.forEach { item ->
                                     DropdownMenuItem(
@@ -262,7 +206,7 @@ fun NewTaskWindow(/*navController: NavController*/viewModel: TypeOfActivityViewM
                     onClick = {},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(45.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0),
                     contentPadding = PaddingValues(horizontal = 12.dp)
