@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ButtonTemplate
-import com.example.taskmaster.android.ui.component.projectTemplate.CardContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.ComplitedTasksContainer
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
 
 @Composable
@@ -26,7 +26,7 @@ fun ProjectSubTaskScreen(navController: NavController) {
                 "Выполнено" to "Перенести задачу"
             )
         ) { _, (title, buttonTitle) ->
-            CardContainer(
+            ComplitedTasksContainer(
                 title = title,
                 buttonTitle = buttonTitle,
                 navController = navController,
