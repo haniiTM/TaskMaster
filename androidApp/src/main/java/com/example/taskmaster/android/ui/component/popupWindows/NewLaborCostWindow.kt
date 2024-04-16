@@ -73,7 +73,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(210.dp)
+                    .height(230.dp)
             ) {
                 Box(
                     modifier = Modifier

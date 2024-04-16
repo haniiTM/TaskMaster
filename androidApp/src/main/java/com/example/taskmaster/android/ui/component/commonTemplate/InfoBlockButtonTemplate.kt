@@ -44,6 +44,8 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = 0) {
         mutableStateOf(false)
     }
 
+    var showWindow: Boolean
+
     Button(
         onClick = { },
         modifier = Modifier
@@ -116,7 +118,9 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = 0) {
     }
     if (openUserDialog){
         Dialog(onDismissRequest = { openUserDialog = !openUserDialog }) {
-            UserList(checkBoxAble = false, addRoleButton = true, buttonText = "Добавить пользователя", onDismissRequest = { openUserDialog = !openUserDialog }, paddingValue = 20)
+            TaskUserList(
+                checkBoxAble = false, addRoleButton = true, buttonText = "Добавить пользователя", paddingValue = 20
+            )
         }
     }
 }

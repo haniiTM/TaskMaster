@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,22 +23,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.R
 
 @Composable
 fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String) {
-    val checked by remember {
+    var checked by remember {
         mutableStateOf(false)
     }
     var paddingValue = 12
 
-    Divider (
+    Divider(
         color = MaterialTheme.colorScheme.outline,
         modifier = Modifier
             .height(1.dp)
@@ -54,7 +57,7 @@ fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Box {
+            Box(modifier = Modifier.padding(end = 5.dp).weight(.7f)) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start,
@@ -63,7 +66,12 @@ fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String) {
                             paddingValue = 0
                             Checkbox(
                                 checked = checked,
-                                onCheckedChange = {}
+                                onCheckedChange = { checked = !checked },
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = Color.Transparent,
+                                    checkmarkColor = Color.Black,
+                                    uncheckedColor = Color.Black
+                                )
                             )
                         }
                         Image(
@@ -78,15 +86,24 @@ fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String) {
                                 .clip(shape = RoundedCornerShape(25.dp))
                                 .size(25.dp)
                         )
-                        Text(text = item, modifier = Modifier.padding(start = 9.dp))
+                        Text(
+                            text = item,
+                            modifier = Modifier
+                                .padding(start = 9.dp),
+                            overflow = TextOverflow.Ellipsis,
+                            color = Color.Black
+                        )
                     })
             }
             if (addRoleButton) {
                 IconButton(onClick = { /*TODO*/ }) {
-                    Icon(painter = painterResource(id = R.drawable.more), contentDescription = "")
+                    Icon(
+                        painter = painterResource(id = R.drawable.more),
+                        contentDescription = "",
+                        tint = Color.Black
+                    )
                 }
             }
         }
     }
-
 }

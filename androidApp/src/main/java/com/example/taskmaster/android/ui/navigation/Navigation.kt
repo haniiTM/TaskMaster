@@ -24,7 +24,7 @@ import com.taskmaster.ui.screens.AuthScreen
 fun Navigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.Auth.route
+        startDestination = NavigationItem.TaskInfo.route
     ) {
 
         composable(route = NavigationItem.Auth.route) {
