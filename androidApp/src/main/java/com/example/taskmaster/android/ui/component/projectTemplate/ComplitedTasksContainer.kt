@@ -90,7 +90,8 @@ fun ComplitedTasksContainer(
                             ItemProject(
                                 item = item,
                                 context = LocalContext.current,
-                                navController = navController
+                                navController = navController,
+                                completed = true
                             )
                         }
                     }
