@@ -11,6 +11,7 @@ import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -167,6 +168,31 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/task") {
                 contentType(ContentType.Application.Json)
                 setBody(project)
+            }
+            if (response.status.isSuccess()) {
+                println("Server create project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun updateStatusTask(taskId: Int, statusId: Int, nameTask: String) {
+        try {
+            val status = TaskDTO()
+            status.status = statusId
+            status.name = nameTask
+            val response: HttpResponse = httpClient.put("http://5.35.85.206:8080/task/update/${taskId}") {
+                contentType(ContentType.Application.Json)
+                setBody(status)
             }
             if (response.status.isSuccess()) {
                 println("Server create project: ${response.status}")
