@@ -43,10 +43,11 @@ import me.saket.swipe.SwipeableActionsBox
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel()) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false) {
     var showDialog by remember {
         mutableStateOf(false)
     }
+    val taskCompleted: SwipeAction
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     val delete = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
@@ -63,28 +64,22 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
         )
     }, background = MaterialTheme.colorScheme.surface
     )
-    val done = SwipeAction(onSwipe = {
+    taskCompleted = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
             VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
         vibrator.cancel()
         vibrator.vibrate(vibrationEffect1)
-
-        // Если задание не выполенно
-        if(item.status == 2){
-            // Передается id 1 - готово
-            viewModel.updateStatus(item.id!!, 1, item.name, item.parent!!)
-        } else {
-            // Передается id 2 - В работе
-            viewModel.updateStatus(item.id!!, 2, item.name, item.parent!!)
-        }
+        val newStatus = if (item.status == 2) 1 else 2
+        viewModel.updateStatus(item.id!!, newStatus, item.name, item.parent!!)
     }, icon = {
+        val iconResId = if (completed) R.drawable.cancel_icon else R.drawable.done_icon
         Icon(
             modifier = Modifier.padding(25.dp),
-            painter = painterResource(id = R.drawable.done_icon),
+            painter = painterResource(id = iconResId),
             tint = Color.Black,
             contentDescription = null
         )
-    }, background = MaterialTheme.colorScheme.surfaceVariant
+    }, background = if (completed) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant
     )
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
@@ -103,7 +98,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),
-            startActions = listOf(done),
+            startActions = listOf(taskCompleted),
             swipeThreshold = 50.dp
         ) {
             Box {
