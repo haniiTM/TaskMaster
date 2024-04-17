@@ -102,4 +102,17 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         val itemProjectState: MutableList<ItemProjectState?> = mutableListOf(),
         val isLoading: Boolean = false
     )
+
+    // Функция для обновление статуса
+    fun updateStatus(taskId: Int, statusId: Int, nameTask: String, parent: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.updateStatusTask(taskId, statusId, nameTask)
+            } catch(e: Exception) {
+                println("Exception in createProject ${e}")
+            }
+            getCompletedTask(parent)
+            getUnfulfilleddTask(parent)
+        }
+    }
 }

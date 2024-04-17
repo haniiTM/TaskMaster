@@ -36,13 +36,14 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.models.TaskDTO
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController,
-                completed: Boolean = false) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false) {
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -63,38 +64,23 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController,
         )
     }, background = MaterialTheme.colorScheme.surface
     )
-    if (completed){
-        taskCompleted = SwipeAction(onSwipe = {
-            val vibrationEffect1: VibrationEffect =
-                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.cancel()
-            vibrator.vibrate(vibrationEffect1)
-        }, icon = {
-            Icon(
-                modifier = Modifier.padding(25.dp),
-                painter = painterResource(id = R.drawable.cancel_icon),
-                tint = Color.Black,
-                contentDescription = null
-            )
-        }, background = MaterialTheme.colorScheme.surface
+    taskCompleted = SwipeAction(onSwipe = {
+        val vibrationEffect1: VibrationEffect =
+            VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+        vibrator.cancel()
+        vibrator.vibrate(vibrationEffect1)
+        val newStatus = if (item.status == 2) 1 else 2
+        viewModel.updateStatus(item.id!!, newStatus, item.name, item.parent!!)
+    }, icon = {
+        val iconResId = if (completed) R.drawable.cancel_icon else R.drawable.done_icon
+        Icon(
+            modifier = Modifier.padding(25.dp),
+            painter = painterResource(id = iconResId),
+            tint = Color.Black,
+            contentDescription = null
         )
-    }else{
-        taskCompleted = SwipeAction(onSwipe = {
-            val vibrationEffect1: VibrationEffect =
-                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.cancel()
-            vibrator.vibrate(vibrationEffect1)
-        }, icon = {
-            Icon(
-                modifier = Modifier.padding(25.dp),
-                painter = painterResource(id = R.drawable.done_icon),
-                tint = Color.Black,
-                contentDescription = null
-            )
-        }, background = MaterialTheme.colorScheme.surfaceVariant
-        )
-    }
-
+    }, background = if (completed) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant
+    )
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
             ActionNotificationTemplate( onConfirmation = { showDialog = !showDialog }, onDismissRequest = { showDialog = !showDialog }, title = "Удаление задачи")
