@@ -20,6 +20,7 @@
 		287638FC2BB1ED3700B55DBF /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287638FB2BB1ED3700B55DBF /* TaskCardView.swift */; };
 		288B59F42BCFB32800CD2BCE /* ScreenInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288B59F32BCFB32800CD2BCE /* ScreenInfoButton.swift */; };
 		288B59F62BCFB71800CD2BCE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288B59F52BCFB71800CD2BCE /* Constants.swift */; };
+		288B59F82BCFCC2A00CD2BCE /* TaskSectionBG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288B59F72BCFCC2A00CD2BCE /* TaskSectionBG.swift */; };
 		28DE0A362BCEAF17001F819C /* TaskCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A352BCEAF17001F819C /* TaskCardModel.swift */; };
 		28DE0A382BCEC774001F819C /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A372BCEC774001F819C /* SwiftUIView.swift */; };
 		28DE0A3B2BCEE7C3001F819C /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A3A2BCEE7C3001F819C /* ActionButton.swift */; };
@@ -41,6 +42,7 @@
 		287638FB2BB1ED3700B55DBF /* TaskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
 		288B59F32BCFB32800CD2BCE /* ScreenInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenInfoButton.swift; sourceTree = "<group>"; };
 		288B59F52BCFB71800CD2BCE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		288B59F72BCFCC2A00CD2BCE /* TaskSectionBG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSectionBG.swift; sourceTree = "<group>"; };
 		28DE0A352BCEAF17001F819C /* TaskCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardModel.swift; sourceTree = "<group>"; };
 		28DE0A372BCEC774001F819C /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		28DE0A3A2BCEE7C3001F819C /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				28DE0A342BCEAEC7001F819C /* TaskCard */,
 				28DE0A3A2BCEE7C3001F819C /* ActionButton.swift */,
 				288B59F32BCFB32800CD2BCE /* ScreenInfoButton.swift */,
+				288B59F72BCFCC2A00CD2BCE /* TaskSectionBG.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				287638F02BB1AE6000B55DBF /* LoginScreen.swift in Sources */,
 				287638FC2BB1ED3700B55DBF /* TaskCardView.swift in Sources */,
 				288B59F42BCFB32800CD2BCE /* ScreenInfoButton.swift in Sources */,
+				288B59F82BCFCC2A00CD2BCE /* TaskSectionBG.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
