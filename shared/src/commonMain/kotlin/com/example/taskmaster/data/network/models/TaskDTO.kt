@@ -13,7 +13,7 @@ class TaskDTO(
     var parent: Int?, // Принадлежность к проекту, задаче/подзадаче
     val userCount: Int? = null, // Убрать
     var generation : Int? = 1, // Поколение для индентификации проекта, задачи/подзадачи
-    val typeofactivityid: Int?, // Тип активности (front, back  и т.д)
+    var typeofactivityid: Int?, // Тип активности (front, back  и т.д)
     var position: Int?, // Убрать
     var gruop: Int?, // Убрать
     var dependence: String? // Убрать

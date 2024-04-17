@@ -90,7 +90,8 @@ fun ComplitedTasksContainer(
                             ItemProject(
                                 item = item,
                                 context = LocalContext.current,
-                                navController = navController
+                                navController = navController,
+                                completed = true
                             )
                         }
                     }
@@ -98,7 +99,7 @@ fun ComplitedTasksContainer(
             }
 
             if (buttonTitle.isNotEmpty()) {
-                BoxButton(buttonTitle)
+                BoxButton(buttonTitle, id!!)
             }
         }
     }

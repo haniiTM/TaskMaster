@@ -23,12 +23,17 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ActionNotificationTemplate(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     title: String,
+    viewModel: TaskViewModel = getViewModel(),
+    id: Int,
+    parent: Int
 ) {
     val gradient = Brush.verticalGradient(0f to MaterialTheme.colorScheme.secondary, 1f to MaterialTheme.colorScheme.surfaceTint)
     Box(
@@ -60,7 +65,9 @@ fun ActionNotificationTemplate(
                     .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { onConfirmation() },
+                    onClick = {
+                        onConfirmation();
+                        viewModel.deleteTaskOrProject(id!!, parent!!) },
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier.defaultMinSize(minWidth = 72.dp),
                     colors = ButtonDefaults.buttonColors(

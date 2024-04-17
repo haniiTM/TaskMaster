@@ -20,7 +20,7 @@ import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.NewTaskWindow
 
 @Composable
-fun BoxButton(text: String) {
+fun BoxButton(text: String, id: Int) {
     var showDialog by remember { mutableStateOf(false) }
     Button(
         onClick = { showDialog = true },
@@ -42,7 +42,7 @@ fun BoxButton(text: String) {
     }
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            NewTaskWindow()
+            NewTaskWindow(id = id)
         }
     }
 }
