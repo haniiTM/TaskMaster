@@ -95,7 +95,7 @@ fun UncomplitedTasksContainer(
                 }
             }
             if (buttonTitle.isNotEmpty()) {
-                BoxButton(buttonTitle)
+                BoxButton(buttonTitle, id!!)
             }
         }
     }

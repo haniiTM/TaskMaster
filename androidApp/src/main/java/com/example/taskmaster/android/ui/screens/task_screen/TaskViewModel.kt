@@ -129,4 +129,16 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         }
     }
 
+
+    // Функция для создания задания
+    fun createTask(task: TaskDTO, parentId: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.createTask(task, parentId)
+            } catch(e: Exception) {
+                println("Exception in createProject ${e}")
+            }
+            getUnfulfilleddTask(parentId)
+        }
+    }
 }

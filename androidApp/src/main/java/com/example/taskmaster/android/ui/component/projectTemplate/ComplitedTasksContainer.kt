@@ -99,7 +99,7 @@ fun ComplitedTasksContainer(
             }
 
             if (buttonTitle.isNotEmpty()) {
-                BoxButton(buttonTitle)
+                BoxButton(buttonTitle, id!!)
             }
         }
     }
