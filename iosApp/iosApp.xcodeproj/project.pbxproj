@@ -18,6 +18,8 @@
 		287638F62BB1AF3400B55DBF /* NavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287638F52BB1AF3400B55DBF /* NavigationItem.swift */; };
 		287638FA2BB1B87B00B55DBF /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287638F92BB1B87B00B55DBF /* Logo.swift */; };
 		287638FC2BB1ED3700B55DBF /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287638FB2BB1ED3700B55DBF /* TaskCardView.swift */; };
+		288B59F42BCFB32800CD2BCE /* ScreenInfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288B59F32BCFB32800CD2BCE /* ScreenInfoButton.swift */; };
+		288B59F62BCFB71800CD2BCE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288B59F52BCFB71800CD2BCE /* Constants.swift */; };
 		28DE0A362BCEAF17001F819C /* TaskCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A352BCEAF17001F819C /* TaskCardModel.swift */; };
 		28DE0A382BCEC774001F819C /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A372BCEC774001F819C /* SwiftUIView.swift */; };
 		28DE0A3B2BCEE7C3001F819C /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A3A2BCEE7C3001F819C /* ActionButton.swift */; };
@@ -37,6 +39,8 @@
 		287638F52BB1AF3400B55DBF /* NavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationItem.swift; sourceTree = "<group>"; };
 		287638F92BB1B87B00B55DBF /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		287638FB2BB1ED3700B55DBF /* TaskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
+		288B59F32BCFB32800CD2BCE /* ScreenInfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenInfoButton.swift; sourceTree = "<group>"; };
+		288B59F52BCFB71800CD2BCE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		28DE0A352BCEAF17001F819C /* TaskCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardModel.swift; sourceTree = "<group>"; };
 		28DE0A372BCEC774001F819C /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		28DE0A3A2BCEE7C3001F819C /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -97,9 +101,11 @@
 		287638EA2BB1ADA000B55DBF /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				288B59F52BCFB71800CD2BCE /* Constants.swift */,
 				287638F92BB1B87B00B55DBF /* Logo.swift */,
 				28DE0A342BCEAEC7001F819C /* TaskCard */,
 				28DE0A3A2BCEE7C3001F819C /* ActionButton.swift */,
+				288B59F32BCFB32800CD2BCE /* ScreenInfoButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -291,6 +297,7 @@
 				28DE0A3B2BCEE7C3001F819C /* ActionButton.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				287638F42BB1AF1F00B55DBF /* Navigation.swift in Sources */,
+				288B59F62BCFB71800CD2BCE /* Constants.swift in Sources */,
 				287638F22BB1AE6F00B55DBF /* LoginViewModel.swift in Sources */,
 				287638FA2BB1B87B00B55DBF /* Logo.swift in Sources */,
 				287638E62BB1AD4A00B55DBF /* PresentationModule.swift in Sources */,
@@ -299,6 +306,7 @@
 				287638F62BB1AF3400B55DBF /* NavigationItem.swift in Sources */,
 				287638F02BB1AE6000B55DBF /* LoginScreen.swift in Sources */,
 				287638FC2BB1ED3700B55DBF /* TaskCardView.swift in Sources */,
+				288B59F42BCFB32800CD2BCE /* ScreenInfoButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
