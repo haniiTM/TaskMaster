@@ -116,7 +116,7 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         }
     }
 
-    // Функция для обновление статуса
+    // Функция для создания задания
     fun createTask(task: TaskDTO, parentId: Int) {
         viewModelScope.launch {
             try {
