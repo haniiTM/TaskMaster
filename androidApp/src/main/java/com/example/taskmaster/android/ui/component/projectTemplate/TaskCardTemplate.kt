@@ -36,12 +36,14 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.models.TaskDTO
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel()) {
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -66,6 +68,15 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
             VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
         vibrator.cancel()
         vibrator.vibrate(vibrationEffect1)
+
+        // Если задание не выполенно
+        if(item.status == 2){
+            // Передается id 1 - готово
+            viewModel.updateStatus(item.id!!, 1, item.name, item.parent!!)
+        } else {
+            // Передается id 2 - В работе
+            viewModel.updateStatus(item.id!!, 2, item.name, item.parent!!)
+        }
     }, icon = {
         Icon(
             modifier = Modifier.padding(25.dp),
