@@ -12,27 +12,32 @@ struct ActionButton: View {
     //    MARK: - Props
     private let isImageNeeded: Bool
 
+    //    MARK: - Init
     init(isImageNeeded: Bool) {
         self.isImageNeeded = isImageNeeded
     }
 
-    //    MARK: - Init
     var body: some View {
         ActionButtonBody()
     }
 
     //    MARK: - Methods
     private func ActionButtonBody() -> some View {
-        HStack {
-            if isImageNeeded {
-                Image(systemName: getTaskImageName())
-            }
+        Button(action: isImageNeeded ? openTaskCreationView : openLaborCostCreationView) {
+            HStack {
+                if isImageNeeded {
+                    Image(systemName: getTaskImageName())
+                }
 
-            Text(isImageNeeded ? getTaskTitle() : getLaborCostTitle())
+                Text(isImageNeeded ? getTaskTitle() : getLaborCostTitle())
+            }
         }
         .padding()
         .border(.primary)
     }
+
+    private func openTaskCreationView() {}
+    private func openLaborCostCreationView() {}
 }
 
 //    MARK: - Constants

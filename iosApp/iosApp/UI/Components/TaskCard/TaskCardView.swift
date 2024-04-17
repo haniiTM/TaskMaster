@@ -23,38 +23,42 @@ struct TaskCardView: View {
 
     //    MARK: - Methods
     private func TaskCardBody() -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: getLineSpacing()) {
-                if let unwrappedNumberValue = taskInfo.numberValue {
-                    Text(getNumberTitle() + unwrappedNumberValue.description)
-                }
+        Button(action: openTaskView) {
+            HStack {
+                VStack(alignment: .leading, spacing: getLineSpacing()) {
+                    if let unwrappedNumberValue = taskInfo.numberValue {
+                        Text(getNumberTitle() + unwrappedNumberValue.description)
+                    }
 
-                Text(taskInfo.title)
+                    Text(taskInfo.title)
 
-                HStack {
-                    Text(getTimerTitle())
+                    HStack {
+                        Text(getTimerTitle())
 
-                    Spacer()
+                        Spacer()
 
-                    if taskInfo.isUrgent {
-                        Image(systemName: getUrgentImageName())
+                        if taskInfo.isUrgent {
+                            Image(systemName: ComponentsConstants.Strings.urgentImageName)
+                        }
+                    }
+
+                    if let unwrappedParticipiantsValue = taskInfo.participiantsValue {
+                        Text(getParticipiantsTitle() + unwrappedParticipiantsValue.description)
+                    }
+
+                    if let unwrappedCategories = taskInfo.categories {
+                        Text(unwrappedCategories.joined(separator: getCategoriesSeparator()))
                     }
                 }
 
-                if let unwrappedParticipiantsValue = taskInfo.participiantsValue {
-                    Text(getParticipiantsTitle() + unwrappedParticipiantsValue.description)
-                }
-
-                if let unwrappedCategories = taskInfo.categories {
-                    Text(unwrappedCategories.joined(separator: getCategoriesSeparator()))
-                }
+                Spacer()
             }
-
-            Spacer()
         }
         .padding()
         .border(.primary)
     }
+
+    private func openTaskView() {}
 }
 
 //    MARK: - Constants
@@ -63,7 +67,6 @@ private extension TaskCardView {
     func getNumberTitle() -> String { "Задача №" }
     func getTimerTitle() -> String { "Время на выполнение: \(taskInfo.timerValue) часа" }
     func getParticipiantsTitle() -> String { "Участники: " }
-    func getUrgentImageName() -> String { "exclamationmark.triangle" }
     func getCategoriesSeparator() -> String { ", " }
 
     //    MARK: Numbers
