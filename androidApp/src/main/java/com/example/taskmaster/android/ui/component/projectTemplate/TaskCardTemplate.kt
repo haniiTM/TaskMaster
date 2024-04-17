@@ -41,10 +41,12 @@ import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController,
+                completed: Boolean = false) {
     var showDialog by remember {
         mutableStateOf(false)
     }
+    val taskCompleted: SwipeAction
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     val delete = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
@@ -61,20 +63,38 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
         )
     }, background = MaterialTheme.colorScheme.surface
     )
-    val done = SwipeAction(onSwipe = {
-        val vibrationEffect1: VibrationEffect =
-            VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-        vibrator.cancel()
-        vibrator.vibrate(vibrationEffect1)
-    }, icon = {
-        Icon(
-            modifier = Modifier.padding(25.dp),
-            painter = painterResource(id = R.drawable.done_icon),
-            tint = Color.Black,
-            contentDescription = null
+    if (completed){
+        taskCompleted = SwipeAction(onSwipe = {
+            val vibrationEffect1: VibrationEffect =
+                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect1)
+        }, icon = {
+            Icon(
+                modifier = Modifier.padding(25.dp),
+                painter = painterResource(id = R.drawable.cancel_icon),
+                tint = Color.Black,
+                contentDescription = null
+            )
+        }, background = MaterialTheme.colorScheme.surface
         )
-    }, background = MaterialTheme.colorScheme.surfaceVariant
-    )
+    }else{
+        taskCompleted = SwipeAction(onSwipe = {
+            val vibrationEffect1: VibrationEffect =
+                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect1)
+        }, icon = {
+            Icon(
+                modifier = Modifier.padding(25.dp),
+                painter = painterResource(id = R.drawable.done_icon),
+                tint = Color.Black,
+                contentDescription = null
+            )
+        }, background = MaterialTheme.colorScheme.surfaceVariant
+        )
+    }
+
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
             ActionNotificationTemplate( onConfirmation = { showDialog = !showDialog }, onDismissRequest = { showDialog = !showDialog }, title = "Удаление задачи")
@@ -92,7 +112,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),
-            startActions = listOf(done),
+            startActions = listOf(taskCompleted),
             swipeThreshold = 50.dp
         ) {
             Box {
