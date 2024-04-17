@@ -9,6 +9,7 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.put
@@ -216,6 +217,25 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
                 contentType(ContentType.Application.Json)
                 setBody(status)
             }
+            if (response.status.isSuccess()) {
+                println("Server create project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun DeleteTaskOrProject(taskId: Int) {
+        try {
+            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/task/${taskId}")
             if (response.status.isSuccess()) {
                 println("Server create project: ${response.status}")
             } else {

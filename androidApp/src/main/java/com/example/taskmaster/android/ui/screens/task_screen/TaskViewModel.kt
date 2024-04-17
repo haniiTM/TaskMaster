@@ -109,12 +109,26 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
             try {
                 apiService.updateStatusTask(taskId, statusId, nameTask)
             } catch(e: Exception) {
-                println("Exception in createProject ${e}")
+                println("Exception in updateStatus ${e}")
             }
             getCompletedTask(parent)
             getUnfulfilleddTask(parent)
         }
     }
+
+    // Функция для удаления
+    fun deleteTaskOrProject(taskId: Int, parent: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.DeleteTaskOrProject(taskId)
+            } catch(e: Exception) {
+                println("Exception in deleteTaskOrProject ${e}")
+            }
+            getCompletedTask(parent)
+            getUnfulfilleddTask(parent)
+        }
+    }
+
 
     // Функция для создания задания
     fun createTask(task: TaskDTO, parentId: Int) {

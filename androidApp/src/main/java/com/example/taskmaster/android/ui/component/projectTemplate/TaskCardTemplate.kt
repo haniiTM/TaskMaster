@@ -83,7 +83,13 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
     )
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            ActionNotificationTemplate( onConfirmation = { showDialog = !showDialog }, onDismissRequest = { showDialog = !showDialog }, title = "Удаление задачи")
+            ActionNotificationTemplate(
+                onConfirmation = { showDialog = !showDialog },
+                onDismissRequest = { showDialog = !showDialog },
+                title = "Удаление задачи",
+                id = item.id!!,
+                parent = item.parent!!
+            )
         }
     }
     ElevatedCard(
