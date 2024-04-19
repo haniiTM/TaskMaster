@@ -6,7 +6,7 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-//    MARK: - TaskCardModel
+// MARK: - TaskCardModel
 struct TaskCardModel {
     private var privateTaskList: [TaskInfo] = .init()
 
@@ -15,7 +15,7 @@ struct TaskCardModel {
     }
 }
 
-//    MARK: - TaskInfo
+// MARK: - TaskInfo
 struct TaskInfo: Hashable {
     var parentNumber: UInt8?
     var numberValue: UInt8?
