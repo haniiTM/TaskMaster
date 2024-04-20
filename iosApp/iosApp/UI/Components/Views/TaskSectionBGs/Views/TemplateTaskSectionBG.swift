@@ -25,11 +25,13 @@ struct TemplateTaskSectionBG<Content: View>: View {
     }
 
     private var ViewBody: some View {
-        VStack(spacing: TaskSectionBGsConstants.Numbers.verticalSpacing) {
+        VStack(spacing: TaskSectionBGsConstants.Numbers.sectionComponentsVerticalSpacing) {
             Text(title)
                 .font(.title3)
 
-            content()
+            VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
+                content()
+            }
         }
         .frame(maxWidth: .infinity)
         .padding()

@@ -10,11 +10,11 @@ import SwiftUI
 
 struct TemplateActionButton<Content: View>: View {
     //    MARK: Props
-    private let action: () -> Void
+    private let action: Openable
     @ViewBuilder private let content: () -> Content
 
     //    MARK: Init
-    init(action: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
+    init(action: Openable, @ViewBuilder content: @escaping () -> Content) {
         self.action = action
         self.content = content
     }
@@ -25,7 +25,7 @@ struct TemplateActionButton<Content: View>: View {
     }
 
     private var ViewBody: some View {
-        Button(action: action) {
+        Button(action: action.open) {
             HStack {
                 content()
             }

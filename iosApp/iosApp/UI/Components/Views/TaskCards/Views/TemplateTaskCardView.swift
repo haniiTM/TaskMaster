@@ -10,12 +10,13 @@ import SwiftUI
 
 struct TemplateTaskCardView<Content: View>: View {
     //    MARK: Props
-    private let action: () -> Void
+    private let controller: TaskCardActions
     @ViewBuilder private let content: () -> Content
+    @State private var isButtonVisible = true
 
     //    MARK: Init
-    init(action: @escaping () -> Void, @ViewBuilder content: @escaping () -> Content) {
-        self.action = action
+    init(controller: TaskCardActions, @ViewBuilder content: @escaping () -> Content) {
+        self.controller = controller
         self.content = content
     }
 
@@ -25,19 +26,33 @@ struct TemplateTaskCardView<Content: View>: View {
     }
 
     private var ViewBody: some View {
-        Button(action: action) {
-            HStack {
-                VStack(alignment: .leading, spacing: TaskCardsConstants.Numbers.lineSpacing) {
-                    content()
-                }
+        VStack {
+            if isButtonVisible {
+                Button(action: controller.open) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: TaskCardsConstants.Numbers.lineSpacing) {
+                            content()
+                        }
 
-                Spacer()
+                        Spacer()
+                    }
+                }
+                .padding()
+                .border(.primary)
+                .transition(.move(edge: .trailing))
+                .animation(.easeInOut)
             }
         }
-        .padding()
-        .border(.primary)
+        .gesture(
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.width < -100 {
+                        withAnimation {
+                            isButtonVisible = false
+                            controller.remove()
+                        }
+                    }
+                }
+        )
     }
-
-    //    MARK: Methods
-    private func removeCard() {}
 }

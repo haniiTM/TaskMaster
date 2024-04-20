@@ -10,19 +10,20 @@ import SwiftUI
 
 struct SubTaskCardView: View {
     //    MARK: Props
-    private let defaultAction: Openable = SubTaskCardViewAction()
     private let taskInfo: TaskInfo
-
+    private let controller: TaskCardActions
+    
     //    MARK: Init
     init(taskInfo: TaskInfo) {
         self.taskInfo = taskInfo
+        controller = SubTaskCardController()
     }
-
+    
     //    MARK: Body
     var body: some View {
-        TemplateTaskCardView(action: defaultAction.open) { ViewBody }
+        TemplateTaskCardView(controller: controller) { ViewBody }
     }
-
+    
     @ViewBuilder
     private var ViewBody: some View {
         if let unwrappedParentNumber = taskInfo.parentNumber,
@@ -33,22 +34,22 @@ struct SubTaskCardView: View {
                  unwrappedNumberValue.description)
             .font(.footnote)
         }
-
+        
         Text(taskInfo.title)
             .multilineTextAlignment(.leading)
-
+        
         HStack {
             Text(TaskCardsConstants.Strings.timerTitle(taskInfo.timerValue))
                 .font(.footnote)
                 .multilineTextAlignment(.leading)
-
+            
             Spacer()
-
+            
             if taskInfo.isUrgent {
                 Image(systemName: TaskCardsConstants.ImageStrings.urgentImageName)
             }
         }
-
+        
         if let unwrappedCategories = taskInfo.categories {
             Text(unwrappedCategories.joined(separator: TaskCardsConstants.Strings.categoriesSeparator))
                 .font(.footnote)

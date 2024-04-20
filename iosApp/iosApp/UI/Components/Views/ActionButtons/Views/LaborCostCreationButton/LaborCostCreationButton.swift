@@ -10,17 +10,15 @@ import SwiftUI
 
 struct LaborCostCreationButton: View {
     //    MARK: Props
-    private let defaultAction: Openable = LaborCostCreationButtonAction()
-
     private let title: String?
-    private let action: (() -> Void)?
+    private let action: Openable
 
     //    MARK: Init
     /// Initializes the view with specified parameters.
     /// - Parameters:
     ///   - title: A string representing the title of the view.
     ///   - action: A closure representing the action to be performed when the view is interacted with.
-    init(_ title: String, action: @escaping () -> Void) {
+    init(_ title: String, action: Openable) {
         self.title = title
         self.action = action
     }
@@ -28,12 +26,12 @@ struct LaborCostCreationButton: View {
     /// Initializes the view with default realization.
     init() {
         title = nil
-        action = nil
+        action = LaborCostCreationButtonAction()
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateActionButton(action: action ?? defaultAction.open) { ViewBody }
+        TemplateActionButton(action: action) { ViewBody }
     }
 
     @ViewBuilder

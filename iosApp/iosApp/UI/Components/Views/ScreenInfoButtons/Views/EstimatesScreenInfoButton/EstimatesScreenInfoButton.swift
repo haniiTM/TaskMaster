@@ -10,11 +10,11 @@ import SwiftUI
 
 struct EstimatesScreenInfoButton: View {
     //    MARK: Props
-    private let defaultAction: Openable = EstimatesScreenInfoButtonAction()
+    private let action: Openable = EstimatesScreenInfoButtonAction()
 
     //    MARK: Body
     var body: some View {
         AttachmentsScreenInfoButton(ScreenInfoButtonsConstants.Strings.estimatesTitle,
-                                    action: defaultAction.open)
+                                    action: action)
     }
 }

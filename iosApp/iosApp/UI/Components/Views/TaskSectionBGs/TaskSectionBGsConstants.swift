@@ -18,6 +18,7 @@ enum TaskSectionBGsConstants {
 
     //    MARK: Numbers
     enum Numbers {
-        static let verticalSpacing: CGFloat = 32
+        static let sectionComponentsVerticalSpacing: CGFloat = 32
+        static let contentComponentsVerticalSpacing: CGFloat = 16
     }
 }

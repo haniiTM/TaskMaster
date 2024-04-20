@@ -13,7 +13,3 @@ struct Logo: View {
         Image(systemName: "globe")
     }
 }
-
-#Preview {
-    Logo()
-}
