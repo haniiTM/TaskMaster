@@ -9,3 +9,7 @@
 protocol Openable {
     func open()
 }
+
+protocol Removable {
+    func remove()
+}

@@ -10,11 +10,9 @@ import SwiftUI
 
 struct TaskCreationButton: View {
     // MARK: Props
-    private let defaultAction: Openable = TaskCreationButtonAction()
-
     private let title: String?
     private let imageName: String?
-    private let action: (() -> Void)?
+    private let action: Openable
 
     // MARK: Init
     /// Initializes the view with specified parameters.
@@ -22,7 +20,7 @@ struct TaskCreationButton: View {
     ///   - title: A string representing the title of the view.
     ///   - imageName: A string representing the name of the image to be displayed.
     ///   - action: A closure representing the action to be performed when the view is interacted with.
-    init(_ title: String, imageName: String, action: @escaping () -> Void) {
+    init(_ title: String, imageName: String, action: Openable) {
         self.title = title
         self.imageName = imageName
         self.action = action
@@ -32,12 +30,12 @@ struct TaskCreationButton: View {
     init() {
         title = nil
         imageName = nil
-        action = nil
+        action = TaskCreationButtonAction()
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateActionButton(action: action ?? defaultAction.open) { ViewBody }
+        TemplateActionButton(action: action) { ViewBody }
     }
 
     @ViewBuilder

@@ -10,17 +10,15 @@ import SwiftUI
 
 struct AttachmentsScreenInfoButton: View {
     //    MARK: Props
-    private let defaultAction: Openable = ScreenInfoButtonAction()
-
     private let title: String?
-    private let action: (() -> Void)?
+    private let action: Openable
 
     //    MARK: Init
     /// Initializes the view with specified parameters.
     /// - Parameters:
     ///   - title: A string representing the title of the view.
     ///   - action: A closure representing the action to be performed when the view is interacted with.
-    init(_ title: String, action: @escaping () -> Void) {
+    init(_ title: String, action: Openable) {
         self.title = title
         self.action = action
     }
@@ -28,12 +26,12 @@ struct AttachmentsScreenInfoButton: View {
     /// Initializes the view with default realization.
     init() {
         title = nil
-        action = nil
+        action = AttachmentsScreenInfoButtonAction()
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateScreenInfoButton(action: action ?? defaultAction.open) { ViewBody }
+        TemplateScreenInfoButton(action: action) { ViewBody }
     }
 
     @ViewBuilder

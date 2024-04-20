@@ -10,17 +10,18 @@ import SwiftUI
 
 struct TaskCardView: View {
     //    MARK: Props
-    private let defaultAction: Openable = TaskCardViewAction()
     private let taskInfo: TaskInfo
+    private let controller: TaskCardActions
 
     //    MARK: Init
     init(taskInfo: TaskInfo) {
         self.taskInfo = taskInfo
+        controller = TaskCardController()
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateTaskCardView(action: defaultAction.open) { ViewBody }
+        TemplateTaskCardView(controller: controller) { ViewBody }
     }
 
     @ViewBuilder

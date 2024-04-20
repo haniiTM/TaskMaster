@@ -10,14 +10,12 @@ import SwiftUI
 
 struct ScreenInfoButton: View {
     // MARK: Props
-    private let defaultAction: Openable = ScreenInfoButtonAction()
-
     private let title: String
     private let isUrgent: Bool
+    private let action: Openable
 
     private let urgentImageName: String?
     private let imageName: String?
-    private let action: (() -> Void)?
 
     // MARK: Init
     /// Initializes the view with specified parameters.
@@ -25,7 +23,7 @@ struct ScreenInfoButton: View {
     ///   - title: A string representing the title of the view.
     ///   - imageName: A string representing the name of the image to be displayed.
     ///   - action: A closure representing the action to be performed when the view is interacted with.
-    init(_ title: String, isUrgent: Bool, urgentImageName: String, imageName: String, action: @escaping () -> Void) {
+    init(_ title: String, isUrgent: Bool, urgentImageName: String, imageName: String, action: Openable) {
         self.title = title
         self.isUrgent = isUrgent
 
@@ -41,12 +39,12 @@ struct ScreenInfoButton: View {
 
         urgentImageName = nil
         imageName = nil
-        action = nil
+        action = ScreenInfoButtonAction()
     }
 
     // MARK: Body
     var body: some View {
-        TemplateScreenInfoButton(action: action ?? defaultAction.open) { ViewBody }
+        TemplateScreenInfoButton(action: action) { ViewBody }
     }
 
     @ViewBuilder
