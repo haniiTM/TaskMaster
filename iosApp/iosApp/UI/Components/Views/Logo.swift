@@ -1,5 +1,5 @@
 //
-//  NavigationItem.swift
+//  Logo.swift
 //  iosApp
 //
 //  Created by evilgen on 25.03.2024.
@@ -8,12 +8,8 @@
 
 import SwiftUI
 
-struct NavigationItem: View {
+struct Logo: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(systemName: "globe")
     }
-}
-
-#Preview {
-    NavigationItem()
 }
