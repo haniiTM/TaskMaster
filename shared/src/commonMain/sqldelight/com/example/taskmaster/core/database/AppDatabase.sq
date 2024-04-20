@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS AccessTokenEntity  (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tokenLong TEXT DEFAULT NULL
+);
+
+saveToken:
+INSERT OR REPLACE INTO AccessTokenEntity(tokenLong)
+VALUES ?;
+
+getToken:
+SELECT * FROM AccessTokenEntity ORDER BY id DESC LIMIT 1;
+
+deleteToken:
+DELETE FROM AccessTokenEntity;
