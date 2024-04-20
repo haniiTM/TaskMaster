@@ -36,6 +36,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.models.TaskDTO
 import me.saket.swipe.SwipeAction
@@ -43,7 +44,7 @@ import me.saket.swipe.SwipeableActionsBox
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false, projectTitle: String) {
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -94,7 +95,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
             .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate("projectSubTask") }
+            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle)) }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),

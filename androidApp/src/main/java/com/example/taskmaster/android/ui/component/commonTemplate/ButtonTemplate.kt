@@ -21,11 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 
 @Composable
-fun ButtonTemplate(text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, navController: NavController, route: String) {
+fun ButtonTemplate(navController: NavController, text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, title: String?, id: Int?) {
     Button(
-        onClick = { navController.navigate(route) }, modifier = Modifier
+        onClick = { navController.navigate(
+            NavigationItem.AttachmentsListScreen.passIdAndTitle(id ?: 0,title ?: "Заголовок не получен")
+        ) }, modifier = Modifier
             .padding(top = 20.dp, bottom = 20.dp)
             .width(width.dp)
             .height(31.dp)
