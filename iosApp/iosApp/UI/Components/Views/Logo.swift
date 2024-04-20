@@ -10,6 +10,11 @@ import SwiftUI
 
 struct Logo: View {
     var body: some View {
-        Image(systemName: "globe")
+        Text("LOGO")
+            .font(.largeTitle)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .padding()
+            .background(Color.secondary)
     }
 }
