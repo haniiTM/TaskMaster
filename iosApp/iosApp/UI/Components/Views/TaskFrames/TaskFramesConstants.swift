@@ -22,6 +22,6 @@ enum TaskFramesConstants {
 
     //    MARK: Numbers
     enum Numbers {
-        static let componentsVerticalSpacing: CGFloat = 32
+        static let componentsVerticalSpacing: CGFloat = 16
     }
 }

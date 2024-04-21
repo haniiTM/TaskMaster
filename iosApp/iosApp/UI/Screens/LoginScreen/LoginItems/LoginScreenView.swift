@@ -61,7 +61,3 @@ struct LoginScreenView: View {
         .border(Color.primary)
     }
 }
-
-#Preview {
-    LoginScreenView()
-}

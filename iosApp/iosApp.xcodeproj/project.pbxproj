@@ -59,6 +59,10 @@
 		289BFD332BD18FBD00099EAE /* TaskSectionBGsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289BFD322BD18FBD00099EAE /* TaskSectionBGsConstants.swift */; };
 		28DE0A362BCEAF17001F819C /* TaskCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A352BCEAF17001F819C /* TaskCardModel.swift */; };
 		28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A3A2BCEE7C3001F819C /* TemplateActionButton.swift */; };
+		28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF12BD5507C00B31497 /* ProjectListView.swift */; };
+		28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */; };
+		28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */; };
+		28EA9CF92BD5539300B31497 /* ProjectListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF82BD5539300B31497 /* ProjectListModel.swift */; };
 		9ADDAE73F2DB40F24F5DB985 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60C2C5EDD4A5A3BC10C7FB08 /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +119,10 @@
 		289BFD322BD18FBD00099EAE /* TaskSectionBGsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSectionBGsConstants.swift; sourceTree = "<group>"; };
 		28DE0A352BCEAF17001F819C /* TaskCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardModel.swift; sourceTree = "<group>"; };
 		28DE0A3A2BCEE7C3001F819C /* TemplateActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateActionButton.swift; sourceTree = "<group>"; };
+		28EA9CF12BD5507C00B31497 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
+		28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelProtocol.swift; sourceTree = "<group>"; };
+		28EA9CF82BD5539300B31497 /* ProjectListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListModel.swift; sourceTree = "<group>"; };
 		60C2C5EDD4A5A3BC10C7FB08 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B82CDA4686ACE1A0320D9C7 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* TaskMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +264,7 @@
 		287638E32BB1AC5600B55DBF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2864E6C62BD3DD6000504DE0 /* TaskInfo.swift */,
 				287638EC2BB1ADB200B55DBF /* Screens */,
 				289BFD372BD1914C00099EAE /* ModalScreens */,
 				287638EA2BB1ADA000B55DBF /* Components */,
@@ -279,6 +288,7 @@
 			children = (
 				2864E6D12BD42C7600504DE0 /* Launch Screen.storyboard */,
 				287638EE2BB1AE5300B55DBF /* LoginScreen */,
+				28EA9CF32BD5508E00B31497 /* ProjectList */,
 				2864E6CB2BD3EE2900504DE0 /* Box.swift */,
 			);
 			path = Screens;
@@ -423,11 +433,21 @@
 			children = (
 				28DE0A352BCEAF17001F819C /* TaskCardModel.swift */,
 				28407DEB2BD16B0E004B275D /* Views */,
-				2864E6C62BD3DD6000504DE0 /* TaskInfo.swift */,
 				289BFD262BD1801B00099EAE /* TaskCardsConstants.swift */,
 				2864E6AD2BD38F7600504DE0 /* TaskCardsProtocols.swift */,
 			);
 			path = TaskCards;
+			sourceTree = "<group>";
+		};
+		28EA9CF32BD5508E00B31497 /* ProjectList */ = {
+			isa = PBXGroup;
+			children = (
+				28EA9CF82BD5539300B31497 /* ProjectListModel.swift */,
+				28EA9CF12BD5507C00B31497 /* ProjectListView.swift */,
+				28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */,
+				28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */,
+			);
+			path = ProjectList;
 			sourceTree = "<group>";
 		};
 		7555FF72242A565900829871 = {
@@ -580,6 +600,7 @@
 				2864E6C12BD3D3CF00504DE0 /* LoginScreenConstants.swift in Sources */,
 				2864E6CA2BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift in Sources */,
 				288455E72BD2DF0D00DF64E5 /* EstimatesScreenInfoButtonAction.swift in Sources */,
+				28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2864E6C52BD3DD2C00504DE0 /* UserInfo.swift in Sources */,
 				28609D042BD15A42005D2D01 /* ScreenInfoButton.swift in Sources */,
@@ -589,6 +610,7 @@
 				288455F02BD2E04D00DF64E5 /* ProjectCardController.swift in Sources */,
 				2864E6BA2BD3B4F900504DE0 /* ProjectFrameView.swift in Sources */,
 				2864E6B52BD3B4BE00504DE0 /* MainFrameView.swift in Sources */,
+				28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */,
 				2864E6B82BD3B4D900504DE0 /* MainFrameAction.swift in Sources */,
 				28407DEA2BD1698B004B275D /* TaskCreationButton.swift in Sources */,
 				2864E6AC2BD3808C00504DE0 /* TaskFramesConstants.swift in Sources */,
@@ -613,7 +635,9 @@
 				287638F02BB1AE6000B55DBF /* LoginScreenView.swift in Sources */,
 				289BFD292BD18AA900099EAE /* TaskCardView.swift in Sources */,
 				287638FC2BB1ED3700B55DBF /* TemplateTaskCardView.swift in Sources */,
+				28EA9CF92BD5539300B31497 /* ProjectListModel.swift in Sources */,
 				288455EC2BD2DFD300DF64E5 /* TaskCardController.swift in Sources */,
+				28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */,
 				2864E6B32BD39B0200504DE0 /* GradientBGConstants.swift in Sources */,
 				288455DE2BD2B10C00DF64E5 /* TaskCreationButtonAction.swift in Sources */,
 				28750F152BD1458100E3006D /* CompletedTaskSectionBG.swift in Sources */,
