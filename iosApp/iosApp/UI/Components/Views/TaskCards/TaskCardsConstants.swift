@@ -27,7 +27,7 @@ enum TaskCardsConstants {
 
     //    MARK: Numbers
     enum Numbers {
-        static let lineSpacing: CGFloat = 16
+        static let lineSpacing: CGFloat = 8
     }
 }
 

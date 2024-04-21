@@ -20,6 +20,6 @@ enum LoginScreenConstants {
     enum Numbers {
         static let rootVerticalSpacing: CGFloat = 32
         static let childVerticalSpacing: CGFloat = 16
-        static let rootPadding: CGFloat = 32
+        static let rootPadding: CGFloat = 40
     }
 }
