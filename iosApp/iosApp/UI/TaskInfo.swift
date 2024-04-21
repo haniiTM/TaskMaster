@@ -6,7 +6,10 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-struct TaskInfo: Hashable {
+import Foundation
+
+struct TaskInfo: Identifiable {
+    let id = UUID()
     var parentNumber: UInt8?
     var numberValue: UInt8?
     let title: String

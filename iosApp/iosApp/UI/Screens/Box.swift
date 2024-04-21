@@ -20,7 +20,6 @@ class Box<T> {
         value = v
     }
 
-
     //    MARK: Methods
     func bind(_ l: Listener?) {
         listener = l
