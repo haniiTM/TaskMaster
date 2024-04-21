@@ -23,7 +23,6 @@
 		2864E6B82BD3B4D900504DE0 /* MainFrameAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6B72BD3B4D900504DE0 /* MainFrameAction.swift */; };
 		2864E6BA2BD3B4F900504DE0 /* ProjectFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6B92BD3B4F900504DE0 /* ProjectFrameView.swift */; };
 		2864E6BD2BD3B51800504DE0 /* ProjectFrameAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6BC2BD3B51800504DE0 /* ProjectFrameAction.swift */; };
-		2864E6BF2BD3D2A000504DE0 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6BE2BD3D2A000504DE0 /* SplashScreen.swift */; };
 		2864E6C12BD3D3CF00504DE0 /* LoginScreenConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6C02BD3D3CF00504DE0 /* LoginScreenConstants.swift */; };
 		2864E6C32BD3DACB00504DE0 /* LoginScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6C22BD3DACB00504DE0 /* LoginScreenModel.swift */; };
 		2864E6C52BD3DD2C00504DE0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6C42BD3DD2C00504DE0 /* UserInfo.swift */; };
@@ -31,6 +30,7 @@
 		2864E6CA2BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6C92BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift */; };
 		2864E6CC2BD3EE2900504DE0 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6CB2BD3EE2900504DE0 /* Box.swift */; };
 		2864E6CE2BD409A900504DE0 /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2864E6CD2BD409A900504DE0 /* LoginError.swift */; };
+		2864E6D22BD42C7600504DE0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2864E6D12BD42C7600504DE0 /* Launch Screen.storyboard */; };
 		28750F112BD1450100E3006D /* TaskSectionBG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28750F102BD1450100E3006D /* TaskSectionBG.swift */; };
 		28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28750F122BD1454A00E3006D /* SubTaskSectionBG.swift */; };
 		28750F152BD1458100E3006D /* CompletedTaskSectionBG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28750F142BD1458100E3006D /* CompletedTaskSectionBG.swift */; };
@@ -79,7 +79,6 @@
 		2864E6B72BD3B4D900504DE0 /* MainFrameAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFrameAction.swift; sourceTree = "<group>"; };
 		2864E6B92BD3B4F900504DE0 /* ProjectFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFrameView.swift; sourceTree = "<group>"; };
 		2864E6BC2BD3B51800504DE0 /* ProjectFrameAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFrameAction.swift; sourceTree = "<group>"; };
-		2864E6BE2BD3D2A000504DE0 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		2864E6C02BD3D3CF00504DE0 /* LoginScreenConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenConstants.swift; sourceTree = "<group>"; };
 		2864E6C22BD3DACB00504DE0 /* LoginScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenModel.swift; sourceTree = "<group>"; };
 		2864E6C42BD3DD2C00504DE0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
@@ -87,6 +86,7 @@
 		2864E6C92BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewModelProtocol.swift; sourceTree = "<group>"; };
 		2864E6CB2BD3EE2900504DE0 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		2864E6CD2BD409A900504DE0 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
+		2864E6D12BD42C7600504DE0 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		28750F102BD1450100E3006D /* TaskSectionBG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSectionBG.swift; sourceTree = "<group>"; };
 		28750F122BD1454A00E3006D /* SubTaskSectionBG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskSectionBG.swift; sourceTree = "<group>"; };
 		28750F142BD1458100E3006D /* CompletedTaskSectionBG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskSectionBG.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		28DE0A3A2BCEE7C3001F819C /* TemplateActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateActionButton.swift; sourceTree = "<group>"; };
 		60C2C5EDD4A5A3BC10C7FB08 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B82CDA4686ACE1A0320D9C7 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
-		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7555FF7B242A565900829871 /* TaskMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A390F116FA2DB7FF8BD32408 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -277,7 +277,7 @@
 		287638EC2BB1ADB200B55DBF /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				2864E6BE2BD3D2A000504DE0 /* SplashScreen.swift */,
+				2864E6D12BD42C7600504DE0 /* Launch Screen.storyboard */,
 				287638EE2BB1AE5300B55DBF /* LoginScreen */,
 				2864E6CB2BD3EE2900504DE0 /* Box.swift */,
 			);
@@ -443,7 +443,7 @@
 		7555FF7C242A565900829871 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7555FF7B242A565900829871 /* iosApp.app */,
+				7555FF7B242A565900829871 /* TaskMaster.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -480,9 +480,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7555FF7A242A565900829871 /* iosApp */ = {
+		7555FF7A242A565900829871 /* TaskMaster */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */;
+			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "TaskMaster" */;
 			buildPhases = (
 				DBACD8947C958B66E2B02F5D /* [CP] Check Pods Manifest.lock */,
 				7555FF77242A565900829871 /* Sources */,
@@ -493,9 +493,9 @@
 			);
 			dependencies = (
 			);
-			name = iosApp;
+			name = TaskMaster;
 			productName = iosApp;
-			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
+			productReference = 7555FF7B242A565900829871 /* TaskMaster.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -526,7 +526,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7555FF7A242A565900829871 /* iosApp */,
+				7555FF7A242A565900829871 /* TaskMaster */,
 			);
 		};
 /* End PBXProject section */
@@ -536,6 +536,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2864E6D22BD42C7600504DE0 /* Launch Screen.storyboard in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
@@ -602,7 +603,6 @@
 				28750F112BD1450100E3006D /* TaskSectionBG.swift in Sources */,
 				28407DE82BD16976004B275D /* LaborCostCreationButton.swift in Sources */,
 				2864E6B02BD3949700504DE0 /* GradientBG.swift in Sources */,
-				2864E6BF2BD3D2A000504DE0 /* SplashScreen.swift in Sources */,
 				289BFD2B2BD18AD200099EAE /* SubTaskCardView.swift in Sources */,
 				28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */,
 				2864E6CE2BD409A900504DE0 /* LoginError.swift in Sources */,
@@ -810,7 +810,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */ = {
+		7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "TaskMaster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7555FFA6242A565B00829871 /* Debug */,
