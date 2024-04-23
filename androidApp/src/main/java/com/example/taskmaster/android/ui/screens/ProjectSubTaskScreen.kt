@@ -39,7 +39,7 @@ fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?,
                         width = 232,
                         rotateAngle = 0f,
                         title = title ?: "Заголовок отсутствует",
-                        iconItem = R.drawable.arrow_circle_right_icon,
+                        iconItem = R.drawable.arrow_circle_right_icon
                     )
                     TaskDescription(description = taskDescription ?: "Описание отсутствует")
                     ButtonTemplate(
