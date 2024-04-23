@@ -28,17 +28,18 @@ import com.example.taskmaster.android.ui.theme.ShadowGray
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun UncomplitedTasksContainer(
+fun CompletedTasksContainer(
     title: String,
     buttonTitle: String,
     navController: NavController,
     id: Int?,
-    viewModel: TaskViewModel = getViewModel()
+    viewModel: TaskViewModel = getViewModel(),
+    projectTitle: String
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.getUnfulfilleddTask(id!!.toInt())
+        viewModel.getCompletedTask(id!!.toInt())
     }
-    val uncompletedTasks = viewModel.stateUnfulfilleddTask.value.itemTaskState
+    val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
 
     Box(
         contentAlignment = Alignment.TopCenter,
@@ -60,7 +61,7 @@ fun UncomplitedTasksContainer(
                 color = Color.Black
             )
 
-            if (uncompletedTasks.isEmpty()) {
+            if (completedTasks.isEmpty()) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
@@ -75,7 +76,9 @@ fun UncomplitedTasksContainer(
                         color = Color.Black
                     )
                 }
-            } else {
+            }
+
+            if (completedTasks.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
                         .padding(start = 7.dp, end = 14.dp, bottom = 7.dp)
@@ -83,17 +86,20 @@ fun UncomplitedTasksContainer(
                         .heightIn(min = 232.dp, max = 345.dp)
                         .background(ShadowGray)
                 ) {
-                    itemsIndexed(uncompletedTasks) { _, item ->
+                    itemsIndexed(completedTasks) { _, item ->
                         if (item != null) {
                             ItemProject(
                                 item = item,
                                 context = LocalContext.current,
-                                navController = navController
+                                navController = navController,
+                                completed = true,
+                                projectTitle = projectTitle
                             )
                         }
                     }
                 }
             }
+
             if (buttonTitle.isNotEmpty()) {
                 BoxButton(buttonTitle, id!!)
             }
