@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ButtonTemplate
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.projectTemplate.ComplitedTasksContainer
@@ -31,15 +32,15 @@ fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?)
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    /*ButtonTemplate(
+                    ButtonTemplate(
+                        id = id,
+                        navController = navController,
                         text = "Название задачи",
                         width = 232,
                         rotateAngle = 0f,
+                        title = title ?: "Заголовок отсутствует",
                         iconItem = R.drawable.arrow_circle_right_icon,
-                        route = navController.navigate(
-                            NavigationItem.TaskInfo.passIdAndTitle(title ?: "Заголовок не получен")
-                        )
-                    )*/
+                    )
                     TaskDescription(description = "Подзадачи какой-то задачи, какого-то проекта")
                     ButtonTemplate(
                         navController = navController,

@@ -7,10 +7,10 @@ import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.ListItemList
 
 @Composable
-fun TaskLaborCostListScreen(navController: NavController){
+fun TaskLaborCostListScreen(navController: NavController, id: Int?, title: String?){
     Column {
         Header(
-            text = "",
+            text = title!!,
             iconItem = 0,
             actionIcons = listOf(),
             navController,

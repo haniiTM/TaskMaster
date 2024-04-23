@@ -24,27 +24,48 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.navigation.NavigationItem
 
 @Composable
-fun ButtonTemplate(navController: NavController, text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, title: String?, id: Int?) {
-    Button(
-        onClick = { navController.navigate(
-            NavigationItem.AttachmentsListScreen.passIdAndTitle(id ?: 0,title ?: "Заголовок не получен")
-        ) }, modifier = Modifier
-            .padding(top = 20.dp, bottom = 20.dp)
-            .width(width.dp)
-            .height(31.dp)
-            .fillMaxSize(), colors = ButtonDefaults.buttonColors(
-            Color.White
-        ), shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(15.dp, 0.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-    ) {
-        Text(text = text, color = Color.Black)
-        if (iconItem > 0) {
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                modifier = Modifier.rotate(rotateAngle),
-                painter = painterResource(id = iconItem),
-                contentDescription = "",
-                alignment = Alignment.CenterEnd
-            )
+fun ButtonTemplate(navController: NavController, text: String, width: Int, iconItem: Int = -1, rotateAngle: Float, title: String, id: Int?) {
+    if (text == "Вложения"){
+        Button(
+            onClick = { navController.navigate(NavigationItem.AttachmentsListScreen.passIdAndTitle(id!!.toInt(), title)) }, modifier = Modifier
+                .padding(top = 20.dp, bottom = 20.dp)
+                .width(width.dp)
+                .height(31.dp)
+                .fillMaxSize(), colors = ButtonDefaults.buttonColors(
+                Color.White
+            ), shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(15.dp, 0.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+        ) {
+            Text(text = text, color = Color.Black)
+            if (iconItem > 0) {
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    modifier = Modifier.rotate(rotateAngle),
+                    painter = painterResource(id = iconItem),
+                    contentDescription = "",
+                    alignment = Alignment.CenterEnd
+                )
+            }
+        }
+    }else{
+        Button(
+            onClick = { navController.navigate(NavigationItem.TaskInfo.passIdAndTitle(id!!.toInt(), title)) }, modifier = Modifier
+                .padding(top = 20.dp, bottom = 20.dp)
+                .width(width.dp)
+                .height(31.dp)
+                .fillMaxSize(), colors = ButtonDefaults.buttonColors(
+                Color.White
+            ), shape = RoundedCornerShape(10.dp), contentPadding = PaddingValues(15.dp, 0.dp), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+        ) {
+            Text(text = text, color = Color.Black)
+            if (iconItem > 0) {
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    modifier = Modifier.rotate(rotateAngle),
+                    painter = painterResource(id = iconItem),
+                    contentDescription = "",
+                    alignment = Alignment.CenterEnd
+                )
+            }
         }
     }
 }

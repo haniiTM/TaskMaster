@@ -11,7 +11,7 @@ import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 
 @Composable
-fun TaskInfoScreen(navController: NavController, id: Int?, title: String){
+fun TaskInfoScreen(navController: NavController, id: Int?, title: String?){
     Column {
         Header(
             text = title ?: "Заголовок отсутствует",
@@ -20,7 +20,7 @@ fun TaskInfoScreen(navController: NavController, id: Int?, title: String){
             navController,
             spacer = false)
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-            TaskInfoBlock(navController = navController)
+            TaskInfoBlock(navController = navController, id = id, title = title)
         }
     }
 }

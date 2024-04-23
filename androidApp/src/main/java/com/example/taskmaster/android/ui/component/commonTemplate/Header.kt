@@ -46,7 +46,7 @@ fun Header(
     actionIcons: List<Int>,
     navController: NavController,
     spacer: Boolean
-    ) {
+) {
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val action =

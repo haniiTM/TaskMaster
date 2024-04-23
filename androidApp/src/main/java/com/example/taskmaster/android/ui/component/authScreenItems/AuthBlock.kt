@@ -95,7 +95,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                             if (success) {
                                 navController.navigate("projects")
                             } else {
-                                userLogin = ""
                                 userPassword = ""
                                 showErrorMessage("Неверный логин или пароль", context = context)
                             }

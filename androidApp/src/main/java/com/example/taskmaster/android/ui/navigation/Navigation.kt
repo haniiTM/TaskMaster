@@ -22,7 +22,6 @@ import com.taskmaster.ui.screens.AuthScreen
 @ExperimentalAnimationApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    var title: String? = null
     NavHost(
         navController = navController,
         startDestination = NavigationItem.Auth.route
@@ -45,7 +44,7 @@ fun Navigation(navController: NavHostController) {
             })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt(PROJECT_TASK_ARGUMENT_KEY)
-            title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
+            val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
             ProjectTaskScreen(navController = navController, id = id, title = title)
         }
 
@@ -58,43 +57,57 @@ fun Navigation(navController: NavHostController) {
             })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt(PROJECT_SUBTASK_ARGUMENT_KEY)
+            val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
             ProjectSubTaskScreen(
                 navController = navController,
                 id = id,
-                title = title ?: "Заголовок отсутствует"
+                title = title
             )
         }
 
         composable(route = NavigationItem.TaskInfo.route,
-            arguments = listOf(navArgument(PROJECT_SUBTASK_ARGUMENT_KEY) {
+            arguments = listOf(navArgument(PROJECT_INFO_ARGUMENT_KEY) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
                 type = NavType.StringType
             })
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt(PROJECT_SUBTASK_ARGUMENT_KEY)
-
+            val id = backStackEntry.arguments?.getInt(PROJECT_INFO_ARGUMENT_KEY)
+            val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
             TaskInfoScreen(
                 navController = navController,
                 id = id,
-                title = title ?: "Заголовок отсутствует"
+                title = title
             )
         }
-        composable(route = NavigationItem.TaskLaborCostListScreen.route) {
-            TaskLaborCostListScreen(navController = navController)
-        }
-        composable(route = NavigationItem.AttachmentsListScreen.route,
-            arguments = listOf(navArgument(PROJECT_SUBTASK_ARGUMENT_KEY) {
+        composable(route = NavigationItem.TaskLaborCostListScreen.route,
+            arguments = listOf(navArgument(PROJECT_INFO_ARGUMENT_KEY) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
                 type = NavType.StringType
             })
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt(PROJECT_SUBTASK_ARGUMENT_KEY)
+            val id = backStackEntry.arguments?.getInt(PROJECT_INFO_ARGUMENT_KEY)
+            val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
+            TaskLaborCostListScreen(
+                navController = navController,
+                id = id,
+                title = title
+            )
+        }
+        composable(route = NavigationItem.AttachmentsListScreen.route,
+            arguments = listOf(navArgument(PROJECT_INFO_ARGUMENT_KEY) {
+                type = NavType.IntType
+            }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt(PROJECT_INFO_ARGUMENT_KEY)
+            val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
             AttachmentsListScreen(
                 navController = navController,
                 id = id,
-                title = title ?: "Заголовок отсутствует"
+                title = title
             )
         }
         composable(route = NavigationItem.CalculationOfLaborCosts.route) {
