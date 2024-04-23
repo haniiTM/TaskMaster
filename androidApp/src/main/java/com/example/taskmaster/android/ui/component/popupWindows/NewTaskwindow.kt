@@ -39,12 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.android.ui.theme.PlaceHolder
+import com.example.taskmaster.data.network.models.TaskDTO
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
+fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModelTask: TaskViewModel = getViewModel(), id: Int, onDismissRequest: () -> Unit) {
     LaunchedEffect(key1 = true) {
         viewModel.getTypeActivity()
     }
@@ -61,6 +63,8 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
     var taskCategory by remember {
         mutableStateOf("")
     }
+
+    var categoryId by remember { mutableStateOf(0) }
     val linearGradient =
         Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     var categoryExpanded by remember { mutableStateOf(false) }
@@ -166,6 +170,7 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
                                         onClick = {
                                             categoryExpanded = false
                                             taskCategory = item!!.name
+                                            categoryId = item!!.id
                                         },
                                         text = {
                                             if (item != null) {
@@ -190,7 +195,18 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel()) {
                         .fillMaxWidth()
                 )
                 Button(
-                    onClick = {},
+                    onClick = {
+//                        val task = TaskDTO() {
+//                            name = taskTitle,
+//                            scope = taskAllocatedTime,
+//                            typeActivity = categoryId
+//                        }
+                        val task = TaskDTO()
+                        task.name = taskTitle
+                        task.scope = taskAllocatedTime.toInt()
+                        task.typeofactivityid = categoryId
+                        viewModelTask.createTask(task, id)
+                             onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(45.dp),
