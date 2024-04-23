@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.projectTemplate.CalculationTimeButton
-import com.example.taskmaster.android.ui.component.projectTemplate.ComplitedTasksContainer
-import com.example.taskmaster.android.ui.component.projectTemplate.UncomplitedTasksContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTasksContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
 
 @Composable
 fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
@@ -30,7 +30,7 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
             }
 
             item {
-                UncomplitedTasksContainer(
+                UncompletedTasksContainer(
                     title = "Задачи",
                     buttonTitle = "Добавить задачу",
                     navController = navController,
@@ -40,7 +40,7 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
             }
 
             item {
-                ComplitedTasksContainer(
+                CompletedTasksContainer(
                     title = "Выполнено",
                     buttonTitle = "",
                     navController = navController,

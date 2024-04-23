@@ -11,8 +11,8 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ButtonTemplate
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
-import com.example.taskmaster.android.ui.component.projectTemplate.ComplitedTasksContainer
-import com.example.taskmaster.android.ui.component.projectTemplate.UncomplitedTasksContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTasksContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
 
 @Composable
@@ -53,7 +53,7 @@ fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?,
                 }
 
                 item {
-                    UncomplitedTasksContainer(
+                    UncompletedTasksContainer(
                         title = "Задачи",
                         buttonTitle = "Добавить задачу",
                         navController = navController,
@@ -63,7 +63,7 @@ fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?,
                 }
 
                 item {
-                    ComplitedTasksContainer(
+                    CompletedTasksContainer(
                         title = "Выполнено",
                         buttonTitle = "",
                         navController = navController,
