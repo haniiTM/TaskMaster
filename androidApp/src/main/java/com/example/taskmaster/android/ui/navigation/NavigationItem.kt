@@ -4,8 +4,10 @@ import androidx.annotation.DrawableRes
 
 const val PROJECT_TASK_ARGUMENT_KEY = "id"
 const val PROJECT_TITLE_ARGUMENT_KEY = "projectTitle"
+const val TASK_TITLE_ARGUMENT_KEY = "name"
 const val PROJECT_SUBTASK_ARGUMENT_KEY = "id"
 const val PROJECT_INFO_ARGUMENT_KEY = "id"
+const val TASK_DESCRIPTION_ARGUMENT_KEY = "description"
 sealed class NavigationItem(
     val route: String,
     val title: String,
@@ -18,9 +20,9 @@ sealed class NavigationItem(
             return "projectTask/$id/$title"
         }
     }
-    data object ProjectSubTask : NavigationItem("projectSubTask/{$PROJECT_SUBTASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null) {
-        fun passIdAndTitle(id: Int, title: String): String {
-            return "projectSubTask/$id/$title"
+    data object ProjectSubTask : NavigationItem("projectSubTask/{$PROJECT_SUBTASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}/{$TASK_TITLE_ARGUMENT_KEY}/{$TASK_DESCRIPTION_ARGUMENT_KEY}", "R.string.title_auth", null) {
+        fun passIdAndTitle(id: Int, title: String, taskTitle: String, taskDescription: String): String {
+            return "projectSubTask/$id/$title/$taskTitle/$taskDescription"
         }
     }
     data object TaskInfo : NavigationItem("taskInfo/{$PROJECT_INFO_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null){

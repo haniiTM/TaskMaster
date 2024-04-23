@@ -16,7 +16,7 @@ import com.example.taskmaster.android.ui.component.projectTemplate.UncomplitedTa
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
 
 @Composable
-fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?) {
+fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?, taskTitle: String?, taskDescription: String?) {
     Box {
         Column(modifier = Modifier.fillMaxWidth()) {
             Header(
@@ -35,13 +35,13 @@ fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?)
                     ButtonTemplate(
                         id = id,
                         navController = navController,
-                        text = "Название задачи",
+                        text = taskTitle!!,
                         width = 232,
                         rotateAngle = 0f,
                         title = title ?: "Заголовок отсутствует",
                         iconItem = R.drawable.arrow_circle_right_icon,
                     )
-                    TaskDescription(description = "Подзадачи какой-то задачи, какого-то проекта")
+                    TaskDescription(description = taskDescription ?: "Описание отсутствует")
                     ButtonTemplate(
                         navController = navController,
                         text = "Вложения",
