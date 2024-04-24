@@ -9,12 +9,14 @@
 import SwiftUI
 
 struct TaskListView: View {
+    //    MARK: Props
     @StateObject private var viewModel = TaskListViewModel()
     @State private var taskList: [TaskInfo] = []
     private let title: String
 
     @State private var model = TaskListModel()
 
+    //    MARK: Init
     init(_ title: String) {
         self.title = title
         //        viewModel.projectListSignal.bind { projectList in
@@ -23,6 +25,7 @@ struct TaskListView: View {
         //        }
     }
 
+    //    MARK: Body
     var body: some View {
         ProjectFrameView(title) {
             EstimatesScreenInfoButton()

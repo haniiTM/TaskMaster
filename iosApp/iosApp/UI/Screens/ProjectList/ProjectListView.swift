@@ -9,10 +9,12 @@
 import SwiftUI
 
 struct ProjectListView: View {
+    //    MARK: Props
     @StateObject private var viewModel = ProjectListViewModel()
     @State private var projectList: [TaskInfo] = []
     @State private var model = ProjectListModel()
 
+    //    MARK: Init
     init() {
 //        viewModel.projectListSignal.bind { projectList in
 //            guard let projectList = projectList else { return }
@@ -20,6 +22,7 @@ struct ProjectListView: View {
 //        }
     }
 
+    //    MARK: Body
     var body: some View {
         MainFrameView {
             ForEach(viewModel.projectListSignal.value ?? .init()) { project in
