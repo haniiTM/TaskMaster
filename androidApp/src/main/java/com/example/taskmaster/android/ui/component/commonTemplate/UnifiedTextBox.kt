@@ -42,7 +42,8 @@ fun UnifiedTextBox(
     passwordVisibleValue: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     keyboardType: KeyboardType = KeyboardType.Email,
-    roundedAngle: Int = 0,
+    roundedTopAngle: Int = 0,
+    roundedDownAngle: Int = 0,
     spacer: Int = 0,
     borderWidth: Int = 0,
     icon: Int = 0,
@@ -55,10 +56,10 @@ fun UnifiedTextBox(
         value = value,
         onValueChange = onValueChange,
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp))
+            .clip(shape = RoundedCornerShape(roundedTopAngle.dp, roundedTopAngle.dp, roundedDownAngle.dp, roundedDownAngle.dp))
             .border(
                 BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline),
-                shape = RoundedCornerShape(roundedAngle.dp, roundedAngle.dp)
+                shape = RoundedCornerShape(roundedTopAngle.dp, roundedTopAngle.dp)
             )
             .background(color = Color.White)
             .height(40.dp)

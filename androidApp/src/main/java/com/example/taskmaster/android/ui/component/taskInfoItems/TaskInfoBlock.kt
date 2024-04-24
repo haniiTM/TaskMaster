@@ -43,11 +43,12 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
 import com.example.taskmaster.android.ui.component.popupWindows.NewLaborCostWindow
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = getViewModel()) {
+fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = getViewModel(), id: Int?, title: String?) {
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
     }
@@ -271,7 +272,7 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                         .fillMaxWidth()
                 )
                 Button(
-                    onClick = { navController.navigate("taskLaborCostList") },
+                    onClick = { navController.navigate(NavigationItem.TaskLaborCostListScreen.passIdAndTitle(id!!.toInt(), title!!)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(32.dp),

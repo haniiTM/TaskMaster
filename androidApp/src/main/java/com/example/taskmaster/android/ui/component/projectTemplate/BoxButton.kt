@@ -42,7 +42,7 @@ fun BoxButton(text: String, id: Int) {
     }
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            NewTaskWindow(id = id)
+            NewTaskWindow(id = id, onDismissRequest = {showDialog = !showDialog})
         }
     }
 }
