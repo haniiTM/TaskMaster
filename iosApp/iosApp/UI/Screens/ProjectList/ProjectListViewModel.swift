@@ -13,6 +13,7 @@ final class ProjectListViewModel: ProjectListViewModelProtocol, ObservableObject
     var projectListSignal: Box<[TaskInfo]?> = .init(nil)
     private let model = ProjectListModel()
 
+    //    MARK: Methods
     func updateDataSource() {
         projectListSignal.value = model.projectList
     }

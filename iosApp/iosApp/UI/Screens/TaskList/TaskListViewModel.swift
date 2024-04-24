@@ -13,6 +13,7 @@ final class TaskListViewModel: TaskListViewModelProtocol, ObservableObject {
     var taskListSignal: Box<[TaskInfo]?> = .init(nil)
     private let model = TaskListModel()
 
+    //    MARK: Methods
     func updateDataSource() {
         taskListSignal.value = model.taskList
     }

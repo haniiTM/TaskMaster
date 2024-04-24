@@ -13,6 +13,7 @@ final class SubTaskListViewModel: SubTaskListViewModelProtocol, ObservableObject
     var subTaskListSignal: Box<[TaskInfo]?> = .init(nil)
     private let model = SubTaskListModel()
 
+    //    MARK: Methods
     func updateDataSource() {
         subTaskListSignal.value = model.subTaskList
     }

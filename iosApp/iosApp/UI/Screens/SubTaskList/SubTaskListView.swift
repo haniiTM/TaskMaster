@@ -9,12 +9,14 @@
 import SwiftUI
 
 struct SubTaskListView: View {
+    //    MARK: Props
     @StateObject private var viewModel = SubTaskListViewModel()
     @State private var subTaskList: [TaskInfo] = []
     private let title: String
 
     @State private var model = SubTaskListModel()
 
+    //    MARK: Init
     init(_ title: String) {
         self.title = title
         //        viewModel.projectListSignal.bind { projectList in
@@ -23,6 +25,7 @@ struct SubTaskListView: View {
         //        }
     }
 
+    //    MARK: Body
     var body: some View {
         ProjectFrameView(title) {
             ScreenInfoButton(title, isUrgent: false)

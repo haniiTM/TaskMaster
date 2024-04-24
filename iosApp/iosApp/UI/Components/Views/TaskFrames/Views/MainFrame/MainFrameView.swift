@@ -21,7 +21,7 @@ struct MainFrameView<Content: View>: View {
     //    MARK: Body
     var body: some View {
         TemplateTaskFrame(TaskFramesConstants.Strings.Titles.mainFrameTitle,
-                          imageName: TaskFramesConstants.Strings.ImageNames.extraActionsImageName,
+                          imageName: Constants.Strings.ImageNames.extraActionsImageName,
                           action: action,
                           content: content)
     }

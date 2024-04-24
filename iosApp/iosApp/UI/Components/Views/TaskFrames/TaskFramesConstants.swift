@@ -15,12 +15,6 @@ enum TaskFramesConstants {
         enum Titles {
             static let mainFrameTitle = "Все проекты"
         }
-
-        //    MARK: Image names
-        enum ImageNames {
-            static let extraActionsImageName = "ellipsis"
-            static let searchActionImageName = "magnifyingglass"
-        }
     }
 
     //    MARK: - Numbers

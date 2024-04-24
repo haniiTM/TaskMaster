@@ -68,6 +68,15 @@
 		289BFD332BD18FBD00099EAE /* TaskSectionBGsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289BFD322BD18FBD00099EAE /* TaskSectionBGsConstants.swift */; };
 		28DE0A362BCEAF17001F819C /* TaskCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A352BCEAF17001F819C /* TaskCardModel.swift */; };
 		28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE0A3A2BCEE7C3001F819C /* TemplateActionButton.swift */; };
+		28E795FA2BD966B000D402E4 /* AttachmentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E795F92BD966B000D402E4 /* AttachmentListView.swift */; };
+		28E795FD2BD9679800D402E4 /* AttachmentCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E795FC2BD9679800D402E4 /* AttachmentCardView.swift */; };
+		28E795FF2BD9686900D402E4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E795FE2BD9686900D402E4 /* Constants.swift */; };
+		28E796012BD96DA600D402E4 /* AttachmentCreationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796002BD96DA600D402E4 /* AttachmentCreationButton.swift */; };
+		28E796042BD96EAD00D402E4 /* AttachmentCreationButtonAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796032BD96EAD00D402E4 /* AttachmentCreationButtonAction.swift */; };
+		28E796062BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796052BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift */; };
+		28E796082BD96F7E00D402E4 /* AttachmentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */; };
+		28E7960A2BD96FDA00D402E4 /* AttachmentListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */; };
+		28E7960D2BD973DB00D402E4 /* AttachmentCardAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */; };
 		28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF12BD5507C00B31497 /* ProjectListView.swift */; };
 		28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */; };
 		28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */; };
@@ -142,6 +151,15 @@
 		289BFD322BD18FBD00099EAE /* TaskSectionBGsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSectionBGsConstants.swift; sourceTree = "<group>"; };
 		28DE0A352BCEAF17001F819C /* TaskCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardModel.swift; sourceTree = "<group>"; };
 		28DE0A3A2BCEE7C3001F819C /* TemplateActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateActionButton.swift; sourceTree = "<group>"; };
+		28E795F92BD966B000D402E4 /* AttachmentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListView.swift; sourceTree = "<group>"; };
+		28E795FC2BD9679800D402E4 /* AttachmentCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCardView.swift; sourceTree = "<group>"; };
+		28E795FE2BD9686900D402E4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		28E796002BD96DA600D402E4 /* AttachmentCreationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCreationButton.swift; sourceTree = "<group>"; };
+		28E796032BD96EAD00D402E4 /* AttachmentCreationButtonAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCreationButtonAction.swift; sourceTree = "<group>"; };
+		28E796052BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListViewModelProtocol.swift; sourceTree = "<group>"; };
+		28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListViewModel.swift; sourceTree = "<group>"; };
+		28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListModel.swift; sourceTree = "<group>"; };
+		28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCardAction.swift; sourceTree = "<group>"; };
 		28EA9CF12BD5507C00B31497 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -293,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				2864E6C62BD3DD6000504DE0 /* TaskInfo.swift */,
+				28E795FE2BD9686900D402E4 /* Constants.swift */,
 				287638EC2BB1ADB200B55DBF /* Screens */,
 				289BFD372BD1914C00099EAE /* ModalScreens */,
 				287638EA2BB1ADA000B55DBF /* Components */,
@@ -319,6 +338,7 @@
 				28EA9CF32BD5508E00B31497 /* ProjectList */,
 				28EA9CFC2BD5811300B31497 /* TaskList */,
 				28EA9D052BD590CE00B31497 /* SubTaskList */,
+				28E795FB2BD9674A00D402E4 /* AttachmentList */,
 				2864E6CB2BD3EE2900504DE0 /* Box.swift */,
 			);
 			path = Screens;
@@ -460,6 +480,7 @@
 				288455D92BD2B03A00DF64E5 /* LaborCostCreationButton */,
 				288455DC2BD2B10300DF64E5 /* TaskCreationButton */,
 				288BA0C22BD6376E000E3A82 /* SubTaskCreationButton */,
+				28E796022BD96DB300D402E4 /* AttachmentCreationButton */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -481,6 +502,36 @@
 				2894CEBB2BD926C100B8AB1C /* TaskCardsExtensions.swift */,
 			);
 			path = TaskCards;
+			sourceTree = "<group>";
+		};
+		28E795FB2BD9674A00D402E4 /* AttachmentList */ = {
+			isa = PBXGroup;
+			children = (
+				28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */,
+				28E795F92BD966B000D402E4 /* AttachmentListView.swift */,
+				28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */,
+				28E796052BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift */,
+				28E7960B2BD973CD00D402E4 /* AttachmentCard */,
+			);
+			path = AttachmentList;
+			sourceTree = "<group>";
+		};
+		28E796022BD96DB300D402E4 /* AttachmentCreationButton */ = {
+			isa = PBXGroup;
+			children = (
+				28E796002BD96DA600D402E4 /* AttachmentCreationButton.swift */,
+				28E796032BD96EAD00D402E4 /* AttachmentCreationButtonAction.swift */,
+			);
+			path = AttachmentCreationButton;
+			sourceTree = "<group>";
+		};
+		28E7960B2BD973CD00D402E4 /* AttachmentCard */ = {
+			isa = PBXGroup;
+			children = (
+				28E795FC2BD9679800D402E4 /* AttachmentCardView.swift */,
+				28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */,
+			);
+			path = AttachmentCard;
 			sourceTree = "<group>";
 		};
 		28EA9CF32BD5508E00B31497 /* ProjectList */ = {
@@ -685,12 +736,16 @@
 				2864E6AC2BD3808C00504DE0 /* TaskFramesConstants.swift in Sources */,
 				288BA0BF2BD6356F000E3A82 /* SubTaskListViewModelProtocol.swift in Sources */,
 				288455DB2BD2B05000DF64E5 /* LaborCostCreationButtonAction.swift in Sources */,
+				28E795FF2BD9686900D402E4 /* Constants.swift in Sources */,
 				28EA9D002BD5812F00B31497 /* TaskListViewModel.swift in Sources */,
 				287638F22BB1AE6F00B55DBF /* LoginScreenViewModel.swift in Sources */,
 				288BA0C12BD63766000E3A82 /* SubTaskCreationButton.swift in Sources */,
+				28E795FA2BD966B000D402E4 /* AttachmentListView.swift in Sources */,
 				28609D022BD154DF005D2D01 /* AttachmentsScreenInfoButton.swift in Sources */,
+				28E796042BD96EAD00D402E4 /* AttachmentCreationButtonAction.swift in Sources */,
 				2894CEBE2BD92C8600B8AB1C /* SubTaskCardControllerProtocol.swift in Sources */,
 				288455D82BD2AFB100DF64E5 /* Protocols.swift in Sources */,
+				28E796062BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift in Sources */,
 				2864E6CC2BD3EE2900504DE0 /* Box.swift in Sources */,
 				28EA9D022BD5813B00B31497 /* TaskListViewModelProtocol.swift in Sources */,
 				287638FA2BB1B87B00B55DBF /* Logo.swift in Sources */,
@@ -702,6 +757,7 @@
 				2864E6B02BD3949700504DE0 /* GradientBG.swift in Sources */,
 				289BFD2B2BD18AD200099EAE /* SubTaskCardView.swift in Sources */,
 				28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */,
+				28E7960A2BD96FDA00D402E4 /* AttachmentListModel.swift in Sources */,
 				2894CEC02BD92FDD00B8AB1C /* TaskCardControllerProtocol.swift in Sources */,
 				2864E6CE2BD409A900504DE0 /* LoginError.swift in Sources */,
 				289BFD272BD1801B00099EAE /* TaskCardsConstants.swift in Sources */,
@@ -712,6 +768,9 @@
 				287638F02BB1AE6000B55DBF /* LoginScreenView.swift in Sources */,
 				288BA0C42BD6394B000E3A82 /* SubTaskCreationButtonAction.swift in Sources */,
 				289BFD292BD18AA900099EAE /* TaskCardView.swift in Sources */,
+				28E795FD2BD9679800D402E4 /* AttachmentCardView.swift in Sources */,
+				28E7960D2BD973DB00D402E4 /* AttachmentCardAction.swift in Sources */,
+				28E796082BD96F7E00D402E4 /* AttachmentListViewModel.swift in Sources */,
 				287638FC2BB1ED3700B55DBF /* TemplateTaskCardView.swift in Sources */,
 				28EA9CF92BD5539300B31497 /* ProjectListModel.swift in Sources */,
 				288455EC2BD2DFD300DF64E5 /* TaskCardController.swift in Sources */,
@@ -722,6 +781,7 @@
 				28750F152BD1458100E3006D /* CompletedTaskSectionBG.swift in Sources */,
 				28EA9CFB2BD5810800B31497 /* TaskListView.swift in Sources */,
 				288455E42BD2DEBE00DF64E5 /* AttachmentsScreenInfoButtonAction.swift in Sources */,
+				28E796012BD96DA600D402E4 /* AttachmentCreationButton.swift in Sources */,
 				289BFD332BD18FBD00099EAE /* TaskSectionBGsConstants.swift in Sources */,
 				288455EE2BD2E02200DF64E5 /* SubTaskCardController.swift in Sources */,
 				2864E6C72BD3DD6000504DE0 /* TaskInfo.swift in Sources */,

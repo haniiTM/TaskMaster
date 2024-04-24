@@ -13,15 +13,18 @@ enum ActionButtonsConstants {
     enum Strings {
         //    MARK: Titles
         enum Titles {
-            static let taskTitle = "Добавить задачу"
-            static let subTaskTitle = "Добавить подзадачу"
-            static let laborCostTitle = "Добавить трудозатраты"
+            static let generalTitle = "Добавить "
+            static let taskTitle = generalTitle + "задачу"
+            static let subTaskTitle = generalTitle + "подзадачу"
+            static let laborCostTitle = generalTitle + "трудозатраты"
+            static let attachmentTitle = generalTitle + "вложение"
         }
 
         //    MARK: Image Names
         enum ImageNames {
             static let taskImageName = "plus"
             static let subTaskImageName = taskImageName
+            static let attachmentImageName = taskImageName
         }
     }
 }
