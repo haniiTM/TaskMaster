@@ -77,6 +77,10 @@
 		28E796082BD96F7E00D402E4 /* AttachmentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */; };
 		28E7960A2BD96FDA00D402E4 /* AttachmentListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */; };
 		28E7960D2BD973DB00D402E4 /* AttachmentCardAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */; };
+		28E7960F2BD9935600D402E4 /* LaborCostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E7960E2BD9935600D402E4 /* LaborCostListView.swift */; };
+		28E796122BD9A95100D402E4 /* LaborCostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796112BD9A95100D402E4 /* LaborCostListViewModel.swift */; };
+		28E796142BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */; };
+		28E796162BD9A98F00D402E4 /* LaborCostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */; };
 		28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF12BD5507C00B31497 /* ProjectListView.swift */; };
 		28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */; };
 		28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */; };
@@ -160,6 +164,10 @@
 		28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListViewModel.swift; sourceTree = "<group>"; };
 		28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListModel.swift; sourceTree = "<group>"; };
 		28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCardAction.swift; sourceTree = "<group>"; };
+		28E7960E2BD9935600D402E4 /* LaborCostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListView.swift; sourceTree = "<group>"; };
+		28E796112BD9A95100D402E4 /* LaborCostListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListViewModel.swift; sourceTree = "<group>"; };
+		28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListViewModelProtocol.swift; sourceTree = "<group>"; };
+		28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListModel.swift; sourceTree = "<group>"; };
 		28EA9CF12BD5507C00B31497 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -339,6 +347,7 @@
 				28EA9CFC2BD5811300B31497 /* TaskList */,
 				28EA9D052BD590CE00B31497 /* SubTaskList */,
 				28E795FB2BD9674A00D402E4 /* AttachmentList */,
+				28E796102BD9A93F00D402E4 /* LaborCostList */,
 				2864E6CB2BD3EE2900504DE0 /* Box.swift */,
 			);
 			path = Screens;
@@ -532,6 +541,17 @@
 				28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */,
 			);
 			path = AttachmentCard;
+			sourceTree = "<group>";
+		};
+		28E796102BD9A93F00D402E4 /* LaborCostList */ = {
+			isa = PBXGroup;
+			children = (
+				28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */,
+				28E7960E2BD9935600D402E4 /* LaborCostListView.swift */,
+				28E796112BD9A95100D402E4 /* LaborCostListViewModel.swift */,
+				28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */,
+			);
+			path = LaborCostList;
 			sourceTree = "<group>";
 		};
 		28EA9CF32BD5508E00B31497 /* ProjectList */ = {
@@ -733,8 +753,10 @@
 				28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */,
 				2864E6B82BD3B4D900504DE0 /* MainFrameAction.swift in Sources */,
 				28407DEA2BD1698B004B275D /* TaskCreationButton.swift in Sources */,
+				28E796122BD9A95100D402E4 /* LaborCostListViewModel.swift in Sources */,
 				2864E6AC2BD3808C00504DE0 /* TaskFramesConstants.swift in Sources */,
 				288BA0BF2BD6356F000E3A82 /* SubTaskListViewModelProtocol.swift in Sources */,
+				28E796142BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift in Sources */,
 				288455DB2BD2B05000DF64E5 /* LaborCostCreationButtonAction.swift in Sources */,
 				28E795FF2BD9686900D402E4 /* Constants.swift in Sources */,
 				28EA9D002BD5812F00B31497 /* TaskListViewModel.swift in Sources */,
@@ -766,6 +788,7 @@
 				28DE0A362BCEAF17001F819C /* TaskCardModel.swift in Sources */,
 				2894CEBA2BD8FA2200B8AB1C /* ProjectCardControllerProtocol.swift in Sources */,
 				287638F02BB1AE6000B55DBF /* LoginScreenView.swift in Sources */,
+				28E796162BD9A98F00D402E4 /* LaborCostListModel.swift in Sources */,
 				288BA0C42BD6394B000E3A82 /* SubTaskCreationButtonAction.swift in Sources */,
 				289BFD292BD18AA900099EAE /* TaskCardView.swift in Sources */,
 				28E795FD2BD9679800D402E4 /* AttachmentCardView.swift in Sources */,
@@ -784,6 +807,7 @@
 				28E796012BD96DA600D402E4 /* AttachmentCreationButton.swift in Sources */,
 				289BFD332BD18FBD00099EAE /* TaskSectionBGsConstants.swift in Sources */,
 				288455EE2BD2E02200DF64E5 /* SubTaskCardController.swift in Sources */,
+				28E7960F2BD9935600D402E4 /* LaborCostListView.swift in Sources */,
 				2864E6C72BD3DD6000504DE0 /* TaskInfo.swift in Sources */,
 				288B59F42BCFB32800CD2BCE /* TemplateScreenInfoButton.swift in Sources */,
 				288B59F82BCFCC2A00CD2BCE /* TemplateTaskSectionBG.swift in Sources */,
