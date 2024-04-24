@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class ProjectListViewModel: ProjectListViewModelProtocol, ObservableObject {
+final class ProjectListViewModel: ProjectListViewModelProtocol, ObservableObject {
     //    MARK: Props
     var projectListSignal: Box<[TaskInfo]?> = .init(nil)
     private let model = ProjectListModel()

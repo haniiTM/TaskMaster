@@ -23,7 +23,7 @@ struct ProjectFrameView<Content: View>: View {
     //    MARK: Body
     var body: some View {
         TemplateTaskFrame(title,
-                          imageName: TaskFramesConstants.ImageNames.searchActionImageName,
+                          imageName: TaskFramesConstants.Strings.ImageNames.searchActionImageName,
                           action: action,
                           content: content)
     }

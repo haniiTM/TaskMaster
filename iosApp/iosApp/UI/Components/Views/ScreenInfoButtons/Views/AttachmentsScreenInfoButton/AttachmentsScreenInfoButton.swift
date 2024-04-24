@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AttachmentsScreenInfoButton: View {
     //    MARK: Props
-    private let title: String?
+    private let title: String
     private let action: Openable
 
     //    MARK: Init
@@ -25,7 +25,7 @@ struct AttachmentsScreenInfoButton: View {
 
     /// Initializes the view with default realization.
     init() {
-        title = nil
+        title = ScreenInfoButtonsConstants.Strings.Titles.attachmentsTitle
         action = AttachmentsScreenInfoButtonAction()
     }
 
@@ -38,7 +38,7 @@ struct AttachmentsScreenInfoButton: View {
     private var ViewBody: some View {
         Spacer()
 
-        Text(title ?? ScreenInfoButtonsConstants.Strings.attachmentsTitle)
+        Text(title)
             .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
             .minimumScaleFactor(ScreenInfoButtonsConstants.Numbers.minimumScaleFactor)
 

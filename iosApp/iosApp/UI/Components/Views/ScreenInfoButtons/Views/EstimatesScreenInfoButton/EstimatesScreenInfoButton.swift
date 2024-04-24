@@ -10,11 +10,17 @@ import SwiftUI
 
 struct EstimatesScreenInfoButton: View {
     //    MARK: Props
-    private let action: Openable = EstimatesScreenInfoButtonAction()
+    private let title: String
+    private let action: Openable
+
+    //    MARK: Init
+    init() {
+        title = ScreenInfoButtonsConstants.Strings.Titles.estimatesTitle
+        action = EstimatesScreenInfoButtonAction()
+    }
 
     //    MARK: Body
     var body: some View {
-        AttachmentsScreenInfoButton(ScreenInfoButtonsConstants.Strings.estimatesTitle,
-                                    action: action)
+        AttachmentsScreenInfoButton(title, action: action)
     }
 }

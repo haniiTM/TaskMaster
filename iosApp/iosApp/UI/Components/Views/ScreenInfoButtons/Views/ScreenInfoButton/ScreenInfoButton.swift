@@ -10,12 +10,13 @@ import SwiftUI
 
 struct ScreenInfoButton: View {
     // MARK: Props
-    private let title: String
     private let isUrgent: Bool
-    private let action: Openable
 
-    private let urgentImageName: String?
-    private let imageName: String?
+    private let title: String
+    private let urgentImageName: String
+    private let imageName: String
+
+    private let action: Openable
 
     // MARK: Init
     /// Initializes the view with specified parameters.
@@ -26,7 +27,6 @@ struct ScreenInfoButton: View {
     init(_ title: String, isUrgent: Bool, urgentImageName: String, imageName: String, action: Openable) {
         self.title = title
         self.isUrgent = isUrgent
-
         self.urgentImageName = urgentImageName
         self.imageName = imageName
         self.action = action
@@ -36,9 +36,9 @@ struct ScreenInfoButton: View {
     init(_ title: String, isUrgent: Bool) {
         self.title = title
         self.isUrgent = isUrgent
-
-        urgentImageName = nil
-        imageName = nil
+        
+        urgentImageName = TaskCardsConstants.Strings.ImageNames.urgentImageName
+        imageName = ScreenInfoButtonsConstants.Strings.ImageNames.infoImageName
         action = ScreenInfoButtonAction()
     }
 
@@ -50,7 +50,7 @@ struct ScreenInfoButton: View {
     @ViewBuilder
     private var ViewBody: some View {
         if isUrgent {
-            Image(systemName: urgentImageName ?? TaskCardsConstants.ImageStrings.urgentImageName)
+            Image(systemName: urgentImageName)
         }
 
         Spacer()
@@ -61,6 +61,6 @@ struct ScreenInfoButton: View {
 
         Spacer()
 
-        Image(systemName: imageName ?? ScreenInfoButtonsConstants.ImageStrings.infoImageName)
+        Image(systemName: imageName)
     }
 }

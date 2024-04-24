@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LaborCostCreationButton: View {
     //    MARK: Props
-    private let title: String?
+    private let title: String
     private let action: Openable
 
     //    MARK: Init
@@ -25,7 +25,7 @@ struct LaborCostCreationButton: View {
 
     /// Initializes the view with default realization.
     init() {
-        title = nil
+        title = ActionButtonsConstants.Strings.Titles.laborCostTitle
         action = LaborCostCreationButtonAction()
     }
 
@@ -36,7 +36,7 @@ struct LaborCostCreationButton: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Text(title ?? ActionButtonsConstants.Strings.laborCostTitle)
+        Text(title)
             .font(.subheadline)
     }
 }

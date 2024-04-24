@@ -6,7 +6,17 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-struct SubTaskCardController: TaskCardActions {
+final class SubTaskCardController: SubTaskCardControllerProtocol {
+    //    MARK: Props
+    let model: TaskInfo
+
+    //    MARK: Init
+    required init(model: TaskInfo) {
+        self.model = model
+    }
+
+    //    MARK: Methods
     func open() {}
+
     func remove() {}
 }

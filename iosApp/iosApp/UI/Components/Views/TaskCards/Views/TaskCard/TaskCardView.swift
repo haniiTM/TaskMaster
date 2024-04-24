@@ -10,13 +10,19 @@ import SwiftUI
 
 struct TaskCardView: View {
     //    MARK: Props
-    private let taskInfo: TaskInfo
-    private let controller: TaskCardActions
+    private let controller: TaskCardControllerProtocol
 
     //    MARK: Init
-    init(taskInfo: TaskInfo) {
-        self.taskInfo = taskInfo
-        controller = TaskCardController()
+    /// Initializes the view with specified controller.
+    /// - Parameters:
+    ///   - controller: An object conforming to the TaskCardControllerProtocol that will serve as the controller for this view.
+    init(controller: TaskCardControllerProtocol) {
+        self.controller = controller
+    }
+
+    /// Initializes the view with default realization.
+    init(model: TaskInfo) {
+        controller = TaskCardController(model: model)
     }
 
     //    MARK: Body
@@ -26,29 +32,25 @@ struct TaskCardView: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        if let unwrappedNumberValue = taskInfo.numberValue {
-            Text(TaskCardsConstants.Strings.numberTitle + unwrappedNumberValue.description)
-                .font(.footnote)
-        }
+        Text(controller.taskNumberTitle)
+            .font(.footnote)
 
-        Text(taskInfo.title)
+        Text(controller.taskTitle)
             .multilineTextAlignment(.leading)
 
         HStack {
-            Text(TaskCardsConstants.Strings.timerTitle(taskInfo.timerValue))
+            Text(controller.timerTitle)
                 .font(.footnote)
                 .multilineTextAlignment(.leading)
 
             Spacer()
 
-            if taskInfo.isUrgent {
-                Image(systemName: TaskCardsConstants.ImageStrings.urgentImageName)
+            if controller.isUrgent {
+                Image(systemName: controller.urgentImageName)
             }
         }
 
-        if let unwrappedCategories = taskInfo.categories {
-            Text(unwrappedCategories.joined(separator: TaskCardsConstants.Strings.categoriesSeparator))
-                .font(.footnote)
-        }
+        Text(controller.categoriesTitle)
+            .font(.footnote)
     }
 }
