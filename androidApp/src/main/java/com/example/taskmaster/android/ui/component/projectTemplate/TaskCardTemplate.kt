@@ -71,7 +71,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
         vibrator.cancel()
         vibrator.vibrate(vibrationEffect1)
         val newStatus = if (item.status == 2) 1 else 2
-        viewModel.updateStatus(item.id!!, newStatus, item.name, item.parent!!)
+        viewModel.updateStatus(item.id!!, newStatus, item.name!!, item.parent!!)
     }, icon = {
         val iconResId = if (completed) R.drawable.cancel_icon else R.drawable.done_icon
         Icon(
@@ -101,7 +101,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
             .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name, "Описание получено")) }
+            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content!!)) }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),
@@ -116,7 +116,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
-                            text = item.name,
+                            text = item.name!!,
                             modifier = Modifier.width(226.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1,
