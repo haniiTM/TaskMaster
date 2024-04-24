@@ -1,6 +1,7 @@
 package com.example.taskmaster.android.di
 
 import com.example.taskmaster.android.ui.activity.MainActivityViewModel
+import com.example.taskmaster.android.ui.screens.description_screen.DescriptionViewModel
 import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
@@ -14,4 +15,5 @@ val presentationModule = module {
     viewModel { TaskViewModel(apiService = get()) }
     viewModel { TypeOfActivityViewModel(apiService = get()) }
     viewModel { StatusViewModel(apiService = get()) }
+    viewModel { DescriptionViewModel(apiService = get()) }
 }
