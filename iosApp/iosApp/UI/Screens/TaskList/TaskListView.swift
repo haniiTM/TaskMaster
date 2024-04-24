@@ -29,7 +29,7 @@ struct TaskListView: View {
 
             TaskSectionBG {
                 ForEach(model.taskList) { task in
-                    TaskCardView(taskInfo: task)
+                    TaskCardView(model: task)
                 }
 
                 TaskCreationButton()

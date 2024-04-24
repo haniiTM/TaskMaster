@@ -9,18 +9,21 @@
 import CoreGraphics
 
 enum TaskFramesConstants {
-    //    MARK: Strings
+    //    MARK: - Strings
     enum Strings {
-        static let mainFrameTitle = "Все проекты"
+        //    MARK: Titles
+        enum Titles {
+            static let mainFrameTitle = "Все проекты"
+        }
+
+        //    MARK: Image names
+        enum ImageNames {
+            static let extraActionsImageName = "ellipsis"
+            static let searchActionImageName = "magnifyingglass"
+        }
     }
 
-    //    MARK: Image names
-    enum ImageNames {
-        static let extraActionsImageName = "ellipsis"
-        static let searchActionImageName = "magnifyingglass"
-    }
-
-    //    MARK: Numbers
+    //    MARK: - Numbers
     enum Numbers {
         static let componentsVerticalSpacing: CGFloat = 16
     }

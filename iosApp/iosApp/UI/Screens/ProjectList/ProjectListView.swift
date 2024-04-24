@@ -23,7 +23,7 @@ struct ProjectListView: View {
     var body: some View {
         MainFrameView {
             ForEach(viewModel.projectListSignal.value ?? .init()) { project in
-                ProjectCardView(taskInfo: project)
+                ProjectCardView(model: project)
             }
         }.onAppear { viewModel.updateDataSource() }
     }

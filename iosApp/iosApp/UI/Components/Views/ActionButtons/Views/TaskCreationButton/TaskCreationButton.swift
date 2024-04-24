@@ -10,8 +10,8 @@ import SwiftUI
 
 struct TaskCreationButton: View {
     // MARK: Props
-    private let title: String?
-    private let imageName: String?
+    private let title: String
+    private let imageName: String
     private let action: Openable
 
     // MARK: Init
@@ -28,8 +28,8 @@ struct TaskCreationButton: View {
 
     /// Initializes the view with default realization.
     init() {
-        title = nil
-        imageName = nil
+        title = ActionButtonsConstants.Strings.Titles.taskTitle
+        imageName = ActionButtonsConstants.Strings.ImageNames.taskImageName
         action = TaskCreationButtonAction()
     }
 
@@ -40,10 +40,9 @@ struct TaskCreationButton: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Image(systemName: imageName ?? ActionButtonsConstants.ImageStrings.taskImageName)
+        Image(systemName: imageName)
 
-        Text(title ?? ActionButtonsConstants.Strings.taskTitle)
+        Text(title)
             .font(.subheadline)
     }
 }
-

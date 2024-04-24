@@ -10,13 +10,11 @@ import SwiftUI
 
 struct ProjectCardView: View {
     //    MARK: Props
-    private let taskInfo: TaskInfo
-    private let controller: TaskCardActions
+    private let controller: ProjectCardControllerProtocol
 
     //    MARK: Init
-    init(taskInfo: TaskInfo) {
-        self.taskInfo = taskInfo
-        controller = ProjectCardController()
+    init(model: TaskInfo) {
+        controller = ProjectCardController(model: model)
     }
 
     //    MARK: Body
@@ -26,24 +24,22 @@ struct ProjectCardView: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Text(taskInfo.title)
+        Text(controller.taskTitle)
             .multilineTextAlignment(.leading)
 
         HStack {
-            Text(TaskCardsConstants.Strings.timerTitle(taskInfo.timerValue))
+            Text(controller.timerTitle)
                 .font(.subheadline)
                 .multilineTextAlignment(.leading)
 
             Spacer()
 
-            if taskInfo.isUrgent {
-                Image(systemName: TaskCardsConstants.ImageStrings.urgentImageName)
+            if controller.isUrgent {
+                Image(systemName: controller.urgentImageName)
             }
         }
 
-        if let unwrappedParticipiantsValue = taskInfo.participiantsValue {
-            Text(TaskCardsConstants.Strings.participiantsTitle + unwrappedParticipiantsValue.description)
-                .font(.subheadline)
-        }
+        Text(controller.participiantsTitle)
+            .font(.subheadline)
     }
 }

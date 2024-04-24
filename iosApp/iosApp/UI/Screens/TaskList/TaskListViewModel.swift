@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TaskListViewModel: TaskListViewModelProtocol, ObservableObject {
+final class TaskListViewModel: TaskListViewModelProtocol, ObservableObject {
     //    MARK: Props
     var taskListSignal: Box<[TaskInfo]?> = .init(nil)
     private let model = TaskListModel()

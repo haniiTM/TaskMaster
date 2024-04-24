@@ -6,7 +6,7 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-class Box<T> {
+final class Box<T> {
     //    MARK: Props
     typealias Listener = (T) -> Void
     private var listener: Listener?
