@@ -67,8 +67,8 @@ struct TaskInfoListView: View {
         ProjectFrameView(projectTitle) {
             TaskInfoCard
 
-            LaborCostCreationButton()
-        }
+            LaborCostCreationButton().foregroundColor(.primary)
+        }.navigationTitle("Инфо о задаче")
     }
 
     private var TaskInfoCard: some View {
@@ -96,11 +96,17 @@ struct TaskInfoListView: View {
                 TextRow(taskStatusTitle, taskStatusValue)
                 Divider()
 
-                Button(laborCostTitle) {}
+                NavigationLink(destination: LaborCostListView("")) {
+//                    Button(laborCostTitle) {}
+                    Text(laborCostTitle)
+                }.foregroundColor(.primary)
             }.padding(.bottom, 8)
         }
         .padding()
-        .border(.secondary)
+        .background(
+            Color(uiColor: .secondarySystemBackground),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
     }
 
     //    MARK: Methods

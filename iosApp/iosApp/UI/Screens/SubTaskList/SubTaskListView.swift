@@ -28,29 +28,43 @@ struct SubTaskListView: View {
     //    MARK: Body
     var body: some View {
         ProjectFrameView(title) {
-            ScreenInfoButton(title, isUrgent: false)
+            NavigationLink(destination: TaskInfoListView("", model: model.subTaskList.first!)) {
+                ScreenInfoButton("Изучение React Native", isUrgent: false)
+            }.foregroundColor(.primary)
 
             DescriptionBody
 
-            AttachmentsScreenInfoButton()
+            NavigationLink(destination: AttachmentListView("")) {
+                AttachmentsScreenInfoButton()
+            }.foregroundColor(.primary)
 
             SubTaskSectionBG {
                 ForEach(model.subTaskList) { subTask in
                     SubTaskCardView(model: subTask)
                 }
 
-                SubTaskCreationButton()
+                SubTaskCreationButton().foregroundColor(.primary)
             }
 
             CompletedTaskSectionBG {
-                SubTaskCreationButton()
+                SubTaskCreationButton().foregroundColor(.primary)
             }
         }.onAppear { viewModel.updateDataSource() }
+            .navigationTitle("Сайт Nissan")
+            .toolbar {
+                Button(action: {}) {
+                    Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
+                }
+            }
+        
     }
 
     private var DescriptionBody: some View {
         Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure.")
             .padding()
-            .border(.secondary)
+            .background(
+                Color(uiColor: .secondarySystemBackground),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
     }
 }

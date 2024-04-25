@@ -26,10 +26,10 @@ struct AttachmentListView: View {
     var body: some View {
         ProjectFrameView(title) {
             ForEach(attachmentList, id: \.self) { attachment in
-                AttachmentCardView(attachment)
+                AttachmentCardView(attachment).foregroundColor(.primary)
             }.padding(.horizontal, 40)
 
-            AttachmentCreationButton()
-        }
+            AttachmentCreationButton().foregroundColor(.primary)
+        }.navigationTitle("Вложения")
     }
 }

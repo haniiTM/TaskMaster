@@ -18,7 +18,7 @@ struct LaborCostListModel {
 
     //    MARK: Methods
     private mutating func setupDefaultLaborCostList() {
-        let localLaborCostList: [String] = .init(repeating: "Трудозатрата", count: 42)
+        let localLaborCostList: [String] = .init(repeating: "Трудозатрата", count: 15)
 
         localLaborCostList.enumerated().forEach { index, laborCost in
             let newLaborCost = "\(laborCost) \(index + 1)"

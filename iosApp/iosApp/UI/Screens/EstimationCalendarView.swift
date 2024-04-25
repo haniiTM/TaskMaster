@@ -22,7 +22,7 @@ struct EstimationCalendarView: View {
         ProjectFrameView(projectTitle) {
             CalendarSection("Календарный план")
             CalendarSection("Расчет трудозатрат")
-        }
+        }.navigationTitle("Таблицы")
     }
 
     //    MARK: Methods
@@ -34,27 +34,37 @@ struct EstimationCalendarView: View {
                 Group {
                     Button(action: {}) {
                         Text("Выбор таблицы")
+                            .font(.subheadline)
+                            .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
 
                         Spacer()
 
                         Image(systemName: "arrow.down.circle")
-                    }
+                    }.foregroundColor(.primary)
 
                     Button(action: {}) {
                         Text("Скачать")
+                            .font(.subheadline)
+                            .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
 
                         Image(systemName: "square.and.arrow.down")
-                    }
+                    }.foregroundColor(.primary)
                 }
                 .padding(8)
-                .border(Color.secondary)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
             }
 
             Text("Calendar")
                 .font(.title)
                 .frame(maxWidth: .infinity)
-                .padding(100)
-                .background(.secondary)
+                .padding(70)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
         }.padding(.horizontal)
     }
 }

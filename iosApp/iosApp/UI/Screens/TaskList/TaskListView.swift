@@ -11,10 +11,9 @@ import SwiftUI
 struct TaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskListViewModel()
-    @State private var taskList: [TaskInfo] = []
+    @State private var unCompletedTaskList: [TaskInfo] = []
+    @State private var completedTaskList: [TaskInfo] = []
     private let title: String
-
-    @State private var model = TaskListModel()
 
     //    MARK: Init
     init(_ title: String) {
@@ -23,24 +22,63 @@ struct TaskListView: View {
         //            guard let projectList = projectList else { return }
         //            self.projectList = projectList
         //        }
+
     }
 
     //    MARK: Body
     var body: some View {
         ProjectFrameView(title) {
-            EstimatesScreenInfoButton()
+            NavigationLink(destination: EstimationCalendarView("")) {
+                EstimatesScreenInfoButton()
+            }.foregroundColor(.primary)
 
             TaskSectionBG {
-                ForEach(model.taskList) { task in
-                    TaskCardView(model: task)
+                ForEach(unCompletedTaskList) { task in
+                    NavigationLink(destination: SubTaskListView("")) {
+                        TaskCardView(model: task)
+                    }.foregroundColor(.primary)
                 }
 
                 TaskCreationButton()
+                    .foregroundColor(.primary)
+                    .onTapGesture {
+                        viewModel.addUncompletedTask()
+                    }
             }
 
             CompletedTaskSectionBG {
+                ForEach(completedTaskList) { task in
+                    NavigationLink(destination: SubTaskListView("")) {
+                        TaskCardView(model: task)
+                    }.foregroundColor(.primary)
+                }
+
                 TaskCreationButton()
+                    .foregroundColor(.primary)
+                    .onTapGesture {
+                        viewModel.addCompletedTask()
+                    }
             }
-        }.onAppear { viewModel.updateDataSource() }
+        }
+        .onAppear {
+            viewModel.unCompletedTaskListSignal.bind { taskList in
+                guard let taskList = taskList else { return }
+                unCompletedTaskList = taskList
+            }
+
+            viewModel.completedTaskListSignal.bind { taskList in
+                guard let taskList = taskList else { return }
+                completedTaskList = taskList
+            }
+
+            viewModel.updateDataSource()
+        }
+        .navigationTitle("Сайт Nissan")
+        .toolbar {
+            Button(action: {}) {
+                Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
+                    .foregroundColor(.primary)
+            }
+        }
     }
 }

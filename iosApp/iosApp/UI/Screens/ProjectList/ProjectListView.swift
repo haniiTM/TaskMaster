@@ -26,8 +26,22 @@ struct ProjectListView: View {
     var body: some View {
         MainFrameView {
             ForEach(viewModel.projectListSignal.value ?? .init()) { project in
-                ProjectCardView(model: project)
+                NavigationLink(destination: TaskListView(.init())) {
+                    ProjectCardView(model: project)
+                }
+                .foregroundColor(.primary)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
             }
         }.onAppear { viewModel.updateDataSource() }
+            .navigationTitle("Все проекты")
+            .toolbar {
+                Button(action: {}) {
+                    Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
+                        .foregroundColor(.primary)
+                }
+            }
     }
 }

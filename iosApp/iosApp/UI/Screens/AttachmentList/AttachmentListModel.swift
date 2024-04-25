@@ -18,7 +18,7 @@ struct AttachmentListModel {
 
     //    MARK: Methods
     private mutating func setupDefaultAttachmentList() {
-        let localAttachmentList: [String] = .init(repeating: "Вложение", count: 3)
+        let localAttachmentList: [String] = .init(repeating: "Вложение", count: 10)
 
         localAttachmentList.enumerated().forEach { index, attachment in
             let newAttachment = "\(attachment) \(index + 1)"

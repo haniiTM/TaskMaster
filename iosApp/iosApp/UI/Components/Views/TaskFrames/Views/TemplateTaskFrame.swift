@@ -43,13 +43,13 @@ struct TemplateTaskFrame<Content: View>: View {
             HStack {
                 Spacer()
 
-                Text(title)
+//                Text(title)
 
-                Spacer()
+//                Spacer()
 
-                Button(action: action.open) {
-                    Image(systemName: imageName)
-                }
+//                Button(action: action.open) {
+//                    Image(systemName: imageName)
+//                }
             }
             .padding()
             .background(GeometryReader { geo in
@@ -73,8 +73,8 @@ struct TemplateTaskFrame<Content: View>: View {
             .padding()
             .padding(.vertical)
         }
-        .border(.secondary)
-        //        .background(GradientBG())
-        .padding(.top, statusBarHeight + frameBodyHeight)
+//        .border(.secondary)
+//        .background(GradientBG())
+        .padding(.top, statusBarHeight - frameBodyHeight)
     }
 }

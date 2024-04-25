@@ -10,11 +10,23 @@ import Foundation
 
 final class TaskListViewModel: TaskListViewModelProtocol, ObservableObject {
     //    MARK: Props
-    var taskListSignal: Box<[TaskInfo]?> = .init(nil)
-    private let model = TaskListModel()
+    @Published var unCompletedTaskListSignal: Box<[TaskInfo]?> = .init(nil)
+    @Published var completedTaskListSignal: Box<[TaskInfo]?> = .init(nil)
+    private var model = TaskListModel()
 
     //    MARK: Methods
     func updateDataSource() {
-        taskListSignal.value = model.taskList
+        unCompletedTaskListSignal.value = model.uncompletedTaskList
+        completedTaskListSignal.value = model.completedTaskList
+    }
+
+    func addUncompletedTask() {
+        model.addUncompletedTask()
+        updateDataSource()
+    }
+
+    func addCompletedTask() {
+        model.addCompletedTask()
+        updateDataSource()
     }
 }

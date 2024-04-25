@@ -17,4 +17,5 @@ struct TaskInfo: Identifiable {
     let isUrgent: Bool
     var participiantsValue: UInt8?
     var categories: [String]?
+    var isCompleted: Bool?
 }

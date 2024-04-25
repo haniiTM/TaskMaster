@@ -16,12 +16,14 @@ struct LoginScreenView: View {
 
     //    MARK: Body
     var body: some View {
-        ViewBody
+        NavigationView {
+            ViewBody
+        }
     }
 
     private var ViewBody: some View {
         VStack(spacing: LoginScreenConstants.Numbers.rootVerticalSpacing) {
-            Logo()
+            Logo(appIcon: AppIconProvider.appIcon())
 
             VStack(spacing: LoginScreenConstants.Numbers.childVerticalSpacing) {
                 LoginActionsBody
@@ -47,17 +49,28 @@ struct LoginScreenView: View {
         Group {
             TextFieldsBody
 
-            Button(
-                action: { viewModel.loginUser(name: loginTextFieldState,
-                                              password: passwordTextFieldState) }
-            ) {
+            NavigationLink(destination: ProjectListView()) {
                 Text(LoginScreenConstants.Strings.loginButtonTitle)
+                    .foregroundColor(.primary)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .padding(.horizontal)
             }
+
+            //            Button(
+            //                action: { viewModel.loginUser(name: loginTextFieldState,
+            //                                              password: passwordTextFieldState) }
+            //            ) {
+            //                Text(LoginScreenConstants.Strings.loginButtonTitle)
+            //                    .frame(maxWidth: .infinity)
+            //                    .padding()
+            //                    .padding(.horizontal)
+            //            }
         }
         .font(.subheadline)
-        .border(.secondary)
+        .background(
+            Color(uiColor: .secondarySystemBackground),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
     }
 }
