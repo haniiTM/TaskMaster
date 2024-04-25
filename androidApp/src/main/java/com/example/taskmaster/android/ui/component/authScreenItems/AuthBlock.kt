@@ -72,7 +72,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 value = userLogin,
                 onValueChange = { newValue -> userLogin = newValue },
                 placeholder = "Логин",
-                roundedAngle = 5,
+                roundedTopAngle = 5,
                 spacer = 20,
                 borderWidth = 1
             )
@@ -95,7 +95,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                             if (success) {
                                 navController.navigate("projects")
                             } else {
-                                userLogin = ""
                                 userPassword = ""
                                 showErrorMessage("Неверный логин или пароль", context = context)
                             }

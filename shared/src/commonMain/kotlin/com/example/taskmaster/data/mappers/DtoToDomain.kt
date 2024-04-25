@@ -6,7 +6,7 @@ import com.example.taskmaster.domain.models.*
 fun TaskDTO.toDomain(): ItemProjectState {
     return ItemProjectState(
         id = this.id!!,
-        projectTitle = this.name,
+        projectTitle = this.name!!,
         projectTimeLeft = this.scope!!,
         projectMemberCount = this.userCount!!,
     )

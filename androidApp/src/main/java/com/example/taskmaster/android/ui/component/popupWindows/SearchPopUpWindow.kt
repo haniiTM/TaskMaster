@@ -40,17 +40,31 @@ fun SearchPopUpWindow(onDismissRequest: () -> Unit){
 
     Box(modifier = Modifier
         .padding(horizontal = 16.dp)
-        .fillMaxWidth().clip(shape = RoundedCornerShape(15.dp)).border(BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary), shape = RoundedCornerShape(15.dp)).background(linearGradient)){
+        .fillMaxWidth()
+        .clip(shape = RoundedCornerShape(15.dp))
+        .border(
+            BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
+            shape = RoundedCornerShape(15.dp)
+        )
+        .background(linearGradient)){
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            UnifiedTextBox(
-                value = searchQuery,
-                onValueChange = { newValue -> searchQuery = newValue },
-                placeholder = "Что ищем?"
-            )
+            Box(modifier = Modifier.padding(start = 26.dp, end = 26.dp, top = 15.dp )){
+                UnifiedTextBox(
+                    value = searchQuery,
+                    onValueChange = { newValue -> searchQuery = newValue },
+                    placeholder = "Что ищем?",
+                    roundedTopAngle = 10,
+                    roundedDownAngle = 10
+                )
+            }
+
             Button(
                 onClick = { onDismissRequest() },
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.padding(bottom = 10.dp).width(72.dp).height(20.dp),
+                modifier = Modifier
+                    .padding(top = 11.dp, bottom = 16.dp)
+                    .width(108.dp)
+                    .height(30.dp),
                 colors = ButtonDefaults.buttonColors(
                     Color.White), contentPadding = PaddingValues(0.dp)
             ) {

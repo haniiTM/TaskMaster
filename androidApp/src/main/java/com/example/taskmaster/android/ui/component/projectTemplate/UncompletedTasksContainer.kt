@@ -28,17 +28,18 @@ import com.example.taskmaster.android.ui.theme.ShadowGray
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ComplitedTasksContainer(
+fun UncompletedTasksContainer(
     title: String,
     buttonTitle: String,
     navController: NavController,
     id: Int?,
-    viewModel: TaskViewModel = getViewModel()
+    viewModel: TaskViewModel = getViewModel(),
+    projectTitle: String
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.getCompletedTask(id!!.toInt())
+        viewModel.getUnfulfilleddTask(id!!.toInt())
     }
-    val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
+    val uncompletedTasks = viewModel.stateUnfulfilleddTask.value.itemTaskState
 
     Box(
         contentAlignment = Alignment.TopCenter,
@@ -60,7 +61,7 @@ fun ComplitedTasksContainer(
                 color = Color.Black
             )
 
-            if (completedTasks.isEmpty()) {
+            if (uncompletedTasks.isEmpty()) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
@@ -75,9 +76,7 @@ fun ComplitedTasksContainer(
                         color = Color.Black
                     )
                 }
-            }
-
-            if (completedTasks.isNotEmpty()) {
+            } else {
                 LazyColumn(
                     modifier = Modifier
                         .padding(start = 7.dp, end = 14.dp, bottom = 7.dp)
@@ -85,19 +84,18 @@ fun ComplitedTasksContainer(
                         .heightIn(min = 232.dp, max = 345.dp)
                         .background(ShadowGray)
                 ) {
-                    itemsIndexed(completedTasks) { _, item ->
+                    itemsIndexed(uncompletedTasks) { _, item ->
                         if (item != null) {
                             ItemProject(
                                 item = item,
                                 context = LocalContext.current,
                                 navController = navController,
-                                completed = true
+                                projectTitle = projectTitle
                             )
                         }
                     }
                 }
             }
-
             if (buttonTitle.isNotEmpty()) {
                 BoxButton(buttonTitle, id!!)
             }

@@ -43,11 +43,10 @@ import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.android.ui.theme.PlaceHolder
 import com.example.taskmaster.data.network.models.TaskDTO
-import com.example.taskmaster.data.network.models.TypeOfActivityDTO
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModelTask: TaskViewModel = getViewModel(), id: Int) {
+fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModelTask: TaskViewModel = getViewModel(), id: Int, onDismissRequest: () -> Unit) {
     LaunchedEffect(key1 = true) {
         viewModel.getTypeActivity()
     }
@@ -206,7 +205,8 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModel
                         task.name = taskTitle
                         task.scope = taskAllocatedTime.toInt()
                         task.typeofactivityid = categoryId
-                        viewModelTask.createTask(task, id)},
+                        viewModelTask.createTask(task, id)
+                             onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(45.dp),
