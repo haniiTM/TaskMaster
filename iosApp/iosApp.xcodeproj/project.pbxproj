@@ -82,6 +82,7 @@
 		28E796142BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */; };
 		28E796162BD9A98F00D402E4 /* LaborCostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */; };
 		28E796182BD9B34600D402E4 /* TaskInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796172BD9B34600D402E4 /* TaskInfoView.swift */; };
+		28E796212BD9D8CA00D402E4 /* EstimationCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */; };
 		28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF12BD5507C00B31497 /* ProjectListView.swift */; };
 		28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */; };
 		28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */; };
@@ -170,6 +171,7 @@
 		28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListViewModelProtocol.swift; sourceTree = "<group>"; };
 		28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListModel.swift; sourceTree = "<group>"; };
 		28E796172BD9B34600D402E4 /* TaskInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoView.swift; sourceTree = "<group>"; };
+		28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationCalendarView.swift; sourceTree = "<group>"; };
 		28EA9CF12BD5507C00B31497 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				28E795FB2BD9674A00D402E4 /* AttachmentList */,
 				28E796102BD9A93F00D402E4 /* LaborCostList */,
 				28E796192BD9B34C00D402E4 /* TaskInfo */,
+				28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */,
 				2864E6CB2BD3EE2900504DE0 /* Box.swift */,
 			);
 			path = Screens;
@@ -789,6 +792,7 @@
 				28407DE82BD16976004B275D /* LaborCostCreationButton.swift in Sources */,
 				288BA0BD2BD6354E000E3A82 /* SubTaskListViewModel.swift in Sources */,
 				2864E6B02BD3949700504DE0 /* GradientBG.swift in Sources */,
+				28E796212BD9D8CA00D402E4 /* EstimationCalendarView.swift in Sources */,
 				289BFD2B2BD18AD200099EAE /* SubTaskCardView.swift in Sources */,
 				28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */,
 				28E7960A2BD96FDA00D402E4 /* AttachmentListModel.swift in Sources */,
