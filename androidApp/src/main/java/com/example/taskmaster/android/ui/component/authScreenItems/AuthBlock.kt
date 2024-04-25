@@ -62,6 +62,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
         }
     }
 
+
     Box {
         Column(
             modifier = Modifier
@@ -90,9 +91,11 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
             Button(
                 onClick = {
                     if (isInternetConnected) {
+                        // success - класс в который хранит токени и флаг, указывающий является ли
+                        // пользователь адмнином или прект-менеджером
                         viewModel.dataToken(userLogin, userPassword).observeForever { success ->
-                            isValid = success
-                            if (success) {
+                            isValid = success.tokenLong!!.isNotEmpty()
+                            if (isValid) {
                                 navController.navigate("projects")
                             } else {
                                 userPassword = ""

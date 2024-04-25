@@ -5,6 +5,7 @@ import com.example.taskmaster.data.cache.sqldelight.AccessTokenDao
 import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.mappers.toEntity
 import com.example.taskmaster.data.network.ApiService
+import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.domain.models.AccessToken
 import com.example.taskmaster.domain.repositories.AuthRepository
@@ -17,13 +18,13 @@ class AuthRepositoryImpl constructor(
     private val accessTokenDao: AccessTokenDao
 ) : AuthRepository {
 
-    override suspend fun fetchUserToken(login: String, password: String): Boolean {
+    override suspend fun fetchUserToken(login: String, password: String): AccessTokenDto {
         val accessTokenDto = apiService.fetchUserToken(login, password)
         if(accessTokenDto != null){
             val responseEntity = accessTokenDto?.toEntity()
             saveUserToken(accessToken = responseEntity!!)
         }
-        return accessTokenDto != null;
+        return accessTokenDto!!
     }
 
     override suspend fun getUserToken(): Flow<AccessToken?> {
