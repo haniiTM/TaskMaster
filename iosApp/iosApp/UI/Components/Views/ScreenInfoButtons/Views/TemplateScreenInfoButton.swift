@@ -32,7 +32,7 @@ struct TemplateScreenInfoButton<Content: View>: View {
                 }
             }
             .padding()
-            .border(.primary)
+            .border(.secondary)
         }
         .padding(.horizontal, ScreenInfoButtonsConstants.Numbers.externalPadding)
     }

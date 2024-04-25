@@ -58,6 +58,6 @@ struct LoginScreenView: View {
             }
         }
         .font(.subheadline)
-        .border(Color.primary)
+        .border(.secondary)
     }
 }

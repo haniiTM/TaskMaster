@@ -73,7 +73,7 @@ struct TemplateTaskFrame<Content: View>: View {
             .padding()
             .padding(.vertical)
         }
-        .border(Color.primary)
+        .border(.secondary)
         //        .background(GradientBG())
         .padding(.top, statusBarHeight + frameBodyHeight)
     }

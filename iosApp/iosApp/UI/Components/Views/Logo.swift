@@ -15,6 +15,6 @@ struct Logo: View {
             .frame(maxWidth: .infinity)
             .padding()
             .padding()
-            .background(Color.secondary)
+            .background(.secondary)
     }
 }
