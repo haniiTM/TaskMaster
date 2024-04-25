@@ -38,7 +38,7 @@ struct TemplateTaskCardView<Content: View>: View {
                     }
                 }
                 .padding()
-                .border(.primary)
+                .border(.secondary)
                 .transition(.move(edge: .trailing))
                 .animation(.easeInOut)
             }

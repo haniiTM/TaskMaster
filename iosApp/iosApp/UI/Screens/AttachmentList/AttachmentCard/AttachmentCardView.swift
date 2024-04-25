@@ -33,6 +33,6 @@ struct AttachmentCardView: View {
             }
         }
         .padding()
-        .border(Color.primary)
+        .border(.secondary)
     }
 }

@@ -35,6 +35,6 @@ struct TemplateTaskSectionBG<Content: View>: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .border(.primary)
+        .border(.secondary)
     }
 }

@@ -31,6 +31,6 @@ struct TemplateActionButton<Content: View>: View {
             }
         }
         .padding()
-        .border(.primary)
+        .border(.secondary)
     }
 }
