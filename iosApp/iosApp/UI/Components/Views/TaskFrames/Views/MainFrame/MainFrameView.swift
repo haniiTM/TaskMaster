@@ -20,8 +20,8 @@ struct MainFrameView<Content: View>: View {
 
     //    MARK: Body
     var body: some View {
-        TemplateTaskFrame(TaskFramesConstants.Strings.mainFrameTitle,
-                          imageName: TaskFramesConstants.ImageNames.extraActionsImageName,
+        TemplateTaskFrame(TaskFramesConstants.Strings.Titles.mainFrameTitle,
+                          imageName: Constants.Strings.ImageNames.extraActionsImageName,
                           action: action,
                           content: content)
     }

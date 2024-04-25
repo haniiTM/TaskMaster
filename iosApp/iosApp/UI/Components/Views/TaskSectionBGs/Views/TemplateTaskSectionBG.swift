@@ -35,6 +35,9 @@ struct TemplateTaskSectionBG<Content: View>: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .border(.primary)
+        .background(
+            .ultraThickMaterial,
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(lineWidth: 4)
+        )
     }
 }

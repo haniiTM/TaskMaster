@@ -9,25 +9,40 @@
 import CoreGraphics
 
 enum TaskCardsConstants {
-    //    MARK: Strings
+    //    MARK:  - Strings
     enum Strings {
-        static let numberTitle = "Задача №"
-        static let timerTitle: (UInt8) -> String = { hours in
-            "Время на выполнение: \(hours) часа"
+        //        MARK: Titles
+        enum Titles {
+            static let numberTitle = "Задача №"
+            static let timerTitle: (UInt8) -> String = { hours in
+                "Время на выполнение: \(hours) часа"
+            }
+            static let participiantsTitle = "Участники: "
         }
-        static let categoriesSeparator = ", "
-        static let participiantsTitle = "Участники: "
+
+        //        MARK: Empty Titles
+        enum EmptyTitles {
+            static let emptyNumberTitle = "0"
+            static let emptyStringTitle = "Нет"
+            static let emptyCategoriesTitle = "Нет тегов"
+        }
+
+        //        MARK: Separators
+        enum Separators {
+            static let numbersSeparator = "."
+            static let categoriesSeparator = ", "
+        }
+
+        //        MARK: Image Names
+        enum ImageNames {
+            static let urgentImageName = "exclamationmark.triangle"
+            static let removeIcon = "xmark.bin"
+        }
     }
 
-    //    MARK: ImageStrings
-    enum ImageStrings {
-        static let urgentImageName = "exclamationmark.triangle"
-        static let removeIcon = "xmark.bin"
-    }
-
-    //    MARK: Numbers
+    //    MARK: - Numbers
     enum Numbers {
-        static let lineSpacing: CGFloat = 16
+        static let lineSpacing: CGFloat = 8
     }
 }
 

@@ -9,18 +9,21 @@
 import CoreGraphics
 
 enum ScreenInfoButtonsConstants {
-    //    MARK: Strings
+    //    MARK: - Strings
     enum Strings {
-        static let estimatesTitle = "Рассчет времени по проекту"
-        static let attachmentsTitle = "Вложения"
+        //    MARK: Titles
+        enum Titles {
+            static let estimatesTitle = "Рассчет времени по проекту"
+            static let attachmentsTitle = "Вложения"
+        }
+
+        //    MARK: Image Names
+        enum ImageNames {
+            static let infoImageName = "arrow.right.circle"
+        }
     }
-    
-    //    MARK: ImageStrings
-    enum ImageStrings {
-        static let infoImageName = "arrow.right.circle"
-    }
-    
-    //    MARK: Numbers
+
+    //    MARK: - Numbers
     enum Numbers {
         static let externalPadding: CGFloat = 64
         static let lineLimit: Int = 1

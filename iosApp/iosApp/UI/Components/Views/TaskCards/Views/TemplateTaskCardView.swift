@@ -28,7 +28,7 @@ struct TemplateTaskCardView<Content: View>: View {
     private var ViewBody: some View {
         VStack {
             if isButtonVisible {
-                Button(action: controller.open) {
+//                Button(action: controller.open) {
                     HStack {
                         VStack(alignment: .leading, spacing: TaskCardsConstants.Numbers.lineSpacing) {
                             content()
@@ -36,9 +36,12 @@ struct TemplateTaskCardView<Content: View>: View {
 
                         Spacer()
                     }
-                }
+//                }
                 .padding()
-                .border(.primary)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
                 .transition(.move(edge: .trailing))
                 .animation(.easeInOut)
             }

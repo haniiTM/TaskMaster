@@ -8,8 +8,43 @@
 
 import SwiftUI
 
+enum AppIconProvider {
+    static func appIcon(in bundle: Bundle = .main) -> String {
+        guard let icons = bundle.object(forInfoDictionaryKey: "CFBundleIcons") as? [String: Any],
+              let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+              let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+              let iconFileName = iconFiles.last else {
+            fatalError("Could not find icons in bundle")
+        }
+
+        return iconFileName
+    }
+}
+
 struct Logo: View {
+    let appIcon: String
+
     var body: some View {
-        Image(systemName: "globe")
+        HStack(alignment: .center) {
+            if let image = UIImage(named: appIcon) {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            }
+
+            Spacer()
+
+            VStack() {
+                Text("Welcome to the")
+                    .font(.title3)
+
+                Text("SÉBBIA")
+                    .font(.largeTitle)
+            }
+//            .padding()
+//            .padding()
+        }
+        .fixedSize()
+        .accessibilityElement(children: .ignore)
     }
 }

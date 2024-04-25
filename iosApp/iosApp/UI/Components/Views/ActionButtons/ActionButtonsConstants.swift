@@ -9,14 +9,22 @@
 import CoreGraphics
 
 enum ActionButtonsConstants {
-    //    MARK: Strings
+    //    MARK: - Strings
     enum Strings {
-        static let taskTitle = "Добавить задачу"
-        static let laborCostTitle = "Добавить трудозатраты"
-    }
+        //    MARK: Titles
+        enum Titles {
+            static let generalTitle = "Добавить "
+            static let taskTitle = generalTitle + "задачу"
+            static let subTaskTitle = generalTitle + "подзадачу"
+            static let laborCostTitle = generalTitle + "трудозатраты"
+            static let attachmentTitle = generalTitle + "вложение"
+        }
 
-    //    MARK: ImageStrings
-    enum ImageStrings {
-        static let taskImageName = "plus"
+        //    MARK: Image Names
+        enum ImageNames {
+            static let taskImageName = "plus"
+            static let subTaskImageName = taskImageName
+            static let attachmentImageName = taskImageName
+        }
     }
 }
