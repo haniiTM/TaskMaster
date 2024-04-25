@@ -26,8 +26,10 @@ struct LaborCostListView: View {
     var body: some View {
 //        ProjectFrameView(title) {
             List(laborCostList, id: \.self) { laborCost in
-                Button(laborCost) {}.padding(8)
-            }.padding()
+                Button(laborCost) {}.padding(8).foregroundColor(.primary)
+            }
+//            .padding()
+            .navigationTitle("Трудозатраты")
 //        }
     }
 }
