@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,10 +38,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
+import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
+import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.android.ui.theme.PlaceHolder
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NewUserWindow(onDismissRequest: () -> Unit) {
+fun NewUserWindow(
+    onDismissRequest: () -> Unit,
+    viewModel: TypeOfActivityViewModel = getViewModel(),
+    viewModelNewUser: NewUserViewModel = getViewModel()
+) {
+    LaunchedEffect(key1 = true) {
+        viewModel.getTypeActivity()
+    }
+    val typeActivity = viewModel.state.value.itemState
+
     val linearGradient =
         Brush.verticalGradient(
             listOf(
@@ -60,7 +73,7 @@ fun NewUserWindow(onDismissRequest: () -> Unit) {
     var password by remember {
         mutableStateOf("")
     }
-    val role = listOf("Роль 1", "Роль 2", "Роль 3", "Роль 4")
+    var role = ""
 
     var expanded by remember {
         mutableStateOf(false)
@@ -168,16 +181,17 @@ fun NewUserWindow(onDismissRequest: () -> Unit) {
                                     .height(185.dp)
                                     .background(Color.White)
                             ) {
-                                role.forEach { item ->
+                                typeActivity.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
                                             expanded = false
-                                            roleValue = item
+                                            roleValue = item?.name ?: ""
+                                            role = item?.name ?: ""
                                         },
                                         text = {
                                             if (item != null) {
                                                 Text(
-                                                    text = item,
+                                                    text = item.name,
                                                     fontWeight = FontWeight.Normal
                                                 )
                                             }
@@ -192,6 +206,13 @@ fun NewUserWindow(onDismissRequest: () -> Unit) {
                 Button(
                     onClick = {
                         onDismissRequest()
+                        viewModelNewUser.createNewUser(
+                            firstName = name,
+                            lastName = surname,
+                            login = login,
+                            password =  password,
+                            role = role
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
