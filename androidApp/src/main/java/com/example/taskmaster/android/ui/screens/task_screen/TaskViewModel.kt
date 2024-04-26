@@ -2,16 +2,17 @@ package com.example.taskmaster.android.ui.screens.task_screen
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.network.ApiService
+import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.domain.models.ItemProjectState
 import kotlinx.coroutines.launch
-
-
-class TaskViewModel constructor( private val apiService: ApiService) : ViewModel()
+class TaskViewModel constructor ( private val apiService: ApiService) : ViewModel()
 {
     private val _state = mutableStateOf(ItemProjectStates())
     val state: State<ItemProjectStates> = _state
@@ -102,4 +103,55 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         val itemProjectState: MutableList<ItemProjectState?> = mutableListOf(),
         val isLoading: Boolean = false
     )
+
+    // Функция для обновление статуса
+    fun updateStatus(taskId: Int, statusId: Int, nameTask: String, parent: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.updateStatusTask(taskId, statusId, nameTask)
+            } catch(e: Exception) {
+                println("Exception in updateStatus ${e}")
+            }
+            getCompletedTask(parent)
+            getUnfulfilleddTask(parent)
+        }
+    }
+
+    // Функция для удаления
+    fun deleteTaskOrProject(taskId: Int, parent: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.DeleteTaskOrProject(taskId)
+            } catch(e: Exception) {
+                println("Exception in deleteTaskOrProject ${e}")
+            }
+            getCompletedTask(parent)
+            getUnfulfilleddTask(parent)
+        }
+    }
+
+    // Функция для создания задания
+    fun createTask(task: TaskDTO, parentId: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.createTask(task, parentId)
+            } catch(e: Exception) {
+                println("Exception in createProject ${e}")
+            }
+            getUnfulfilleddTask(parentId)
+        }
+    }
+
+    // Функции для получение одной задачи
+    suspend fun fetchTask(taskId: Int):  TaskDTO? {
+        return apiService.fetchTaskById(taskId)
+    }
+    fun dataTaskById(taskId: Int): LiveData<TaskDTO> {
+        val resultLiveData = MutableLiveData<TaskDTO>()
+        viewModelScope.launch {
+            val task = fetchTask(taskId)
+            resultLiveData.value = task
+        }
+        return resultLiveData
+    }
 }

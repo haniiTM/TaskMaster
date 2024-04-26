@@ -5,33 +5,33 @@ import kotlinx.serialization.Serializable
 @Serializable
 class TaskDTO(
     var id: Int?,
-    var name: String, // Название проекта, задачи/подзадачи
-    var status: Int?, // Id статуса
-    val start_date: String?, // Дата начала
-    var scope: Int?, // Общее кол-во часов на выполнение
-    var description: Int?, // Описание
-    var parent: Int?, // Принадлежность к проекту, задаче/подзадаче
-    val userCount: Int? = null, // Убрать
-    var generation : Int? = 1, // Поколение для индентификации проекта, задачи/подзадачи
-    val typeofactivityid: Int?, // Тип активности (front, back  и т.д)
-    var position: Int?, // Убрать
-    var gruop: Int?, // Убрать
-    var dependence: String? // Убрать
+    var name: String?,
+    var status: Int?,
+    val start_date: String?,
+    var scope: Int?,
+    var description: Int?,
+    var parent: Int?,
+    var userCount: Int?,
+    var generation : Int? = 1,
+    var content: String? = null,
+    var typeofactivityid: Int?,
+    var position: Int?,
+    var dependence: String?
 )
 {
     constructor() : this(
         id = null,
-        name = "",
+        name = null,
         status = null,
         start_date = null,
         scope = null,
         description = null,
         parent = null,
         userCount = null,
-        generation =1,
+        generation = 1,
+        content = null,
         typeofactivityid = null,
         position = null,
-        gruop = null,
         dependence = null
     )
 }

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
@@ -62,6 +63,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
         }
     }
 
+
     Box {
         Column(
             modifier = Modifier
@@ -71,8 +73,8 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
             UnifiedTextBox(
                 value = userLogin,
                 onValueChange = { newValue -> userLogin = newValue },
-                placeholder = "Логин",
-                roundedAngle = 5,
+                placeholder = " Логин",
+                roundedTopAngle = 5,
                 spacer = 20,
                 borderWidth = 1
             )
@@ -90,12 +92,24 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
             Button(
                 onClick = {
                     if (isInternetConnected) {
+                        // success - класс в который хранит токени и флаг, указывающий является ли
+                        // пользователь адмнином или прект-менеджером
                         viewModel.dataToken(userLogin, userPassword).observeForever { success ->
-                            isValid = success
-                            if (success) {
-                                navController.navigate("projects")
-                            } else {
-                                userLogin = ""
+                            println(success)
+                            success?.let {
+                                isValid = it.tokenLong!!.isNotEmpty()
+                                val result = it.adminOrProjectManager
+                                if (isValid) {
+                                    navController.navigate(
+                                        NavigationItem.Projects.passIdAndTitle(
+                                            success = result!!
+                                        )
+                                    )
+                                } else {
+                                    userPassword = ""
+                                    showErrorMessage("Неверный логин или пароль", context = context)
+                                }
+                            }?: run {
                                 userPassword = ""
                                 showErrorMessage("Неверный логин или пароль", context = context)
                             }

@@ -1,37 +1,77 @@
 package com.example.taskmaster.android.ui.screens
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ButtonTemplate
-import com.example.taskmaster.android.ui.component.projectTemplate.CardContainer
+import com.example.taskmaster.android.ui.component.commonTemplate.Header
+import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTasksContainer
+import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
 
 @Composable
-fun ProjectSubTaskScreen(navController: NavController) {
-    LazyColumn(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        item {
-            ButtonTemplate(text = "Название задачи", width = 232, rotateAngle = 0f, navController = navController, iconItem = R.drawable.arrow_circle_right_icon, route = "taskInfo")
-            TaskDescription(description = "Подзадачи какой-то задачи, какого-то проекта")
-            ButtonTemplate(text = "Вложения", width = 232, rotateAngle = 0f, navController = navController, route = "attachmentsList")
-        }
-        itemsIndexed(
-            listOf(
-                "Задачи" to "Добавить задачу",
-                "Выполнено" to "Перенести задачу"
+fun ProjectSubTaskScreen(navController: NavController, id: Int?, title: String?, taskTitle: String?, taskDescription: String?) {
+    Box {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Header(
+                text = title ?: "Заголовок отсутствует",
+                iconItem = 0,
+                actionIcons = listOf(),
+                navController,
+                spacer = false
             )
-        ) { _, (title, buttonTitle) ->
-            CardContainer(
-                title = title,
-                buttonTitle = buttonTitle,
-                navController = navController,
-                id = 28
-            )
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                item {
+                    ButtonTemplate(
+                        id = id,
+                        navController = navController,
+                        text = taskTitle!!,
+                        width = 232,
+                        rotateAngle = 0f,
+                        title = title ?: "Заголовок отсутствует",
+                        iconItem = R.drawable.arrow_circle_right_icon
+                    )
+                    TaskDescription(description = taskDescription ?: "Описание отсутствует")
+                    ButtonTemplate(
+                        navController = navController,
+                        text = "Вложения",
+                        width = 232,
+                        rotateAngle = 0f,
+                        title = title ?: "Заголовок не получен",
+                        id = id
+                    )
+                }
+
+                item {
+                    UncompletedTasksContainer(
+                        title = "Задачи",
+                        buttonTitle = "Добавить задачу",
+                        navController = navController,
+                        id = id,
+                        projectTitle = title ?: "Заголовок отсутствует"
+                    )
+                }
+
+                item {
+                    CompletedTasksContainer(
+                        title = "Выполнено",
+                        buttonTitle = "",
+                        navController = navController,
+                        id = id,
+                        projectTitle = title ?: "Заголовок отсутствует"
+                    )
+                }
+            }
         }
     }
 }

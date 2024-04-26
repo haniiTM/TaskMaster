@@ -28,18 +28,21 @@ import com.example.taskmaster.android.ui.theme.ShadowGray
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun CardContainer(
+fun CompletedTasksContainer(
     title: String,
     buttonTitle: String,
     navController: NavController,
     id: Int?,
-    viewModel: TaskViewModel = getViewModel()
+    viewModel: TaskViewModel = getViewModel(),
+    projectTitle: String
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.getUnfulfilleddTask(id!!.toInt())
+        viewModel.getCompletedTask(id!!.toInt())
     }
-    val tasks = viewModel.stateUnfulfilleddTask.value.itemTaskState
-    Box(contentAlignment = Alignment.TopCenter,
+    val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
+
+    Box(
+        contentAlignment = Alignment.TopCenter,
         modifier = Modifier
             .padding(bottom = 20.dp, start = 14.dp, end = 14.dp)
             .clip(shape = RoundedCornerShape(25.dp))
@@ -57,39 +60,49 @@ fun CardContainer(
                 fontSize = 18.sp,
                 color = Color.Black
             )
-            if (tasks.isEmpty()) {
-                Box(contentAlignment = Alignment.Center,
+
+            if (completedTasks.isEmpty()) {
+                Box(
+                    contentAlignment = Alignment.Center,
                     modifier = Modifier
-                    .padding(start = 14.dp, end = 14.dp, bottom = 14.dp)
-                    .clip(shape = RoundedCornerShape(25.dp))
-                    .heightIn(min = 232.dp, max = 345.dp).fillMaxWidth().background(ShadowGray)){
+                        .padding(start = 14.dp, end = 14.dp, bottom = 14.dp)
+                        .clip(shape = RoundedCornerShape(25.dp))
+                        .heightIn(min = 232.dp, max = 345.dp)
+                        .fillMaxWidth()
+                        .background(ShadowGray)
+                ) {
                     Text(
                         text = "Задачи отсутствуют",
-                        color = Color.Black)
+                        color = Color.Black
+                    )
                 }
+            }
 
-            } else {
+            if (completedTasks.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
                         .padding(start = 7.dp, end = 14.dp, bottom = 7.dp)
                         .clip(shape = RoundedCornerShape(25.dp))
-                        .heightIn(min = 232.dp, max = 345.dp).background(ShadowGray)
+                        .heightIn(min = 232.dp, max = 345.dp)
+                        .background(ShadowGray)
                 ) {
-                    itemsIndexed(tasks) { _, item ->
+                    itemsIndexed(completedTasks) { _, item ->
                         if (item != null) {
                             ItemProject(
                                 item = item,
                                 context = LocalContext.current,
-                                navController = navController
+                                navController = navController,
+                                completed = true,
+                                projectTitle = projectTitle
                             )
                         }
                     }
                 }
             }
-            if (buttonTitle != "") {
-                BoxButton(buttonTitle)
+
+            if (buttonTitle.isNotEmpty()) {
+                BoxButton(buttonTitle, id!!)
             }
         }
-
     }
 }

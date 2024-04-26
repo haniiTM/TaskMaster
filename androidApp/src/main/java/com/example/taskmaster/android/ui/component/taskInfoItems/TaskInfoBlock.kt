@@ -25,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -43,34 +42,30 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButtonTemplate
 import com.example.taskmaster.android.ui.component.popupWindows.NewLaborCostWindow
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
+import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import org.koin.androidx.compose.getViewModel
-
 @Composable
-fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = getViewModel()) {
+fun TaskInfoBlock(
+    navController: NavController,
+    viewModel: StatusViewModel = getViewModel(),
+    viewModelTypeOfActivity: TypeOfActivityViewModel = getViewModel(),
+    name: String,
+    scope: Int,
+    status: Int,
+    id: Int?,
+    title: String?) {
+
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
+        viewModelTypeOfActivity.getTypeActivity()
     }
-    val members by remember {
-        mutableIntStateOf(4)
-    }
-    val allocatedTime by remember {
-        mutableStateOf("4:00")
-    }
-    val spentPerDay by remember {
-        mutableStateOf("1:00")
-    }
+
     val wastedTime by remember {
         mutableStateOf("3:29")
     }
-    var taskStatus by remember {
-        mutableStateOf("Новая")
-    }
-    val taskTitle by remember {
-        mutableStateOf("Изучение семантики языка")
-    }
-    val taskCategoryList =
-        listOf("Backend", "Frontend", "QA", "DevOps", "DB Dev")
+
     var taskCategory by remember {
         mutableStateOf("")
     }
@@ -81,7 +76,6 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
         Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
-
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -105,7 +99,7 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                         .height(32.dp), contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = taskTitle,
+                        text = name,
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
@@ -120,14 +114,14 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Участники",
-                    param = members,
+                    param = scope,
                     avatar = R.drawable.logo
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачиваемые часы / день",
-                    param = spentPerDay
+                    param = scope
                 )
-                InfoBlockButtonTemplate(categoryText = "Оценка времени", param = allocatedTime)
+                InfoBlockButtonTemplate(categoryText = "Оценка времени", param = scope)
                 InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = wastedTime)
                 Button(
                     onClick = { categoryExpanded = true },
@@ -171,15 +165,15 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                                     .background(Color.White)
                                     .height(185.dp)
                             ) {
-                                taskCategoryList.forEach { item ->
+                                viewModelTypeOfActivity.state.value.itemState.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
                                             categoryExpanded = false
-                                            taskCategory = item
+                                            taskCategory = item?.name ?: ""
                                         },
                                         text = {
                                             Text(
-                                                text = item,
+                                                text = item?.name ?: "",
                                                 fontWeight = FontWeight.Normal,
                                                 color = Color.Black
                                             )
@@ -220,7 +214,9 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                                 fontWeight = FontWeight.Normal
                             )
                             Text(
-                                text = taskStatus,
+                                text = viewModel.state.value.itemState.find { item ->
+                                    item?.id == status
+                                }?.name ?: "",
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
@@ -244,7 +240,9 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                                         onClick = {
                                             statusExpanded = false
                                             if (item != null) {
-                                                taskStatus = item.name
+                                                viewModel.state.value.itemState.find { item ->
+                                                    item?.id == status
+                                                }?.name!!
                                             }
                                         },
                                         text = {
@@ -271,7 +269,7 @@ fun TaskInfoBlock(navController: NavController, viewModel: StatusViewModel = get
                         .fillMaxWidth()
                 )
                 Button(
-                    onClick = { navController.navigate("taskLaborCostList") },
+                    onClick = { navController.navigate(NavigationItem.TaskLaborCostListScreen.passIdAndTitle(id!!.toInt(), title!!)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(32.dp),

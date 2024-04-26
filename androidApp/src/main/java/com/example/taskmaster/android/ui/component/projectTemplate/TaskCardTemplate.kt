@@ -36,15 +36,19 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.ActionNotificationTemplate
+import com.example.taskmaster.android.ui.navigation.NavigationItem
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.models.TaskDTO
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false, projectTitle: String) {
     var showDialog by remember {
         mutableStateOf(false)
     }
+    val taskCompleted: SwipeAction
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     val delete = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
@@ -61,23 +65,32 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
         )
     }, background = MaterialTheme.colorScheme.surface
     )
-    val done = SwipeAction(onSwipe = {
+    taskCompleted = SwipeAction(onSwipe = {
         val vibrationEffect1: VibrationEffect =
             VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
         vibrator.cancel()
         vibrator.vibrate(vibrationEffect1)
+        val newStatus = if (item.status == 2) 1 else 2
+        viewModel.updateStatus(item.id!!, newStatus, item.name!!, item.parent!!)
     }, icon = {
+        val iconResId = if (completed) R.drawable.cancel_icon else R.drawable.done_icon
         Icon(
             modifier = Modifier.padding(25.dp),
-            painter = painterResource(id = R.drawable.done_icon),
+            painter = painterResource(id = iconResId),
             tint = Color.Black,
             contentDescription = null
         )
-    }, background = MaterialTheme.colorScheme.surfaceVariant
+    }, background = if (completed) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant
     )
     if ( showDialog ){
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            ActionNotificationTemplate( onConfirmation = { showDialog = !showDialog }, onDismissRequest = { showDialog = !showDialog }, title = "Удаление задачи")
+            ActionNotificationTemplate(
+                onConfirmation = { showDialog = !showDialog },
+                onDismissRequest = { showDialog = !showDialog },
+                title = "Удаление задачи",
+                id = item.id!!,
+                parent = item.parent!!
+            )
         }
     }
     ElevatedCard(
@@ -88,11 +101,11 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
             .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate("projectSubTask") }
+            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content ?: "Описание отсутствует")) }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),
-            startActions = listOf(done),
+            startActions = listOf(taskCompleted),
             swipeThreshold = 50.dp
         ) {
             Box {
@@ -103,7 +116,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController) {
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Text(
-                            text = item.name,
+                            text = item.name!!,
                             modifier = Modifier.width(226.dp),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1,

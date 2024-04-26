@@ -7,4 +7,6 @@ import kotlinx.serialization.Serializable
 data class AccessTokenDto(
     @SerialName("tokenLong")
     var tokenLong: String? = null,
+    @SerialName("adminOrProjectManager")
+    val adminOrProjectManager: Boolean? = null,
 )
