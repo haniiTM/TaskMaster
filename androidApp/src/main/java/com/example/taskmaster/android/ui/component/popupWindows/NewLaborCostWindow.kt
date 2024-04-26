@@ -51,7 +51,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
         mutableStateOf("")
     }
     val laborCostCategoryList =
-        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Дизайн")
+        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Обсуждение")
     var laborCostCategory by remember {
         mutableStateOf("")
     }
@@ -73,13 +73,13 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(230.dp)
+                    .height(240.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .background(linearGradient)
                         .fillMaxWidth()
-                        .height(35.dp), contentAlignment = Alignment.Center
+                        .height(40.dp), contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "Новая трудозатрата",
@@ -112,7 +112,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     onClick = { categoryExpanded = true },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(40.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0),
                     contentPadding = PaddingValues(horizontal = 12.dp)
@@ -189,7 +189,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     onClick = { onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(40.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0),
                     contentPadding = PaddingValues(horizontal = 12.dp)
