@@ -6,7 +6,7 @@ import com.example.taskmaster.domain.models.AccessToken
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    suspend fun fetchUserToken(login: String, password: String): AccessTokenDto
+    suspend fun fetchUserToken(login: String, password: String): AccessTokenDto?
     suspend fun getUserToken(): Flow<AccessToken?>
     suspend fun saveUserToken(accessToken: AccessTokenEntity)
     suspend fun deleteUserToken()

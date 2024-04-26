@@ -17,7 +17,7 @@ import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getViewModel()) {
+fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getViewModel(), result : Boolean) {
     LaunchedEffect(key1 = true) {
         viewModel.getProject()
     }
@@ -29,11 +29,13 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
             iconItem = R.drawable.more,
             actionIcons = listOf(
                 R.drawable.search1_icon,
+                R.drawable.add_user_icon,
                 R.drawable.add_project_icon,
-                R.drawable.exit_icon
+                R.drawable.exit_icon,
             ),
             navController,
-            spacer = true)
+            spacer = true,
+            result = result)
         LazyColumn(modifier = Modifier.padding(horizontal = 14.dp), state = rememberLazyListState()
         ) {
             itemsIndexed(projects.reversed()) { _, item ->

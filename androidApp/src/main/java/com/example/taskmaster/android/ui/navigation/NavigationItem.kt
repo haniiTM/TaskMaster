@@ -8,13 +8,18 @@ const val TASK_TITLE_ARGUMENT_KEY = "name"
 const val PROJECT_SUBTASK_ARGUMENT_KEY = "id"
 const val PROJECT_INFO_ARGUMENT_KEY = "id"
 const val TASK_DESCRIPTION_ARGUMENT_KEY = "description"
+const val USER_ROLE_ARGUMENT_KEY = "result"
 sealed class NavigationItem(
     val route: String,
     val title: String,
     @DrawableRes val icon: Int?
 ) {
     data object Auth : NavigationItem("auth", "R.string.title_auth", null)
-    data object Projects : NavigationItem("projects", "R.string.title_auth", null)
+    data object Projects : NavigationItem("projects/{$USER_ROLE_ARGUMENT_KEY}", "R.string.title_auth", null){
+        fun passIdAndTitle(success: Boolean): String {
+            return "projects/$success"
+        }
+    }
     data object ProjectTask : NavigationItem("projectTask/{$PROJECT_TASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null) {
         fun passIdAndTitle(id: Int, title: String): String {
             return "projectTask/$id/$title"
