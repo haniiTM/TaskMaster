@@ -2,6 +2,7 @@ package com.example.taskmaster.data.network
 
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.DescriptionDTO
+import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
@@ -234,7 +235,6 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Error: ${e.message}")
         }
     }
-
     override suspend fun updateStatusTask(taskId: Int, statusId: Int, nameTask: String) {
         try {
             val status = TaskDTO()
@@ -259,7 +259,6 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Error: ${e.message}")
         }
     }
-
     override suspend fun DeleteTaskOrProject(taskId: Int) {
         try {
             val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/task/${taskId}")
@@ -278,7 +277,6 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Error: ${e.message}")
         }
     }
-
     override suspend fun fetchTypeOfActivity(): MutableList<TypeOfActivityDTO?> {
         val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/type_of_activity")
         if (response.status.isSuccess()) {
@@ -303,7 +301,6 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             return  mutableListOf() // возвращаем пустой список
         }
     }
-
     override suspend fun fetchStatus(): MutableList<StatusDTO?> {
         return try {
             val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/status")
@@ -328,6 +325,27 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             mutableListOf()
+        }
+    }
+    override suspend fun registerUser(user: RegisterReceiveRemote) {
+        try {
+            val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/register") {
+                contentType(ContentType.Application.Json)
+                setBody(user)
+            }
+            if (response.status.isSuccess()) {
+                println("Server create project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
         }
     }
 }
