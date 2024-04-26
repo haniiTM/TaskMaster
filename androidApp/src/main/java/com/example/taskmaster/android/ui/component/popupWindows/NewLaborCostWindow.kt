@@ -52,7 +52,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
         mutableStateOf("")
     }
     val laborCostCategoryList =
-        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Дизайн")
+        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Обсуждение")
     var laborCostCategory by remember {
         mutableStateOf("")
     }
