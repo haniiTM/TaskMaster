@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
+import com.example.taskmaster.android.ui.component.popupWindows.NewUserWindow
 import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
 import com.example.taskmaster.android.ui.navigation.NavigationItem
 
@@ -45,12 +46,13 @@ fun Header(
     iconItem: Int,
     actionIcons: List<Int>,
     navController: NavController,
-    spacer: Boolean
+    spacer: Boolean,
+    result: Boolean = false
 ) {
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val action =
-        listOf("Поиск", "Добавить", "Выйти")
+        listOf("Поиск", "Добавить пользователя", "Добавить проект", "Выйти")
 
     Row(
         modifier = Modifier
@@ -87,7 +89,7 @@ fun Header(
                 MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
                     DropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = { expanded = !expanded },
+                        onDismissRequest = { expanded =!expanded },
                         modifier = Modifier
                             .fillMaxWidth(.5f)
                             .background(Color.White)
@@ -95,14 +97,16 @@ fun Header(
                                 BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp)
                             )
                     ) {
-                        action.forEachIndexed { index, item ->
-                            val isLastItem = index == action.size - 1
+                        action.filterIndexed { index, _ ->
+                            index!= 1 && index!=2 || result
+                        }.forEach { item ->
+                            val isLastItem = item == action.last()
                             val iconColor = if (isLastItem) Color.Red else Color.Black
 
                             DropdownMenuItem(
                                 onClick = {
-                                    selectedItemIndex = index
-                                    if (index == 2) {
+                                    selectedItemIndex = action.indexOf(item)
+                                    if (action.indexOf(item) == 2) {
                                         shouldNavigateToAuth = true
                                     } else {
                                         showDialog = true
@@ -112,7 +116,7 @@ fun Header(
                                 text = { Text(text = item) },
                                 trailingIcon = {
                                     Icon(
-                                        painter = painterResource(id = actionIcons[index]),
+                                        painter = painterResource(id = actionIcons[action.indexOf(item)]),
                                         contentDescription = "",
                                         tint = iconColor
                                     )
@@ -122,7 +126,7 @@ fun Header(
                                     textColor = if (isLastItem) Color.Red else Color.Black
                                 )
                             )
-                            if (index <= 1)
+                            if (action.indexOf(item) < action.size - 1)
                                 Divider(
                                     color = MaterialTheme.colorScheme.outline,
                                     modifier = Modifier
@@ -139,7 +143,13 @@ fun Header(
                                 showDialog = !showDialog
                             })
 
-                            1 -> NewProjectWindow(
+                            1 -> NewUserWindow(
+                                onDismissRequest = {
+                                    showDialog = !showDialog
+                                }
+                            )
+
+                            2 -> NewProjectWindow(
                                 onDismissRequest = {
                                     showDialog = !showDialog
                                 }

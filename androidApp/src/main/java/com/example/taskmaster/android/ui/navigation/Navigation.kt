@@ -31,8 +31,15 @@ fun Navigation(navController: NavHostController) {
             AuthScreen(navController = navController)
         }
 
-        composable(route = NavigationItem.Projects.route) {
-            ProjectScreen(navController = navController)
+        composable(
+            route = NavigationItem.Projects.route, arguments = listOf(navArgument(
+                USER_ROLE_ARGUMENT_KEY
+            ) {
+                type = NavType.BoolType
+            })
+        ) { backStackEntry ->
+            val result = backStackEntry.arguments?.getBoolean(USER_ROLE_ARGUMENT_KEY)
+            ProjectScreen(navController = navController, result = result!!)
         }
 
         composable(
@@ -57,9 +64,9 @@ fun Navigation(navController: NavHostController) {
                 type = NavType.StringType
             }, navArgument(TASK_TITLE_ARGUMENT_KEY) {
                 type = NavType.StringType
-                }, navArgument(TASK_DESCRIPTION_ARGUMENT_KEY) {
-                    type = NavType.StringType
-                })
+            }, navArgument(TASK_DESCRIPTION_ARGUMENT_KEY) {
+                type = NavType.StringType
+            })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt(PROJECT_SUBTASK_ARGUMENT_KEY)
             val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
@@ -74,7 +81,8 @@ fun Navigation(navController: NavHostController) {
             )
         }
 
-        composable(route = NavigationItem.TaskInfo.route,
+        composable(
+            route = NavigationItem.TaskInfo.route,
             arguments = listOf(navArgument(PROJECT_INFO_ARGUMENT_KEY) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
@@ -89,7 +97,8 @@ fun Navigation(navController: NavHostController) {
                 title = title
             )
         }
-        composable(route = NavigationItem.TaskLaborCostListScreen.route,
+        composable(
+            route = NavigationItem.TaskLaborCostListScreen.route,
             arguments = listOf(navArgument(PROJECT_INFO_ARGUMENT_KEY) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
@@ -104,7 +113,8 @@ fun Navigation(navController: NavHostController) {
                 title = title
             )
         }
-        composable(route = NavigationItem.AttachmentsListScreen.route,
+        composable(
+            route = NavigationItem.AttachmentsListScreen.route,
             arguments = listOf(navArgument(PROJECT_INFO_ARGUMENT_KEY) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
