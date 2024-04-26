@@ -106,7 +106,7 @@ fun Header(
                             DropdownMenuItem(
                                 onClick = {
                                     selectedItemIndex = action.indexOf(item)
-                                    if (action.indexOf(item) == 2) {
+                                    if (action.indexOf(item) == 3) {
                                         shouldNavigateToAuth = true
                                     } else {
                                         showDialog = true
