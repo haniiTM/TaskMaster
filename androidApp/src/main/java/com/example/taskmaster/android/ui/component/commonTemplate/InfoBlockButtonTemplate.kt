@@ -36,9 +36,16 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = 0) {
     var openDialog by remember {
         mutableStateOf(false)
     }
-    var paramItem by remember {
+    val paramItem by remember {
         mutableStateOf(param)
     }
+
+    var openUserDialog by remember {
+        mutableStateOf(false)
+    }
+
+    var showWindow: Boolean
+
     Button(
         onClick = { },
         modifier = Modifier
@@ -51,7 +58,9 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = 0) {
         if (avatar > 0) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { openUserDialog = true },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -105,6 +114,13 @@ fun InfoBlockButtonTemplate(categoryText: String, param: Any, avatar: Int = 0) {
     if (openDialog) {
         Dialog(onDismissRequest = { openDialog = !openDialog }) {
             ChangeInfoValueTemplate(title = categoryText, value = param.toString(), placeholder = categoryText, onDismissRequest = { openDialog = !openDialog} )
+        }
+    }
+    if (openUserDialog){
+        Dialog(onDismissRequest = { openUserDialog = !openUserDialog }) {
+            TaskUserList(
+                checkBoxAble = false, addRoleButton = true, buttonText = "Добавить пользователя", paddingValue = 20
+            )
         }
     }
 }
