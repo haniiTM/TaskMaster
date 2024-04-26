@@ -111,6 +111,32 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
+    override suspend fun fetchTaskById(taskId: Number): TaskDTO? {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/${taskId}")
+            if (response.status.isSuccess()) {
+                val tasks = response.body<TaskDTO?>()
+                println("Server returned task: ${tasks}")
+                tasks
+            } else {
+                println("Server returned error status: ${response.status}")
+                null
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            null
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            null
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            null
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            null
+        }
+    }
+
     override suspend fun fetchCompletedTask(idProj: Number): MutableList<TaskDTO?> {
         return try {
             val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/downtask/completed/${idProj}")

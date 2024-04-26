@@ -23,8 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TaskDescription(description: String) {
-    var descriptionTask by remember { mutableStateOf(description) }
+fun TaskDescription(description: String?) {
+    var descriptionTask by remember { mutableStateOf(description ?: "Описание отсутствует") }
     Column(
         modifier = Modifier
             .padding(start = 14.dp, top = 6.dp, end = 14.dp)
@@ -32,7 +32,7 @@ fun TaskDescription(description: String) {
             .background(Color.White)
     ) {
         TextField(
-            value = descriptionTask,
+            value = descriptionTask ?: "Описание отсутствует",
             onValueChange = { descriptionTask = it },
             modifier = Modifier
                 .height(130.dp)
