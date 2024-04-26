@@ -30,6 +30,7 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
             actionIcons = listOf(
                 R.drawable.search1_icon,
                 R.drawable.add_user_icon,
+                R.drawable.remove_user_icon,
                 R.drawable.add_project_icon,
                 R.drawable.exit_icon,
             ),

@@ -52,7 +52,7 @@ fun Header(
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val action =
-        listOf("Поиск", "Добавить пользователя", "Добавить проект", "Выйти")
+        listOf("Поиск", "Добавить пользователя", "Удалить пользователя", "Добавить проект", "Выйти")
 
     Row(
         modifier = Modifier
@@ -63,7 +63,7 @@ fun Header(
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (spacer){
+        if (spacer) {
             Spacer(modifier = Modifier.weight(0.5f))
         }
         Text(
@@ -89,7 +89,7 @@ fun Header(
                 MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
                     DropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = { expanded =!expanded },
+                        onDismissRequest = { expanded = !expanded },
                         modifier = Modifier
                             .fillMaxWidth(.5f)
                             .background(Color.White)
@@ -98,7 +98,7 @@ fun Header(
                             )
                     ) {
                         action.filterIndexed { index, _ ->
-                            index!= 1 && index!=2 || result
+                            index != 1 && index != 2 && index != 3 || result
                         }.forEach { item ->
                             val isLastItem = item == action.last()
                             val iconColor = if (isLastItem) Color.Red else Color.Black
@@ -106,7 +106,7 @@ fun Header(
                             DropdownMenuItem(
                                 onClick = {
                                     selectedItemIndex = action.indexOf(item)
-                                    if (action.indexOf(item) == 3) {
+                                    if (action.indexOf(item) == 4) {
                                         shouldNavigateToAuth = true
                                     } else {
                                         showDialog = true
@@ -116,7 +116,11 @@ fun Header(
                                 text = { Text(text = item) },
                                 trailingIcon = {
                                     Icon(
-                                        painter = painterResource(id = actionIcons[action.indexOf(item)]),
+                                        painter = painterResource(
+                                            id = actionIcons[action.indexOf(
+                                                item
+                                            )]
+                                        ),
                                         contentDescription = "",
                                         tint = iconColor
                                     )
@@ -149,7 +153,13 @@ fun Header(
                                 }
                             )
 
-                            2 -> NewProjectWindow(
+                            2 -> TaskUserList(
+                                checkBoxAble = true,
+                                addRoleButton = false,
+                                buttonText = "Удалить"
+                            )
+
+                            3 -> NewProjectWindow(
                                 onDismissRequest = {
                                     showDialog = !showDialog
                                 }
