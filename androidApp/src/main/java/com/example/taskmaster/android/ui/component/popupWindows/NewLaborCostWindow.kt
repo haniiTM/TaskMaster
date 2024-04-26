@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
@@ -51,7 +52,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
         mutableStateOf("")
     }
     val laborCostCategoryList =
-        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Дизайн")
+        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Обсуждение")
     var laborCostCategory by remember {
         mutableStateOf("")
     }
@@ -73,13 +74,13 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(210.dp)
+                    .height(240.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .background(linearGradient)
                         .fillMaxWidth()
-                        .height(35.dp), contentAlignment = Alignment.Center
+                        .height(40.dp), contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "Новая трудозатрата",
@@ -112,7 +113,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     onClick = { categoryExpanded = true },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(40.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0),
                     contentPadding = PaddingValues(horizontal = 12.dp)
@@ -189,7 +190,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                     onClick = { onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(40.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0),
                     contentPadding = PaddingValues(horizontal = 12.dp)
@@ -198,5 +199,13 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun p(){
+    NewLaborCostWindow {
+
     }
 }
