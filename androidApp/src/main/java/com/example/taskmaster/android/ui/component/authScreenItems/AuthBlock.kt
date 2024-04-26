@@ -110,7 +110,8 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                                     showErrorMessage("Неверный логин или пароль", context = context)
                                 }
                             }?: run {
-                                showErrorMessage("Ошибка авторизации", context = context)
+                                userPassword = ""
+                                showErrorMessage("Неверный логин или пароль", context = context)
                             }
                         }
                     } else {
