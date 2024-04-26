@@ -2,16 +2,17 @@ package com.example.taskmaster.android.ui.screens.task_screen
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.network.ApiService
+import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.domain.models.ItemProjectState
 import kotlinx.coroutines.launch
-
-
-class TaskViewModel constructor( private val apiService: ApiService) : ViewModel()
+class TaskViewModel constructor ( private val apiService: ApiService) : ViewModel()
 {
     private val _state = mutableStateOf(ItemProjectStates())
     val state: State<ItemProjectStates> = _state
@@ -129,7 +130,6 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
         }
     }
 
-
     // Функция для создания задания
     fun createTask(task: TaskDTO, parentId: Int) {
         viewModelScope.launch {
@@ -140,5 +140,18 @@ class TaskViewModel constructor( private val apiService: ApiService) : ViewModel
             }
             getUnfulfilleddTask(parentId)
         }
+    }
+
+    // Функции для получение одной задачи
+    suspend fun fetchTask(taskId: Int):  TaskDTO? {
+        return apiService.fetchTaskById(taskId)
+    }
+    fun dataTaskById(taskId: Int): LiveData<TaskDTO> {
+        val resultLiveData = MutableLiveData<TaskDTO>()
+        viewModelScope.launch {
+            val task = fetchTask(taskId)
+            resultLiveData.value = task
+        }
+        return resultLiveData
     }
 }

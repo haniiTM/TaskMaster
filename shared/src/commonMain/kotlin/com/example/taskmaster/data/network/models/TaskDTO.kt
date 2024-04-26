@@ -11,7 +11,7 @@ class TaskDTO(
     var scope: Int?,
     var description: Int?,
     var parent: Int?,
-    var userCount: Int? = null,
+    var userCount: Int?,
     var generation : Int? = 1,
     var content: String? = null,
     var typeofactivityid: Int?,

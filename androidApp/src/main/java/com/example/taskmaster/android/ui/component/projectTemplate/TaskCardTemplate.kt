@@ -101,7 +101,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
             .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content!!)) }
+            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content ?: "Описание отсутствует")) }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),
