@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
 import org.koin.androidx.compose.getViewModel
 
@@ -26,7 +27,7 @@ fun TaskInfoScreen(
     title: String?,
     viewTaskModel: TaskViewModel = getViewModel()
 ) {
-    var task: TaskDTO? by remember { mutableStateOf(null) }
+    var task: TaskByID? by remember { mutableStateOf(null) }
 
     LaunchedEffect(id) {
         viewTaskModel.dataTaskById(id!!).observeForever { taskValue ->
@@ -50,8 +51,12 @@ fun TaskInfoScreen(
                     id = id,
                     title = title,
                     name = task?.name ?: "",
-                    scope = task?.scope ?: 0,
-                    status = task?.status ?: 0
+                    scope = task?.score ?: 0,
+                    status = task?.status ?: 0,
+                    spentTime = task?.spentTime ?: 0,
+                    spentedTime =  task?.spentedTime ?: "",
+                    typeofactivityid = task?.typeofactivityid ?: 0,
+                    userCount = task?.userCount ?: 0
                 )
             } else {
                 Text("Loading...")

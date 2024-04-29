@@ -1,9 +1,12 @@
 package com.example.taskmaster.data.network
 
 import com.example.taskmaster.data.network.models.AccessTokenDto
+import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.DescriptionDTO
+import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
+import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
 import io.ktor.client.HttpClient
@@ -112,11 +115,13 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
-    override suspend fun fetchTaskById(taskId: Number): TaskDTO? {
+    override suspend fun fetchTaskById(taskId: Number): TaskByID? {
         return try {
             val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/${taskId}")
             if (response.status.isSuccess()) {
-                val tasks = response.body<TaskDTO?>()
+                val tas = response.bodyAsText()
+                println(tas)
+                val tasks = response.body<TaskByID?>()
                 println("Server returned task: ${tasks}")
                 tasks
             } else {
@@ -346,6 +351,82 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("300 error: ${e.message}")
         } catch (e: Exception) {
             println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun createManHours(manHour: ManHoursDTO, taskId: Int) {
+        try {
+            val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/manhours/${taskId}") {
+                contentType(ContentType.Application.Json)
+                setBody(manHour)
+            }
+            if (response.status.isSuccess()) {
+                println("Server create project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/status")
+            if (response.status.isSuccess()) {
+                val json = response.bodyAsText()
+                val manHours = Json.decodeFromString<MutableList<ManHoursDTO?>>(json)
+                println("Server returned manHours: ${manHours}")
+                manHours
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
+    override suspend fun fetchActivity(): MutableList<ActivityDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/activity")
+            if (response.status.isSuccess()) {
+                val json = response.bodyAsText()
+                val activity = Json.decodeFromString<MutableList<ActivityDTO?>>(json)
+                println("Server returned acivity: ${activity}")
+                activity
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
         }
     }
 }

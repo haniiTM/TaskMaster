@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,9 +39,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
+import com.example.taskmaster.android.ui.screens.activity_screen.ActivityViewModel
+import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.data.network.models.ActivityDTO
+import com.example.taskmaster.data.network.models.ManHoursDTO
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
+fun NewLaborCostWindow(
+    onDismissRequest: () -> Unit,
+    viewModelActivity: ActivityViewModel = getViewModel(),
+    viewModel: ManHoursViewModel = getViewModel(),
+    viewTaskModel: TaskViewModel = getViewModel(),
+    taskId: Int
+) {
+    LaunchedEffect(key1 = true) {
+        viewModelActivity.getActivity()
+        viewTaskModel.dataTaskById(taskId!!).observeForever { taskValue ->
+
+        }
+    }
+
     var date by remember {
         mutableStateOf("")
     }
@@ -50,10 +70,10 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
     var spendTime by remember {
         mutableStateOf("")
     }
-    val laborCostCategoryList =
-        listOf("Проектирование", "Разработка", "Дизайн", "Расследование", "Обсуждение")
+    val laborCostCategoryList = viewModelActivity.state.value.itemState
+
     var laborCostCategory by remember {
-        mutableStateOf("")
+        mutableStateOf(ActivityDTO())
     }
     val linearGradient =
         Brush.verticalGradient(
@@ -125,7 +145,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                                 .padding(end = 5.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            if (laborCostCategory == "") {
+                            if (laborCostCategory.name == null) {
                                 Text(
                                     text = "Выбор деятельности",
                                     color = Color.Black,
@@ -146,7 +166,7 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                                     fontWeight = FontWeight.Normal
                                 )
                                 Text(
-                                    text = laborCostCategory,
+                                    text = laborCostCategory.name!!,
                                     color = Color.Black,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal
@@ -165,13 +185,17 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                                 DropdownMenuItem(
                                     onClick = {
                                         categoryExpanded = false
-                                        laborCostCategory = item
+                                        if (item != null) {
+                                            laborCostCategory = item
+                                        }
                                     },
                                     text = {
-                                        Text(
-                                            text = item,
-                                            fontWeight = FontWeight.Normal
-                                        )
+                                        item?.name?.let {
+                                            Text(
+                                                text = it,
+                                                fontWeight = FontWeight.Normal
+                                            )
+                                        }
                                     },
                                     colors = MenuDefaults.itemColors(textColor = Color.Black)
                                 )
@@ -186,7 +210,17 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                         .fillMaxWidth()
                 )
                 Button(
-                    onClick = { onDismissRequest() },
+                    onClick = {
+                        viewModel.createManHours(
+                            ManHoursDTO(
+                                comment = comment,
+                                hours_spent = spendTime,
+                                activityid = laborCostCategory.id ?: 1,
+                                taskid = taskId,
+                            ),
+                            taskId
+                        )
+                        onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),
