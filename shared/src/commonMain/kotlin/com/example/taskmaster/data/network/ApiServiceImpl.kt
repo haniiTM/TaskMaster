@@ -4,6 +4,7 @@ import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.DescriptionDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskByID
@@ -411,6 +412,33 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
                 val activity = Json.decodeFromString<MutableList<ActivityDTO?>>(json)
                 println("Server returned acivity: ${activity}")
                 activity
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
+    override suspend fun fetchAllPerson(): MutableList<PersonDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/person")
+            if (response.status.isSuccess()) {
+                val json = response.bodyAsText()
+                val personDTO = Json.decodeFromString<MutableList<PersonDTO?>>(json)
+                println("Server returned PersonDTO: ${personDTO}")
+                personDTO
             } else {
                 println("Server returned error status: ${response.status}")
                 mutableListOf() // возвращаем пустой список
