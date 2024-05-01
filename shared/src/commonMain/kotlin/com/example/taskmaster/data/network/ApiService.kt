@@ -4,6 +4,7 @@ import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.DescriptionDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskByID
@@ -28,5 +29,6 @@ interface ApiService {
     suspend fun createManHours(manHour: ManHoursDTO, taskId: Int)
     suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?>
     suspend fun fetchActivity(): MutableList<ActivityDTO?>
+    suspend fun fetchAllPerson(): MutableList<PersonDTO?>
 }
 
