@@ -20,6 +20,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun TaskUserList(
@@ -41,9 +44,15 @@ fun TaskUserList(
     title: String = "",
     buttonText: String,
     paddingValue: Int = 0,
+    viewModel: NewUserViewModel = getViewModel(),
     onCloseButtonClick: (() -> Unit)? = null
 
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.getAllPerson()
+    }
+
+
     val list = listOf(
         "Иванов Иван Иванович",
         "Сидоров Петр Сергеевич",
@@ -92,12 +101,12 @@ fun TaskUserList(
             LazyColumn(
                 state = rememberLazyListState(), modifier = Modifier.sizeIn(maxHeight = 180.dp)
             ) {
-                itemsIndexed(list) { _, item ->
+                itemsIndexed(viewModel.state.value.itemState) { _, item ->
                     if (item != null) {
                         UserCard(
                             checkBoxAble = checkBoxAble,
                             addRoleButton = addRoleButton,
-                            item = item
+                            item = "${item.surname} ${item.name} ${item.patronymic}"
                         )
                     }
                 }

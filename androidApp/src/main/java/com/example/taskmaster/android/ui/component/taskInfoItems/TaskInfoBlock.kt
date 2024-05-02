@@ -52,18 +52,18 @@ fun TaskInfoBlock(
     viewModel: StatusViewModel = getViewModel(),
     viewModelTypeOfActivity: TypeOfActivityViewModel = getViewModel(),
     name: String,
+    spentTime: Int,
+    spentedTime: String,
     scope: Int,
     status: Int,
+    userCount: Int,
+    typeofactivityid: Int,
     id: Int?,
     title: String?) {
 
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
         viewModelTypeOfActivity.getTypeActivity()
-    }
-
-    val wastedTime by remember {
-        mutableStateOf("3:29")
     }
 
     var taskCategory by remember {
@@ -114,15 +114,15 @@ fun TaskInfoBlock(
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Участники",
-                    param = scope,
+                    param = userCount,
                     avatar = R.drawable.logo
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачиваемые часы / день",
-                    param = scope
+                    param = spentTime
                 )
                 InfoBlockButtonTemplate(categoryText = "Оценка времени", param = scope)
-                InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = wastedTime)
+                InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = spentedTime)
                 Button(
                     onClick = { categoryExpanded = true },
                     modifier = Modifier
@@ -145,7 +145,9 @@ fun TaskInfoBlock(
                                 fontWeight = FontWeight.Normal
                             )
                             Text(
-                                text = taskCategory,
+                                text = viewModelTypeOfActivity.state.value.itemState.find { typeOfActivity ->
+                                    typeOfActivity?.id == typeofactivityid
+                                }?.name ?: "",
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
@@ -295,7 +297,7 @@ fun TaskInfoBlock(
         }
         if (showDialog){
             Dialog(onDismissRequest = { showDialog = !showDialog}) {
-                NewLaborCostWindow(onDismissRequest = {showDialog = !showDialog})
+                NewLaborCostWindow(onDismissRequest = {showDialog = !showDialog}, taskId = id!!)
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.AccessTokenDto
+import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.domain.models.ItemProjectState
 import kotlinx.coroutines.launch
@@ -143,11 +144,11 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
     }
 
     // Функции для получение одной задачи
-    suspend fun fetchTask(taskId: Int):  TaskDTO? {
+    suspend fun fetchTask(taskId: Int):  TaskByID? {
         return apiService.fetchTaskById(taskId)
     }
-    fun dataTaskById(taskId: Int): LiveData<TaskDTO> {
-        val resultLiveData = MutableLiveData<TaskDTO>()
+    fun dataTaskById(taskId: Int): LiveData<TaskByID> {
+        val resultLiveData = MutableLiveData<TaskByID>()
         viewModelScope.launch {
             val task = fetchTask(taskId)
             resultLiveData.value = task
