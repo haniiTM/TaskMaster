@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,8 +34,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun UnifiedTextBox(
     value: String,
@@ -47,16 +51,26 @@ fun UnifiedTextBox(
     spacer: Int = 0,
     borderWidth: Int = 0,
     icon: Int = 0,
-    changeIcon : Int = 0,
+    iconAction: (() -> Unit)? = null,
+    changeIcon: Int = 0,
     prefix: @Composable (() -> Unit)? = null
 ) {
     var passwordVisible by remember { mutableStateOf(passwordVisibleValue) }
+    val navController = rememberAnimatedNavController()
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(roundedTopAngle.dp, roundedTopAngle.dp, roundedDownAngle.dp, roundedDownAngle.dp))
+            .clip(
+                shape = RoundedCornerShape(
+                    roundedTopAngle.dp,
+                    roundedTopAngle.dp,
+                    roundedDownAngle.dp,
+                    roundedDownAngle.dp
+                )
+            )
             .border(
                 BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline),
                 shape = RoundedCornerShape(roundedTopAngle.dp, roundedTopAngle.dp)
@@ -84,7 +98,7 @@ fun UnifiedTextBox(
                 ),
                 contentPadding = PaddingValues(horizontal = 10.dp),
                 trailingIcon = {
-                    if (icon != 0){
+                    if (icon != 0 && currentRoute == "auth") {
                         if (passwordVisible) {
                             Icon(
                                 painter = painterResource(id = icon),
@@ -103,6 +117,16 @@ fun UnifiedTextBox(
                                     passwordVisible = !passwordVisible
                                 }
                             )
+                        }
+                    } else if (icon != 0 && currentRoute != "auth") {
+                        Icon(
+                            painter = painterResource(id = icon),
+                            contentDescription = "",
+                            tint = Color.Black
+                        )
+                    } else if (currentRoute == "taskInfo"){
+                        IconButton(onClick = { iconAction }) {
+                            Icon(painter = painterResource(id = icon), contentDescription = "")
                         }
                     }
                 },

@@ -13,13 +13,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,9 +45,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
+import com.example.taskmaster.android.ui.theme.ShadowGray
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+
     var date by remember {
         mutableStateOf("")
     }
@@ -63,6 +75,10 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
             )
         )
     var categoryExpanded by remember { mutableStateOf(false) }
+    var showDatePickerDialog by remember {
+        mutableStateOf(false)
+    }
+    val calendarState = rememberDatePickerState()
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -89,13 +105,50 @@ fun NewLaborCostWindow(onDismissRequest: () -> Unit) {
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
-                UnifiedTextBox(
-                    value = date,
-                    onValueChange = { newValue -> date = newValue },
-                    icon = R.drawable.calendar_icon,
-                    changeIcon = R.drawable.calendar_icon,
-                    prefix = { Text(text = "Дата: ", color = Color.Black) }
-                )
+                Button(onClick = { showDatePickerDialog = !showDatePickerDialog }) {
+
+                }
+                if(showDatePickerDialog){
+                    DatePickerDialog(
+                        onDismissRequest = {
+                            showDatePickerDialog = !showDatePickerDialog
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                date = "$calendarState"
+                                showDatePickerDialog = !showDatePickerDialog
+                            }) {
+                                Text(text = "Готово")
+                            }
+                        }, modifier = Modifier.height(screenHeight/1.5f),
+                        colors = DatePickerDefaults.colors(
+                            containerColor = Color.White
+                        )
+                    ) {
+                        DatePicker(
+                            state = calendarState, colors = DatePickerDefaults.colors(
+                                containerColor = Color.White,
+                                titleContentColor = Color.Black,
+                                headlineContentColor = Color.Black,
+                                weekdayContentColor = Color.Black,
+                                dayContentColor = Color.Black,
+                                subheadContentColor = Color.Black,
+                                yearContentColor = Color.Black,
+                                currentYearContentColor = Color.Black,
+                                selectedYearContentColor = Color.White,
+                                selectedYearContainerColor = ShadowGray,
+                                selectedDayContentColor = Color.Black,
+                                disabledSelectedDayContentColor = Color.Black,
+                                selectedDayContainerColor = ShadowGray,
+                                disabledSelectedDayContainerColor = Color.Black,
+                                todayContentColor = Color.Black,
+                                todayDateBorderColor = Color.Black,
+                                dayInSelectionRangeContentColor = Color.Black,
+                                dayInSelectionRangeContainerColor = Color.Black
+                            )
+                        )
+                    }
+                }
                 UnifiedTextBox(
                     value = comment,
                     onValueChange = { newValue -> comment = newValue },
