@@ -13,4 +13,6 @@ class TaskByID(
     val spentedTime: String? = null, // Сколько часов сотрудник выделил на задачу
     var userCount: Int? = null,
     var typeofactivityid: Int? = null,
+    val canAddManHours: Boolean? = null,
+    val projectId: Int? = null,
 )

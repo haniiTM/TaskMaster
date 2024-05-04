@@ -30,5 +30,7 @@ interface ApiService {
     suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?>
     suspend fun fetchActivity(): MutableList<ActivityDTO?>
     suspend fun fetchAllPerson(): MutableList<PersonDTO?>
+    suspend fun fetchPersonInTask(taskId: Int): MutableList<PersonDTO?>
+    suspend fun fetchPersonInProject(taskId: Int): MutableList<PersonDTO?>
 }
 

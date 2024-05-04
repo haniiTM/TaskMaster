@@ -56,7 +56,9 @@ fun TaskInfoScreen(
                     spentTime = task?.spentTime ?: 0,
                     spentedTime =  task?.spentedTime ?: "",
                     typeofactivityid = task?.typeofactivityid ?: 0,
-                    userCount = task?.userCount ?: 0
+                    userCount = task?.userCount ?: 0,
+                    canAddManHours = task?.canAddManHours ?: false,
+                    projectId = task?.projectId ?: 0
                 )
             } else {
                 Text("Loading...")

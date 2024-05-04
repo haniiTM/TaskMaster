@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
+import com.example.taskmaster.data.network.models.PersonDTO
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -43,23 +44,31 @@ fun TaskUserList(
     addRoleButton: Boolean,
     title: String = "",
     buttonText: String,
+    id: Int = 0,
+    projectId: Int = 0,
     paddingValue: Int = 0,
+    showPersonInProject: Boolean, // Флаг для отображение сотрудников в проекте
     viewModel: NewUserViewModel = getViewModel(),
     onCloseButtonClick: (() -> Unit)? = null
-
 ) {
-    LaunchedEffect(key1 = true) {
-        viewModel.getAllPerson()
+
+    if(id != 0) {
+        // Получение списка сотрудников в задаче
+        LaunchedEffect(id != 0) {
+            viewModel.getPersonInTask(id)
+        }
+    } else if(projectId != 0 && showPersonInProject){
+        // Получение списка сотрудников в проекте
+        LaunchedEffect(projectId != 0 && showPersonInProject) {
+            viewModel.getPersonInProject(projectId)
+        }
     }
-
-
-    val list = listOf(
-        "Иванов Иван Иванович",
-        "Сидоров Петр Сергеевич",
-        "Петров Петр Петрович",
-        "Сидоров Петр Сергеевич",
-        "Сидоров Петр Сергеевич"
-    )
+    else {
+        // Получение списка всех сотрудников
+        LaunchedEffect(key1 = true) {
+            viewModel.getAllPerson()
+        }
+    }
 
     val linearGradient =
         Brush.verticalGradient(
@@ -101,7 +110,17 @@ fun TaskUserList(
             LazyColumn(
                 state = rememberLazyListState(), modifier = Modifier.sizeIn(maxHeight = 180.dp)
             ) {
-                itemsIndexed(viewModel.state.value.itemState) { _, item ->
+                val itemsList = if (id != 0) {
+                    viewModel.stateInTask.value.itemState
+                } else if(projectId != 0 && showPersonInProject){
+                    // Получение списка сотрудников в проекте
+                    viewModel.stateInProject.value.itemState
+                }
+                else {
+                    // Получение списка всех сотрудников
+                    viewModel.state.value.itemState
+                }
+                itemsIndexed(itemsList) { _, item ->
                     if (item != null) {
                         UserCard(
                             checkBoxAble = checkBoxAble,
@@ -145,7 +164,9 @@ fun TaskUserList(
                 title = "выберите пользователя",
                 buttonText = "Добавить",
                 paddingValue = 0,
-                onCloseButtonClick = { showWindow = false }
+                onCloseButtonClick = { showWindow = false },
+                projectId = projectId,
+                showPersonInProject = true,
             )
         }
     }
