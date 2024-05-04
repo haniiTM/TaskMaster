@@ -31,7 +31,7 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
     private val _state = mutableStateOf(ItemStates())
     val state: State<ItemStates> = _state
 
-    // Функция для получения видов активностей
+    // Функция для получения всех проектов
     fun getAllPerson() {
         viewModelScope.launch {
             try {
@@ -47,7 +47,53 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
         }
     }
 
+    // Получение всех сотрудников привязанных к задаче
     data class ItemStates (
+        val itemState: MutableList<PersonDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
+
+    private val _stateInTask = mutableStateOf(ItemStatesInTask())
+    val stateInTask: State<ItemStatesInTask> = _stateInTask
+
+    fun getPersonInTask(taskId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateInTask.value = stateInTask.value.copy(isLoading = true)
+                val data = apiService.fetchPersonInTask(taskId)
+                _stateInTask.value = stateInTask.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateInTask.value = stateInTask.value.copy(isLoading = false)
+            }
+        }
+    }
+    data class ItemStatesInTask (
+        val itemState: MutableList<PersonDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
+
+    // Получение всех сотрудников привязанных к проекту
+    private val _stateInProject = mutableStateOf(ItemStatesInProject())
+    val stateInProject: State<ItemStatesInProject> = _stateInProject
+
+    fun getPersonInProject(projId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateInProject.value = stateInProject.value.copy(isLoading = true)
+                val data = apiService.fetchPersonInProject(projId)
+                _stateInProject.value = stateInProject.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateInProject.value = stateInProject.value.copy(isLoading = false)
+            }
+        }
+    }
+    data class ItemStatesInProject (
         val itemState: MutableList<PersonDTO?> = mutableListOf(),
         val isLoading: Boolean = false
     )

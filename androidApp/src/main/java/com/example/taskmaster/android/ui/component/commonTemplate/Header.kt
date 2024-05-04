@@ -38,6 +38,8 @@ import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
 import com.example.taskmaster.android.ui.component.popupWindows.NewUserWindow
 import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
 import com.example.taskmaster.android.ui.navigation.NavigationItem
+import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
+import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -47,8 +49,13 @@ fun Header(
     actionIcons: List<Int>,
     navController: NavController,
     spacer: Boolean,
-    result: Boolean = false
+    result: Boolean = false,
+    viewModel: NewUserViewModel = getViewModel()
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.getAllPerson()
+    }
+
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val action =
@@ -156,7 +163,8 @@ fun Header(
                             2 -> TaskUserList(
                                 checkBoxAble = true,
                                 addRoleButton = false,
-                                buttonText = "Удалить"
+                                buttonText = "Удалить",
+                                showPersonInProject = false,
                             )
 
                             3 -> NewProjectWindow(

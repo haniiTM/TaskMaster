@@ -59,7 +59,9 @@ fun TaskInfoBlock(
     userCount: Int,
     typeofactivityid: Int,
     id: Int?,
-    title: String?) {
+    projectId: Int?,
+    title: String?,
+    canAddManHours: Boolean?) {
 
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
@@ -115,14 +117,18 @@ fun TaskInfoBlock(
                 InfoBlockButtonTemplate(
                     categoryText = "Участники",
                     param = userCount,
-                    avatar = R.drawable.logo
+                    avatar = R.drawable.logo,
+                    id = id!!,
+                    projectId = projectId!!
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачиваемые часы / день",
-                    param = spentTime
+                    param = spentTime,
+                    id = id!!,
+                    projectId = projectId!!
                 )
-                InfoBlockButtonTemplate(categoryText = "Оценка времени", param = scope)
-                InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = spentedTime)
+                InfoBlockButtonTemplate(categoryText = "Оценка времени", param = scope, id = id!!, projectId = projectId!!)
+                InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = spentedTime, id = id!!, projectId = projectId!!)
                 Button(
                     onClick = { categoryExpanded = true },
                     modifier = Modifier
@@ -283,22 +289,25 @@ fun TaskInfoBlock(
                 }
             }
         }
-        Button(
-            onClick = { showDialog = true },
-            modifier = Modifier
-                .padding(vertical = 24.dp)
-                .width(168.dp)
-                .height(33.dp),
-            colors = ButtonDefaults.buttonColors(Color.White),
-            contentPadding = PaddingValues(horizontal = 1.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-        ) {
-            Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
-        }
-        if (showDialog){
-            Dialog(onDismissRequest = { showDialog = !showDialog}) {
-                NewLaborCostWindow(onDismissRequest = {showDialog = !showDialog}, taskId = id!!)
+        if(canAddManHours!!) {
+            Button(
+                onClick = { showDialog = true },
+                modifier = Modifier
+                    .padding(vertical = 24.dp)
+                    .width(168.dp)
+                    .height(33.dp),
+                colors = ButtonDefaults.buttonColors(Color.White),
+                contentPadding = PaddingValues(horizontal = 1.dp),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+            ) {
+                Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
+            }
+            if (showDialog){
+                Dialog(onDismissRequest = { showDialog = !showDialog}) {
+                    NewLaborCostWindow(onDismissRequest = {showDialog = !showDialog}, taskId = id!!)
+                }
             }
         }
+
     }
 }
