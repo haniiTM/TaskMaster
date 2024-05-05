@@ -51,6 +51,7 @@ fun NewLaborCostWindow(
     onDismissRequest: () -> Unit,
     viewModelActivity: ActivityViewModel = getViewModel(),
     viewModel: ManHoursViewModel = getViewModel(),
+    viewTaskModel: TaskViewModel = getViewModel(),
     taskId: Int
 ) {
     LaunchedEffect(key1 = true) {
@@ -216,6 +217,7 @@ fun NewLaborCostWindow(
                             ),
                             taskId
                         )
+                        viewTaskModel.dataTaskById(taskId!!)
                         onDismissRequest() },
                     modifier = Modifier
                         .fillMaxWidth()

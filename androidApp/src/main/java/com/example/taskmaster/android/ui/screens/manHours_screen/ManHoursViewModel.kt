@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -14,6 +15,7 @@ class ManHoursViewModel constructor( private val apiService: ApiService) : ViewM
         viewModelScope.launch {
             try {
                 apiService.createManHours(manHour, taskId)
+                delay(200)
             } catch(e: Exception) {
                 println("Exception in ${e}")
             }
