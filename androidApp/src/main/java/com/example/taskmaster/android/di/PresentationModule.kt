@@ -9,6 +9,7 @@ import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,4 +23,5 @@ val presentationModule = module {
     viewModel { NewUserViewModel(apiService = get()) }
     viewModel { ManHoursViewModel(apiService = get()) }
     viewModel { ActivityViewModel(apiService = get()) }
+    viewModel { UserroleprojectViewModel(apiService = get()) }
 }

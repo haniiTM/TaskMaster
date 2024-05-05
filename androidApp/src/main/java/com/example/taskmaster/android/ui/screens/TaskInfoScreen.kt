@@ -3,21 +3,18 @@ package com.example.taskmaster.android.ui.screens
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
-import com.example.taskmaster.data.network.models.TaskByID
-import com.example.taskmaster.data.network.models.TaskDTO
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -25,13 +22,14 @@ fun TaskInfoScreen(
     navController: NavController,
     id: Int?,
     title: String?,
-    viewTaskModel: TaskViewModel = getViewModel()
+    viewTaskModel: TaskViewModel = getViewModel()  // Получаем ViewModel
 ) {
-    var task: TaskByID? by remember { mutableStateOf(null) }
+    // Следим за состоянием из `ViewModel`
+    val taskData by remember { viewTaskModel.stateTaskById }  // Используем `remember` для наблюдения за изменениями состояния
 
-    LaunchedEffect(id) {
-        viewTaskModel.dataTaskById(id!!).observeForever { taskValue ->
-            task = taskValue
+    LaunchedEffect(key1 = id) {  // Перезапускаем эффект при изменении `id`
+        id?.let {
+            viewTaskModel.dataTaskById(it)  // Загружаем данные при инициализации
         }
     }
 
@@ -44,24 +42,30 @@ fun TaskInfoScreen(
             spacer = false
         )
 
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            if (task != null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            if (taskData.isLoading) {  // Отображаем загрузку, если `isLoading` истина
+                CircularProgressIndicator()  // Индикатор загрузки
+            } else if (taskData.itemTaskState != null) {  // Проверяем, если данные задачи доступны
+                val itemTaskState = taskData.itemTaskState
                 TaskInfoBlock(
                     navController = navController,
                     id = id,
                     title = title,
-                    name = task?.name ?: "",
-                    scope = task?.score ?: 0,
-                    status = task?.status ?: 0,
-                    spentTime = task?.spentTime ?: 0,
-                    spentedTime =  task?.spentedTime ?: "",
-                    typeofactivityid = task?.typeofactivityid ?: 0,
-                    userCount = task?.userCount ?: 0,
-                    canAddManHours = task?.canAddManHours ?: false,
-                    projectId = task?.projectId ?: 0
+                    name = itemTaskState?.name ?: "",
+                    scope = itemTaskState?.score ?: 0,
+                    status = itemTaskState?.status ?: 0,
+                    spentTime = itemTaskState?.spentTime ?: 0,
+                    spentedTime = itemTaskState?.spentedTime ?: "",
+                    typeofactivityid = itemTaskState?.typeofactivityid ?: 0,
+                    userCount = itemTaskState?.userCount ?: 0,
+                    canAddManHours = itemTaskState?.canAddManHours ?: false,
+                    projectId = itemTaskState?.projectId ?: 0
                 )
             } else {
-                Text("Loading...")
+                Text("No Data Available")  // Если данных нет
             }
         }
     }

@@ -10,6 +10,7 @@ import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 
 interface ApiService {
     suspend fun fetchUserToken(login: String, password: String): AccessTokenDto?
@@ -32,5 +33,6 @@ interface ApiService {
     suspend fun fetchAllPerson(): MutableList<PersonDTO?>
     suspend fun fetchPersonInTask(taskId: Int): MutableList<PersonDTO?>
     suspend fun fetchPersonInProject(taskId: Int): MutableList<PersonDTO?>
+    suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO)
 }
 

@@ -10,6 +10,7 @@ import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -499,6 +500,27 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             mutableListOf()
+        }
+    }
+    override suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO) {
+        try {
+            val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/user_role_project") {
+                contentType(ContentType.Application.Json)
+                setBody(urp)
+            }
+            if (response.status.isSuccess()) {
+                println("Server link user to task or project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
         }
     }
 }

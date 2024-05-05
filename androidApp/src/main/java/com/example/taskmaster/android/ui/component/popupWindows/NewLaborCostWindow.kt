@@ -51,14 +51,10 @@ fun NewLaborCostWindow(
     onDismissRequest: () -> Unit,
     viewModelActivity: ActivityViewModel = getViewModel(),
     viewModel: ManHoursViewModel = getViewModel(),
-    viewTaskModel: TaskViewModel = getViewModel(),
     taskId: Int
 ) {
     LaunchedEffect(key1 = true) {
         viewModelActivity.getActivity()
-        viewTaskModel.dataTaskById(taskId!!).observeForever { taskValue ->
-
-        }
     }
 
     var date by remember {

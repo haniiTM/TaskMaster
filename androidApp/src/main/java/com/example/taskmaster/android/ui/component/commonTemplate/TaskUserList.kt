@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -35,7 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import com.example.taskmaster.data.network.models.PersonDTO
+import com.example.taskmaster.data.network.models.TaskByID
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -49,12 +55,14 @@ fun TaskUserList(
     paddingValue: Int = 0,
     showPersonInProject: Boolean, // Флаг для отображение сотрудников в проекте
     viewModel: NewUserViewModel = getViewModel(),
+    viewModelURP: UserroleprojectViewModel = getViewModel(),
+    viewTaskModel: TaskViewModel = getViewModel(),
     onCloseButtonClick: (() -> Unit)? = null
 ) {
 
-    if(id != 0) {
+    if(id != 0 && !showPersonInProject) {
         // Получение списка сотрудников в задаче
-        LaunchedEffect(id != 0) {
+        LaunchedEffect(id != 0 && showPersonInProject) {
             viewModel.getPersonInTask(id)
         }
     } else if(projectId != 0 && showPersonInProject){
@@ -69,6 +77,8 @@ fun TaskUserList(
             viewModel.getAllPerson()
         }
     }
+
+    var selectedUsers: MutableList<Int> by remember { mutableStateOf(mutableListOf()) }
 
     val linearGradient =
         Brush.verticalGradient(
@@ -110,7 +120,7 @@ fun TaskUserList(
             LazyColumn(
                 state = rememberLazyListState(), modifier = Modifier.sizeIn(maxHeight = 180.dp)
             ) {
-                val itemsList = if (id != 0) {
+                val itemsList = if (id != 0 && !showPersonInProject) {
                     viewModel.stateInTask.value.itemState
                 } else if(projectId != 0 && showPersonInProject){
                     // Получение списка сотрудников в проекте
@@ -125,7 +135,16 @@ fun TaskUserList(
                         UserCard(
                             checkBoxAble = checkBoxAble,
                             addRoleButton = addRoleButton,
-                            item = "${item.surname} ${item.name} ${item.patronymic}"
+                            item = "${item.surname} ${item.name} ${item.patronymic}",
+                            onCheckChanged = { isChecked ->
+                                if (isChecked) {
+                                    if (item.id !in selectedUsers) {
+                                        selectedUsers.add(item.id!!)  // Add to the selected users list
+                                    }
+                                } else {
+                                    selectedUsers.remove(item.id)  // Remove from the selected users list
+                                }
+                            }
                         )
                     }
                 }
@@ -143,6 +162,14 @@ fun TaskUserList(
                         showWindow = true
                     } else {
                         onCloseButtonClick()
+                        if(selectedUsers.isNotEmpty() && id != 0) {
+                            viewModelURP.linkUserToTaskOrProject(UserRoleProjectDTO(
+                                userid = selectedUsers,
+                                current_task_id = id
+                            ))
+
+                            viewTaskModel.dataTaskById(id!!)
+                        }
                     }
                 },
                 modifier = Modifier
@@ -164,6 +191,7 @@ fun TaskUserList(
                 title = "выберите пользователя",
                 buttonText = "Добавить",
                 paddingValue = 0,
+                id = id,
                 onCloseButtonClick = { showWindow = false },
                 projectId = projectId,
                 showPersonInProject = true,
