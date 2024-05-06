@@ -16,7 +16,6 @@ class TaskDTO(
     var content: String? = null,
     var typeofactivityid: Int?,
     var position: Int?,
-    var dependence: String?
 )
 {
     constructor() : this(
@@ -32,6 +31,5 @@ class TaskDTO(
         content = null,
         typeofactivityid = null,
         position = null,
-        dependence = null
     )
 }
