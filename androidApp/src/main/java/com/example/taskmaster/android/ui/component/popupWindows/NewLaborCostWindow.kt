@@ -77,9 +77,7 @@ fun NewLaborCostWindow(
     var comment by remember {
         mutableStateOf("")
     }
-    var spendTime by remember {
-        mutableStateOf("")
-    }
+    var spendTime by remember { mutableStateOf("0000") }
     val laborCostCategoryList = viewModelActivity.state.value.itemState
 
     var laborCostCategory by remember {
@@ -93,6 +91,8 @@ fun NewLaborCostWindow(
             )
         )
     var categoryExpanded by remember { mutableStateOf(false) }
+    val dateFormat = SimpleDateFormat("dd/M/yyyy")
+    val currentDateAndTime = dateFormat.format(Date())
 
     val mContext = LocalContext.current
     val mYear: Int
@@ -103,16 +103,13 @@ fun NewLaborCostWindow(
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
     mCalendar.time = Date()
-    val mDate = remember { mutableStateOf("") }
+    var mDate by remember { mutableStateOf(currentDateAndTime) }
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
+            mDate = "$mDayOfMonth/${mMonth + 1}/$mYear"
         }, mYear, mMonth, mDay
     )
-
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-    val currentDateAndTime = dateFormat.format(Date())
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -152,7 +149,7 @@ fun NewLaborCostWindow(
                 ) {
                     Row(modifier = Modifier.padding(start = 10.dp)){
                         Text(text = "Дата: ", color = Color.Black)
-                        Text(text = mDate.value, color = Color.Black)
+                        Text(text = mDate, color = Color.Black)
                     }
                     Icon(
                         painter = painterResource(id = R.drawable.calendar_icon),
