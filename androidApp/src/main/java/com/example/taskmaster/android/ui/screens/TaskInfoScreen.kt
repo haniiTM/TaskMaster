@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
@@ -36,10 +37,13 @@ fun TaskInfoScreen(
     Column {
         Header(
             text = title ?: "Заголовок отсутствует",
-            iconItem = 0,
-            actionIcons = listOf(),
-            navController,
-            spacer = false
+            iconItem = R.drawable.more,
+            actionIcons = listOf(
+                R.drawable.search1_icon, R.drawable.users_icon
+            ),
+            navController = navController,
+            actionTitle = listOf("Поиск", "Пользователи"),
+            projectScreenKey = false
         )
 
         Box(

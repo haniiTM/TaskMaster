@@ -3,6 +3,7 @@ package com.example.taskmaster.android.ui.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.ListItemList
 
@@ -10,11 +11,15 @@ import com.example.taskmaster.android.ui.component.taskInfoItems.ListItemList
 fun AttachmentsListScreen(navController: NavController, id: Int?, title: String?){
     Column {
         Header(
-            text = title ?: "Заголовок не получен",
-            iconItem = 0,
-            actionIcons = listOf(),
-            navController,
-            spacer = false)
+            text = title ?: "Заголовок отсутствует",
+            iconItem = R.drawable.more,
+            actionIcons = listOf(
+                R.drawable.search1_icon, R.drawable.users_icon
+            ),
+            navController = navController,
+            actionTitle = listOf("Поиск", "Пользователи"),
+            projectScreenKey = false
+        )
         ListItemList(taskId = id ?: 0)
     }
 
