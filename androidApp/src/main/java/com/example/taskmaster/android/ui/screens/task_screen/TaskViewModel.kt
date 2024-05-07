@@ -118,6 +118,16 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
         }
     }
 
+    fun updateDescription(taskId: Int, description: String) {
+        viewModelScope.launch {
+            try {
+                apiService.updateDescriptionTask(taskId, description)
+            } catch(e: Exception) {
+                println("Exception in  updateDescriptionTask${e}")
+            }
+        }
+    }
+
     // Функция для удаления
     fun deleteTaskOrProject(taskId: Int, parent: Int) {
         viewModelScope.launch {

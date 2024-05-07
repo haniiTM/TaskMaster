@@ -14,6 +14,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +29,9 @@ import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTasksContainer
 import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
+import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ProjectSubTaskScreen(
@@ -32,8 +39,11 @@ fun ProjectSubTaskScreen(
     id: Int?,
     title: String?,
     taskTitle: String?,
-    taskDescription: String?
+    taskDescription: String?,
 ) {
+    var description by remember {
+        mutableStateOf("")
+    }
     Box {
         Column(modifier = Modifier.fillMaxWidth()) {
             Header(
@@ -58,24 +68,7 @@ fun ProjectSubTaskScreen(
                         title = title ?: "Заголовок отсутствует",
                         iconItem = R.drawable.arrow_circle_right_icon
                     )
-                    TaskDescription(description = taskDescription ?: "Описание отсутствует")
-                    Button(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .padding(horizontal = 14.dp, vertical = 0.dp)
-                            .fillMaxWidth()
-                            .border(
-                                BorderStroke(
-                                    width = 1.dp,
-                                    color = MaterialTheme.colorScheme.outline
-                                ),
-                                shape = RoundedCornerShape(0.dp, 0.dp, 25.dp, 25.dp)
-                            ).height(42.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                        shape = RoundedCornerShape(0.dp, 0.dp, 25.dp, 25.dp)
-                    ) {
-                        Text(text = "Сохранить", color = Color.Black)
-                    }
+                    TaskDescription(description = taskDescription, taskId = id ?: 0, onValueChange = {newValue -> description = newValue})
                     ButtonTemplate(
                         navController = navController,
                         text = "Вложения",
