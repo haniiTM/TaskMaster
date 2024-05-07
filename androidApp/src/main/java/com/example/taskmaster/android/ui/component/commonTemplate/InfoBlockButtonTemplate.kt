@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.popupWindows.MaskVisualTransformation
 
 @Composable
 fun InfoBlockButtonTemplate(
@@ -38,8 +39,10 @@ fun InfoBlockButtonTemplate(
     avatar: Int = 0,
     id: Int,
     projectId: Int,
-    enable: Boolean = true
-) {
+    enable: Boolean = true,
+    timeUnifiedTextFieldKey: Boolean = false,
+
+    ) {
     var openDialog by remember {
         mutableStateOf(false)
     }
@@ -50,6 +53,7 @@ fun InfoBlockButtonTemplate(
     var openUserDialog by remember {
         mutableStateOf(false)
     }
+    val timeMask = MaskVisualTransformation("##:##")
 
     Button(
         onClick = { },
@@ -72,12 +76,11 @@ fun InfoBlockButtonTemplate(
                     },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = "$categoryText: $paramItem",
-                    color = Color.Black,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    maxLines = 1
+                InfoText(
+                    categoryText = categoryText,
+                    paramItem = paramItem,
+                    timeUnifiedTextFieldKey = timeUnifiedTextFieldKey,
+                    timeMask = timeMask
                 )
                 Image(
                     painter = painterResource(id = R.drawable.logo),
@@ -126,7 +129,10 @@ fun InfoBlockButtonTemplate(
                 title = categoryText,
                 value = param.toString(),
                 placeholder = categoryText,
-                onDismissRequest = { openDialog = !openDialog })
+                onDismissRequest = { updatedValue ->
+                    openDialog = !openDialog
+                },
+                timeField = timeUnifiedTextFieldKey)
         }
     }
     if (openUserDialog) {
@@ -143,4 +149,26 @@ fun InfoBlockButtonTemplate(
             )
         }
     }
+}
+
+@Composable
+private fun InfoText(
+    categoryText: String,
+    paramItem: Any,
+    timeUnifiedTextFieldKey: Boolean,
+    timeMask: MaskVisualTransformation
+) {
+    Text(
+        text = if (timeUnifiedTextFieldKey) {
+            "${categoryText}: ${
+                paramItem.toString().format(timeMask).filter { it.isDigit() }.take(4)
+            }"
+        } else {
+            "$categoryText: $paramItem"
+        },
+        color = Color.Black,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+        maxLines = 1
+    )
 }

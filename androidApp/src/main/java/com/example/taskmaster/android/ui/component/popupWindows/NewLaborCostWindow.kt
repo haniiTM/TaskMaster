@@ -71,9 +71,6 @@ fun NewLaborCostWindow(
     LaunchedEffect(key1 = true) {
         viewModelActivity.getActivity()
     }
-    var date by remember {
-        mutableStateOf("")
-    }
     var comment by remember {
         mutableStateOf("")
     }

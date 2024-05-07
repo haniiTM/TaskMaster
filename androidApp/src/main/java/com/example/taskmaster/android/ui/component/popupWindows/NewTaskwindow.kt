@@ -46,7 +46,12 @@ import com.example.taskmaster.data.network.models.TaskDTO
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModelTask: TaskViewModel = getViewModel(), id: Int, onDismissRequest: () -> Unit) {
+fun NewTaskWindow(
+    viewModel: TypeOfActivityViewModel = getViewModel(),
+    viewModelTask: TaskViewModel = getViewModel(),
+    id: Int,
+    onDismissRequest: () -> Unit
+) {
     LaunchedEffect(key1 = true) {
         viewModel.getTypeActivity()
     }
@@ -66,7 +71,12 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModel
 
     var categoryId by remember { mutableStateOf(0) }
     val linearGradient =
-        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
+        Brush.verticalGradient(
+            listOf(
+                MaterialTheme.colorScheme.onPrimary,
+                MaterialTheme.colorScheme.onSecondary
+            )
+        )
     var categoryExpanded by remember { mutableStateOf(false) }
 
 
@@ -103,7 +113,8 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModel
                 UnifiedTextBox(
                     value = taskAllocatedTime,
                     onValueChange = { newValue -> taskAllocatedTime = newValue },
-                    prefix = { Text(text = "Временная оценка: ", color = Color.Black)}
+                    prefix = { Text(text = "Временная оценка: ", color = Color.Black) },
+                    timeUnifiedTextFieldKey = true
                 )
                 Button(
                     onClick = { categoryExpanded = true },
@@ -201,7 +212,8 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModel
                         task.scope = taskAllocatedTime.toInt()
                         task.typeofactivityid = categoryId
                         viewModelTask.createTask(task, id)
-                             onDismissRequest() },
+                        onDismissRequest()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(45.dp),
