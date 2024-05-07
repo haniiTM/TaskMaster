@@ -15,6 +15,6 @@ fun TaskLaborCostListScreen(navController: NavController, id: Int?, title: Strin
             actionIcons = listOf(),
             navController,
             spacer = false)
-        ListItemList()
+        ListItemList(taskId = id ?: 0)
     }
 }

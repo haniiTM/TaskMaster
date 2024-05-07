@@ -15,7 +15,7 @@ fun AttachmentsListScreen(navController: NavController, id: Int?, title: String?
             actionIcons = listOf(),
             navController,
             spacer = false)
-        ListItemList()
+        ListItemList(taskId = id ?: 0)
     }
 
 }

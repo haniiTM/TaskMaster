@@ -405,7 +405,7 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
 
     override suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?> {
         return try {
-            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/status")
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/manhours/${taskId}")
             if (response.status.isSuccess()) {
                 val json = response.bodyAsText()
                 val manHours = Json.decodeFromString<MutableList<ManHoursDTO?>>(json)
