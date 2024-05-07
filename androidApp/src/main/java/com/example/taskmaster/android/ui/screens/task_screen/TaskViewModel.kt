@@ -143,16 +143,26 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
         }
     }
 
-    // Функции для получение одной задачи
-    suspend fun fetchTask(taskId: Int):  TaskByID? {
-        return apiService.fetchTaskById(taskId)
-    }
-    fun dataTaskById(taskId: Int): LiveData<TaskByID> {
-        val resultLiveData = MutableLiveData<TaskByID>()
+    private val _stateTaskById = mutableStateOf(ItemTaskById())
+    val stateTaskById: State<ItemTaskById> = _stateTaskById
+
+    // Функция для извлечение определенной задачи
+    fun dataTaskById(taskId: Int) {
         viewModelScope.launch {
-            val task = fetchTask(taskId)
-            resultLiveData.value = task
+            try {
+                _stateTaskById.value = stateTaskById.value.copy(isLoading = true)
+                val data = apiService.fetchTaskById(taskId)
+                _stateTaskById.value = stateTaskById.value.copy(
+                    itemTaskState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateTaskById.value = stateTaskById.value.copy(isLoading = false)
+            }
         }
-        return resultLiveData
     }
+    data class ItemTaskById (
+        val itemTaskState: TaskByID? = null,
+        val isLoading: Boolean = false
+    )
 }

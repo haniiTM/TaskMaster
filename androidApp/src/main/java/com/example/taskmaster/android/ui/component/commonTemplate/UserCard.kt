@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.R
 
 @Composable
-fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String) {
+fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String, onCheckChanged: (Boolean) -> Unit ) {
     var checked by remember {
         mutableStateOf(false)
     }
@@ -66,7 +66,10 @@ fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String) {
                             paddingValue = 0
                             Checkbox(
                                 checked = checked,
-                                onCheckedChange = { checked = !checked },
+                                onCheckedChange = { isChecked ->
+                                    checked = isChecked
+                                    onCheckChanged(isChecked)  // Invoke the callback with the new state
+                                },
                                 colors = CheckboxDefaults.colors(
                                     checkedColor = Color.Transparent,
                                     checkmarkColor = Color.Black,

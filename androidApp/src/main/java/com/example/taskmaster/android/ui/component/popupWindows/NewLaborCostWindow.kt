@@ -1,6 +1,11 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
+import android.app.DatePickerDialog
+import android.widget.DatePicker
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,9 +38,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +53,8 @@ import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import org.koin.androidx.compose.getViewModel
+import java.util.Calendar
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,13 +67,7 @@ fun NewLaborCostWindow(
 ) {
     LaunchedEffect(key1 = true) {
         viewModelActivity.getActivity()
-        viewTaskModel.dataTaskById(taskId!!).observeForever { taskValue ->
-
-        }
     }
-    val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
-
     var date by remember {
         mutableStateOf("")
     }
@@ -89,15 +90,28 @@ fun NewLaborCostWindow(
             )
         )
     var categoryExpanded by remember { mutableStateOf(false) }
-    var showDatePickerDialog by remember {
-        mutableStateOf(false)
-    }
-    val calendarState = rememberDatePickerState()
+
+    val mContext = LocalContext.current
+    val mYear: Int
+    val mMonth: Int
+    val mDay: Int
+    val mCalendar = Calendar.getInstance()
+    mYear = mCalendar.get(Calendar.YEAR)
+    mMonth = mCalendar.get(Calendar.MONTH)
+    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+    mCalendar.time = Date()
+    val mDate = remember { mutableStateOf("") }
+    val mDatePickerDialog = DatePickerDialog(
+        mContext,
+        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+            mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
+        }, mYear, mMonth, mDay
+    )
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
-                .padding(horizontal = 38.dp)
+                .padding(horizontal = 10.dp)
                 .clip(shape = RoundedCornerShape(15.dp))
         ) {
             Column(
@@ -119,12 +133,30 @@ fun NewLaborCostWindow(
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
-                UnifiedTextBox(
-                    prefix = { Text(text = "Дата") },
-                    value = date,
-                    onValueChange = { newValue -> date = newValue },
-                    icon = R.drawable.calendar_icon,
-                    iconAction = { showDatePickerDialog = !showDatePickerDialog })
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .background(Color.White)
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .border(
+                            BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+                        )
+                ) {
+                    Row(modifier = Modifier.padding(start = 10.dp)){
+                        Text(text = "Дата: ", color = Color.Black)
+                        Text(text = mDate.value, color = Color.Black)
+                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.calendar_icon),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(end = 15.dp)
+                            .clickable { mDatePickerDialog.show() },
+                        tint = Color.Black
+                    )
+                }
                 UnifiedTextBox(
                     value = comment,
                     onValueChange = { newValue -> comment = newValue },
@@ -134,8 +166,9 @@ fun NewLaborCostWindow(
                     value = spendTime,
                     onValueChange = { newValue -> spendTime = newValue },
                     icon = R.drawable.clock_icon,
-                    changeIcon = R.drawable.clock_icon,
-                    prefix = { Text(text = "Затрачено: ", color = Color.Black) }
+                    prefix = { Text(text = "Затрачено: ", color = Color.Black) },
+                    timeUnifiedTextFieldKey = true,
+                    keyboardType = KeyboardType.Number
                 )
                 Button(
                     onClick = { categoryExpanded = true },
@@ -168,6 +201,12 @@ fun NewLaborCostWindow(
                                     tint = Color.Black,
                                 )
                             } else {
+                                Text(
+                                    text = "Деятельность:",
+                                    color = Color.Black,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Normal
+                                )
                                 Text(
                                     text = laborCostCategory.name!!,
                                     color = Color.Black,
@@ -223,6 +262,7 @@ fun NewLaborCostWindow(
                             ),
                             taskId
                         )
+                        viewTaskModel.dataTaskById(taskId!!)
                         onDismissRequest()
                     },
                     modifier = Modifier

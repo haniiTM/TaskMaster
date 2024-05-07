@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -68,7 +69,7 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(10.dp)
+                .padding(10.dp).sizeIn(maxWidth = 278.dp)
         ) {
             UnifiedTextBox(
                 value = userLogin,
@@ -87,7 +88,8 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 spacer = 20,
                 borderWidth = 1,
                 icon = R.drawable.crossed_out_eye_icon,
-                changeIcon = R.drawable.eye_icon
+                changeIcon = R.drawable.eye_icon,
+                passwordTransformationKey = true
             )
             Button(
                 onClick = {
