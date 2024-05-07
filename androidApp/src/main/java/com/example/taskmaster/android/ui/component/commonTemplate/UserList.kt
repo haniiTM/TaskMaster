@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,10 +37,7 @@ import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
-import com.example.taskmaster.data.network.models.PersonDTO
-import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -57,21 +53,21 @@ fun TaskUserList(
     viewModel: NewUserViewModel = getViewModel(),
     viewModelURP: UserroleprojectViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
-    onCloseButtonClick: (() -> Unit)? = null
+    onCloseButtonClick: (() -> Unit)? = null,
+    removeUserWindowKey: Boolean = true
 ) {
 
-    if(id != 0 && !showPersonInProject) {
+    if (id != 0 && !showPersonInProject) {
         // Получение списка сотрудников в задаче
         LaunchedEffect(id != 0 && showPersonInProject) {
             viewModel.getPersonInTask(id)
         }
-    } else if(projectId != 0 && showPersonInProject){
+    } else if (projectId != 0 && showPersonInProject) {
         // Получение списка сотрудников в проекте
         LaunchedEffect(projectId != 0 && showPersonInProject) {
             viewModel.getPersonInProject(projectId)
         }
-    }
-    else {
+    } else {
         // Получение списка всех сотрудников
         LaunchedEffect(key1 = true) {
             viewModel.getAllPerson()
@@ -122,11 +118,10 @@ fun TaskUserList(
             ) {
                 val itemsList = if (id != 0 && !showPersonInProject) {
                     viewModel.stateInTask.value.itemState
-                } else if(projectId != 0 && showPersonInProject){
+                } else if (projectId != 0 && showPersonInProject) {
                     // Получение списка сотрудников в проекте
                     viewModel.stateInProject.value.itemState
-                }
-                else {
+                } else {
                     // Получение списка всех сотрудников
                     viewModel.state.value.itemState
                 }
@@ -158,18 +153,24 @@ fun TaskUserList(
 
             Button(
                 onClick = {
-                    if (onCloseButtonClick == null) {
-                        showWindow = true
-                    } else {
-                        onCloseButtonClick()
-                        if(selectedUsers.isNotEmpty() && id != 0) {
-                            viewModelURP.linkUserToTaskOrProject(UserRoleProjectDTO(
-                                userid = selectedUsers,
-                                current_task_id = id
-                            ))
+                    if (!removeUserWindowKey) {
+                        if (onCloseButtonClick == null) {
+                            showWindow = true
+                        } else {
+                            onCloseButtonClick()
+                            if (selectedUsers.isNotEmpty() && id != 0) {
+                                viewModelURP.linkUserToTaskOrProject(
+                                    UserRoleProjectDTO(
+                                        userid = selectedUsers,
+                                        current_task_id = id
+                                    )
+                                )
 
-                            viewTaskModel.dataTaskById(id!!)
+                                viewTaskModel.dataTaskById(id!!)
+                            }
                         }
+                    } else {
+                        //удаление пользователя
                     }
                 },
                 modifier = Modifier
@@ -183,7 +184,7 @@ fun TaskUserList(
             }
         }
     }
-    if (showWindow) {
+    if (showWindow && !removeUserWindowKey) {
         Dialog(onDismissRequest = { showWindow = false }) {
             TaskUserList(
                 checkBoxAble = true,
