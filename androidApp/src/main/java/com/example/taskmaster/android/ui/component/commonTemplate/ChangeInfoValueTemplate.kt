@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ChangeInfoValueTemplate(title: String, value: String, placeholder: String, onDismissRequest: () -> Unit) {
+fun ChangeInfoValueTemplate(title: String, value: String, placeholder: String, onDismissRequest: (Any?) -> Unit, timeField: Boolean = false) {
     var changeValue by remember {
         mutableStateOf(value)
     }
@@ -64,13 +64,23 @@ fun ChangeInfoValueTemplate(title: String, value: String, placeholder: String, o
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
-                UnifiedTextBox(
-                    value = changeValue,
-                    onValueChange = { newValue -> changeValue = newValue },
-                    placeholder = placeholder
-                )
+                if (timeField){
+                    UnifiedTextBox(
+                        value = changeValue,
+                        onValueChange = { newValue -> changeValue = newValue },
+                        placeholder = placeholder,
+                        timeUnifiedTextFieldKey = true
+                    )
+                }
+                else{
+                    UnifiedTextBox(
+                        value = changeValue,
+                        onValueChange = { newValue -> changeValue = newValue },
+                        placeholder = placeholder
+                    )
+                }
                 Button(
-                    onClick = { onDismissRequest() },
+                    onClick = { onDismissRequest(changeValue) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(35.dp),

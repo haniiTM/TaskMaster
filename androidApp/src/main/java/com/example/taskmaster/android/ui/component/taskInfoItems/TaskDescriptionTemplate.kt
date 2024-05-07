@@ -28,7 +28,7 @@ fun TaskDescription(description: String?) {
     Column(
         modifier = Modifier
             .padding(start = 14.dp, top = 6.dp, end = 14.dp)
-            .clip(shape = RoundedCornerShape(25.dp))
+            .clip(shape = RoundedCornerShape(25.dp, 25.dp, 0.dp, 0.dp))
             .background(Color.White)
     ) {
         TextField(
@@ -39,7 +39,7 @@ fun TaskDescription(description: String?) {
                 .fillMaxWidth()
                 .border(
                     BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline),
-                    shape = RoundedCornerShape(25.dp)
+                    shape = RoundedCornerShape(25.dp, 25.dp, 0.dp, 0.dp)
                 ),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
