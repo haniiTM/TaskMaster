@@ -41,7 +41,7 @@ import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun TaskUserList(
+fun UserList(
     checkBoxAble: Boolean,
     addRoleButton: Boolean,
     title: String = "",
@@ -54,8 +54,9 @@ fun TaskUserList(
     viewModelURP: UserroleprojectViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
     onCloseButtonClick: (() -> Unit)? = null,
-    removeUserWindowKey: Boolean = true
+    removeUserWindowKey: Boolean
 ) {
+    val selectedUsers = remember { mutableStateOf<Set<Int>>(setOf()) }
 
     if (id != 0 && !showPersonInProject) {
         // Получение списка сотрудников в задаче
@@ -74,8 +75,6 @@ fun TaskUserList(
         }
     }
 
-    var selectedUsers: MutableList<Int> by remember { mutableStateOf(mutableListOf()) }
-
     val linearGradient =
         Brush.verticalGradient(
             listOf(
@@ -87,7 +86,6 @@ fun TaskUserList(
     var showWindow by remember {
         mutableStateOf(false)
     }
-
     Box(
         modifier = Modifier
             .padding(horizontal = paddingValue.dp)
@@ -127,17 +125,17 @@ fun TaskUserList(
                 }
                 itemsIndexed(itemsList) { _, item ->
                     if (item != null) {
+                        val isSelected = selectedUsers.value.contains(item.id!!)
                         UserCard(
                             checkBoxAble = checkBoxAble,
                             addRoleButton = addRoleButton,
                             item = "${item.surname} ${item.name} ${item.patronymic}",
-                            onCheckChanged = { isChecked ->
-                                if (isChecked) {
-                                    if (item.id !in selectedUsers) {
-                                        selectedUsers.add(item.id!!)  // Add to the selected users list
-                                    }
+                            isSelected = isSelected,
+                            onCheckChanged = { isSelected ->
+                                if (isSelected) {
+                                    selectedUsers.value += item.id!!
                                 } else {
-                                    selectedUsers.remove(item.id)  // Remove from the selected users list
+                                    selectedUsers.value -= item.id!!
                                 }
                             }
                         )
@@ -158,10 +156,13 @@ fun TaskUserList(
                             showWindow = true
                         } else {
                             onCloseButtonClick()
-                            if (selectedUsers.isNotEmpty() && id != 0) {
+                            if (selectedUsers.value.isNotEmpty() && id!= 0) {
+                                val selectedUsersList = mutableListOf<Int>()
+                                selectedUsersList.addAll(selectedUsers.value)
+
                                 viewModelURP.linkUserToTaskOrProject(
                                     UserRoleProjectDTO(
-                                        userid = selectedUsers,
+                                        userid = selectedUsersList,
                                         current_task_id = id
                                     )
                                 )
@@ -170,7 +171,7 @@ fun TaskUserList(
                             }
                         }
                     } else {
-                        //удаление пользователя
+
                     }
                 },
                 modifier = Modifier
@@ -184,9 +185,9 @@ fun TaskUserList(
             }
         }
     }
-    if (showWindow && !removeUserWindowKey) {
+    if (showWindow && removeUserWindowKey != true) {
         Dialog(onDismissRequest = { showWindow = false }) {
-            TaskUserList(
+            UserList(
                 checkBoxAble = true,
                 addRoleButton = false,
                 title = "выберите пользователя",
@@ -196,6 +197,7 @@ fun TaskUserList(
                 onCloseButtonClick = { showWindow = false },
                 projectId = projectId,
                 showPersonInProject = true,
+                removeUserWindowKey = false
             )
         }
     }

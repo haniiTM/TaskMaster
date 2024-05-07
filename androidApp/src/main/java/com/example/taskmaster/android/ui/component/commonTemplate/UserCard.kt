@@ -20,10 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,12 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.R
 
 @Composable
-fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String, onCheckChanged: (Boolean) -> Unit ) {
-    var checked by remember {
-        mutableStateOf(false)
-    }
+fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String, isSelected: Boolean, onCheckChanged: (Boolean) -> Unit ) {
     var paddingValue = 12
-
     Divider(
         color = MaterialTheme.colorScheme.outline,
         modifier = Modifier
@@ -65,11 +57,8 @@ fun UserCard(checkBoxAble: Boolean, addRoleButton: Boolean, item: String, onChec
                         if (checkBoxAble) {
                             paddingValue = 0
                             Checkbox(
-                                checked = checked,
-                                onCheckedChange = { isChecked ->
-                                    checked = isChecked
-                                    onCheckChanged(isChecked)  // Invoke the callback with the new state
-                                },
+                                checked = isSelected,
+                                onCheckedChange = onCheckChanged,
                                 colors = CheckboxDefaults.colors(
                                     checkedColor = Color.Transparent,
                                     checkmarkColor = Color.Black,
