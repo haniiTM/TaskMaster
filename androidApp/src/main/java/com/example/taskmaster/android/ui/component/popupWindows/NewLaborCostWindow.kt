@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +58,6 @@ fun NewLaborCostWindow(
     LaunchedEffect(key1 = true) {
         viewModelActivity.getActivity()
     }
-
     var date by remember {
         mutableStateOf("")
     }
@@ -84,7 +84,7 @@ fun NewLaborCostWindow(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
-                .padding(horizontal = 38.dp)
+                .padding(horizontal = 10.dp)
                 .clip(shape = RoundedCornerShape(15.dp))
         ) {
             Column(
@@ -110,7 +110,6 @@ fun NewLaborCostWindow(
                     value = date,
                     onValueChange = { newValue -> date = newValue },
                     icon = R.drawable.calendar_icon,
-                    changeIcon = R.drawable.calendar_icon,
                     prefix = { Text(text = "Дата: ", color = Color.Black) }
                 )
                 UnifiedTextBox(
@@ -122,8 +121,9 @@ fun NewLaborCostWindow(
                     value = spendTime,
                     onValueChange = { newValue -> spendTime = newValue },
                     icon = R.drawable.clock_icon,
-                    changeIcon = R.drawable.clock_icon,
-                    prefix = { Text(text = "Затрачено: ", color = Color.Black) }
+                    prefix = { Text(text = "Затрачено: ", color = Color.Black) },
+                    timeUnifiedTextFieldKey = true,
+                    keyboardType = KeyboardType.Number
                 )
                 Button(
                     onClick = { categoryExpanded = true },
