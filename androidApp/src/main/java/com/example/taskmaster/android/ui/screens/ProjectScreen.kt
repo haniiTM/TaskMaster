@@ -25,6 +25,7 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
     val projects = viewModel.state.value.itemProjectState
     Column {
         Header(
+            projectScreenKey = true,
             text = "Все проекты",
             iconItem = R.drawable.more,
             actionIcons = listOf(
@@ -34,9 +35,10 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
                 R.drawable.add_project_icon,
                 R.drawable.exit_icon,
             ),
-            navController,
+            navController = navController,
             spacer = true,
-            result = result)
+            result = result,
+            actionTitle = listOf("Поиск", "Добавить пользователя", "Удалить пользователя", "Добавить проект", "Выйти"))
         LazyColumn(modifier = Modifier.padding(horizontal = 14.dp), state = rememberLazyListState()
         ) {
             itemsIndexed(projects.reversed()) { _, item ->

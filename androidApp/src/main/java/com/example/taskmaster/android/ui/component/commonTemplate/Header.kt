@@ -44,13 +44,15 @@ import org.koin.androidx.compose.getViewModel
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun Header(
+    projectScreenKey: Boolean = false,
     text: String,
     iconItem: Int,
     actionIcons: List<Int>,
     navController: NavController,
     spacer: Boolean,
     result: Boolean = false,
-    viewModel: NewUserViewModel = getViewModel()
+    viewModel: NewUserViewModel = getViewModel(),
+    actionTitle: List<String>
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getAllPerson()
@@ -58,8 +60,7 @@ fun Header(
 
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
-    val action =
-        listOf("Поиск", "Добавить пользователя", "Удалить пользователя", "Добавить проект", "Выйти")
+
 
     Row(
         modifier = Modifier
@@ -104,16 +105,19 @@ fun Header(
                                 BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp)
                             )
                     ) {
-                        action.filterIndexed { index, _ ->
+                        actionTitle.filterIndexed { index, _ ->
                             index != 1 && index != 2 && index != 3 || result
                         }.forEach { item ->
-                            val isLastItem = item == action.last()
-                            val iconColor = if (isLastItem) Color.Red else Color.Black
-
+                            val isLastItem = item == actionTitle.last()
+                            val iconColor = if (projectScreenKey) {
+                                if (isLastItem) Color.Red else Color.Black
+                            } else {
+                                Color.Black
+                            }
                             DropdownMenuItem(
                                 onClick = {
-                                    selectedItemIndex = action.indexOf(item)
-                                    if (action.indexOf(item) == 4) {
+                                    selectedItemIndex = actionTitle.indexOf(item)
+                                    if (actionTitle.indexOf(item) == 4) {
                                         shouldNavigateToAuth = true
                                     } else {
                                         showDialog = true
@@ -124,20 +128,22 @@ fun Header(
                                 trailingIcon = {
                                     Icon(
                                         painter = painterResource(
-                                            id = actionIcons[action.indexOf(
+                                            id = actionIcons[actionTitle.indexOf(
                                                 item
                                             )]
                                         ),
                                         contentDescription = "",
-                                        tint = iconColor
+                                        tint = if (projectScreenKey) iconColor else Color.Black
                                     )
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = MenuDefaults.itemColors(
-                                    textColor = if (isLastItem) Color.Red else Color.Black
+                                    textColor = if (projectScreenKey) {
+                                        if (isLastItem) Color.Red else Color.Black
+                                    } else Color.Black
                                 )
                             )
-                            if (action.indexOf(item) < action.size - 1)
+                            if (actionTitle.indexOf(item) < actionTitle.size - 1)
                                 Divider(
                                     color = MaterialTheme.colorScheme.outline,
                                     modifier = Modifier
@@ -149,30 +155,44 @@ fun Header(
                 }
                 if (showDialog) {
                     Dialog(onDismissRequest = { showDialog = false }) {
-                        when (selectedItemIndex) {
-                            0 -> SearchPopUpWindow(onDismissRequest = {
-                                showDialog = !showDialog
-                            })
-
-                            1 -> NewUserWindow(
-                                onDismissRequest = {
+                        if (projectScreenKey) {
+                            when (selectedItemIndex) {
+                                0 -> SearchPopUpWindow(onDismissRequest = {
                                     showDialog = !showDialog
-                                }
-                            )
+                                })
 
-                            2 -> UserList(
-                                checkBoxAble = true,
-                                addRoleButton = false,
-                                buttonText = "Удалить",
-                                showPersonInProject = false,
-                                removeUserWindowKey = true
-                            )
+                                1 -> NewUserWindow(
+                                    onDismissRequest = {
+                                        showDialog = !showDialog
+                                    }
+                                )
 
-                            3 -> NewProjectWindow(
-                                onDismissRequest = {
+                                2 -> UserList(
+                                    checkBoxAble = true,
+                                    addRoleButton = false,
+                                    buttonText = "Удалить",
+                                    showPersonInProject = false,
+                                    removeUserWindowKey = true
+                                )
+
+                                3 -> NewProjectWindow(
+                                    onDismissRequest = {
+                                        showDialog = !showDialog
+                                    }
+                                )
+                            }
+                        } else {
+                            when (selectedItemIndex) {
+                                0 -> SearchPopUpWindow(onDismissRequest = {
                                     showDialog = !showDialog
-                                }
-                            )
+                                })
+
+                                1 -> NewUserWindow(
+                                    onDismissRequest = {
+                                        showDialog = !showDialog
+                                    }
+                                )
+                            }
                         }
                     }
                 }
