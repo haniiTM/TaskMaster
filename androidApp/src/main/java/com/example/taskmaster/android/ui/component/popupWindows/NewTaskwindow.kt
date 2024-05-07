@@ -79,7 +79,7 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModel
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(235.dp)
+                    .height(195.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -99,11 +99,6 @@ fun NewTaskWindow(viewModel: TypeOfActivityViewModel = getViewModel(), viewModel
                     value = taskTitle,
                     onValueChange = { newValue -> taskTitle = newValue },
                     placeholder = "Название задачи"
-                )
-                UnifiedTextBox(
-                    value = taskDependence,
-                    onValueChange = { newValue -> taskDependence = newValue },
-                    prefix = { Text(text = "Зависит от задачи: ", color = Color.Black)}
                 )
                 UnifiedTextBox(
                     value = taskAllocatedTime,

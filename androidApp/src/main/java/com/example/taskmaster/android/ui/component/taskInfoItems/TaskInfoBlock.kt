@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +47,7 @@ import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import org.koin.androidx.compose.getViewModel
+
 @Composable
 fun TaskInfoBlock(
     navController: NavController,
@@ -61,7 +63,8 @@ fun TaskInfoBlock(
     id: Int?,
     projectId: Int?,
     title: String?,
-    canAddManHours: Boolean?) {
+    canAddManHours: Boolean?
+) {
 
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
@@ -75,9 +78,17 @@ fun TaskInfoBlock(
         mutableStateOf(false)
     }
     val linearGradient =
-        Brush.verticalGradient(listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onSecondary))
+        Brush.verticalGradient(
+            listOf(
+                MaterialTheme.colorScheme.onPrimary,
+                MaterialTheme.colorScheme.onSecondary
+            )
+        )
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
+    var dependenceAt by remember { mutableStateOf(false) }
+    val tasks = listOf("Название задачи 1", "Название задачи 2", "Очень длинное название задачи 3","Название задачи 4","Название задачи 5")
+    var taskName = ""
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -92,7 +103,7 @@ fun TaskInfoBlock(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(264.dp)
+                    .height(296.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -124,11 +135,92 @@ fun TaskInfoBlock(
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачиваемые часы / день",
                     param = spentTime,
-                    id = id!!,
-                    projectId = projectId!!
+                    id = id,
+                    projectId = projectId,
                 )
-                InfoBlockButtonTemplate(categoryText = "Оценка времени", param = scope, id = id!!, projectId = projectId!!)
-                InfoBlockButtonTemplate(categoryText = "Затрачено времени", param = spentedTime, id = id!!, projectId = projectId!!)
+                InfoBlockButtonTemplate(
+                    categoryText = "Оценка времени",
+                    param = scope,
+                    id = id,
+                    projectId = projectId
+                )
+                InfoBlockButtonTemplate(
+                    categoryText = "Затрачено времени",
+                    param = spentedTime,
+                    id = id,
+                    projectId = projectId,
+                    enable = false
+                )
+                Button(
+                    onClick = { dependenceAt = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    shape = RoundedCornerShape(0),
+                    contentPadding = PaddingValues(horizontal = 12.dp)
+                ) {
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Зависит от:  ",
+                                color = Color.Black,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                            Text(
+                                text = taskName,
+                                color = Color.Black,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Normal,
+                                modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.5f),
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            DropdownMenu(
+                                expanded = dependenceAt,
+                                onDismissRequest = { dependenceAt = !dependenceAt },
+                                modifier = Modifier
+                                    .fillMaxWidth(.61f)
+                                    .height(185.dp)
+                                    .background(Color.White)
+                            ) {
+                                tasks.forEach { item ->
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            dependenceAt = false
+                                            taskName = item
+                                        },
+                                        text = {
+                                            if (item != null) {
+                                                Text(
+                                                    text = item,
+                                                    fontWeight = FontWeight.Normal
+                                                )
+                                            }
+                                        },
+                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                    )
+                                }
+
+                            }
+                        }
+                    }
+                }
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 Button(
                     onClick = { categoryExpanded = true },
                     modifier = Modifier
@@ -145,7 +237,7 @@ fun TaskInfoBlock(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "Категория:",
+                                text = "Категория:  ",
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
@@ -156,7 +248,9 @@ fun TaskInfoBlock(
                                 }?.name ?: "",
                                 color = Color.Black,
                                 fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal
+                                fontWeight = FontWeight.Normal,
+                                        modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.5f),
+                                overflow = TextOverflow.Ellipsis
                             )
 
                         }
@@ -216,7 +310,7 @@ fun TaskInfoBlock(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "Статус задачи:",
+                                text = "Статус задачи:  ",
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
@@ -227,7 +321,9 @@ fun TaskInfoBlock(
                                 }?.name ?: "",
                                 color = Color.Black,
                                 fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal
+                                fontWeight = FontWeight.Normal,
+                                        modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.4f),
+                                overflow = TextOverflow.Ellipsis
                             )
 
                         }
@@ -277,7 +373,14 @@ fun TaskInfoBlock(
                         .fillMaxWidth()
                 )
                 Button(
-                    onClick = { navController.navigate(NavigationItem.TaskLaborCostListScreen.passIdAndTitle(id!!.toInt(), title!!)) },
+                    onClick = {
+                        navController.navigate(
+                            NavigationItem.TaskLaborCostListScreen.passIdAndTitle(
+                                id!!.toInt(),
+                                title!!
+                            )
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(32.dp),
@@ -289,7 +392,7 @@ fun TaskInfoBlock(
                 }
             }
         }
-        if(canAddManHours!!) {
+        if (canAddManHours!!) {
             Button(
                 onClick = { showDialog = true },
                 modifier = Modifier
@@ -302,9 +405,12 @@ fun TaskInfoBlock(
             ) {
                 Text(text = "Добавить трудозатраты", color = Color.Black, fontSize = 12.sp)
             }
-            if (showDialog){
-                Dialog(onDismissRequest = { showDialog = !showDialog}) {
-                    NewLaborCostWindow(onDismissRequest = {showDialog = !showDialog}, taskId = id!!)
+            if (showDialog) {
+                Dialog(onDismissRequest = { showDialog = !showDialog }) {
+                    NewLaborCostWindow(
+                        onDismissRequest = { showDialog = !showDialog },
+                        taskId = id!!
+                    )
                 }
             }
         }
