@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -81,6 +82,15 @@ fun NewUserWindow(
     var roleValue by remember {
         mutableStateOf("")
     }
+    var selectedItemIndex by remember { mutableIntStateOf(-1) }
+    val roleIcons = listOf(
+        R.drawable.backend_role_icon,
+        R.drawable.frontend_role_icon,
+        R.drawable.designer_role_icon,
+        R.drawable.tester_role_icon,
+        R.drawable.project_manager_role_icon,
+    )
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -184,19 +194,32 @@ fun NewUserWindow(
                                 typeActivity.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
-                                            expanded = false
+                                            selectedItemIndex = typeActivity.indexOf(item)
                                             roleValue = item?.name ?: ""
                                             role = item?.name ?: ""
+                                            expanded = false
                                         },
                                         text = {
-                                            if (item != null) {
-                                                Text(
-                                                    text = item.name,
-                                                    fontWeight = FontWeight.Normal
-                                                )
-                                            }
+                                            Text(
+                                                text = item!!.name,
+                                                fontWeight = FontWeight.Normal
+                                            )
                                         },
-                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                        trailingIcon = {
+                                            Icon(
+                                                painter = painterResource(
+                                                    id = roleIcons[typeActivity.indexOf(
+                                                        item
+                                                    )]
+                                                ),
+                                                contentDescription = "",
+                                                tint = Color.Black
+                                            )
+                                        },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        colors = MenuDefaults.itemColors(
+                                            textColor = Color.Black
+                                        )
                                     )
                                 }
                             }
@@ -210,7 +233,7 @@ fun NewUserWindow(
                             firstName = name,
                             lastName = surname,
                             login = login,
-                            password =  password,
+                            password = password,
                             role = role
                         )
                     },
