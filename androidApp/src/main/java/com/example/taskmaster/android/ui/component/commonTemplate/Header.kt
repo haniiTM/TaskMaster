@@ -160,11 +160,12 @@ fun Header(
                                 }
                             )
 
-                            2 -> TaskUserList(
+                            2 -> UserList(
                                 checkBoxAble = true,
                                 addRoleButton = false,
                                 buttonText = "Удалить",
                                 showPersonInProject = false,
+                                removeUserWindowKey = true
                             )
 
                             3 -> NewProjectWindow(

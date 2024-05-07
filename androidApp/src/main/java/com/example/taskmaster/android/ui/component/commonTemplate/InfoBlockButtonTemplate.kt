@@ -16,7 +16,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,9 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
-import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
-import com.example.taskmaster.data.network.models.PersonDTO
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun InfoBlockButtonTemplate(
@@ -128,7 +124,7 @@ fun InfoBlockButtonTemplate(
     }
     if (openUserDialog){
         Dialog(onDismissRequest = { openUserDialog = !openUserDialog }) {
-            TaskUserList(
+            UserList(
                 checkBoxAble = false,
                 addRoleButton = true,
                 id = id,
@@ -136,6 +132,7 @@ fun InfoBlockButtonTemplate(
                 paddingValue = 20,
                 projectId = projectId,
                 showPersonInProject = false,
+                removeUserWindowKey = false
             )
         }
     }

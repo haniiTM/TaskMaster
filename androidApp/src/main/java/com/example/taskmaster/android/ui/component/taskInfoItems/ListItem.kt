@@ -14,13 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ListItem(){
+fun ListItem(number: Int){
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(45.dp), contentAlignment = Alignment.CenterStart
     ) {
-        Text(text = "Трудозатрата 1", modifier = Modifier.padding(horizontal = 12.dp), color = Color.Black)
+        Text(text = "Трудозатрата $number", modifier = Modifier.padding(horizontal = 12.dp), color = Color.Black)
     }
     Divider (
         color = MaterialTheme.colorScheme.outline,
