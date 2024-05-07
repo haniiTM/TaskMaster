@@ -38,6 +38,7 @@ fun InfoBlockButtonTemplate(
     avatar: Int = 0,
     id: Int,
     projectId: Int,
+    enable: Boolean = true
 ) {
     var openDialog by remember {
         mutableStateOf(false)
@@ -49,8 +50,6 @@ fun InfoBlockButtonTemplate(
     var openUserDialog by remember {
         mutableStateOf(false)
     }
-
-    var showWindow: Boolean
 
     Button(
         onClick = { },
@@ -66,7 +65,11 @@ fun InfoBlockButtonTemplate(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable { openUserDialog = true },
+                    .clickable {
+                        if (enable) {
+                            openUserDialog = true
+                        }
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -111,7 +114,7 @@ fun InfoBlockButtonTemplate(
             }
         }
     }
-    Divider (
+    Divider(
         color = Color.Black,
         modifier = Modifier
             .height(1.dp)
@@ -119,10 +122,14 @@ fun InfoBlockButtonTemplate(
     )
     if (openDialog) {
         Dialog(onDismissRequest = { openDialog = !openDialog }) {
-            ChangeInfoValueTemplate(title = categoryText, value = param.toString(), placeholder = categoryText, onDismissRequest = { openDialog = !openDialog} )
+            ChangeInfoValueTemplate(
+                title = categoryText,
+                value = param.toString(),
+                placeholder = categoryText,
+                onDismissRequest = { openDialog = !openDialog })
         }
     }
-    if (openUserDialog){
+    if (openUserDialog) {
         Dialog(onDismissRequest = { openUserDialog = !openUserDialog }) {
             UserList(
                 checkBoxAble = false,
