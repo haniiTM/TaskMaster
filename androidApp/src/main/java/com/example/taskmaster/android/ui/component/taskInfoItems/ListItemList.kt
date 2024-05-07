@@ -11,13 +11,23 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ListItemList() {
+fun ListItemList(
+    viewModel: ManHoursViewModel = getViewModel(),
+    taskId: Int
+) {
+    LaunchedEffect(key1 = true) {
+        viewModel.getManHours(taskId)
+    }
+
     var laborCosts = listOf("1", "2", "3", "4", "5", "6", "7")
     Box(
         modifier = Modifier
@@ -31,9 +41,9 @@ fun ListItemList() {
             .background(Color.White)
     ) {
         LazyColumn {
-            itemsIndexed(laborCosts) { _, item ->
+            itemsIndexed(viewModel.state.value.itemState) { _, item ->
                 if (item != null) {
-                    ListItem(number = item.toInt())
+                    ListItem(name = item.comment ?: "")
                 }
             }
         }
