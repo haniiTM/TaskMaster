@@ -61,7 +61,7 @@ fun TaskInfoScreen(
                     spentedTime = itemTaskState?.spentedTime ?: "",
                     typeofactivityid = itemTaskState?.typeofactivityid ?: 0,
                     userCount = itemTaskState?.userCount ?: 0,
-                    canAddManHours = true,
+                    canAddManHours = itemTaskState?.canAddManHours,
                     projectId = itemTaskState?.projectId ?: 0
                 )
             } else {

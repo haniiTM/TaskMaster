@@ -24,6 +24,8 @@ val Lime = Color(0xFF57D75C)
 @Stable
 val Red = Color(0xFFFF0000)
 @Stable
+val DarkGray = Color(0xFF4D4D4D)
+@Stable
 val Ultramarine = Color(0xFF2A15A6)
 @Stable
 val Blueberry = Color(0xFF593CFF)

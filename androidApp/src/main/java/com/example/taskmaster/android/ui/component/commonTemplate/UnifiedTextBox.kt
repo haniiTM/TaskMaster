@@ -1,6 +1,5 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,11 +29,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.ui.component.popupWindows.MaskVisualTransformation
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnifiedTextBox(
     value: String,
@@ -52,6 +50,7 @@ fun UnifiedTextBox(
     prefix: @Composable (() -> Unit)? = null,
     timeUnifiedTextFieldKey: Boolean = false,
     passwordTransformationKey: Boolean = false,
+    enabled: Boolean = true
 ) {
     val passwordVisible = remember { mutableStateOf(passwordVisibleValue) }
     val timeMask = MaskVisualTransformation("##:##")
@@ -81,6 +80,7 @@ fun UnifiedTextBox(
         } else onValueChange,
         modifier = textFieldModifier,
         singleLine = true,
+        enabled = enabled,
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         visualTransformation = visualTransformation,
@@ -101,15 +101,17 @@ fun UnifiedTextBox(
                 contentPadding = PaddingValues(horizontal = 10.dp),
                 trailingIcon = {
                     if (icon != 0) {
-                        Icon(painter = painterResource(id = if (changeIcon != 0) {
-                            if (passwordVisible.value) icon else changeIcon
-                        } else {
-                            icon
-                        }),
+                        Icon(painter = painterResource(
+                            id = if (changeIcon != 0) {
+                                if (passwordVisible.value) icon else changeIcon
+                            } else {
+                                icon
+                            }
+                        ),
                             contentDescription = "Toggle Password Visibility",
                             tint = Color.Black,
                             modifier = Modifier.clickable {
-                                passwordVisible.value = !passwordVisible.value
+                                    passwordVisible.value = !passwordVisible.value
                             })
                     }
                 },
@@ -120,9 +122,3 @@ fun UnifiedTextBox(
 }
 
 private val TextFieldHeight = 40.dp
-
-@Preview
-@Composable
-fun prev() {
-    UnifiedTextBox(value = "", onValueChange = {})
-}

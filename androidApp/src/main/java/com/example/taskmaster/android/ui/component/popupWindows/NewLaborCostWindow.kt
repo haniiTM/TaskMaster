@@ -1,6 +1,11 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
+import android.app.DatePickerDialog
+import android.widget.DatePicker
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
@@ -32,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -46,7 +53,10 @@ import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import org.koin.androidx.compose.getViewModel
+import java.util.Calendar
+import java.util.Date
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewLaborCostWindow(
     onDismissRequest: () -> Unit,
@@ -81,6 +91,23 @@ fun NewLaborCostWindow(
         )
     var categoryExpanded by remember { mutableStateOf(false) }
 
+    val mContext = LocalContext.current
+    val mYear: Int
+    val mMonth: Int
+    val mDay: Int
+    val mCalendar = Calendar.getInstance()
+    mYear = mCalendar.get(Calendar.YEAR)
+    mMonth = mCalendar.get(Calendar.MONTH)
+    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+    mCalendar.time = Date()
+    val mDate = remember { mutableStateOf("") }
+    val mDatePickerDialog = DatePickerDialog(
+        mContext,
+        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+            mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
+        }, mYear, mMonth, mDay
+    )
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -106,12 +133,30 @@ fun NewLaborCostWindow(
                         modifier = Modifier.padding(horizontal = 12.dp)
                     )
                 }
-                UnifiedTextBox(
-                    value = date,
-                    onValueChange = { newValue -> date = newValue },
-                    icon = R.drawable.calendar_icon,
-                    prefix = { Text(text = "Дата: ", color = Color.Black) }
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .background(Color.White)
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .border(
+                            BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+                        )
+                ) {
+                    Row(modifier = Modifier.padding(start = 10.dp)){
+                        Text(text = "Дата: ", color = Color.Black)
+                        Text(text = mDate.value, color = Color.Black)
+                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.calendar_icon),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(end = 15.dp)
+                            .clickable { mDatePickerDialog.show() },
+                        tint = Color.Black
+                    )
+                }
                 UnifiedTextBox(
                     value = comment,
                     onValueChange = { newValue -> comment = newValue },
@@ -218,7 +263,8 @@ fun NewLaborCostWindow(
                             taskId
                         )
                         viewTaskModel.dataTaskById(taskId!!)
-                        onDismissRequest() },
+                        onDismissRequest()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),
