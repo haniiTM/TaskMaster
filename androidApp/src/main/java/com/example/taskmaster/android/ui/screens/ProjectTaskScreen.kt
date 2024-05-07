@@ -20,40 +20,38 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
             text = title ?: "Заголовок отсутствует",
             iconItem = R.drawable.more,
             actionIcons = listOf(
-                R.drawable.search1_icon,
-                R.drawable.users_icon
+                R.drawable.search1_icon, R.drawable.users_icon
             ),
             navController = navController,
-            spacer = false,
-            actionTitle = listOf("Поиск", "Пользователи")
+            actionTitle = listOf("Поиск", "Пользователи"),
+            projectScreenKey = false
         )
-    }
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {
-            CalculationTimeButton()
-        }
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                CalculationTimeButton()
+            }
 
-        item {
-            UncompletedTasksContainer(
-                title = "Задачи",
-                buttonTitle = "Добавить задачу",
-                navController = navController,
-                id = id,
-                projectTitle = title ?: "Заголовок отсутствует"
-            )
-        }
+            item {
+                UncompletedTasksContainer(
+                    title = "Задачи",
+                    buttonTitle = "Добавить задачу",
+                    navController = navController,
+                    id = id,
+                    projectTitle = title ?: "Заголовок отсутствует"
+                )
+            }
 
-        item {
-            CompletedTasksContainer(
-                title = "Выполнено",
-                buttonTitle = "",
-                navController = navController,
-                id = id,
-                projectTitle = title ?: "Заголовок отсутствует"
-            )
+            item {
+                CompletedTasksContainer(
+                    title = "Выполнено",
+                    buttonTitle = "",
+                    navController = navController,
+                    id = id,
+                    projectTitle = title ?: "Заголовок отсутствует"
+                )
+            }
         }
     }
 }

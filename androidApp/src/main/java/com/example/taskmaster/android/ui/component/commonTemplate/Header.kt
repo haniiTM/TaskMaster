@@ -49,10 +49,9 @@ fun Header(
     iconItem: Int,
     actionIcons: List<Int>,
     navController: NavController,
-    spacer: Boolean,
     result: Boolean = false,
     viewModel: NewUserViewModel = getViewModel(),
-    actionTitle: List<String>
+    actionTitle: List<String> = emptyList()
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getAllPerson()
@@ -71,49 +70,44 @@ fun Header(
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (spacer) {
-            Spacer(modifier = Modifier.weight(0.5f))
-        }
+        Spacer(modifier = Modifier.weight(0.5f))
         Text(
             text = text,
             modifier = Modifier.weight(1.5f),
             textAlign = TextAlign.Center,
             color = Color.Black
         )
-        if (iconItem > 0) {
-            IconButton(
-                onClick = { expanded = true },
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .weight(0.5f)
-            ) {
-                Image(
-                    painter = painterResource(id = iconItem),
-                    contentDescription = "",
-                    alignment = Alignment.CenterEnd
-                )
-                var showDialog by remember { mutableStateOf(false) }
-                var selectedItemIndex by remember { mutableIntStateOf(-1) }
-                MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = !expanded },
-                        modifier = Modifier
-                            .fillMaxWidth(.5f)
-                            .background(Color.White)
-                            .border(
-                                BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp)
-                            )
-                    ) {
+
+        IconButton(
+            onClick = { expanded = true },
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .weight(0.5f)
+        ) {
+            Image(
+                painter = painterResource(id = iconItem),
+                contentDescription = "",
+                alignment = Alignment.CenterEnd
+            )
+            var showDialog by remember { mutableStateOf(false) }
+            var selectedItemIndex by remember { mutableIntStateOf(-1) }
+            MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = !expanded },
+                    modifier = Modifier
+                        .fillMaxWidth(.5f)
+                        .background(Color.White)
+                        .border(
+                            BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp)
+                        )
+                ) {
+                    if (projectScreenKey) {
                         actionTitle.filterIndexed { index, _ ->
                             index != 1 && index != 2 && index != 3 || result
                         }.forEach { item ->
                             val isLastItem = item == actionTitle.last()
-                            val iconColor = if (projectScreenKey) {
-                                if (isLastItem) Color.Red else Color.Black
-                            } else {
-                                Color.Black
-                            }
+                            val iconColor = if (isLastItem) Color.Red else Color.Black
                             DropdownMenuItem(
                                 onClick = {
                                     selectedItemIndex = actionTitle.indexOf(item)
@@ -133,14 +127,45 @@ fun Header(
                                             )]
                                         ),
                                         contentDescription = "",
-                                        tint = if (projectScreenKey) iconColor else Color.Black
+                                        tint = if (isLastItem) iconColor else Color.Black
                                     )
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = MenuDefaults.itemColors(
-                                    textColor = if (projectScreenKey) {
-                                        if (isLastItem) Color.Red else Color.Black
-                                    } else Color.Black
+                                    textColor = if (isLastItem) Color.Red else Color.Black
+                                )
+                            )
+                            if (actionTitle.indexOf(item) < actionTitle.size - 1)
+                                Divider(
+                                    color = MaterialTheme.colorScheme.outline,
+                                    modifier = Modifier
+                                        .height(1.dp)
+                                        .fillMaxWidth()
+                                )
+                        }
+                    } else {
+                        actionTitle.forEach { item ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedItemIndex = actionTitle.indexOf(item)
+                                    showDialog = true
+                                    expanded = false
+                                },
+                                text = { Text(text = item) },
+                                trailingIcon = {
+                                    Icon(
+                                        painter = painterResource(
+                                            id = actionIcons[actionTitle.indexOf(
+                                                item
+                                            )]
+                                        ),
+                                        contentDescription = "",
+                                        tint = Color.Black
+                                    )
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = MenuDefaults.itemColors(
+                                    textColor = Color.Black
                                 )
                             )
                             if (actionTitle.indexOf(item) < actionTitle.size - 1)
@@ -187,10 +212,12 @@ fun Header(
                                     showDialog = !showDialog
                                 })
 
-                                1 -> NewUserWindow(
-                                    onDismissRequest = {
-                                        showDialog = !showDialog
-                                    }
+                                1 -> UserList(
+                                    checkBoxAble = true,
+                                    addRoleButton = false,
+                                    buttonText = "Добавить в проект",
+                                    showPersonInProject = true,
+                                    removeUserWindowKey = false
                                 )
                             }
                         }

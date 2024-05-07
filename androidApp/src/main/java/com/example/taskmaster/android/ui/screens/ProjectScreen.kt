@@ -36,7 +36,6 @@ fun ProjectScreen(navController: NavController, viewModel: TaskViewModel = getVi
                 R.drawable.exit_icon,
             ),
             navController = navController,
-            spacer = true,
             result = result,
             actionTitle = listOf("Поиск", "Добавить пользователя", "Удалить пользователя", "Добавить проект", "Выйти"))
         LazyColumn(modifier = Modifier.padding(horizontal = 14.dp), state = rememberLazyListState()
