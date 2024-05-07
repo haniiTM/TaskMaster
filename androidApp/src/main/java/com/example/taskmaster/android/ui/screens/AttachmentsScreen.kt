@@ -20,7 +20,7 @@ fun AttachmentsListScreen(navController: NavController, id: Int?, title: String?
             actionTitle = listOf("Поиск", "Пользователи"),
             projectScreenKey = false
         )
-        ListItemList()
+        ListItemList(taskId = id ?: 0)
     }
 
 }
