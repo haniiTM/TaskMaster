@@ -266,6 +266,31 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Error: ${e.message}")
         }
     }
+
+    override suspend fun updateDescriptionTask(taskId: Int, description: String) {
+        try {
+            val taskDescription = TaskDTO()
+            taskDescription.content = description
+            val response: HttpResponse = httpClient.put("http://5.35.85.206:8080/task/update/${taskId}") {
+                contentType(ContentType.Application.Json)
+                setBody(taskDescription)
+            }
+            if (response.status.isSuccess()) {
+                println("Server create project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
     override suspend fun DeleteTaskOrProject(taskId: Int) {
         try {
             val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/task/${taskId}")

@@ -24,6 +24,7 @@ interface ApiService {
     suspend fun fetchCompletedTask(idProj: Number): MutableList<TaskDTO?>
     suspend fun fetchUnfulfilleddTask(idProj: Number): MutableList<TaskDTO?>
     suspend fun updateStatusTask(taskId: Int, statusId: Int, nameTask: String)
+    suspend fun updateDescriptionTask(taskId: Int, description: String)
     suspend fun DeleteTaskOrProject(taskId: Int)
     suspend fun fetchDescription(descrId: Int): MutableList<DescriptionDTO?>
     suspend fun registerUser(user: RegisterReceiveRemote)
