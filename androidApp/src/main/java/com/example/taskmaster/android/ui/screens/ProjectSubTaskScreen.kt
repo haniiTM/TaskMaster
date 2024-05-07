@@ -40,7 +40,8 @@ fun ProjectSubTaskScreen(
                 ),
                 navController = navController,
                 actionTitle = listOf("Поиск", "Пользователи"),
-                projectScreenKey = false
+                projectScreenKey = false,
+                projectId = id,
             )
 
             LazyColumn(

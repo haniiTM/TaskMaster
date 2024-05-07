@@ -51,8 +51,12 @@ fun Header(
     navController: NavController,
     result: Boolean = false,
     viewModel: NewUserViewModel = getViewModel(),
-    actionTitle: List<String> = emptyList()
+    actionTitle: List<String> = emptyList(),
+    projectId: Int? = 0
 ) {
+    val projectIdr by remember {
+        mutableStateOf(projectId)
+    }
     LaunchedEffect(key1 = true) {
         viewModel.getAllPerson()
     }
@@ -213,10 +217,12 @@ fun Header(
                                 })
 
                                 1 -> UserList(
-                                    checkBoxAble = true,
-                                    addRoleButton = false,
-                                    buttonText = "Добавить в проект",
-                                    showPersonInProject = true,
+                                    checkBoxAble = false,
+                                    addRoleButton = true,
+                                    buttonText = "Добавить пользователя",
+                                    paddingValue = 20,
+                                    projectId = projectIdr!!,
+                                    showPersonInProject = false,
                                     removeUserWindowKey = false
                                 )
                             }
