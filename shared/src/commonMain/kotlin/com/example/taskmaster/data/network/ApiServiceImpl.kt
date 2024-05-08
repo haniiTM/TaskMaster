@@ -571,4 +571,23 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Error: ${e.message}")
         }
     }
+
+    override suspend fun deletePersonFromSystem(personId: Int) {
+        try {
+            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/User/${personId}")
+            if (response.status.isSuccess()) {
+                println("Server delete person: ${response.status}")
+            } else {
+                println("Server returned error person: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
 }

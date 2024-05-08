@@ -120,4 +120,14 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
         val itemState: MutableList<PersonDTO?> = mutableListOf(),
         val isLoading: Boolean = false
     )
+
+    fun deletePerson(personId: Int){
+        viewModelScope.launch {
+            try {
+                apiService.deletePersonFromSystem(personId)
+            } catch(e: Exception) {
+                println("Exception in deletePerson ${e}")
+            }
+        }
+    }
 }
