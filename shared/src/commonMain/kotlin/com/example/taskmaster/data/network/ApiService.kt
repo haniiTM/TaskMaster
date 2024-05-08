@@ -31,9 +31,15 @@ interface ApiService {
     suspend fun createManHours(manHour: ManHoursDTO, taskId: Int)
     suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?>
     suspend fun fetchActivity(): MutableList<ActivityDTO?>
+
+    // Извлечение всех пользователей (используется для удаления)
     suspend fun fetchAllPerson(): MutableList<PersonDTO?>
+    // Извлечение всех пользователей, которые привязаны к задача
     suspend fun fetchPersonInTask(taskId: Int): MutableList<PersonDTO?>
+    // Извлечение всех пользователей, которые привязаны к проекту
     suspend fun fetchPersonInProject(taskId: Int): MutableList<PersonDTO?>
+    // Извлечение всех пользователей, которые еще не были добавлены в проект
+    suspend fun fetchPersonFreeFromProject(projId: Int): MutableList<PersonDTO?>
     suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO)
 }
 

@@ -50,6 +50,7 @@ fun UserList(
     projectId: Int = 0,
     paddingValue: Int = 0,
     showPersonInProject: Boolean, // Флаг для отображение сотрудников в проекте
+    addingPersonInProj: Boolean = false, // Флаг для добавления пользователей в проект
     viewModel: NewUserViewModel = getViewModel(),
     viewModelURP: UserroleprojectViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
@@ -62,6 +63,10 @@ fun UserList(
         // Получение списка сотрудников в задаче
         LaunchedEffect(id != 0 && showPersonInProject) {
             viewModel.getPersonInTask(id)
+        }
+    } else if(projectId != 0 && id == 0 && addingPersonInProj) {
+        LaunchedEffect(projectId != 0 && id == 0 && addingPersonInProj) {
+            viewModel.getPersonFreeFromProject(projectId)
         }
     } else if (projectId != 0 && showPersonInProject) {
         // Получение списка сотрудников в проекте
@@ -116,10 +121,13 @@ fun UserList(
             ) {
                 val itemsList = if (id != 0 && !showPersonInProject) {
                     viewModel.stateInTask.value.itemState
+                } else if(projectId != 0 && id == 0 && addingPersonInProj) {
+                    // Получение списка свободных сотрудников
+                    viewModel.stateFreeFromProject.value.itemState
                 } else if (projectId != 0 && showPersonInProject) {
                     // Получение списка сотрудников в проекте
                     viewModel.stateInProject.value.itemState
-                } else {
+                }  else {
                     // Получение списка всех сотрудников
                     viewModel.state.value.itemState
                 }
@@ -156,18 +164,27 @@ fun UserList(
                             showWindow = true
                         } else {
                             onCloseButtonClick()
-                            if (selectedUsers.value.isNotEmpty() && id!= 0) {
+                            if (selectedUsers.value.isNotEmpty()) {
                                 val selectedUsersList = mutableListOf<Int>()
                                 selectedUsersList.addAll(selectedUsers.value)
 
-                                viewModelURP.linkUserToTaskOrProject(
+                                val urp = if(id != 0) {
                                     UserRoleProjectDTO(
                                         userid = selectedUsersList,
                                         current_task_id = id
                                     )
-                                )
+                                } else {
+                                    UserRoleProjectDTO(
+                                        userid = selectedUsersList,
+                                        projectid = projectId
+                                    )
+                                }
 
+                                viewModelURP.linkUserToTaskOrProject(urp)
                                 viewTaskModel.dataTaskById(id!!)
+                                if(projectId != 0) {
+                                    viewModel.getPersonInProject(projectId)
+                                }
                             }
                         }
                     } else {
@@ -197,6 +214,7 @@ fun UserList(
                 onCloseButtonClick = { showWindow = false },
                 projectId = projectId,
                 showPersonInProject = true,
+                addingPersonInProj = true,
                 removeUserWindowKey = false
             )
         }

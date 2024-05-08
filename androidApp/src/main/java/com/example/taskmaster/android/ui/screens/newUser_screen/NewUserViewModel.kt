@@ -97,4 +97,27 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
         val itemState: MutableList<PersonDTO?> = mutableListOf(),
         val isLoading: Boolean = false
     )
+
+    // Извлечение всех пользователей, которые еще не были добавлены в проект
+    private val _stateFreeFromProject = mutableStateOf(ItemStatesFreeFromProject())
+    val stateFreeFromProject: State<ItemStatesFreeFromProject> = _stateFreeFromProject
+
+    fun getPersonFreeFromProject(projId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateFreeFromProject.value = stateFreeFromProject.value.copy(isLoading = true)
+                val data = apiService.fetchPersonFreeFromProject(projId)
+                _stateFreeFromProject.value = stateFreeFromProject.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateFreeFromProject.value = stateFreeFromProject.value.copy(isLoading = false)
+            }
+        }
+    }
+    data class ItemStatesFreeFromProject (
+        val itemState: MutableList<PersonDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
 }

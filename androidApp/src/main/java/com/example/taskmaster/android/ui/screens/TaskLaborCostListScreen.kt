@@ -18,7 +18,8 @@ fun TaskLaborCostListScreen(navController: NavController, id: Int?, title: Strin
             ),
             navController = navController,
             actionTitle = listOf("Поиск", "Пользователи"),
-            projectScreenKey = false
+            projectScreenKey = false,
+            projectId = id
         )
         ListItemList(taskId = id ?: 0)
     }
