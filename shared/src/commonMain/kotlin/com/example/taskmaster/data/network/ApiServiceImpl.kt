@@ -527,6 +527,29 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             mutableListOf()
         }
     }
+
+    override suspend fun fetchPersonFreeFromProject(projId: Int): MutableList<PersonDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/person/freeperson/${projId}")
+            val json = response.bodyAsText()
+            val personDTO = Json.decodeFromString<MutableList<PersonDTO?>>(json)
+            println("Server returned PersonDTO: ${personDTO}")
+            personDTO
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
     override suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO) {
         try {
             val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/user_role_project") {

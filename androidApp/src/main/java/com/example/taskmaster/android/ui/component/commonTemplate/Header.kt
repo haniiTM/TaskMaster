@@ -50,15 +50,11 @@ fun Header(
     actionIcons: List<Int>,
     navController: NavController,
     result: Boolean = false,
-    viewModel: NewUserViewModel = getViewModel(),
     actionTitle: List<String> = emptyList(),
     projectId: Int? = 0
 ) {
     val projectIdr by remember {
         mutableStateOf(projectId)
-    }
-    LaunchedEffect(key1 = true) {
-        viewModel.getAllPerson()
     }
 
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
@@ -222,7 +218,7 @@ fun Header(
                                     buttonText = "Добавить пользователя",
                                     paddingValue = 20,
                                     projectId = projectIdr!!,
-                                    showPersonInProject = false,
+                                    showPersonInProject = true,
                                     removeUserWindowKey = false
                                 )
                             }

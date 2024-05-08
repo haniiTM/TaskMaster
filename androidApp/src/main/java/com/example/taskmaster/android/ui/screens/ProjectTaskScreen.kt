@@ -24,7 +24,8 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
             ),
             navController = navController,
             actionTitle = listOf("Поиск", "Пользователи"),
-            projectScreenKey = false
+            projectScreenKey = false,
+            projectId = id
         )
         LazyColumn(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally

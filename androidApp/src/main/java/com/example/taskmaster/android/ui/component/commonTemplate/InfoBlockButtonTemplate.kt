@@ -145,6 +145,7 @@ fun InfoBlockButtonTemplate(
                 paddingValue = 20,
                 projectId = projectId,
                 showPersonInProject = false,
+                addingPersonInProj = false,
                 removeUserWindowKey = false
             )
         }
