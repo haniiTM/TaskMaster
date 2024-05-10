@@ -188,7 +188,11 @@ fun UserList(
                             }
                         }
                     } else {
-
+                        val selectedUsersList = mutableListOf<Int>()
+                        selectedUsersList.addAll(selectedUsers.value)
+                        if(selectedUsers.value.isNotEmpty()) {
+                            viewModel.deletePerson(selectedUsersList)
+                        }
                     }
                 },
                 modifier = Modifier

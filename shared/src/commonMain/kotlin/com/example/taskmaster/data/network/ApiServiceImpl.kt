@@ -552,6 +552,8 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
 
     override suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO) {
         try {
+
+
             val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/user_role_project") {
                 contentType(ContentType.Application.Json)
                 setBody(urp)
@@ -560,6 +562,40 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
                 println("Server link user to task or project: ${response.status}")
             } else {
                 println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun deletePersonFromSystem(personId: MutableList<Int>) {
+        try {
+            val personIdList = mutableListOf<PersonDTO>()
+            personId.forEach { id ->
+                personIdList.add(
+                    PersonDTO(
+                        id = id,
+                        surname = "",
+                        name = "",
+                        patronymic = "",
+                        role = null
+                    )
+                )
+            }
+            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/User") {
+                contentType(ContentType.Application.Json)
+                setBody(personIdList)
+            }
+            if (response.status.isSuccess()) {
+                println("Server delete person: ${response.status}")
+            } else {
+                println("Server returned error person: ${response.status}")
             }
         } catch (e: ServerResponseException) {
             println("500 error: ${e.message}")
