@@ -191,7 +191,7 @@ fun UserList(
                         val selectedUsersList = mutableListOf<Int>()
                         selectedUsersList.addAll(selectedUsers.value)
                         if(selectedUsers.value.isNotEmpty()) {
-                            viewModel.deletePerson(selectedUsersList[0])
+                            viewModel.deletePerson(selectedUsersList)
                         }
                     }
                 },

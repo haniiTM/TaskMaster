@@ -552,6 +552,8 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
 
     override suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO) {
         try {
+
+
             val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/user_role_project") {
                 contentType(ContentType.Application.Json)
                 setBody(urp)
@@ -572,9 +574,24 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
-    override suspend fun deletePersonFromSystem(personId: Int) {
+    override suspend fun deletePersonFromSystem(personId: MutableList<Int>) {
         try {
-            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/User/${personId}")
+            val personIdList = mutableListOf<PersonDTO>()
+            personId.forEach { id ->
+                personIdList.add(
+                    PersonDTO(
+                        id = id,
+                        surname = "",
+                        name = "",
+                        patronymic = "",
+                        role = null
+                    )
+                )
+            }
+            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/User") {
+                contentType(ContentType.Application.Json)
+                setBody(personIdList)
+            }
             if (response.status.isSuccess()) {
                 println("Server delete person: ${response.status}")
             } else {
