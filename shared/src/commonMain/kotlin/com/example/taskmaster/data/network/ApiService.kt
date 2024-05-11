@@ -39,6 +39,9 @@ interface ApiService {
     suspend fun fetchPersonInProject(taskId: Int): MutableList<PersonDTO?>
     // Извлечение всех пользователей, которые еще не были добавлены в проект
     suspend fun fetchPersonFreeFromProject(projId: Int): MutableList<PersonDTO?>
+
+    // Извлечение пользователей, которые еще не были добавлены к задаче
+    suspend fun fetchPersonFreeForTask(projId: Int): MutableList<PersonDTO?>
     suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO): Boolean
     suspend fun deletePersonFromSystem(personId: MutableList<Int>)
 }

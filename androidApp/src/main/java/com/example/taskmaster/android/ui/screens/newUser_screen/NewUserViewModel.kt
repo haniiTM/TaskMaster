@@ -121,6 +121,29 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
         val isLoading: Boolean = false
     )
 
+    // Извлечение всех пользователей, которые еще не были добавлены в задачу
+    private val _stateFreeForTask = mutableStateOf(ItemStatesFreeForTask())
+    val stateFreeForTask: State<ItemStatesFreeForTask> = _stateFreeForTask
+
+    fun getPersonFreeForTask(taskId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateFreeForTask.value = stateFreeForTask.value.copy(isLoading = true)
+                val data = apiService.fetchPersonFreeForTask(taskId)
+                _stateFreeForTask.value = stateFreeForTask.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateFreeForTask.value = stateFreeForTask.value.copy(isLoading = false)
+            }
+        }
+    }
+    data class ItemStatesFreeForTask (
+        val itemState: MutableList<PersonDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
+
     fun deletePerson(personId: MutableList<Int>){
         viewModelScope.launch {
             try {
