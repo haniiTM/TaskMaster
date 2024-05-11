@@ -703,4 +703,35 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             return success
         }
     }
+
+    override suspend fun fetchTaskForDependence(projId: Int, taskId: Int): MutableList<TaskDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/taskdependence/${projId}/${taskId}")
+            if (response.status.isSuccess()) {
+                val tasks = response.body<MutableList<TaskDTO?>>()
+                println("Server returned projects: ${tasks}")
+                tasks
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
+    override suspend fun addDependenceForTask(projId: Int, taskId: Int): Boolean{
+        TODO()
+        return false
+    }
 }
