@@ -51,6 +51,7 @@ fun UserList(
     paddingValue: Int = 0,
     showPersonInProject: Boolean, // Флаг для отображение сотрудников в проекте
     addingPersonInProj: Boolean = false, // Флаг для добавления пользователей в проект
+    addingPersonInTask: Boolean = false, // Флаг для добавления пользователей в задачу
     viewModel: NewUserViewModel = getViewModel(),
     viewModelURP: UserroleprojectViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
@@ -65,7 +66,13 @@ fun UserList(
         LaunchedEffect(id != 0 && showPersonInProject) {
             viewModel.getPersonInTask(id)
         }
+    } else if(id != 0 && addingPersonInTask) {
+        // Получение списка сотрудников которые еще не были добавлены в задачу
+        LaunchedEffect(id != 0 && addingPersonInTask) {
+            viewModel.getPersonFreeForTask(id)
+        }
     } else if(projectId != 0 && id == 0 && addingPersonInProj) {
+        // Получение списка сотрудников которые еще не были добавлены в проектс
         LaunchedEffect(projectId != 0 && id == 0 && addingPersonInProj) {
             viewModel.getPersonFreeFromProject(projectId)
         }
@@ -122,6 +129,9 @@ fun UserList(
             ) {
                 val itemsList = if (id != 0 && !showPersonInProject) {
                     viewModel.stateInTask.value.itemState
+                } else if(id != 0 && addingPersonInTask) {
+                    // Получение списка свободных сотрудников для добавления в задачу
+                    viewModel.stateFreeForTask.value.itemState
                 } else if(projectId != 0 && id == 0 && addingPersonInProj) {
                     // Получение списка свободных сотрудников
                     viewModel.stateFreeFromProject.value.itemState
@@ -225,6 +235,7 @@ fun UserList(
                 projectId = projectId,
                 showPersonInProject = true,
                 addingPersonInProj = true,
+                addingPersonInTask = true,
                 removeUserWindowKey = false,
                 triggerRefresh = triggerRefresh,
             )
