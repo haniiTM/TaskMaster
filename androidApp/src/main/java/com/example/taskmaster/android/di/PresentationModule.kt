@@ -21,7 +21,7 @@ val presentationModule = module {
     viewModel { StatusViewModel(apiService = get()) }
     viewModel { DescriptionViewModel(apiService = get()) }
     viewModel { NewUserViewModel(apiService = get()) }
-    viewModel { ManHoursViewModel(apiService = get(), get()) }
+    viewModel { ManHoursViewModel(apiService = get()) }
     viewModel { ActivityViewModel(apiService = get()) }
-    viewModel { UserroleprojectViewModel(apiService = get(), get()) }
+    viewModel { UserroleprojectViewModel(apiService = get()) }
 }

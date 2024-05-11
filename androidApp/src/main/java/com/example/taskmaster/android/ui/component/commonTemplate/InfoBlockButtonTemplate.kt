@@ -16,6 +16,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.MaskVisualTransformation
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun InfoBlockButtonTemplate(
@@ -40,6 +43,7 @@ fun InfoBlockButtonTemplate(
     id: Int,
     projectId: Int,
     enable: Boolean = true,
+    changeTimeEstimation: Boolean = false,
     timeUnifiedTextFieldKey: Boolean = false,
     triggerRefresh: ((Boolean) -> Unit)? = null,
     ) {
@@ -132,7 +136,11 @@ fun InfoBlockButtonTemplate(
                 onDismissRequest = { updatedValue ->
                     openDialog = !openDialog
                 },
-                timeField = timeUnifiedTextFieldKey)
+                timeField = timeUnifiedTextFieldKey,
+                taskId = id,
+                changeTimeEstimation = changeTimeEstimation,
+                triggerRefresh = triggerRefresh
+            )
         }
     }
     if (openUserDialog) {

@@ -139,14 +139,17 @@ fun TaskInfoBlock(
                     param = spentTime,
                     id = id,
                     projectId = projectId,
-                    timeUnifiedTextFieldKey = true
+                    timeUnifiedTextFieldKey = true,
+                    triggerRefresh = triggerRefresh,
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Оценка времени",
                     param = scope,
                     id = id,
                     projectId = projectId,
-                    timeUnifiedTextFieldKey = true
+                    timeUnifiedTextFieldKey = true,
+                    triggerRefresh = triggerRefresh,
+                    changeTimeEstimation = true,
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачено времени",

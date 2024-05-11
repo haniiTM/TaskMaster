@@ -11,7 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class ManHoursViewModel constructor( private val apiService: ApiService, private val taskViewModel: TaskViewModel) : ViewModel()  {
+class ManHoursViewModel constructor( private val apiService: ApiService) : ViewModel()  {
     fun createManHours(manHour: ManHoursDTO, taskId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
