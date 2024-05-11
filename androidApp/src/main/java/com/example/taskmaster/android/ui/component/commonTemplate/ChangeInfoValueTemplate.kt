@@ -25,9 +25,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
+import com.example.taskmaster.data.network.models.TaskDTO
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ChangeInfoValueTemplate(title: String, value: String, placeholder: String, onDismissRequest: (Any?) -> Unit, timeField: Boolean = false) {
+fun ChangeInfoValueTemplate(
+    title: String,
+    value: String,
+    placeholder: String,
+    onDismissRequest: (Any?) -> Unit,
+    timeField: Boolean = false,
+    taskId: Int,
+    changeTimeEstimation: Boolean,
+    triggerRefresh: ((Boolean) -> Unit)? = null,
+    viewModelURP: UserroleprojectViewModel = getViewModel(),
+    viewTaskModel: TaskViewModel = getViewModel(),
+) {
     var changeValue by remember {
         mutableStateOf(value)
     }
@@ -80,7 +96,37 @@ fun ChangeInfoValueTemplate(title: String, value: String, placeholder: String, o
                     )
                 }
                 Button(
-                    onClick = { onDismissRequest(changeValue) },
+                    onClick =
+                    {
+                        if(changeTimeEstimation) {
+                            val task = TaskDTO()
+                            task.scope = changeValue.toInt()
+                            viewTaskModel.changeTimeEstimation(
+                                taskDTO = task,
+                                taskId = taskId
+                            ) { success ->
+                                if (triggerRefresh != null && success) {
+                                    viewTaskModel.dataTaskById(taskId)
+                                    triggerRefresh(success)
+                                }
+                            }
+                        } else {
+                            val urp = UserRoleProjectDTO(
+                                score = changeValue.toInt()
+                            )
+                            viewModelURP.changeHoursSpent(
+                                urp = urp,
+                                taskId = taskId
+                            ) { success ->
+                                if (triggerRefresh != null && success) {
+                                    viewTaskModel.dataTaskById(taskId)
+                                    triggerRefresh(success)
+                                }
+                            }
+                        }
+
+                        onDismissRequest(changeValue)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(35.dp),

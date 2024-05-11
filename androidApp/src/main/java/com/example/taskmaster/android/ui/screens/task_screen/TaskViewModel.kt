@@ -11,6 +11,7 @@ import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import com.example.taskmaster.domain.models.ItemProjectState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -178,4 +179,14 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
         val itemTaskState: TaskByID? = null,
         val isLoading: Boolean = false
     )
+
+    fun changeTimeEstimation(taskDTO: TaskDTO, taskId: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.updateTimeEstimation(taskDTO, taskId))
+            } catch(e: Exception) {
+                println("Exception in link user to task or project $e")
+            }
+        }
+    }
 }
