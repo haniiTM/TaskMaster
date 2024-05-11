@@ -63,7 +63,8 @@ fun TaskInfoBlock(
     id: Int?,
     projectId: Int?,
     title: String?,
-    canAddManHours: Boolean?
+    canAddManHours: Boolean?,
+    triggerRefresh: (Boolean) -> Unit,
 ) {
 
     LaunchedEffect(key1 = true) {
@@ -130,7 +131,8 @@ fun TaskInfoBlock(
                     param = userCount,
                     avatar = R.drawable.logo,
                     id = id!!,
-                    projectId = projectId!!
+                    projectId = projectId!!,
+                    triggerRefresh = triggerRefresh,
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачиваемые часы / день",
@@ -412,7 +414,8 @@ fun TaskInfoBlock(
                 Dialog(onDismissRequest = { showDialog = !showDialog }) {
                     NewLaborCostWindow(
                         onDismissRequest = { showDialog = !showDialog },
-                        taskId = id!!
+                        taskId = id!!,
+                        triggerRefresh = triggerRefresh,
                     )
                 }
             }

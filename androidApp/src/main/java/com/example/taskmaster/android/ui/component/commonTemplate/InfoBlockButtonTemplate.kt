@@ -41,7 +41,7 @@ fun InfoBlockButtonTemplate(
     projectId: Int,
     enable: Boolean = true,
     timeUnifiedTextFieldKey: Boolean = false,
-
+    triggerRefresh: ((Boolean) -> Unit)? = null,
     ) {
     var openDialog by remember {
         mutableStateOf(false)
@@ -145,6 +145,7 @@ fun InfoBlockButtonTemplate(
                 paddingValue = 20,
                 projectId = projectId,
                 showPersonInProject = false,
+                triggerRefresh = triggerRefresh,
                 addingPersonInProj = false,
                 removeUserWindowKey = false
             )

@@ -55,7 +55,8 @@ fun UserList(
     viewModelURP: UserroleprojectViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
     onCloseButtonClick: (() -> Unit)? = null,
-    removeUserWindowKey: Boolean
+    removeUserWindowKey: Boolean,
+    triggerRefresh: ((Boolean) -> Unit)? = null,
 ) {
     val selectedUsers = remember { mutableStateOf<Set<Int>>(setOf()) }
 
@@ -180,8 +181,13 @@ fun UserList(
                                     )
                                 }
 
-                                viewModelURP.linkUserToTaskOrProject(urp)
-                                viewTaskModel.dataTaskById(id!!)
+                                viewModelURP.linkUserToTaskOrProject(urp) { success ->
+                                    if (triggerRefresh != null && success) {
+                                        viewTaskModel.dataTaskById(id)
+                                        triggerRefresh(success)
+                                    }
+                                }
+
                                 if(projectId != 0) {
                                     viewModel.getPersonInProject(projectId)
                                 }
@@ -219,7 +225,8 @@ fun UserList(
                 projectId = projectId,
                 showPersonInProject = true,
                 addingPersonInProj = true,
-                removeUserWindowKey = false
+                removeUserWindowKey = false,
+                triggerRefresh = triggerRefresh,
             )
         }
     }

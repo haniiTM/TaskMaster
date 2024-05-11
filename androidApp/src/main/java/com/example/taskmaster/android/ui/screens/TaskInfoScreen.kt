@@ -8,7 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -16,6 +18,7 @@ import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -23,15 +26,32 @@ fun TaskInfoScreen(
     navController: NavController,
     id: Int?,
     title: String?,
-    viewTaskModel: TaskViewModel = getViewModel()  // Получаем ViewModel
+    viewTaskModel: TaskViewModel = getViewModel(),
 ) {
-    // Следим за состоянием из `ViewModel`
-    val taskData by remember { viewTaskModel.stateTaskById }  // Используем `remember` для наблюдения за изменениями состояния
+    val taskData by remember { viewTaskModel.stateTaskById }
 
-    LaunchedEffect(key1 = id) {  // Перезапускаем эффект при изменении `id`
-        id?.let {
-            viewTaskModel.dataTaskById(it)  // Загружаем данные при инициализации
+    var refresh by remember { mutableStateOf(false) }
+
+    if(refresh) {
+        // LaunchedEffect перезагружает данные, когда refresh становится true
+        LaunchedEffect(refresh) {
+            if (refresh) {
+                id?.let {
+                    viewTaskModel.dataTaskById(it)  // Загружаем данные
+                }
+                refresh = false
+            }
         }
+    } else {
+        LaunchedEffect(id) {
+            id?.let {
+                viewTaskModel.dataTaskById(it)  // Загружаем данные
+            }
+        }
+    }
+    // Функция-коллбэкт, которая изменяет refresh
+    val triggerRefresh: (Boolean) -> Unit = { newValue ->
+        refresh = newValue
     }
 
     Column {
@@ -66,7 +86,8 @@ fun TaskInfoScreen(
                     typeofactivityid = itemTaskState?.typeofactivityid ?: 0,
                     userCount = itemTaskState?.userCount ?: 0,
                     canAddManHours = itemTaskState?.canAddManHours,
-                    projectId = itemTaskState?.projectId ?: 0
+                    projectId = itemTaskState?.projectId ?: 0,
+                    triggerRefresh = triggerRefresh,
                 )
             } else {
                 Text("No Data Available")  // Если данных нет

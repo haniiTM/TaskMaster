@@ -66,7 +66,8 @@ fun NewLaborCostWindow(
     viewModelActivity: ActivityViewModel = getViewModel(),
     viewModel: ManHoursViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
-    taskId: Int
+    taskId: Int,
+    triggerRefresh: (Boolean) -> Unit,
 ) {
     LaunchedEffect(key1 = true) {
         viewModelActivity.getActivity()
@@ -263,8 +264,13 @@ fun NewLaborCostWindow(
                                 taskid = taskId,
                             ),
                             taskId
-                        )
-                        viewTaskModel.dataTaskById(taskId!!)
+                        ) { success ->
+                            // Вызов коллбэка после обновления данных
+                            if (triggerRefresh != null && success) {
+                                viewTaskModel.dataTaskById(taskId!!)
+                                triggerRefresh(success)
+                            }
+                        }
                         onDismissRequest()
                     },
                     modifier = Modifier
