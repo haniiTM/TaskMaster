@@ -28,7 +28,7 @@ interface ApiService {
     suspend fun DeleteTaskOrProject(taskId: Int)
     suspend fun fetchDescription(descrId: Int): MutableList<DescriptionDTO?>
     suspend fun registerUser(user: RegisterReceiveRemote)
-    suspend fun createManHours(manHour: ManHoursDTO, taskId: Int)
+    suspend fun createManHours(manHour: ManHoursDTO, taskId: Int): Boolean
     suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?>
     suspend fun fetchActivity(): MutableList<ActivityDTO?>
     // Извлечение всех пользователей (используется для удаления)
@@ -39,7 +39,7 @@ interface ApiService {
     suspend fun fetchPersonInProject(taskId: Int): MutableList<PersonDTO?>
     // Извлечение всех пользователей, которые еще не были добавлены в проект
     suspend fun fetchPersonFreeFromProject(projId: Int): MutableList<PersonDTO?>
-    suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO)
+    suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO): Boolean
     suspend fun deletePersonFromSystem(personId: MutableList<Int>)
 }
 

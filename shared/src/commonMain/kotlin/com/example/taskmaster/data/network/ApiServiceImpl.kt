@@ -381,7 +381,8 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
-    override suspend fun createManHours(manHour: ManHoursDTO, taskId: Int) {
+    override suspend fun createManHours(manHour: ManHoursDTO, taskId: Int): Boolean {
+        var success = false
         try {
             val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/manhours/${taskId}") {
                 contentType(ContentType.Application.Json)
@@ -389,17 +390,24 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             }
             if (response.status.isSuccess()) {
                 println("Server create project: ${response.status}")
+                success = true
+                return success
             } else {
                 println("Server returned error status: ${response.status}")
+                return success
             }
         } catch (e: ServerResponseException) {
             println("500 error: ${e.message}")
+            return success
         } catch (e: ClientRequestException) {
             println("400 error: ${e.message}")
+            return success
         } catch (e: RedirectResponseException) {
             println("300 error: ${e.message}")
+            return success
         } catch (e: Exception) {
             println("Error: ${e.message}")
+            return success
         }
     }
 
@@ -550,27 +558,33 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
-    override suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO) {
+    override suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO): Boolean {
+        var success = false
         try {
-
-
             val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/user_role_project") {
                 contentType(ContentType.Application.Json)
                 setBody(urp)
             }
             if (response.status.isSuccess()) {
                 println("Server link user to task or project: ${response.status}")
+                success = true
+                return success
             } else {
                 println("Server returned error status: ${response.status}")
+                return success
             }
         } catch (e: ServerResponseException) {
             println("500 error: ${e.message}")
+            return success
         } catch (e: ClientRequestException) {
             println("400 error: ${e.message}")
+            return success
         } catch (e: RedirectResponseException) {
             println("300 error: ${e.message}")
+            return success
         } catch (e: Exception) {
             println("Error: ${e.message}")
+            return success
         }
     }
 

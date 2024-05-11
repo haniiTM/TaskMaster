@@ -4,18 +4,18 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class ManHoursViewModel constructor( private val apiService: ApiService) : ViewModel()  {
-    fun createManHours(manHour: ManHoursDTO, taskId: Int) {
+class ManHoursViewModel constructor( private val apiService: ApiService, private val taskViewModel: TaskViewModel) : ViewModel()  {
+    fun createManHours(manHour: ManHoursDTO, taskId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                apiService.createManHours(manHour, taskId)
-                delay(200)
+                callback(apiService.createManHours(manHour, taskId))
             } catch(e: Exception) {
                 println("Exception in ${e}")
             }

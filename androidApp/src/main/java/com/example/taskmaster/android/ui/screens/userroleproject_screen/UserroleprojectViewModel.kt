@@ -1,20 +1,23 @@
 package com.example.taskmaster.android.ui.screens.userroleproject_screen
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
-class UserroleprojectViewModel constructor( private val apiService: ApiService) : ViewModel() {
-    fun linkUserToTaskOrProject(urp: UserRoleProjectDTO) {
+class UserroleprojectViewModel constructor(private val apiService: ApiService, private val taskViewModel: TaskViewModel) : ViewModel() {
+    fun linkUserToTaskOrProject(urp: UserRoleProjectDTO, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                apiService.linkUserTaskOrProject(urp)
-                delay(200) // Задержка необходима чтобы успели подгрузиться данные о задаче
+                callback(apiService.linkUserTaskOrProject(urp))
             } catch(e: Exception) {
-                println("Exception in link user to task or project ${e}")
+                println("Exception in link user to task or project $e")
             }
         }
     }
