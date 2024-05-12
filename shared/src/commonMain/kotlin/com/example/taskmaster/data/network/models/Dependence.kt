@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Dependence (
-    val dependsOn: MutableList<Int> = mutableListOf(),
+    val dependsOn: Int = 0,
     val dependent: Int = 0,
 )

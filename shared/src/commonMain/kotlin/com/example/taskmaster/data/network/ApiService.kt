@@ -50,6 +50,6 @@ interface ApiService {
     // Список задач для зависимости
     suspend fun fetchTaskForDependence(projId: Int, taskId: Int): MutableList<TaskDTO?>
     // Добавление зависимости
-    suspend fun addDependenceForTask(projId: Int, taskId: Int): Boolean
+    suspend fun addDependenceForTask(taskDependent: Int, taskdependsOn: Int): Boolean
 }
 

@@ -212,4 +212,17 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
             }
         }
     }
+
+    fun addDependence(taskDependent: Int, taskdependsOn: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.addDependenceForTask(
+                    taskDependent = taskDependent,
+                    taskdependsOn = taskdependsOn
+                ))
+            } catch(e: Exception) {
+                println("Exception in link user to task or project $e")
+            }
+        }
+    }
 }

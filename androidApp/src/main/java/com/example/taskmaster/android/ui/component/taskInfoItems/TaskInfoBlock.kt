@@ -48,6 +48,7 @@ import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.data.network.models.TaskDTO
+import com.example.taskmaster.data.network.models.TaskDependenceOn
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -62,6 +63,7 @@ fun TaskInfoBlock(
     scope: Int,
     status: Int,
     userCount: Int,
+    taskDependenceOn: String,
     typeofactivityid: Int,
     id: Int?,
     projectId: Int?,
