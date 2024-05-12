@@ -47,5 +47,9 @@ interface ApiService {
     suspend fun updateHoursSpent(urp: UserRoleProjectDTO, taskId: Int): Boolean
     // Обновление оценки часов для выполения задачи
     suspend fun updateTimeEstimation(taskDTO: TaskDTO, taskId: Int): Boolean
+    // Список задач для зависимости
+    suspend fun fetchTaskForDependence(projId: Int, taskId: Int): MutableList<TaskDTO?>
+    // Добавление зависимости
+    suspend fun addDependenceForTask(taskDependent: Int, taskdependsOn: Int): Boolean
 }
 

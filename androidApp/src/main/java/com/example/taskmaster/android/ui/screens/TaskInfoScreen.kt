@@ -18,7 +18,6 @@ import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskInfoBlock
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
-import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -88,6 +87,8 @@ fun TaskInfoScreen(
                     canAddManHours = itemTaskState?.canAddManHours,
                     projectId = itemTaskState?.projectId ?: 0,
                     triggerRefresh = triggerRefresh,
+                    taskDependenceOn = itemTaskState?.taskDependenceOn?.name ?: "",
+                    haveNotChild = itemTaskState?.haveNotChild ?: false,
                 )
             } else {
                 Text("No Data Available")  // Если данных нет

@@ -45,7 +45,10 @@ import com.example.taskmaster.android.ui.component.commonTemplate.InfoBlockButto
 import com.example.taskmaster.android.ui.component.popupWindows.NewLaborCostWindow
 import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
+import com.example.taskmaster.data.network.models.TaskDTO
+import com.example.taskmaster.data.network.models.TaskDependenceOn
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -53,23 +56,29 @@ fun TaskInfoBlock(
     navController: NavController,
     viewModel: StatusViewModel = getViewModel(),
     viewModelTypeOfActivity: TypeOfActivityViewModel = getViewModel(),
+    viewTaskModel: TaskViewModel = getViewModel(),
     name: String,
     spentTime: Int,
     spentedTime: String,
     scope: Int,
     status: Int,
     userCount: Int,
+    taskDependenceOn: String,
     typeofactivityid: Int,
     id: Int?,
     projectId: Int?,
     title: String?,
     canAddManHours: Boolean?,
+    haveNotChild: Boolean,
     triggerRefresh: (Boolean) -> Unit,
 ) {
 
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
         viewModelTypeOfActivity.getTypeActivity()
+        if(projectId != null && id != null){
+            viewTaskModel.dataTaskForDependence(projectId, id)
+        }
     }
 
     var taskCategory by remember {
@@ -88,9 +97,9 @@ fun TaskInfoBlock(
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
     var dependenceAt by remember { mutableStateOf(false) }
-    val tasks = listOf("Название задачи 1", "Название задачи 2", "Очень длинное название задачи 3","Название задачи 4","Название задачи 5")
-    var taskName = ""
+    var taskName: String? = null
 
+    var selectedTask: TaskDTO? by remember { mutableStateOf(null) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -142,6 +151,7 @@ fun TaskInfoBlock(
                     timeUnifiedTextFieldKey = true,
                     triggerRefresh = triggerRefresh,
                 )
+
                 InfoBlockButtonTemplate(
                     categoryText = "Оценка времени",
                     param = scope,
@@ -150,7 +160,9 @@ fun TaskInfoBlock(
                     timeUnifiedTextFieldKey = true,
                     triggerRefresh = triggerRefresh,
                     changeTimeEstimation = true,
+                    haveNotChild = haveNotChild
                 )
+
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачено времени",
                     param = spentedTime,
@@ -181,7 +193,7 @@ fun TaskInfoBlock(
                                 fontWeight = FontWeight.Normal
                             )
                             Text(
-                                text = taskName,
+                                text = taskName ?: taskDependenceOn,
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal,
@@ -201,16 +213,28 @@ fun TaskInfoBlock(
                                     .height(185.dp)
                                     .background(Color.White)
                             ) {
-                                tasks.forEach { item ->
+                                viewTaskModel.stateTaskForDependence.value.itemTaskState.forEach { item ->
                                     DropdownMenuItem(
                                         onClick = {
                                             dependenceAt = false
-                                            taskName = item
+                                            taskName = item?.name
+                                            selectedTask = item
+                                            if(selectedTask?.id != null) {
+                                                viewTaskModel.addDependence(
+                                                    taskDependent = id,
+                                                    taskdependsOn = selectedTask?.id!!
+                                                ) { success ->
+                                                    if (triggerRefresh != null && success) {
+                                                        viewTaskModel.dataTaskById(id)
+                                                        triggerRefresh(success)
+                                                    }
+                                                }
+                                            }
                                         },
                                         text = {
                                             if (item != null) {
                                                 Text(
-                                                    text = item,
+                                                    text = item?.name ?: taskDependenceOn,
                                                     fontWeight = FontWeight.Normal
                                                 )
                                             }
@@ -218,7 +242,6 @@ fun TaskInfoBlock(
                                         colors = MenuDefaults.itemColors(textColor = Color.Black)
                                     )
                                 }
-
                             }
                         }
                     }

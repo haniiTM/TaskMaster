@@ -2,6 +2,7 @@ package com.example.taskmaster.data.network
 
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
+import com.example.taskmaster.data.network.models.Dependence
 import com.example.taskmaster.data.network.models.DescriptionDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.PersonDTO
@@ -683,6 +684,66 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             }
             if (response.status.isSuccess()) {
                 println("Server link user to task or project: ${response.status}")
+                success = true
+                return success
+            } else {
+                println("Server returned error status: ${response.status}")
+                return success
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            return success
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            return success
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            return success
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            return success
+        }
+    }
+
+    override suspend fun fetchTaskForDependence(projId: Int, taskId: Int): MutableList<TaskDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/task/taskdependence/${projId}/${taskId}")
+            if (response.status.isSuccess()) {
+                val tasks = response.body<MutableList<TaskDTO?>>()
+                println("Server returned projects: ${tasks}")
+                tasks
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
+    override suspend fun addDependenceForTask(taskDependent: Int, taskdependsOn: Int): Boolean{
+        var success = false
+        try {
+            val dependence = Dependence(
+                dependent = taskDependent,
+                dependsOn = taskdependsOn
+            )
+            val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/dependence") {
+                contentType(ContentType.Application.Json)
+                setBody(dependence)
+            }
+            if (response.status.isSuccess()) {
+                println("Server addDependenceForTask: ${response.status}")
                 success = true
                 return success
             } else {

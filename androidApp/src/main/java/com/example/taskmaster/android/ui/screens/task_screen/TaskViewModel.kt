@@ -180,10 +180,46 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
         val isLoading: Boolean = false
     )
 
+    private val _stateTaskForDependence = mutableStateOf(ItemTaskForDependence())
+    val stateTaskForDependence: State<ItemTaskForDependence> = _stateTaskForDependence
+
+    // Функция для извлечение определенной задачи
+    fun dataTaskForDependence(projId: Int, taskId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateTaskForDependence.value = stateTaskForDependence.value.copy(isLoading = true)
+                val data = apiService.fetchTaskForDependence(projId, taskId)
+                _stateTaskForDependence.value = stateTaskForDependence.value.copy(
+                    itemTaskState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateTaskForDependence.value = stateTaskForDependence.value.copy(isLoading = false)
+            }
+        }
+    }
+    data class ItemTaskForDependence (
+        val itemTaskState: MutableList<TaskDTO?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
+
     fun changeTimeEstimation(taskDTO: TaskDTO, taskId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
                 callback(apiService.updateTimeEstimation(taskDTO, taskId))
+            } catch(e: Exception) {
+                println("Exception in link user to task or project $e")
+            }
+        }
+    }
+
+    fun addDependence(taskDependent: Int, taskdependsOn: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.addDependenceForTask(
+                    taskDependent = taskDependent,
+                    taskdependsOn = taskdependsOn
+                ))
             } catch(e: Exception) {
                 println("Exception in link user to task or project $e")
             }
