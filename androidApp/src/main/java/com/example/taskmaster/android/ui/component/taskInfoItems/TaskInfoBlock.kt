@@ -69,6 +69,7 @@ fun TaskInfoBlock(
     projectId: Int?,
     title: String?,
     canAddManHours: Boolean?,
+    haveNotChild: Boolean,
     triggerRefresh: (Boolean) -> Unit,
 ) {
 
@@ -96,7 +97,7 @@ fun TaskInfoBlock(
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
     var dependenceAt by remember { mutableStateOf(false) }
-    var taskName = ""
+    var taskName: String? = null
 
     var selectedTask: TaskDTO? by remember { mutableStateOf(null) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -150,6 +151,7 @@ fun TaskInfoBlock(
                     timeUnifiedTextFieldKey = true,
                     triggerRefresh = triggerRefresh,
                 )
+
                 InfoBlockButtonTemplate(
                     categoryText = "Оценка времени",
                     param = scope,
@@ -158,7 +160,9 @@ fun TaskInfoBlock(
                     timeUnifiedTextFieldKey = true,
                     triggerRefresh = triggerRefresh,
                     changeTimeEstimation = true,
+                    haveNotChild = haveNotChild
                 )
+
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачено времени",
                     param = spentedTime,
@@ -189,7 +193,7 @@ fun TaskInfoBlock(
                                 fontWeight = FontWeight.Normal
                             )
                             Text(
-                                text = taskName,
+                                text = taskName ?: taskDependenceOn,
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal,
@@ -213,19 +217,24 @@ fun TaskInfoBlock(
                                     DropdownMenuItem(
                                         onClick = {
                                             dependenceAt = false
-                                            taskName = item?.name ?: ""
+                                            taskName = item?.name
                                             selectedTask = item
-                                            if(item?.id != null) {
-                                                viewTaskModel.dataTaskForDependence(
-                                                    projId = projectId,
-                                                    taskId= item.id!!
-                                                )
+                                            if(selectedTask?.id != null) {
+                                                viewTaskModel.addDependence(
+                                                    taskDependent = id,
+                                                    taskdependsOn = selectedTask?.id!!
+                                                ) { success ->
+                                                    if (triggerRefresh != null && success) {
+                                                        viewTaskModel.dataTaskById(id)
+                                                        triggerRefresh(success)
+                                                    }
+                                                }
                                             }
                                         },
                                         text = {
                                             if (item != null) {
                                                 Text(
-                                                    text = item?.name ?: "",
+                                                    text = item?.name ?: taskDependenceOn,
                                                     fontWeight = FontWeight.Normal
                                                 )
                                             }

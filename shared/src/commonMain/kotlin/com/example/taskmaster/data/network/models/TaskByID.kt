@@ -15,7 +15,8 @@ class TaskByID(
     var typeofactivityid: Int? = null,
     val canAddManHours: Boolean? = null,
     val projectId: Int? = null,
-    val taskDependenceOn: TaskDependenceOn? = null
+    val taskDependenceOn: TaskDependenceOn? = null,
+    val haveNotChild: Boolean = false
 )
 
 @Serializable

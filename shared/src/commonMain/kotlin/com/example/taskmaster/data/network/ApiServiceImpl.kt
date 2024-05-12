@@ -738,7 +738,7 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
                 dependent = taskDependent,
                 dependsOn = taskdependsOn
             )
-            val response: HttpResponse = httpClient.put("http://5.35.85.206:8080/dependence") {
+            val response: HttpResponse = httpClient.post("http://5.35.85.206:8080/dependence") {
                 contentType(ContentType.Application.Json)
                 setBody(dependence)
             }

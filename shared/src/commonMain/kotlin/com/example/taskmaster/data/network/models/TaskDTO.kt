@@ -16,6 +16,7 @@ class TaskDTO(
     var content: String? = null,
     var typeofactivityid: Int?,
     var position: Int?,
+    val taskDependenceOn: TaskDependenceOn? = null
 )
 {
     constructor() : this(

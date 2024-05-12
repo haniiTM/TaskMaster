@@ -87,7 +87,8 @@ fun TaskInfoScreen(
                     canAddManHours = itemTaskState?.canAddManHours,
                     projectId = itemTaskState?.projectId ?: 0,
                     triggerRefresh = triggerRefresh,
-                    taskDependenceOn = itemTaskState?.taskDependenceOn?.name ?: ""
+                    taskDependenceOn = itemTaskState?.taskDependenceOn?.name ?: "",
+                    haveNotChild = itemTaskState?.haveNotChild ?: false,
                 )
             } else {
                 Text("No Data Available")  // Если данных нет
