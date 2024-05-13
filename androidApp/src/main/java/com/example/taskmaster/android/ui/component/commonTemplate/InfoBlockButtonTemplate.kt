@@ -44,6 +44,7 @@ fun InfoBlockButtonTemplate(
     timeUnifiedTextFieldKey: Boolean = false,
     haveNotChild: Boolean = true,
     triggerRefresh: ((Boolean) -> Unit)? = null,
+    buttonEnable: Boolean
     ) {
     var openDialog by remember {
         mutableStateOf(false)
@@ -137,9 +138,8 @@ fun InfoBlockButtonTemplate(
             .height(1.dp)
             .fillMaxWidth()
     )
-    if (openDialog) {
+    if (openDialog && haveNotChild && buttonEnable) {
         Dialog(onDismissRequest = { openDialog = !openDialog }) {
-            if(!haveNotChild){
                 ChangeInfoValueTemplate(
                     title = categoryText,
                     value = param.toString(),
@@ -152,7 +152,6 @@ fun InfoBlockButtonTemplate(
                     changeTimeEstimation = changeTimeEstimation,
                     triggerRefresh = triggerRefresh
                 )
-            }
         }
     }
     if (openUserDialog) {
