@@ -1,10 +1,7 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
@@ -30,13 +26,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun UserCard(
@@ -45,7 +43,9 @@ fun UserCard(
     item: String,
     isSelected: Boolean,
     onCheckChanged: (Boolean) -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    viewModel: TypeOfActivityViewModel = getViewModel(),
+    role: String? = "",
 ) {
     var paddingValue = 12
     var expanded by remember { mutableStateOf(false) }
@@ -90,16 +90,10 @@ fun UserCard(
                                 )
                             )
                         }
-                        Image(
-                            painter = painterResource(id = R.drawable.logo),
-                            contentDescription = "",
-                            modifier = Modifier
+                        Icon(
+                            painter = painterResource(id = getIconForRole(role)),
+                            contentDescription = "", tint = Color.Black, modifier = Modifier
                                 .padding(start = paddingValue.dp)
-                                .border(
-                                    BorderStroke(1.dp, Color.Black),
-                                    shape = RoundedCornerShape(25.dp)
-                                )
-                                .clip(shape = RoundedCornerShape(25.dp))
                                 .size(25.dp)
                         )
                         Text(
@@ -121,7 +115,9 @@ fun UserCard(
                 }
             }
             if (actionButton) {
-                DropdownMenuArea(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+                DropdownMenuArea(
+                    expanded = expanded,
+                    onExpandedChange = { expanded = !expanded }) {
                     IconButton(onClick = { expanded = !expanded }) {
                         Log.d("expanded", expanded.toString())
                         Icon(
@@ -129,21 +125,27 @@ fun UserCard(
                             contentDescription = "",
                             tint = Color.Black
                         )
-                    }
-
-                    DropdownMenu(
-                        modifier = Modifier
-                            .background(Color.White),
-                        expanded = expanded,
-                        onDismissRequest = { expanded = !expanded }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text(text = "Удалить", color = Color.Red) },
-                            onClick = {
-                                onDelete()
-                                expanded = !expanded
-                            }
-                        )
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier
+                                .background(Color.White)
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(text = "Удалить", color = Color.Red) },
+                                onClick = {
+                                    onDelete()
+                                    expanded = !expanded
+                                },
+                                trailingIcon = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.delete_icon),
+                                        contentDescription = "",
+                                        tint = Color.Red
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -162,28 +164,12 @@ fun DropdownMenuArea(
     Box {
         content()
 
-        DropdownMenu(
-            expanded = localExpanded,
-            onDismissRequest = { localExpanded = false },
-            modifier = Modifier
-                .background(Color.White)
-                .align(Alignment.TopEnd)
-        ) {
-            // Add your DropdownMenuItem components here
-        }
-
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(end = 8.dp, top = 8.dp)
         ) {
-            IconButton(onClick = { localExpanded = !localExpanded }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.more),
-                    contentDescription = "",
-                    tint = Color.Black
-                )
-            }
+
         }
 
         DisposableEffect(localExpanded) {
@@ -192,4 +178,29 @@ fun DropdownMenuArea(
             }
         }
     }
+}
+
+fun getIconForRole(role: String?): Int {
+    return when (role) {
+        "Backend" -> R.drawable.backend_role_icon
+        "Frontend" -> R.drawable.frontend_role_icon
+        "UI/UX дизайн" -> R.drawable.tester_role_icon
+        "Тестирование" -> R.drawable.designer_role_icon
+        "Проект менеджер" -> R.drawable.project_manager_role_icon
+        "Админ" -> R.drawable.administrator_role_icon
+        else -> R.drawable.warning
+    }
+}
+
+@Preview
+@Composable
+fun pr() {
+    UserCard(
+        checkBoxAble = false,
+        actionButton = true,
+        item = "1111",
+        isSelected = false,
+        onCheckChanged = {},
+        onDelete = {},
+    )
 }
