@@ -20,7 +20,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.taskmaster.android.di.presentationModule
 import com.example.taskmaster.android.ui.navigation.Navigation
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
@@ -74,7 +73,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun MainScreen(viewModel: TaskViewModel = getViewModel()) {
     val navController = rememberAnimatedNavController()
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
         bottomBar = {}
     ) { innerPadding ->
@@ -85,9 +83,6 @@ private fun MainScreen(viewModel: TaskViewModel = getViewModel()) {
                 .imePadding()
         ) {
             Column {
-                if (currentRoute != "auth" && currentRoute != "projects") {
-
-                }
                 Navigation(
                     navController = navController,
                 )
