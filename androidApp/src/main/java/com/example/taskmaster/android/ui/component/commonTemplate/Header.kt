@@ -6,7 +6,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
 import com.example.taskmaster.android.ui.component.popupWindows.NewUserWindow
 import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
@@ -54,10 +54,10 @@ fun Header(
     val projectIdr by remember {
         mutableStateOf(projectId)
     }
+    var isDarkTheme by remember { mutableStateOf(false) }
 
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
-
 
     Row(
         modifier = Modifier
@@ -68,7 +68,19 @@ fun Header(
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Spacer(modifier = Modifier.weight(0.5f))
+        IconButton(
+            onClick = {
+
+            },
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .weight(0.5f)
+        ) {
+            Image(
+                painter = painterResource(id = if (isDarkTheme) R.drawable.dark_theme_icon else R.drawable.light_theme_icon),
+                contentDescription = "Theme icon",
+                alignment = Alignment.CenterEnd
+            )}
         Text(
             text = text,
             modifier = Modifier.weight(1.5f),
@@ -236,3 +248,4 @@ fun Header(
         }
     }
 }
+

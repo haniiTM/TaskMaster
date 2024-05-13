@@ -147,7 +147,7 @@ fun UserList(
                         val isSelected = selectedUsers.value.contains(item.id!!)
                         UserCard(
                             checkBoxAble = checkBoxAble,
-                            addRoleButton = addRoleButton,
+                            actionButton = addRoleButton,
                             item = "${item.surname} ${item.name} ${item.patronymic}",
                             isSelected = isSelected,
                             onCheckChanged = { isSelected ->
