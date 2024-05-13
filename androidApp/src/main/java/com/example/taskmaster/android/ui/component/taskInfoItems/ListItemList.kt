@@ -28,7 +28,6 @@ fun ListItemList(
         viewModel.getManHours(taskId)
     }
 
-    var laborCosts = listOf("1", "2", "3", "4", "5", "6", "7")
     Box(
         modifier = Modifier
             .padding(start = 14.dp, top = 26.dp, end = 14.dp)
@@ -43,7 +42,7 @@ fun ListItemList(
         LazyColumn {
             itemsIndexed(viewModel.state.value.itemState) { _, item ->
                 if (item != null) {
-                    ListItem(name = item.comment ?: "")
+                    ListItem(name = item.comment ?: "", item = item)
                 }
             }
         }

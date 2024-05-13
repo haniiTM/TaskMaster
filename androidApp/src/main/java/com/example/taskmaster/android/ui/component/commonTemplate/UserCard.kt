@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 
 @Composable
@@ -46,7 +47,9 @@ fun UserCard(
 ) {
     var paddingValue = 12
     var expanded by remember { mutableStateOf(false) }
-
+    var showNotification by remember {
+        mutableStateOf(false)
+    }
     Divider(
         color = MaterialTheme.colorScheme.outline,
         modifier = Modifier
@@ -116,10 +119,21 @@ fun UserCard(
                                         contentDescription = "", tint = Color.Red
                                     )
                                 },
-                                onClick = { expanded = !expanded })
+                                onClick = {
+                                    showNotification = !showNotification
+                                    expanded = !expanded
+                                })
                         }
                     })
-
+                if (showNotification) {
+                    Dialog(onDismissRequest = { showNotification = !showNotification }) {
+                        ActionNotificationTemplate(
+                            onDismissRequest = { showNotification = !showNotification },
+                            onConfirmation = { },
+                            title = "Удалить пользователя"
+                        )
+                    }
+                }
             }
             if (actionButton) {
                 IconButton(onClick = { expanded = !expanded }) {

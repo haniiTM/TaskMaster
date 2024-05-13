@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -80,7 +79,8 @@ fun Header(
                 painter = painterResource(id = if (isDarkTheme) R.drawable.dark_theme_icon else R.drawable.light_theme_icon),
                 contentDescription = "Theme icon",
                 alignment = Alignment.CenterEnd
-            )}
+            )
+        }
         Text(
             text = text,
             modifier = Modifier.weight(1.5f),
@@ -236,12 +236,18 @@ fun Header(
                     }
                 }
                 if (shouldNavigateToAuth) {
-                    LaunchedEffect(Unit) {
-                        navController.popBackStack(
-                            NavigationItem.Auth.route,
-                            inclusive = false,
-                            saveState = false
-                        )
+                    Dialog(onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth }) {
+                        ActionNotificationTemplate(
+                            onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
+                            onConfirmation = {
+                                navController.popBackStack(
+                                    NavigationItem.Auth.route,
+                                    inclusive = false,
+                                    saveState = false
+                                )
+                            },
+                            title = "Выход из аккаунта",
+                            )
                     }
                 }
             }
