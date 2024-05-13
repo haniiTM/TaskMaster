@@ -16,9 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.authScreenItems.AuthBlock
+import com.example.taskmaster.android.ui.theme.AppState
+import com.example.taskmaster.android.ui.component.commonTemplate.ThemeChangingButton
 
 @Composable
 fun AuthScreen(navController: NavController) {
+    ThemeChangingButton(darkTheme = AppState.darkTheme, onThemeUpdate = { AppState.darkTheme = !AppState.darkTheme}, navController = navController)
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

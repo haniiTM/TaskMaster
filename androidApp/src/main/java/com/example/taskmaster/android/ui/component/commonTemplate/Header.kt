@@ -32,11 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
 import com.example.taskmaster.android.ui.component.popupWindows.NewUserWindow
 import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
 import com.example.taskmaster.android.ui.navigation.NavigationItem
+import com.example.taskmaster.android.ui.theme.AppState
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -53,11 +53,9 @@ fun Header(
     val projectIdr by remember {
         mutableStateOf(projectId)
     }
-    var isDarkTheme by remember { mutableStateOf(false) }
 
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
-
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -67,31 +65,17 @@ fun Header(
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = {
-
-            },
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .weight(0.5f)
-        ) {
-            Image(
-                painter = painterResource(id = if (isDarkTheme) R.drawable.dark_theme_icon else R.drawable.light_theme_icon),
-                contentDescription = "Theme icon",
-                alignment = Alignment.CenterEnd
-            )
-        }
+        ThemeChangingButton(darkTheme = AppState.darkTheme, onThemeUpdate = { AppState.darkTheme = !AppState.darkTheme}, navController = navController)
         Text(
             text = text,
             modifier = Modifier.weight(1.5f),
             textAlign = TextAlign.Center,
             color = Color.Black
         )
-
         IconButton(
             onClick = { expanded = true },
             modifier = Modifier
-                .align(Alignment.CenterVertically)
+                .align(alignment = Alignment.CenterVertically)
                 .weight(0.5f)
         ) {
             Image(
