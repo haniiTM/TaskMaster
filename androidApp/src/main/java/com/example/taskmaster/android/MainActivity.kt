@@ -1,5 +1,6 @@
 package com.example.taskmaster.android
 
+import AppSettings
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.WindowManager
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import com.example.taskmaster.android.di.presentationModule
+import com.example.taskmaster.android.ui.component.commonTemplate.AppState
 import com.example.taskmaster.android.ui.navigation.Navigation
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.theme.AppTheme
@@ -32,6 +34,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.logger.Level
+
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
@@ -45,8 +48,11 @@ class MainActivity : ComponentActivity() {
         )
 
         super.onCreate(savedInstanceState)
+        AppState.darkTheme = AppSettings.getDarkTheme(this) // Устанавливаем состояние darkTheme
 
-
+        val onThemeUpdate: () -> Unit = {
+            AppState.darkTheme = !AppState.darkTheme
+        }
         val appModules = listOf(presentationModule)
 
         initKoin {
@@ -59,8 +65,10 @@ class MainActivity : ComponentActivity() {
             NapierInit().init()
         }
 
+
+
         setContent {
-            AppTheme {
+            AppTheme(useDarkTheme = AppState.darkTheme) {
                 MainScreen()
             }
         }
@@ -71,7 +79,9 @@ class MainActivity : ComponentActivity() {
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
-private fun MainScreen(viewModel: TaskViewModel = getViewModel()) {
+private fun MainScreen(
+    viewModel: TaskViewModel = getViewModel()
+) {
     val navController = rememberAnimatedNavController()
     Scaffold(
         bottomBar = {}
