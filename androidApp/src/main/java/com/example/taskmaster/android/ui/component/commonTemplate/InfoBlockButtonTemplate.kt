@@ -181,9 +181,12 @@ private fun InfoText(
 ) {
     Text(
         text = if (timeUnifiedTextFieldKey) {
-            "${categoryText}: ${
-                paramItem.toString().format(timeMask).filter { it.isDigit() }.take(4)
-            }"
+            val formattedTime = paramItem.toString()
+                .replace("::", ":") // Replace double colons with a single colon
+                .format(timeMask)
+                .filter { it.isDigit() }
+                .take(4)
+            "${categoryText}: $formattedTime"
         } else {
             "$categoryText: $paramItem"
         },
