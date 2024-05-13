@@ -48,7 +48,6 @@ import com.example.taskmaster.android.ui.screens.status_screen.StatusViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import com.example.taskmaster.data.network.models.TaskDTO
-import com.example.taskmaster.data.network.models.TaskDependenceOn
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -142,6 +141,7 @@ fun TaskInfoBlock(
                     id = id!!,
                     projectId = projectId!!,
                     triggerRefresh = triggerRefresh,
+                    buttonEnable = true
                 )
                 InfoBlockButtonTemplate(
                     categoryText = "Затрачиваемые часы / день",
@@ -150,6 +150,7 @@ fun TaskInfoBlock(
                     projectId = projectId,
                     timeUnifiedTextFieldKey = true,
                     triggerRefresh = triggerRefresh,
+                    buttonEnable = true
                 )
 
                 InfoBlockButtonTemplate(
@@ -160,7 +161,8 @@ fun TaskInfoBlock(
                     timeUnifiedTextFieldKey = true,
                     triggerRefresh = triggerRefresh,
                     changeTimeEstimation = true,
-                    haveNotChild = haveNotChild
+                    haveNotChild = haveNotChild,
+                    buttonEnable = true
                 )
 
                 InfoBlockButtonTemplate(
@@ -169,7 +171,8 @@ fun TaskInfoBlock(
                     id = id,
                     projectId = projectId,
                     enable = false,
-                    timeUnifiedTextFieldKey = true
+                    timeUnifiedTextFieldKey = true,
+                    buttonEnable = false
                 )
                 Button(
                     onClick = { dependenceAt = true },

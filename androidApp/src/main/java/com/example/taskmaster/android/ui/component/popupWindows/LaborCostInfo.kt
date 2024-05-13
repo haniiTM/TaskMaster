@@ -32,9 +32,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @Composable
-fun LaborCostInfo( number : String, item : ManHoursDTO) {
+fun LaborCostInfo(number: String, item: ManHoursDTO) {
     val linearGradient =
         Brush.verticalGradient(
             listOf(
@@ -45,11 +49,36 @@ fun LaborCostInfo( number : String, item : ManHoursDTO) {
     var comment by remember {
         mutableStateOf(item.comment)
     }
+
+    fun String.toDate(): Date? {
+        if (this == null || this == "null") {
+            return null
+        }
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+        return sdf.parse(this)
+    }
+
+    fun String.toDefaultDate(): Date? {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        return sdf.parse(this)
+    }
+    val defaultDate = "01/01/1970"
+
+
+    val createdDefaultDate = defaultDate.toDefaultDate()
+    val calendar = Calendar.getInstance().apply {
+        time = item.created_at?.toDate() ?: createdDefaultDate
+    }
+
+    val mYear: Int = calendar.get(Calendar.YEAR)
+    val mMonth: Int = calendar.get(Calendar.MONTH) + 1
+    val mDayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
     Box(
         modifier = Modifier
             .width(332.dp)
             .height(198.dp)
-            .clip(shape = RoundedCornerShape(15.dp)).border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
+            .clip(shape = RoundedCornerShape(15.dp))
+            .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
     ) {
         Column {
             Row(
@@ -61,10 +90,13 @@ fun LaborCostInfo( number : String, item : ManHoursDTO) {
                     .clip(shape = RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
                     .background(linearGradient)
             ) {
-                Text(text = "Трудозатрата № ${item.id}" , color = MaterialTheme.colorScheme.onTertiary)
+                Text(
+                    text = "Трудозатрата № ${item.id}",
+                    color = MaterialTheme.colorScheme.onTertiary
+                )
             }
             Divider(color = Color.Black)
-            TextField(value = comment!!,
+            TextField(value = comment ?: "",
                 onValueChange = { newValue -> comment = newValue },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -89,7 +121,7 @@ fun LaborCostInfo( number : String, item : ManHoursDTO) {
                     .background(Color.White)
             ) {
                 Text(
-                    text = "${item.created_at}",
+                    text = "${mDayOfMonth.toString().padStart(2, '0')}/${mMonth.toString().padStart(2, '0')}/${mYear}",
                     color = Color.Black,
                     modifier = Modifier.weight(.5f),
                     textAlign = TextAlign.Center
