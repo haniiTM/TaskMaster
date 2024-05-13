@@ -66,12 +66,12 @@ fun UserList(
         LaunchedEffect(id != 0 && showPersonInProject) {
             viewModel.getPersonInTask(id)
         }
-    } else if(id != 0 && addingPersonInTask) {
+    } else if (id != 0 && addingPersonInTask) {
         // Получение списка сотрудников которые еще не были добавлены в задачу
         LaunchedEffect(id != 0 && addingPersonInTask) {
             viewModel.getPersonFreeForTask(id)
         }
-    } else if(projectId != 0 && id == 0 && addingPersonInProj) {
+    } else if (projectId != 0 && id == 0 && addingPersonInProj) {
         // Получение списка сотрудников которые еще не были добавлены в проектс
         LaunchedEffect(projectId != 0 && id == 0 && addingPersonInProj) {
             viewModel.getPersonFreeFromProject(projectId)
@@ -129,16 +129,16 @@ fun UserList(
             ) {
                 val itemsList = if (id != 0 && !showPersonInProject) {
                     viewModel.stateInTask.value.itemState
-                } else if(id != 0 && addingPersonInTask) {
+                } else if (id != 0 && addingPersonInTask) {
                     // Получение списка свободных сотрудников для добавления в задачу
                     viewModel.stateFreeForTask.value.itemState
-                } else if(projectId != 0 && id == 0 && addingPersonInProj) {
+                } else if (projectId != 0 && id == 0 && addingPersonInProj) {
                     // Получение списка свободных сотрудников
                     viewModel.stateFreeFromProject.value.itemState
                 } else if (projectId != 0 && showPersonInProject) {
                     // Получение списка сотрудников в проекте
                     viewModel.stateInProject.value.itemState
-                }  else {
+                } else {
                     // Получение списка всех сотрудников
                     viewModel.state.value.itemState
                 }
@@ -156,7 +156,9 @@ fun UserList(
                                 } else {
                                     selectedUsers.value -= item.id!!
                                 }
-                            }
+                            },
+                            onDelete = {},
+                            role = item.role
                         )
                     }
                 }
@@ -179,7 +181,7 @@ fun UserList(
                                 val selectedUsersList = mutableListOf<Int>()
                                 selectedUsersList.addAll(selectedUsers.value)
 
-                                val urp = if(id != 0) {
+                                val urp = if (id != 0) {
                                     UserRoleProjectDTO(
                                         userid = selectedUsersList,
                                         current_task_id = id
@@ -198,7 +200,7 @@ fun UserList(
                                     }
                                 }
 
-                                if(projectId != 0) {
+                                if (projectId != 0) {
                                     viewModel.getPersonInProject(projectId)
                                 }
                             }
@@ -206,7 +208,7 @@ fun UserList(
                     } else {
                         val selectedUsersList = mutableListOf<Int>()
                         selectedUsersList.addAll(selectedUsers.value)
-                        if(selectedUsers.value.isNotEmpty()) {
+                        if (selectedUsers.value.isNotEmpty()) {
                             viewModel.deletePerson(selectedUsersList)
                         }
                     }

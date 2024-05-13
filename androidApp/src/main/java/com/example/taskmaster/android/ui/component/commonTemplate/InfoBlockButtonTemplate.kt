@@ -16,7 +16,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,8 +31,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.MaskVisualTransformation
-import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun InfoBlockButtonTemplate(
@@ -87,15 +84,27 @@ fun InfoBlockButtonTemplate(
                     timeUnifiedTextFieldKey = timeUnifiedTextFieldKey,
                     timeMask = timeMask
                 )
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(25.dp)
-                        .clip(
-                            CircleShape
-                        )
-                )
+                if(param == 1){
+                    Image(
+                        painter = painterResource(id = R.drawable.solo_user_icon),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(14.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+                }else{
+                    Image(
+                        painter = painterResource(id = R.drawable.users_group_icon),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(14.dp)
+                            .clip(
+                                CircleShape
+                            )
+                    )
+                }
             }
         } else {
             Row(
