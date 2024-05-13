@@ -1,4 +1,4 @@
-package com.example.taskmaster.android.ui.component.commonTemplate
+package com.example.taskmaster.android.ui.theme
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

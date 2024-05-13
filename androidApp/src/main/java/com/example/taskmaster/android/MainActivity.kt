@@ -22,9 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import com.example.taskmaster.android.di.presentationModule
-import com.example.taskmaster.android.ui.component.commonTemplate.AppState
 import com.example.taskmaster.android.ui.navigation.Navigation
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.android.ui.theme.AppState
 import com.example.taskmaster.android.ui.theme.AppTheme
 import com.example.taskmaster.di.initKoin
 import com.example.taskmaster.domain.utils.NapierInit

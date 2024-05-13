@@ -36,6 +36,7 @@ import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
 import com.example.taskmaster.android.ui.component.popupWindows.NewUserWindow
 import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
 import com.example.taskmaster.android.ui.navigation.NavigationItem
+import com.example.taskmaster.android.ui.theme.AppState
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -64,7 +65,7 @@ fun Header(
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ThemeChangingButton(darkTheme = AppState.darkTheme, onThemeUpdate = {AppState.darkTheme = !AppState.darkTheme}, navController = navController)
+        ThemeChangingButton(darkTheme = AppState.darkTheme, onThemeUpdate = { AppState.darkTheme = !AppState.darkTheme}, navController = navController)
         Text(
             text = text,
             modifier = Modifier.weight(1.5f),
