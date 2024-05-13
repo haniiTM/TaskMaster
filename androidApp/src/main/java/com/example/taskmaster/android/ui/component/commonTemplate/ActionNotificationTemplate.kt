@@ -32,7 +32,7 @@ fun ActionNotificationTemplate(
     onConfirmation: () -> Unit,
     title: String,
     viewModel: TaskViewModel = getViewModel(),
-    id: Int,
+    id: Int? = 0,
     parent: Int? = 0,
     projectKey: Boolean? = false
 ) {
