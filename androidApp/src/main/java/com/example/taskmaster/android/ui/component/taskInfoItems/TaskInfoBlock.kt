@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -20,6 +21,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
@@ -34,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -75,7 +79,7 @@ fun TaskInfoBlock(
     LaunchedEffect(key1 = true) {
         viewModel.getStatus()
         viewModelTypeOfActivity.getTypeActivity()
-        if(projectId != null && id != null){
+        if (projectId != null && id != null) {
             viewTaskModel.dataTaskForDependence(projectId, id)
         }
     }
@@ -96,7 +100,9 @@ fun TaskInfoBlock(
     var statusExpanded by remember { mutableStateOf(false) }
     var categoryExpanded by remember { mutableStateOf(false) }
     var dependenceAt by remember { mutableStateOf(false) }
-    var taskName: String? = null
+    var taskName by remember {
+        mutableStateOf("")
+    }
 
     var selectedTask: TaskDTO? by remember { mutableStateOf(null) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -174,78 +180,102 @@ fun TaskInfoBlock(
                     timeUnifiedTextFieldKey = true,
                     buttonEnable = false
                 )
-                Button(
-                    onClick = { dependenceAt = true },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(32.dp),
-                    colors = ButtonDefaults.buttonColors(Color.White),
-                    shape = RoundedCornerShape(0),
-                    contentPadding = PaddingValues(horizontal = 12.dp)
-                ) {
-                    Column {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "Зависит от:  ",
-                                color = Color.Black,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                            Text(
-                                text = taskName ?: taskDependenceOn,
-                                color = Color.Black,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal,
-                                modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.5f),
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            DropdownMenu(
-                                expanded = dependenceAt,
-                                onDismissRequest = { dependenceAt = !dependenceAt },
-                                modifier = Modifier
-                                    .fillMaxWidth(.61f)
-                                    .height(185.dp)
-                                    .background(Color.White)
+                Row(modifier = Modifier
+                    .height(32.dp)
+                    .background(Color.White)
+                    .fillMaxWidth()) {
+                    Button(
+                        onClick = { dependenceAt = true },
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .height(32.dp),
+                        colors = ButtonDefaults.buttonColors(Color.White),
+                        shape = RoundedCornerShape(0),
+                        contentPadding = PaddingValues(horizontal = 12.dp)
+                    ) {
+                        Column {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxSize(),
+                                horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                viewTaskModel.stateTaskForDependence.value.itemTaskState.forEach { item ->
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            dependenceAt = false
-                                            taskName = item?.name
-                                            selectedTask = item
-                                            if(selectedTask?.id != null) {
-                                                viewTaskModel.addDependence(
-                                                    taskDependent = id,
-                                                    taskdependsOn = selectedTask?.id!!
-                                                ) { success ->
-                                                    if (triggerRefresh != null && success) {
-                                                        viewTaskModel.dataTaskById(id)
-                                                        triggerRefresh(success)
+                                Text(
+                                    text = "Зависит от:  ",
+                                    color = Color.Black,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Normal
+                                )
+                                Text(
+                                    text = taskName ?: taskDependenceOn,
+                                    color = Color.Black,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    modifier = Modifier
+                                        .width(IntrinsicSize.Max)
+                                        .fillMaxWidth(0.5f),
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                DropdownMenu(
+                                    expanded = dependenceAt,
+                                    onDismissRequest = { dependenceAt = !dependenceAt },
+                                    modifier = Modifier
+                                        .fillMaxWidth(.61f)
+                                        .sizeIn(maxHeight = 185.dp)
+                                        .background(Color.White)
+                                ) {
+                                    viewTaskModel.stateTaskForDependence.value.itemTaskState.forEach { item ->
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                dependenceAt = false
+                                                taskName = item?.name.toString()
+                                                selectedTask = item
+                                                if (selectedTask?.id != null) {
+                                                    viewTaskModel.addDependence(
+                                                        taskDependent = id,
+                                                        taskdependsOn = selectedTask?.id!!
+                                                    ) { success ->
+                                                        if (triggerRefresh != null && success) {
+                                                            viewTaskModel.dataTaskById(id)
+                                                            triggerRefresh(success)
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        },
-                                        text = {
-                                            if (item != null) {
-                                                Text(
-                                                    text = item?.name ?: taskDependenceOn,
-                                                    fontWeight = FontWeight.Normal
-                                                )
-                                            }
-                                        },
-                                        colors = MenuDefaults.itemColors(textColor = Color.Black)
-                                    )
+                                            },
+                                            text = {
+                                                if (item != null) {
+                                                    Text(
+                                                        text = item?.name ?: taskDependenceOn,
+                                                        fontWeight = FontWeight.Normal
+                                                    )
+                                                }
+                                            },
+                                            colors = MenuDefaults.itemColors(textColor = Color.Black)
+                                        )
+                                    }
                                 }
                             }
+                        }
+                    }
+                    if(taskName != ""){
+                        IconButton(onClick = { taskName = ""
+                                    /*viewTaskModel.removeDependence(id, selectedTask?.id!!) { success ->
+                                        if (triggerRefresh != null && success) {
+                                            viewTaskModel.dataTaskById(id)
+                                            triggerRefresh(success)
+                                        }
+                                    }*/
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.clear_icon),
+                                contentDescription = "",
+                                tint = Color.Black,
+                                modifier = Modifier.padding(0.dp)
+                            )
                         }
                     }
                 }
@@ -283,7 +313,9 @@ fun TaskInfoBlock(
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal,
-                                        modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.5f),
+                                modifier = Modifier
+                                    .width(IntrinsicSize.Max)
+                                    .fillMaxWidth(0.5f),
                                 overflow = TextOverflow.Ellipsis
                             )
 
@@ -356,7 +388,9 @@ fun TaskInfoBlock(
                                 color = Color.Black,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal,
-                                        modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.4f),
+                                modifier = Modifier
+                                    .width(IntrinsicSize.Max)
+                                    .fillMaxWidth(0.4f),
                                 overflow = TextOverflow.Ellipsis
                             )
 
@@ -449,6 +483,5 @@ fun TaskInfoBlock(
                 }
             }
         }
-
     }
 }
