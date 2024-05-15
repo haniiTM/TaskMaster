@@ -8,7 +8,10 @@
 
 import Foundation
 
-protocol LoginScreenViewModelProtocol {
+protocol LoginScreenViewModelProtocol: AnyObject {
+    //    MARK: Signals
+    var openProjectsViewSignal: (() -> Void)? { get set }
+
     //    MARK: Methods
-    func loginUser(name: String, password: String)
+    func loginUser(name: String, password: String) async 
 }

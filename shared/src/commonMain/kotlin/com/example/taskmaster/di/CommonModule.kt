@@ -7,6 +7,7 @@ import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.ApiServiceImpl
 import com.example.taskmaster.data.network.utils.TokenInterceptor
 import com.example.taskmaster.domain.repositories.AuthRepository
+import com.example.taskmaster.domain.use_cases.GetAccessTokenDtoUseCase
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -20,7 +21,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val commonModule = module {
-
     single { Settings() }
 
     /**
@@ -47,12 +47,14 @@ val commonModule = module {
             }
         }
     }
+
     single<ApiService> { ApiServiceImpl(httpClient = get()) }
 
     single { AccessTokenDao(databaseDriverFactory = get()) }
 
     single<AuthRepository> { AuthRepositoryImpl(apiService = get(), accessTokenDao = get()) }
 
+    factory { GetAccessTokenDtoUseCase() }
 }
 
 expect fun platformModule(): Module

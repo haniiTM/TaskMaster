@@ -7,19 +7,27 @@
 //
 
 import Foundation
+import shared
 
-struct LoginScreenViewModel: LoginScreenViewModelProtocol {
-    //    MARK: Props
-    private let model = LoginScreenModel()
-//    private let router:
+@MainActor final class LoginScreenViewModel: ObservableObject {
+    private let getAccessTokenDtoUseCase = GetAccessTokenDtoUseCase.init()
 
-    //    MARK: Methods
-    func loginUser(name: String, password: String) {
+    @Published var isTokenValid = false
+//    var openProjectsViewSignal: (() -> Void)?
+
+    func loginUser(name: String, password: String) async {
         do {
-            try model.loginUser(name: name, password: password)
-//            router.openProjectListView()
-        } catch let error {
-//            router.showLoginAlert()
+            guard
+                let token = try await getAccessTokenDtoUseCase.fetchUserToken(login: name, 
+                                                                              password: password),
+                let isTokenEmtpy = token.tokenLong
+            else { return }
+
+            //            !isTokenEmtpy.isEmpty ? print("Error") : openProjectsViewSignal?()
+            !isTokenEmtpy.isEmpty ? print("Error") : isTokenValid.toggle()
+
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

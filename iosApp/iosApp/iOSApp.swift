@@ -1,12 +1,17 @@
 import SwiftUI
+import shared
 
 @main
 struct iOSApp: App {
-	var body: some Scene {
-		WindowGroup {
-//			MainFrameView {
-                LoginScreenView()
-//            }
-		}
-	}
+    init() {
+        KoinHelperKt.doInitKoin()
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            //			MainFrameView {
+            LoginScreenView()
+            //            }
+        }
+    }
 }
