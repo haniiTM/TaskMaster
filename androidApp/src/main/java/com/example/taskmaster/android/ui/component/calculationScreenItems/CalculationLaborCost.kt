@@ -43,14 +43,16 @@ fun TableHeader(dates: List<Date?>) {
     }
 }
 @Composable
-fun TableRow(data: Pair<Int?, String?>, dates: List<Date?>) {
+fun TableRow(data: Pair<Int?, String?>, dates: List<Date?>, hoursData: List<Triple<Date?, String?, Int?>>) {
     val uniqueDates = dates.distinct().filterNotNull()
 
     Row(Modifier.fillMaxWidth().background(Color.White)) {
         FirstTableDataCell(text = data.first.toString())
 
-        uniqueDates.forEachIndexed { index, _ ->
-            (if (index == data.first) data.second else "")?.let { TableDataCell(text = data.second ?: "-") }
+        uniqueDates.forEach { date ->
+            val matchingEntry = hoursData.find { it.first == date && it.third == data.first }
+            val matchingHour = matchingEntry?.second ?: "-"
+            TableDataCell(text = matchingHour)
         }
     }
 }
@@ -65,9 +67,11 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
     val dates = laborCosts.map { it?.createdAt?.toDate() }
     val labors = laborCosts.map {
         Pair(it?.taskId ?: -1, it?.hoursSpent ?: "-")
-    }.sortedBy { it.first }
+    }.sortedBy { it.first }.distinct()
     val uniqueDates = dates.distinct().filterNotNull()
-
+    val hoursData = laborCosts.map {
+        Triple(it?.createdAt?.toDate(), it?.hoursSpent ?: "-", it?.taskId)
+    }
     Box(
         modifier = Modifier
             .padding(horizontal = 14.dp)
@@ -78,17 +82,17 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
         LazyRow(
             Modifier
                 .fillMaxSize()
-                .clip(shape = if(uniqueDates.size > 3) RoundedCornerShape(15.dp) else RoundedCornerShape(15.dp, 0.dp, 0.dp, 15.dp)),
+                .clip(shape = if(uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(15.dp, 0.dp, 0.dp, 15.dp)),
         ) {
             item {
                 LazyColumn(
                     Modifier
                         .fillMaxSize()
-                        .clip(shape = if(uniqueDates.size > 3) RoundedCornerShape(15.dp) else RoundedCornerShape(15.dp, 0.dp, 0.dp, 15.dp))
+                        .clip(shape = if(uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(15.dp, 0.dp, 0.dp, 15.dp))
                 ) {
                     item { TableHeader(dates) }
                     itemsIndexed(labors) { _, rowData ->
-                        TableRow(rowData, dates)
+                        TableRow(rowData, dates, hoursData)
                     }
                 }
             }
