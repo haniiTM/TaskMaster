@@ -45,5 +45,9 @@ sealed class NavigationItem(
             return "attachmentsList/$id/$title"
         }
     }
-    data object CalculationOfLaborCosts : NavigationItem("CalculationOfLaborCosts", "R.string.title_auth", null)
+    data object CalculationOfLaborCosts : NavigationItem("CalculationOfLaborCosts/{$PROJECT_TASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null){
+        fun passIdAndTitle(id: Int, title: String): String {
+            return "CalculationOfLaborCosts/$id/$title"
+        }
+    }
 }
