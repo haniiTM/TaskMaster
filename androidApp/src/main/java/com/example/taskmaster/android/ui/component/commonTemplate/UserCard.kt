@@ -92,7 +92,7 @@ fun UserCard(
                         }
                         Icon(
                             painter = painterResource(id = getIconForRole(role)),
-                            contentDescription = "", tint = Color.Black, modifier = Modifier
+                            contentDescription = "role_icon", tint = Color.Black, modifier = Modifier
                                 .padding(start = paddingValue.dp)
                                 .size(25.dp)
                         )
@@ -122,7 +122,7 @@ fun UserCard(
                         Log.d("expanded", expanded.toString())
                         Icon(
                             painter = painterResource(id = R.drawable.more),
-                            contentDescription = "",
+                            contentDescription = "menu_icon",
                             tint = Color.Black
                         )
                         DropdownMenu(
@@ -140,7 +140,7 @@ fun UserCard(
                                 trailingIcon = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.delete_icon),
-                                        contentDescription = "",
+                                        contentDescription = "delete_icon",
                                         tint = Color.Red
                                     )
                                 }

@@ -53,7 +53,7 @@ fun CalculationOfLaborCostsScreen(navController: NavController, result: Int?, ti
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 painter = painterResource(id = R.drawable.download_icon),
-                contentDescription = "",
+                contentDescription = "download_icon",
                 tint = Color.Black
             )
         }
