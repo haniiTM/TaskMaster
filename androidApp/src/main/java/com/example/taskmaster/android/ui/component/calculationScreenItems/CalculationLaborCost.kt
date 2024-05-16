@@ -33,7 +33,7 @@ import java.util.Locale
 
 @Composable
 fun TableHeader(dates: List<Date?>) {
-    val uniqueDates = dates.distinct().filterNotNull()
+    val uniqueDates = dates.distinct().filterNotNull().sorted()
 
     Row(Modifier.background(Color.LightGray)) {
         TableHeaderCell(text = "Задача/Дата")
@@ -44,7 +44,7 @@ fun TableHeader(dates: List<Date?>) {
 }
 @Composable
 fun TableRow(data: Pair<Int?, String?>, dates: List<Date?>, hoursData: List<Triple<Date?, String?, Int?>>) {
-    val uniqueDates = dates.distinct().filterNotNull()
+    val uniqueDates = dates.distinct().filterNotNull().sorted()
 
     Row(Modifier.fillMaxWidth().background(Color.White)) {
         FirstTableDataCell(text = data.first.toString())
@@ -68,7 +68,7 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
     val labors = laborCosts.map {
         Pair(it?.taskId ?: -1, it?.hoursSpent ?: "-")
     }.sortedBy { it.first }.distinct()
-    val uniqueDates = dates.distinct().filterNotNull()
+    val uniqueDates = dates.distinct().filterNotNull().sorted()
     val hoursData = laborCosts.map {
         Triple(it?.createdAt?.toDate(), it?.hoursSpent ?: "-", it?.taskId)
     }
