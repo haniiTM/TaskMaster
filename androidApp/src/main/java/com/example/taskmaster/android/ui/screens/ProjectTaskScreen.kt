@@ -31,7 +31,7 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                CalculationTimeButton()
+                CalculationTimeButton(projectId = id, navController = navController, title = title)
             }
 
             item {

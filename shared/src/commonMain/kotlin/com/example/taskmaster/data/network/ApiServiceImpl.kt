@@ -2,9 +2,11 @@ package com.example.taskmaster.data.network
 
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
+import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.Dependence
 import com.example.taskmaster.data.network.models.DescriptionDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import com.example.taskmaster.data.network.models.ManHoursReportDTO
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
@@ -762,6 +764,58 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             return success
+        }
+    }
+
+    override suspend fun fetchCalenderPlan(projectId: Int): MutableList<CalendarPlan?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/calendar_plan/${projectId}")
+            if (response.status.isSuccess()) {
+                val calendarPlan = response.body<MutableList<CalendarPlan?>>()
+                println("Server returned calendarPlan: ${calendarPlan}")
+                calendarPlan
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
+        }
+    }
+
+    override suspend fun fetchReportManHours(projectId: Int): MutableList<ManHoursReportDTO?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/manhours/report/${projectId}")
+            if (response.status.isSuccess()) {
+                val manHoursReportDTO = response.body<MutableList<ManHoursReportDTO?>>()
+                println("Server returned ManHoursReportDTO: ${manHoursReportDTO}")
+                manHoursReportDTO
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
         }
     }
 }

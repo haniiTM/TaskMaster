@@ -4,14 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.ApiService
+import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 
 class UserroleprojectViewModel constructor(private val apiService: ApiService) : ViewModel() {
+    // Привязка пользователя к проекту
     fun linkUserToTaskOrProject(urp: UserRoleProjectDTO, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
@@ -22,6 +21,7 @@ class UserroleprojectViewModel constructor(private val apiService: ApiService) :
         }
     }
 
+    // Смена кол-во часов, которые пользователь может выделять в день
     fun changeHoursSpent(urp: UserRoleProjectDTO, taskId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
@@ -31,4 +31,28 @@ class UserroleprojectViewModel constructor(private val apiService: ApiService) :
             }
         }
     }
+
+    private val _state = mutableStateOf(ItemStates())
+    val state: State<ItemStates> = _state
+
+    // Получение отчета по календарному плану за определенный проект
+    fun getCalendarPlan(projectId: Int) {
+        viewModelScope.launch {
+            try {
+                _state.value = state.value.copy(isLoading = true)
+                val data = apiService.fetchCalenderPlan(projectId)
+                _state.value = state.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _state.value = state.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    data class ItemStates (
+        val itemState: MutableList<CalendarPlan?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
 }

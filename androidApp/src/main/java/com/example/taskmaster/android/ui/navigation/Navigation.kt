@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.taskmaster.android.ui.screens.AttachmentsListScreen
-import com.example.taskmaster.android.ui.screens.CalculationOfLaborCosts
+import com.example.taskmaster.android.ui.screens.CalculationOfLaborCostsScreen
 import com.example.taskmaster.android.ui.screens.ProjectScreen
 import com.example.taskmaster.android.ui.screens.ProjectSubTaskScreen
 import com.example.taskmaster.android.ui.screens.ProjectTaskScreen
@@ -129,8 +129,19 @@ fun Navigation(navController: NavHostController) {
                 title = title
             )
         }
-        composable(route = NavigationItem.CalculationOfLaborCosts.route) {
-            CalculationOfLaborCosts(navController = navController)
+        composable(
+            route = NavigationItem.CalculationOfLaborCosts.route, arguments = listOf(navArgument(
+                PROJECT_TASK_ARGUMENT_KEY
+            ) {
+                type = NavType.IntType
+            },
+                navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
+                    type = NavType.StringType
+                })
+        ) { backStackEntry ->
+            val result = backStackEntry.arguments?.getInt(PROJECT_TASK_ARGUMENT_KEY)
+            val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
+            CalculationOfLaborCostsScreen(navController = navController, result = result, title = title)
         }
     }
 }

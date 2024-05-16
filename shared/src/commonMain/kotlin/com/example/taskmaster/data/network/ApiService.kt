@@ -1,9 +1,12 @@
 package com.example.taskmaster.data.network
 
+
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
+import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.DescriptionDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import com.example.taskmaster.data.network.models.ManHoursReportDTO
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
@@ -51,5 +54,9 @@ interface ApiService {
     suspend fun fetchTaskForDependence(projId: Int, taskId: Int): MutableList<TaskDTO?>
     // Добавление зависимости
     suspend fun addDependenceForTask(taskDependent: Int, taskdependsOn: Int): Boolean
+    // Получение отчета календарного плана по опредленному проекту
+    suspend fun fetchCalenderPlan(projectId: Int): MutableList<CalendarPlan?>
+    // Получение отчета трудозатрат по опредленному проекту
+    suspend fun fetchReportManHours(projectId: Int): MutableList<ManHoursReportDTO?>
 }
 
