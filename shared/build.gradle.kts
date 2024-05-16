@@ -40,19 +40,19 @@ kotlin {
             linkerOpts("-lsqlite3")
         }
     }
-    
+
     sourceSets {
         commonMain.dependencies {
             // Ktor
-            implementation( "io.ktor:ktor-client-core:${ktor}")
+            implementation("io.ktor:ktor-client-core:${ktor}")
             implementation("io.ktor:ktor-serialization-kotlinx-json:${ktor}")
             implementation("io.ktor:ktor-client-content-negotiation:${ktor}")
             implementation("io.ktor:ktor-client-logging:${ktor}")
             implementation("io.ktor:ktor-client-serialization:${ktor}")
 
 
-            implementation( "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines}")
-            implementation( "org.jetbrains.kotlinx:kotlinx-serialization-json:${serialization}")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines}")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${serialization}")
 
             // SqlDelight
             implementation("app.cash.sqldelight:coroutines-extensions:${sqlDelight}")
@@ -60,11 +60,11 @@ kotlin {
             implementation("app.cash.sqldelight:primitive-adapters:${sqlDelight}")
 
             // Koin
-            implementation( "io.insert-koin:koin-core:${koin}")
+            implementation("io.insert-koin:koin-core:${koin}")
             implementation("io.insert-koin:koin-test:${koin}")
 
             // Russhwolf
-            implementation( "com.russhwolf:multiplatform-settings-no-arg:${multiplatformSettings}")
+            implementation("com.russhwolf:multiplatform-settings-no-arg:${multiplatformSettings}")
 
             //Logging
             implementation("io.github.aakira:napier:${napier}")
@@ -82,6 +82,7 @@ kotlin {
 //            implementation("app.cash.sqldelight:native-driver-iosx64:${sqlDelight}")
 //            implementation("app.cash.sqldelight:native-driver-iosarm64:${sqlDelight}")
 
+            implementation("io.ktor:ktor-client-darwin:${ktor}")
             implementation("app.cash.sqldelight:native-driver:${sqlDelight}")
         }
     }
