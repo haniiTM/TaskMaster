@@ -11,22 +11,12 @@ import SwiftUI
 struct ProjectListView: View {
     //    MARK: Props
     @StateObject private var viewModel = ProjectListViewModel()
-    @State private var projectList: [TaskInfo] = []
-    @State private var model = ProjectListModel()
-
-    //    MARK: Init
-    init() {
-//        viewModel.projectListSignal.bind { projectList in
-//            guard let projectList = projectList else { return }
-//            self.projectList = projectList
-//        }
-    }
 
     //    MARK: Body
     var body: some View {
         MainFrameView {
-            ForEach(viewModel.projectListSignal.value ?? .init()) { project in
-                NavigationLink(destination: TaskListView(.init())) {
+            ForEach(viewModel.projectList) { project in
+                NavigationLink(destination: TaskListView(project.title ?? "Emtpy name")) {
                     ProjectCardView(model: project)
                 }
                 .foregroundColor(.primary)
@@ -35,13 +25,16 @@ struct ProjectListView: View {
                     in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                 )
             }
-        }.onAppear { viewModel.updateDataSource() }
-            .navigationTitle("Все проекты")
-            .toolbar {
-                Button(action: {}) {
-                    Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
-                        .foregroundColor(.primary)
-                }
+        }
+        .task {
+            await viewModel.updateDataSource()
+        }
+        .navigationTitle("Все проекты")
+        .toolbar {
+            Button(action: {}) {
+                Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
+                    .foregroundColor(.primary)
             }
+        }
     }
 }

@@ -8,8 +8,14 @@
 
 import Foundation
 
-struct TaskInfo: Identifiable {
-    let id = UUID()
+protocol TaskInfoProtocol: Identifiable {
+    var id: UInt8 { get }
+    var title: String { get }
+    var timerValue: UInt8 { get }
+}
+
+struct TaskInfo: TaskInfoProtocol {
+    var id: UInt8 = .random(in: 1...99)
     var parentNumber: UInt8?
     var numberValue: UInt8?
     let title: String
