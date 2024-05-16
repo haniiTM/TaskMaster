@@ -10,21 +10,20 @@ import Foundation
 import shared
 
 @MainActor final class LoginScreenViewModel: ObservableObject {
+    //    MARK: Props
     private let accessTokenDtoUseCase = KoinHelper().getAccessTokenDtoUseCase()
-
     @Published var isTokenValid = false
-//    var openProjectsViewSignal: (() -> Void)?
 
+    //    MARK: Methods
     func loginUser(name: String, password: String) async {
         do {
             guard
-                let token = try await accessTokenDtoUseCase.fetchUserToken(login: name,
+                let tokenDto = try await accessTokenDtoUseCase.fetchUserToken(login: name,
                                                                               password: password),
-                let isTokenEmtpy = token.tokenLong
+                let token = tokenDto.tokenLong
             else { return }
 
-            //            !isTokenEmtpy.isEmpty ? print("Error") : openProjectsViewSignal?()
-            !isTokenEmtpy.isEmpty ? print("Error") : isTokenValid.toggle()
+            token.isEmpty ? print("Error: wrong login or password!") : isTokenValid.toggle()
 
         } catch {
             print(error.localizedDescription)

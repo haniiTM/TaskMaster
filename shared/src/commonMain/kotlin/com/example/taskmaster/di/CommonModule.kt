@@ -21,7 +21,6 @@ import org.koin.dsl.module
 
 val commonModule = module {
     single { Settings() }
-
     /**
      * Creates a http client for Ktor that is provided to the
      * API client via constructor injection
