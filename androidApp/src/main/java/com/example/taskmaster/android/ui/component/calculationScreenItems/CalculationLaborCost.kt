@@ -74,7 +74,7 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
     }
     Box(
         modifier = Modifier
-            .padding(horizontal = 14.dp)
+            .padding(horizontal = 14.dp, vertical = 26.dp)
             .height(200.dp)
             .fillMaxWidth()
             .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(15.dp))
