@@ -15,10 +15,10 @@ class LoginViewModel constructor(private val authRepository: AuthRepository) : V
 
     fun dataToken(login: String?, password: String?): LiveData<AccessTokenDto> {
         val resultLiveData = MutableLiveData<AccessTokenDto>()
-        if (login!= null && password!= null && login.isNotEmpty() && password.isNotEmpty()) {
+        if (login != null && password != null && login.isNotEmpty() && password.isNotEmpty()) {
             viewModelScope.launch {
                 val success = fetchUserToken(login, password)
-                if (success == null){
+                if (success == null) {
                     resultLiveData.postValue(AccessTokenDto(tokenLong = ""))
                 } else {
                     resultLiveData.postValue(success)

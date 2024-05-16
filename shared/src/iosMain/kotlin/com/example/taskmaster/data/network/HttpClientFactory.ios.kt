@@ -1,7 +1,8 @@
 package com.example.taskmaster.data.network
 
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.darwin.Darwin
 
 actual fun createPlatformHttpClient(): HttpClient {
-    TODO("Not yet implemented")
+    return HttpClient(Darwin)
 }
