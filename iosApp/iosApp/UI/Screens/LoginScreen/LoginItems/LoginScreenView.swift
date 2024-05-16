@@ -14,11 +14,6 @@ struct LoginScreenView: View {
     @StateObject private var viewModel = LoginScreenViewModel()
     @State private var loginTextFieldState = ""
     @State private var passwordTextFieldState = ""
-//    @State private var isNavigationAllowState = false
-
-//    init() {
-//        isNavigationAllowState = viewModel.isTokenValid
-//    }
 
     //    MARK: Body
     var body: some View {

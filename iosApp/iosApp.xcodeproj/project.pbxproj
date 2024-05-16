@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -93,6 +93,7 @@
 		28EA9D022BD5813B00B31497 /* TaskListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9D012BD5813B00B31497 /* TaskListViewModelProtocol.swift */; };
 		28EA9D042BD590C700B31497 /* SubTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9D032BD590C700B31497 /* SubTaskListView.swift */; };
 		A2E9582C95F18A8536F1E55A /* Pods_TaskMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */; };
+		CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,6 +187,7 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TaskMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC99261B95ABAE38EAD8C7A /* Pods-TaskMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaskMaster.release.xcconfig"; path = "Target Support Files/Pods-TaskMaster/Pods-TaskMaster.release.xcconfig"; sourceTree = "<group>"; };
+		CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -575,6 +577,7 @@
 				28EA9CF12BD5507C00B31497 /* ProjectListView.swift */,
 				28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */,
 				28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */,
+				CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */,
 			);
 			path = ProjectList;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 				28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */,
 				289BFD2F2BD18F5F00099EAE /* ActionButtonsConstants.swift in Sources */,
 				288455F02BD2E04D00DF64E5 /* ProjectCardController.swift in Sources */,
+				CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */,
 				2864E6BA2BD3B4F900504DE0 /* ProjectFrameView.swift in Sources */,
 				2864E6B52BD3B4BE00504DE0 /* MainFrameView.swift in Sources */,
 				288BA0BB2BD6352D000E3A82 /* SubTaskListModel.swift in Sources */,
