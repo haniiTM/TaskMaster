@@ -59,7 +59,7 @@ fun NotificationTemplate() {
             )
             Icon(
                 painter = painterResource(id = R.drawable.warning),
-                contentDescription = "",
+                contentDescription = "warning_icon",
                 tint = Color.Red
             )
         }

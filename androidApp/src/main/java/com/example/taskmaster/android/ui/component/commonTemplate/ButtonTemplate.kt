@@ -41,7 +41,7 @@ fun ButtonTemplate(navController: NavController, text: String, width: Int, iconI
                 Image(
                     modifier = Modifier.rotate(rotateAngle),
                     painter = painterResource(id = iconItem),
-                    contentDescription = "",
+                    contentDescription = "arrow_circle_right_icon",
                     alignment = Alignment.CenterEnd
                 )
             }
@@ -62,7 +62,7 @@ fun ButtonTemplate(navController: NavController, text: String, width: Int, iconI
                 Image(
                     modifier = Modifier.rotate(rotateAngle),
                     painter = painterResource(id = iconItem),
-                    contentDescription = "",
+                    contentDescription = "arrow_circle_right_icon",
                     alignment = Alignment.CenterEnd
                 )
             }

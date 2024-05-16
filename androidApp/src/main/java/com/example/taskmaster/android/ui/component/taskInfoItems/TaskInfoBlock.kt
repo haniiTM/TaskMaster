@@ -272,7 +272,7 @@ fun TaskInfoBlock(
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.clear_icon),
-                                contentDescription = "",
+                                contentDescription = "clear_icon",
                                 tint = Color.Black,
                                 modifier = Modifier.padding(0.dp)
                             )

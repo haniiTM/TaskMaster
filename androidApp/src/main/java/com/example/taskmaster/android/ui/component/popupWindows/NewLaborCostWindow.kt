@@ -151,7 +151,7 @@ fun NewLaborCostWindow(
                     }
                     Icon(
                         painter = painterResource(id = R.drawable.calendar_icon),
-                        contentDescription = "",
+                        contentDescription = "calendar_icon",
                         modifier = Modifier
                             .padding(end = 15.dp)
                             .clickable { mDatePickerDialog.show() },
@@ -197,7 +197,7 @@ fun NewLaborCostWindow(
                                 )
                                 Icon(
                                     painter = painterResource(id = R.drawable.arrow_circle_right_icon),
-                                    contentDescription = "",
+                                    contentDescription = "arrow_circle_right_icon",
                                     modifier = Modifier.rotate(90f),
                                     tint = Color.Black,
                                 )

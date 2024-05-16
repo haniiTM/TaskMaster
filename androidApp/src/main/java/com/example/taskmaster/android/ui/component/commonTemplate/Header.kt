@@ -80,7 +80,7 @@ fun Header(
         ) {
             Image(
                 painter = painterResource(id = iconItem),
-                contentDescription = "",
+                contentDescription = "menu_icon",
                 alignment = Alignment.CenterEnd
             )
             var showDialog by remember { mutableStateOf(false) }
@@ -120,7 +120,7 @@ fun Header(
                                                 item
                                             )]
                                         ),
-                                        contentDescription = "",
+                                        contentDescription = "action_icon",
                                         tint = if (isLastItem) iconColor else Color.Black
                                     )
                                 },
@@ -153,7 +153,7 @@ fun Header(
                                                 item
                                             )]
                                         ),
-                                        contentDescription = "",
+                                        contentDescription = "action_icon",
                                         tint = Color.Black
                                     )
                                 },

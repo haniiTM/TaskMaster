@@ -7,18 +7,44 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
+import org.koin.androidx.compose.getViewModel
+import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 
 @Composable
-fun CalculationTimeButton() {
+fun CalculationTimeButton(
+    navController: NavController,
+    projectId: Int?,
+    viewModelURP: UserroleprojectViewModel = getViewModel(),
+    manHoursViewModel: ManHoursViewModel = getViewModel(),
+    title: String?
+) {
+    // Тестрование получение ответа от сервера
+    if (projectId != null) {
+        LaunchedEffect(key1 = true) {
+            //viewModelURP.getCalendarPlan(projectId)
+            manHoursViewModel.getReportManHours(projectId)
+        }
+    }
+
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            navController.navigate(
+                NavigationItem.CalculationOfLaborCosts.passIdAndTitle(
+                    projectId!!.toInt(),
+                    title = title!!
+                )
+            )
+        },
         modifier = Modifier
-            .padding(start = 14.dp, end = 14.dp, bottom = 14.dp)
-                ,
+            .padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color.Black

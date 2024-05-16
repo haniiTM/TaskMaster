@@ -30,7 +30,7 @@ fun AuthScreen(navController: NavController) {
         Image(
             painter = painterResource(id = R.drawable.logo), modifier = Modifier
                 .height(138.dp)
-                .width(138.dp), contentDescription = ""
+                .width(138.dp), contentDescription = "company logo"
         )
         Spacer(modifier = Modifier.padding(bottom = 26.dp))
         AuthBlock(navController = navController)

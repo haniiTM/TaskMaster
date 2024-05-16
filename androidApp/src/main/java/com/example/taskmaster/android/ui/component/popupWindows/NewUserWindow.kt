@@ -160,7 +160,7 @@ fun NewUserWindow(
                                 )
                                 Icon(
                                     painter = painterResource(id = R.drawable.arrow_circle_right_icon),
-                                    contentDescription = "",
+                                    contentDescription = "arrow_circle_right_icon",
                                     modifier = Modifier.rotate(90f),
                                     tint = Color.Black
                                 )
@@ -212,7 +212,7 @@ fun NewUserWindow(
                                                         item
                                                     )]
                                                 ),
-                                                contentDescription = "",
+                                                contentDescription = "action_icon",
                                                 tint = Color.Black
                                             )
                                         },
