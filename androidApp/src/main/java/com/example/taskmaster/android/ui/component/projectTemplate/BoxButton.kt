@@ -1,5 +1,7 @@
 package com.example.taskmaster.android.ui.component.projectTemplate
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,16 +22,16 @@ import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.NewTaskWindow
 
 @Composable
-fun BoxButton(text: String, id: Int) {
-    var showDialog by remember { mutableStateOf(false) }
+fun BoxButton(text: String, cardContainerFlag: Boolean, onCLick: (() -> Unit)? = null) {
     Button(
-        onClick = { showDialog = true },
+        onClick = { onCLick?.invoke() },
         modifier = Modifier
             .padding(bottom = 14.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color.Black
-        )
+        ),
+        border = if(!cardContainerFlag) BorderStroke(1.dp, Color.Black) else BorderStroke(0.dp, Color.Transparent)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.add_icon),
@@ -39,10 +41,5 @@ fun BoxButton(text: String, id: Int) {
         Text(
             text = text, fontSize = 12.sp
         )
-    }
-    if (showDialog) {
-        Dialog(onDismissRequest = { showDialog = !showDialog }) {
-            NewTaskWindow(id = id, onDismissRequest = {showDialog = !showDialog})
-        }
     }
 }

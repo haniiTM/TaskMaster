@@ -21,6 +21,6 @@ fun TaskLaborCostListScreen(navController: NavController, id: Int?, title: Strin
             projectScreenKey = false,
             projectId = id
         )
-        ListItemList(taskId = id ?: 0)
+        ListItemList(taskId = id ?: 0, attachmentsListFlag = false)
     }
 }

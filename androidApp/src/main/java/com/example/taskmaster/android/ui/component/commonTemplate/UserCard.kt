@@ -90,19 +90,36 @@ fun UserCard(
                                 )
                             )
                         }
-                        Icon(
-                            painter = painterResource(id = getIconForRole(role)),
-                            contentDescription = "role_icon", tint = Color.Black, modifier = Modifier
-                                .padding(start = paddingValue.dp)
-                                .size(25.dp)
-                        )
-                        Text(
-                            text = item,
-                            modifier = Modifier
-                                .padding(start = 9.dp),
-                            overflow = TextOverflow.Ellipsis,
-                            color = Color.Black
-                        )
+                        if (!checkBoxAble) {
+                            Icon(
+                                painter = painterResource(id = getIconForRole(role)),
+                                contentDescription = "role_icon",
+                                tint = Color.Black,
+                                modifier = Modifier
+                                    .padding(start = paddingValue.dp)
+                                    .size(25.dp)
+                            )
+                        }
+                        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.padding(end = 10.dp).fillMaxWidth()) {
+                            Text(
+                                text = item,
+                                modifier = Modifier
+                                    .padding(start = 9.dp),
+                                overflow = TextOverflow.Ellipsis,
+                                color = Color.Black
+                            )
+                            if (checkBoxAble) {
+                                Icon(
+                                    painter = painterResource(id = getIconForRole(role)),
+                                    contentDescription = "role_icon",
+                                    tint = Color.Black,
+                                    modifier = Modifier
+                                        .padding(start = paddingValue.dp)
+                                        .size(25.dp)
+                                )
+                            }
+                        }
+
                     })
             }
             if (showNotification) {
@@ -171,7 +188,6 @@ fun DropdownMenuArea(
         ) {
 
         }
-
         DisposableEffect(localExpanded) {
             onDispose {
                 onExpandedChange(localExpanded)
@@ -190,17 +206,4 @@ fun getIconForRole(role: String?): Int {
         "Админ" -> R.drawable.administrator_role_icon
         else -> R.drawable.warning
     }
-}
-
-@Preview
-@Composable
-fun pr() {
-    UserCard(
-        checkBoxAble = false,
-        actionButton = true,
-        item = "1111",
-        isSelected = false,
-        onCheckChanged = {},
-        onDelete = {},
-    )
 }
