@@ -10,7 +10,7 @@ import Foundation
 import shared
 
 @MainActor final class LoginScreenViewModel: ObservableObject {
-    private let getAccessTokenDtoUseCase = GetAccessTokenDtoUseCase.init()
+    private let accessTokenDtoUseCase = KoinHelper().getAccessTokenDtoUseCase()
 
     @Published var isTokenValid = false
 //    var openProjectsViewSignal: (() -> Void)?
@@ -18,7 +18,7 @@ import shared
     func loginUser(name: String, password: String) async {
         do {
             guard
-                let token = try await getAccessTokenDtoUseCase.fetchUserToken(login: name, 
+                let token = try await accessTokenDtoUseCase.fetchUserToken(login: name,
                                                                               password: password),
                 let isTokenEmtpy = token.tokenLong
             else { return }

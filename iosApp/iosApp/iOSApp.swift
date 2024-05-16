@@ -4,14 +4,12 @@ import shared
 @main
 struct iOSApp: App {
     init() {
-        KoinHelperKt.doInitKoin()
+        AppModuleKt.doInitKoin()
     }
 
     var body: some Scene {
         WindowGroup {
-            //			MainFrameView {
             LoginScreenView()
-            //            }
         }
     }
 }
