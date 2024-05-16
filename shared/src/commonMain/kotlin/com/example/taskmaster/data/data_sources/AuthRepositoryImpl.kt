@@ -9,17 +9,15 @@ import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.domain.models.AccessToken
 import com.example.taskmaster.domain.repositories.AuthRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class AuthRepositoryImpl constructor(
     private val apiService: ApiService,
     private val accessTokenDao: AccessTokenDao
 ) : AuthRepository {
-
     override suspend fun fetchUserToken(login: String, password: String): AccessTokenDto? {
         val accessTokenDto = apiService.fetchUserToken(login, password)
-        if(accessTokenDto != null){
+        if (accessTokenDto != null) {
             val responseEntity = accessTokenDto?.toEntity()
             saveUserToken(accessToken = responseEntity!!)
         }
@@ -27,7 +25,7 @@ class AuthRepositoryImpl constructor(
     }
 
     override suspend fun getUserToken(): Flow<AccessToken?> {
-        return accessTokenDao.getToken.map { it?.toDomain()  }
+        return accessTokenDao.getToken.map { it?.toDomain() }
     }
 
     override suspend fun saveUserToken(accessToken: AccessTokenEntity) =
