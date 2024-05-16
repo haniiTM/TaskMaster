@@ -2,19 +2,10 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
-    id("app.cash.sqldelight")
-    kotlin("plugin.serialization")
-}
 
-val ktor = "2.2.3"
-val sqlDelight = "2.0.0-alpha05"
-val koin = "3.2.0"
-val multiplatformSettings = "0.8.1"
-val napier = "2.4.0"
-val kotlinxCoroutines = "1.6.0"
-val kotlinxSerialization = "1.2.2"
-val coroutines = "1.7.0"
-val serialization = "1.4.1"
+    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.sqlDelight)
+}
 
 kotlin {
     androidTarget {
@@ -37,62 +28,60 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = false
-            linkerOpts("-lsqlite3")
         }
     }
 
     sourceSets {
         commonMain.dependencies {
             // Ktor
-            implementation("io.ktor:ktor-client-core:${ktor}")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:${ktor}")
-            implementation("io.ktor:ktor-client-content-negotiation:${ktor}")
-            implementation("io.ktor:ktor-client-logging:${ktor}")
-            implementation("io.ktor:ktor-client-serialization:${ktor}")
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.serialization.kotlinx)
+            implementation(libs.ktor.negotiation)
+            implementation(libs.ktor.logging)
+            implementation(libs.ktor.serialization)
 
-
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines}")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${serialization}")
+            // KotlinX
+            implementation(libs.kotlinx.coroutines)
+            implementation(libs.kotlinx.serialization)
 
             // SqlDelight
-            implementation("app.cash.sqldelight:coroutines-extensions:${sqlDelight}")
-            implementation("app.cash.sqldelight:runtime:${sqlDelight}")
-            implementation("app.cash.sqldelight:primitive-adapters:${sqlDelight}")
+            implementation(libs.sqldelight.coroutines)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.adapters)
 
             // Koin
-            implementation("io.insert-koin:koin-core:${koin}")
-            implementation("io.insert-koin:koin-test:${koin}")
+            implementation(libs.koin.core)
+            implementation(libs.koin.test)
 
             // Russhwolf
-            implementation("com.russhwolf:multiplatform-settings-no-arg:${multiplatformSettings}")
+            implementation(libs.russhwolf)
 
             //Logging
-            implementation("io.github.aakira:napier:${napier}")
+            implementation(libs.napier)
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+
         androidMain.dependencies {
-            implementation("io.ktor:ktor-client-android:${ktor}")
-            implementation("io.ktor:ktor-client-okhttp:${ktor}")
-
-            implementation("app.cash.sqldelight:android-driver:${sqlDelight}")
+            implementation(libs.ktor.android)
+            implementation(libs.ktor.okhttp)
+            implementation(libs.sqldelight.android)
         }
-        iosMain.dependencies {
-//            implementation("app.cash.sqldelight:native-driver-iosx64:${sqlDelight}")
-//            implementation("app.cash.sqldelight:native-driver-iosarm64:${sqlDelight}")
 
-            implementation("io.ktor:ktor-client-darwin:${ktor}")
-            implementation("app.cash.sqldelight:native-driver:${sqlDelight}")
+        iosMain.dependencies {
+            implementation(libs.ktor.ios)
+            implementation(libs.sqldelight.ios)
         }
     }
 }
 
 android {
     namespace = "com.example.taskmaster"
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = 30
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
