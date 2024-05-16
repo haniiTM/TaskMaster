@@ -21,8 +21,8 @@
 
 /* Begin PBXBuildFile section */
 		46C7AC4BDCAF8D308BB97413DE2767C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		DF566B5DB39D734888F800C93493488F /* Pods-TaskMaster-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F39B1A34BE4496D51AF6EA36FB15CE2D /* Pods-TaskMaster-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EB5425E453465CDB2A069492DB8C7EF8 /* Pods-TaskMaster-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D12F88DA26BFD92E01A27887BF7AAD0A /* Pods-TaskMaster-dummy.m */; };
+		DF566B5DB39D734888F800C93493488F /* Pods-TaskMaster-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 75023953EFAE63F7505DBCB7710DDFD7 /* Pods-TaskMaster-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EB5425E453465CDB2A069492DB8C7EF8 /* Pods-TaskMaster-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3532474A570FF76D507D8C2DE2B4EC2A /* Pods-TaskMaster-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,20 +36,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3532474A570FF76D507D8C2DE2B4EC2A /* Pods-TaskMaster-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TaskMaster-dummy.m"; sourceTree = "<group>"; };
 		35548E3BD8DA30925E8FE97E67B84868 /* shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = shared.release.xcconfig; sourceTree = "<group>"; };
-		692B9EAF05EDA3E7F664CAA14AE0BA12 /* Pods-TaskMaster-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TaskMaster-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4B1B6A69B0301C05DF5226AA677E750D /* Pods-TaskMaster.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TaskMaster.modulemap"; sourceTree = "<group>"; };
+		61DACADAA87C90BBEE2C788CA9068186 /* Pods-TaskMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TaskMaster.release.xcconfig"; sourceTree = "<group>"; };
+		6BF86616048E296DFD985E37D9BEAC0C /* Pods-TaskMaster-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TaskMaster-Info.plist"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		73D4D08B8C9FAD17B10E8E5C0EB49A76 /* shared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared.framework; path = build/cocoapods/framework/shared.framework; sourceTree = "<group>"; };
-		74ABA9804C47C56417C5B7F24BB51CD3 /* Pods-TaskMaster.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TaskMaster.modulemap"; sourceTree = "<group>"; };
+		75023953EFAE63F7505DBCB7710DDFD7 /* Pods-TaskMaster-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TaskMaster-umbrella.h"; sourceTree = "<group>"; };
+		7C695969D76DD8451C061D310A4F5C25 /* Pods-TaskMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TaskMaster.debug.xcconfig"; sourceTree = "<group>"; };
 		95B09EA82E7AF9ACCCCAF3E55C859116 /* shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = shared.debug.xcconfig; sourceTree = "<group>"; };
-		98249AC823EA114ECD52F57537FEDF5D /* Pods-TaskMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TaskMaster.release.xcconfig"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A5B5B5A4D2ABF93647E9696921ACE614 /* Pods-TaskMaster */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-TaskMaster"; path = Pods_TaskMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEC08579EEBAC96DF35FE004AF3FAAAF /* Pods-TaskMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-TaskMaster.debug.xcconfig"; sourceTree = "<group>"; };
-		CC46BD6152C3EAA2B11C5715C7D54FF4 /* Pods-TaskMaster-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TaskMaster-Info.plist"; sourceTree = "<group>"; };
-		D12F88DA26BFD92E01A27887BF7AAD0A /* Pods-TaskMaster-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-TaskMaster-dummy.m"; sourceTree = "<group>"; };
-		F20F7511F15FF8DAA260DB99C32E2F4C /* Pods-TaskMaster-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TaskMaster-acknowledgements.plist"; sourceTree = "<group>"; };
-		F39B1A34BE4496D51AF6EA36FB15CE2D /* Pods-TaskMaster-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TaskMaster-umbrella.h"; sourceTree = "<group>"; };
+		BBB299AA968DF5CD651B72D48A266B7B /* Pods-TaskMaster-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-TaskMaster-frameworks.sh"; sourceTree = "<group>"; };
+		DA1CB8585ADAC0CF3DECD87BA0AC8C1D /* Pods-TaskMaster-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-TaskMaster-acknowledgements.markdown"; sourceTree = "<group>"; };
+		E07F913E1FE3547E448F7C387E3C7E63 /* Pods-TaskMaster-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TaskMaster-acknowledgements.plist"; sourceTree = "<group>"; };
 		FB1BF8BE937671FB0F330C2D28634477 /* shared.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = shared.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
@@ -65,12 +66,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0316AA5E2C467613CF19CF71A4A40DD6 /* Targets Support Files */ = {
+		049F13348C7C13594A02CC8F6B5DC2A5 /* Pods-TaskMaster */ = {
 			isa = PBXGroup;
 			children = (
-				FB8544B332C9EEDEC468A1DA55834758 /* Pods-TaskMaster */,
+				4B1B6A69B0301C05DF5226AA677E750D /* Pods-TaskMaster.modulemap */,
+				DA1CB8585ADAC0CF3DECD87BA0AC8C1D /* Pods-TaskMaster-acknowledgements.markdown */,
+				E07F913E1FE3547E448F7C387E3C7E63 /* Pods-TaskMaster-acknowledgements.plist */,
+				3532474A570FF76D507D8C2DE2B4EC2A /* Pods-TaskMaster-dummy.m */,
+				BBB299AA968DF5CD651B72D48A266B7B /* Pods-TaskMaster-frameworks.sh */,
+				6BF86616048E296DFD985E37D9BEAC0C /* Pods-TaskMaster-Info.plist */,
+				75023953EFAE63F7505DBCB7710DDFD7 /* Pods-TaskMaster-umbrella.h */,
+				7C695969D76DD8451C061D310A4F5C25 /* Pods-TaskMaster.debug.xcconfig */,
+				61DACADAA87C90BBEE2C788CA9068186 /* Pods-TaskMaster.release.xcconfig */,
 			);
-			name = "Targets Support Files";
+			name = "Pods-TaskMaster";
+			path = "Target Support Files/Pods-TaskMaster";
 			sourceTree = "<group>";
 		};
 		313FE5FE915A4A924C55AAC02A910D61 /* Development Pods */ = {
@@ -123,6 +133,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A0CD5AA80A9C79F08F913DBF957E4CF4 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				049F13348C7C13594A02CC8F6B5DC2A5 /* Pods-TaskMaster */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
@@ -130,7 +148,7 @@
 				313FE5FE915A4A924C55AAC02A910D61 /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				43B17913F6C6BB25873820C986141EAE /* Products */,
-				0316AA5E2C467613CF19CF71A4A40DD6 /* Targets Support Files */,
+				A0CD5AA80A9C79F08F913DBF957E4CF4 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,22 +169,6 @@
 			);
 			name = shared;
 			path = ../../shared;
-			sourceTree = "<group>";
-		};
-		FB8544B332C9EEDEC468A1DA55834758 /* Pods-TaskMaster */ = {
-			isa = PBXGroup;
-			children = (
-				74ABA9804C47C56417C5B7F24BB51CD3 /* Pods-TaskMaster.modulemap */,
-				692B9EAF05EDA3E7F664CAA14AE0BA12 /* Pods-TaskMaster-acknowledgements.markdown */,
-				F20F7511F15FF8DAA260DB99C32E2F4C /* Pods-TaskMaster-acknowledgements.plist */,
-				D12F88DA26BFD92E01A27887BF7AAD0A /* Pods-TaskMaster-dummy.m */,
-				CC46BD6152C3EAA2B11C5715C7D54FF4 /* Pods-TaskMaster-Info.plist */,
-				F39B1A34BE4496D51AF6EA36FB15CE2D /* Pods-TaskMaster-umbrella.h */,
-				AEC08579EEBAC96DF35FE004AF3FAAAF /* Pods-TaskMaster.debug.xcconfig */,
-				98249AC823EA114ECD52F57537FEDF5D /* Pods-TaskMaster.release.xcconfig */,
-			);
-			name = "Pods-TaskMaster";
-			path = "Target Support Files/Pods-TaskMaster";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,7 +278,7 @@
 /* Begin XCBuildConfiguration section */
 		0D313627F638B95FB3F85FA423C00D2D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AEC08579EEBAC96DF35FE004AF3FAAAF /* Pods-TaskMaster.debug.xcconfig */;
+			baseConfigurationReference = 7C695969D76DD8451C061D310A4F5C25 /* Pods-TaskMaster.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -331,7 +333,7 @@
 		};
 		306663FC42B1A8BAB7B9907BD02C93DE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98249AC823EA114ECD52F57537FEDF5D /* Pods-TaskMaster.release.xcconfig */;
+			baseConfigurationReference = 61DACADAA87C90BBEE2C788CA9068186 /* Pods-TaskMaster.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;

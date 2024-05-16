@@ -1,4 +1,4 @@
-package com.example.taskmaster.utils
+package com.example.taskmaster.domain.utils
 
 import com.example.taskmaster.di.commonModule
 import org.koin.core.context.startKoin

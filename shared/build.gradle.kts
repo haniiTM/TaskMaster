@@ -36,7 +36,8 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "shared"
-            isStatic = true
+            isStatic = false
+            linkerOpts("-lsqlite3")
         }
     }
     
@@ -76,6 +77,12 @@ kotlin {
             implementation("io.ktor:ktor-client-okhttp:${ktor}")
 
             implementation("app.cash.sqldelight:android-driver:${sqlDelight}")
+        }
+        iosMain.dependencies {
+//            implementation("app.cash.sqldelight:native-driver-iosx64:${sqlDelight}")
+//            implementation("app.cash.sqldelight:native-driver-iosarm64:${sqlDelight}")
+
+            implementation("app.cash.sqldelight:native-driver:${sqlDelight}")
         }
     }
 }
