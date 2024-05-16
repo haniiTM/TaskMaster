@@ -7,12 +7,18 @@
 //
 
 import SwiftUI
+import shared
 
 struct LoginScreenView: View {
     //    MARK: Props
-    private let viewModel: LoginScreenViewModelProtocol = LoginScreenViewModel()
+    @StateObject private var viewModel = LoginScreenViewModel()
     @State private var loginTextFieldState = ""
     @State private var passwordTextFieldState = ""
+//    @State private var isNavigationAllowState = false
+
+//    init() {
+//        isNavigationAllowState = viewModel.isTokenValid
+//    }
 
     //    MARK: Body
     var body: some View {
@@ -49,23 +55,24 @@ struct LoginScreenView: View {
         Group {
             TextFieldsBody
 
-            NavigationLink(destination: ProjectListView()) {
-                Text(LoginScreenConstants.Strings.loginButtonTitle)
-                    .foregroundColor(.primary)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .padding(.horizontal)
-            }
+            NavigationLink(destination: ProjectListView(), isActive: $viewModel.isTokenValid) {
+                Button(
+                    action: {
+                        Task {
+                            await viewModel.loginUser(name: loginTextFieldState,
+                                                      password: passwordTextFieldState)
+                        }
+                    },
 
-            //            Button(
-            //                action: { viewModel.loginUser(name: loginTextFieldState,
-            //                                              password: passwordTextFieldState) }
-            //            ) {
-            //                Text(LoginScreenConstants.Strings.loginButtonTitle)
-            //                    .frame(maxWidth: .infinity)
-            //                    .padding()
-            //                    .padding(.horizontal)
-            //            }
+                    label: {
+                        Text(LoginScreenConstants.Strings.loginButtonTitle)
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .padding(.horizontal)
+                    }
+                )
+            }
         }
         .font(.subheadline)
         .background(

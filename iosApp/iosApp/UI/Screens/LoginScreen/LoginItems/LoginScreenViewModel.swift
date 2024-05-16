@@ -7,19 +7,26 @@
 //
 
 import Foundation
+import shared
 
-struct LoginScreenViewModel: LoginScreenViewModelProtocol {
+@MainActor final class LoginScreenViewModel: ObservableObject {
     //    MARK: Props
-    private let model = LoginScreenModel()
-//    private let router:
+    private let accessTokenDtoUseCase = KoinHelper().getAccessTokenDtoUseCase()
+    @Published var isTokenValid = false
 
     //    MARK: Methods
-    func loginUser(name: String, password: String) {
+    func loginUser(name: String, password: String) async {
         do {
-            try model.loginUser(name: name, password: password)
-//            router.openProjectListView()
-        } catch let error {
-//            router.showLoginAlert()
+            guard
+                let tokenDto = try await accessTokenDtoUseCase.fetchUserToken(login: name,
+                                                                              password: password),
+                let token = tokenDto.tokenLong
+            else { return }
+
+            token.isEmpty ? print("Error: wrong login or password!") : isTokenValid.toggle()
+
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
