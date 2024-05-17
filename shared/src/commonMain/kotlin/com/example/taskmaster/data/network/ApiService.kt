@@ -12,7 +12,6 @@ import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
 import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
-import com.example.taskmaster.data.network.models.TaskDependenceOn
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 
@@ -59,7 +58,11 @@ interface ApiService {
     suspend fun fetchCalenderPlan(projectId: Int): MutableList<CalendarPlan?>
     // Получение отчета трудозатрат по опредленному проекту
     suspend fun fetchReportManHours(projectId: Int): MutableList<ManHoursReportDTO?>
+    // Получение отчета по календарному плану
+    suspend fun downloadFile(projectId: Int): String?
     // Удаление зависимости
     suspend fun deleteDependence(dependenceOn: Int): Boolean
+    // Получение отчета по трудозатратам
+    suspend fun downloadFileForManHours(projectId: Int): String?
 }
 

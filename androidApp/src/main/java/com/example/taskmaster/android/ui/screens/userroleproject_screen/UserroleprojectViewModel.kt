@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.screens.userroleproject_screen
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import kotlinx.coroutines.launch
+import java.io.File
 
 class UserroleprojectViewModel constructor(private val apiService: ApiService) : ViewModel() {
     // Привязка пользователя к проекту
@@ -53,6 +55,29 @@ class UserroleprojectViewModel constructor(private val apiService: ApiService) :
 
     data class ItemStates (
         val itemState: MutableList<CalendarPlan?> = mutableListOf(),
+        val isLoading: Boolean = false
+    )
+
+    private val _stateFile = mutableStateOf(ItemStatesFile())
+    val stateFile: State<ItemStatesFile> = _stateFile
+
+    fun fetchFile(projectId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateFile.value = stateFile.value.copy(isLoading = true)
+                val data = apiService.downloadFile(projectId)
+                _stateFile.value = stateFile.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateFile.value = stateFile.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    data class ItemStatesFile (
+        val itemState:  String? = null,
         val isLoading: Boolean = false
     )
 }
