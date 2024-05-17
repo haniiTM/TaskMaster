@@ -16,7 +16,6 @@ import shared
 
     //    MARK: Methods
     func updateDataSource() async {
-        //        Task {
         do {
             guard
                 let taskList = try await projectListUseCase.getProjectList() as? [TaskDTO?]
@@ -38,6 +37,5 @@ import shared
         } catch {
             print(error.localizedDescription)
         }
-        //        }
     }
 }

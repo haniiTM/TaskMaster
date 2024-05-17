@@ -13,16 +13,14 @@ struct TaskListView: View {
     @StateObject private var viewModel = TaskListViewModel()
     @State private var unCompletedTaskList: [TaskInfo] = []
     @State private var completedTaskList: [TaskInfo] = []
+
+    private let id: UInt8
     private let title: String
 
     //    MARK: Init
-    init(_ title: String) {
-        self.title = title
-        //        viewModel.projectListSignal.bind { projectList in
-        //            guard let projectList = projectList else { return }
-        //            self.projectList = projectList
-        //        }
-
+    init(_ model: TaskInfo) {
+        id = model.id
+        title = model.title
     }
 
     //    MARK: Body
