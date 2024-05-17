@@ -16,7 +16,6 @@ struct TaskInfoListView: View {
     private let participantTitle: String
     private let participantAvatar: String
 
-    private let isUrgent: Bool
     private let hoursDaysSpentTitle: String
     private let urgentImageName: String
     private let hoursDaysSpentValue: String
@@ -38,10 +37,9 @@ struct TaskInfoListView: View {
         taskTitle = model.title
 
         participantTitle = TaskCardsConstants.Strings.Titles.participiantsTitle +
-        (model.participiantsValue?.description ?? TaskCardsConstants.Strings.EmptyTitles.emptyStringTitle)
+        (model.participiantsValue.description)
         participantAvatar = "person.crop.circle"
 
-        isUrgent = model.isUrgent
         hoursDaysSpentTitle = "Затрачиваемые часы / день"
         urgentImageName = TaskCardsConstants.Strings.ImageNames.urgentImageName
         hoursDaysSpentValue = "2:00"
@@ -80,11 +78,7 @@ struct TaskInfoListView: View {
                 ImageRow(participantTitle, participantAvatar)
                 Divider()
 
-                if isUrgent{
-                    ImageRow(hoursDaysSpentTitle, urgentImageName)
-                } else {
-                    TextRow(hoursDaysSpentTitle, hoursDaysSpentValue)
-                }
+                TextRow(hoursDaysSpentTitle, hoursDaysSpentValue)
                 Divider()
 
                 TextRow(timeEstimationTitle, timeEstimationValue)
@@ -97,7 +91,7 @@ struct TaskInfoListView: View {
                 Divider()
 
                 NavigationLink(destination: LaborCostListView("")) {
-//                    Button(laborCostTitle) {}
+                    //                    Button(laborCostTitle) {}
                     Text(laborCostTitle)
                 }.foregroundColor(.primary)
             }.padding(.bottom, 8)

@@ -8,10 +8,10 @@
 
 final class TaskCardController: TaskCardControllerProtocol {
     //    MARK: Props
-    let model: TaskInfo
+    let model: any TaskInfoProtocol
 
     //    MARK: Init
-    required init(model: TaskInfo) {
+    required init(model: any TaskInfoProtocol) {
         self.model = model
     }
 

@@ -6,27 +6,36 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-import Foundation
+import shared
 
-final class TaskListViewModel: TaskListViewModelProtocol, ObservableObject {
+@MainActor final class TaskListViewModel: ObservableObject {
     //    MARK: Props
-    @Published var unCompletedTaskListSignal: Box<[TaskInfo]?> = .init(nil)
-    @Published var completedTaskListSignal: Box<[TaskInfo]?> = .init(nil)
-    private var model = TaskListModel()
+    private let taskListUseCase = KoinHelper().getTaskListUseCase()
+    @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()
+    @Published private(set) var completedTaskListSignal = [TaskInfo]()
 
     //    MARK: Methods
-    func updateDataSource() {
-        unCompletedTaskListSignal.value = model.uncompletedTaskList
-        completedTaskListSignal.value = model.completedTaskList
+    func updateDataSource(_ id: UInt8) async {
+        do {
+            guard
+                let optionalUnCompletedTaskList = try await taskListUseCase.getUncompletedTaskList(idProj: id) as? [TaskDTO?],
+                let optionalCompletedTaskList = try await taskListUseCase.getCompletedTaskList(idProj: id) as? [TaskDTO?]
+            else { return }
+
+            unCompletedTaskListSignal = optionalUnCompletedTaskList.decodedDtoList()
+            completedTaskListSignal = optionalCompletedTaskList.decodedDtoList()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
     func addUncompletedTask() {
-        model.addUncompletedTask()
-        updateDataSource()
+
+        //        updateDataSource()
     }
 
     func addCompletedTask() {
-        model.addCompletedTask()
-        updateDataSource()
+
+        //        updateDataSource()
     }
 }
