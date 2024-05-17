@@ -26,7 +26,6 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import io.ktor.client.statement.readText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
@@ -817,5 +816,20 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Error: ${e.message}")
             mutableListOf()
         }
+    }
+
+    override suspend fun downloadFile(projectId: Int): String? {
+        var name: String? = null
+
+        try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/excel/$projectId")
+            if (response.status.isSuccess()) {
+                name = "calendar_plan_$projectId.xlsx"
+                return name
+            }
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+        return name
     }
 }

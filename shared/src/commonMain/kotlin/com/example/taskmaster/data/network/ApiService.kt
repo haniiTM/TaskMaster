@@ -58,5 +58,6 @@ interface ApiService {
     suspend fun fetchCalenderPlan(projectId: Int): MutableList<CalendarPlan?>
     // Получение отчета трудозатрат по опредленному проекту
     suspend fun fetchReportManHours(projectId: Int): MutableList<ManHoursReportDTO?>
+    suspend fun downloadFile(projectId: Int): String?
 }
 

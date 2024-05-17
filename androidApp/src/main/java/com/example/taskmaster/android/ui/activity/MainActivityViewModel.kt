@@ -26,11 +26,6 @@ class MainActivityViewModel constructor(private val authRepository: AuthReposito
     private fun getUserToken() {
         viewModelScope.launch {
             try {
-                val tok = authRepository.fetchUserToken("admin", "admin123")
-                Napier.e("tok: ${tok}")
-
-
-
                 val response = authRepository.getUserToken()
                 response.collectLatest {
                     _tokenLong.value = it
