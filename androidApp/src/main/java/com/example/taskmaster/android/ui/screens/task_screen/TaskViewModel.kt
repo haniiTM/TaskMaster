@@ -225,4 +225,15 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
             }
         }
     }
+
+    // Удаление зависимости
+    fun removeDependence(dependenceOn: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.deleteDependence(dependenceOn))
+            } catch(e: Exception) {
+                println("Exception in link user to task or project $e")
+            }
+        }
+    }
 }

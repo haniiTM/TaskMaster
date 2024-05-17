@@ -87,6 +87,7 @@ fun TaskInfoScreen(
                     canAddManHours = itemTaskState?.canAddManHours,
                     projectId = itemTaskState?.projectId ?: 0,
                     triggerRefresh = triggerRefresh,
+                    taskIdDependenceOn = itemTaskState?.taskDependenceOn?.id,
                     taskDependenceOn = itemTaskState?.taskDependenceOn?.name ?: "",
                     haveNotChild = itemTaskState?.haveNotChild ?: false,
                 )
