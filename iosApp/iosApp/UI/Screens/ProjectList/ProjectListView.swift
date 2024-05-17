@@ -16,7 +16,7 @@ struct ProjectListView: View {
     var body: some View {
         MainFrameView {
             ForEach(viewModel.projectList) { project in
-                NavigationLink(destination: TaskListView(project.title ?? "Emtpy name")) {
+                NavigationLink(destination: TaskListView(project)) {
                     ProjectCardView(model: project)
                 }
                 .foregroundColor(.primary)

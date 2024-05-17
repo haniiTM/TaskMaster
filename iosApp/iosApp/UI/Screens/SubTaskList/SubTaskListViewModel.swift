@@ -6,15 +6,26 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-import Foundation
+import shared
 
-final class SubTaskListViewModel: SubTaskListViewModelProtocol, ObservableObject {
+@MainActor final class SubTaskListViewModel: ObservableObject {
     //    MARK: Props
-    var subTaskListSignal: Box<[TaskInfo]?> = .init(nil)
-    private let model = SubTaskListModel()
+    private let subTaskListUseCase = KoinHelper().getTaskListUseCase()
+    @Published private(set) var unCompletedSubTaskListSignal = [TaskInfo]()
+    @Published private(set) var completedSubTaskListSignal = [TaskInfo]()
 
     //    MARK: Methods
-    func updateDataSource() {
-        subTaskListSignal.value = model.subTaskList
+    func updateDataSource(_ id: UInt8) async {
+        do {
+            guard
+                let optionalUnCompletedSubTaskList = try await subTaskListUseCase.getUncompletedTaskList(idProj: id) as? [TaskDTO?],
+                let optionalCompletedSubTaskList = try await subTaskListUseCase.getCompletedTaskList(idProj: id) as? [TaskDTO?]
+            else { return }
+
+            unCompletedSubTaskListSignal = optionalUnCompletedSubTaskList.decodedDtoList()
+            completedSubTaskListSignal = optionalCompletedSubTaskList.decodedDtoList()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

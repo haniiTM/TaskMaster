@@ -10,11 +10,13 @@ import SwiftUI
 
 struct EstimationCalendarView: View {
     //    MARK: Props
+    private let projectId: UInt8
     private let projectTitle: String
 
     //    MARK: Init
-    init(_ projectTitle: String) {
-        self.projectTitle = projectTitle
+    init(_ model: ProjectInfo) {
+        projectId = model.id
+        projectTitle = model.title
     }
 
     //    MARK: Body

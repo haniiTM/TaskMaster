@@ -13,7 +13,7 @@ struct ProjectCardView: View {
     private let controller: ProjectCardControllerProtocol
 
     //    MARK: Init
-    init(model: TaskInfo) {
+    init(model: ProjectInfo) {
         controller = ProjectCardController(model: model)
     }
 
@@ -34,9 +34,9 @@ struct ProjectCardView: View {
 
             Spacer()
 
-            if controller.isUrgent {
-                Image(systemName: controller.urgentImageName)
-            }
+//            if controller.isUrgent {
+//                Image(systemName: controller.urgentImageName)
+//            }
         }
 
         Text(controller.participiantsTitle)

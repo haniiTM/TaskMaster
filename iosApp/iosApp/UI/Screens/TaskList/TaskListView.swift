@@ -11,30 +11,23 @@ import SwiftUI
 struct TaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskListViewModel()
-    @State private var unCompletedTaskList: [TaskInfo] = []
-    @State private var completedTaskList: [TaskInfo] = []
-    private let title: String
+    private let model: ProjectInfo
 
     //    MARK: Init
-    init(_ title: String) {
-        self.title = title
-        //        viewModel.projectListSignal.bind { projectList in
-        //            guard let projectList = projectList else { return }
-        //            self.projectList = projectList
-        //        }
-
+    init(_ model: ProjectInfo) {
+        self.model = model
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(title) {
-            NavigationLink(destination: EstimationCalendarView("")) {
+        ProjectFrameView(model.title) {
+            NavigationLink(destination: EstimationCalendarView(model)) {
                 EstimatesScreenInfoButton()
             }.foregroundColor(.primary)
 
             TaskSectionBG {
-                ForEach(unCompletedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView("")) {
+                ForEach(viewModel.unCompletedTaskListSignal) { task in
+                    NavigationLink(destination: SubTaskListView(model.title, model: task)) {
                         TaskCardView(model: task)
                     }.foregroundColor(.primary)
                 }
@@ -47,33 +40,17 @@ struct TaskListView: View {
             }
 
             CompletedTaskSectionBG {
-                ForEach(completedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView("")) {
+                ForEach(viewModel.completedTaskListSignal) { task in
+                    NavigationLink(destination: SubTaskListView(model.title, model: task)) {
                         TaskCardView(model: task)
                     }.foregroundColor(.primary)
                 }
-
-                TaskCreationButton()
-                    .foregroundColor(.primary)
-                    .onTapGesture {
-                        viewModel.addCompletedTask()
-                    }
             }
         }
-        .onAppear {
-            viewModel.unCompletedTaskListSignal.bind { taskList in
-                guard let taskList = taskList else { return }
-                unCompletedTaskList = taskList
-            }
-
-            viewModel.completedTaskListSignal.bind { taskList in
-                guard let taskList = taskList else { return }
-                completedTaskList = taskList
-            }
-
-            viewModel.updateDataSource()
+        .task {
+            await viewModel.updateDataSource(model.id)
         }
-        .navigationTitle("Сайт Nissan")
+        .navigationTitle(model.title)
         .toolbar {
             Button(action: {}) {
                 Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
