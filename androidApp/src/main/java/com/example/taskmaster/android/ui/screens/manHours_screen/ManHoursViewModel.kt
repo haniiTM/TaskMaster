@@ -71,4 +71,27 @@ class ManHoursViewModel constructor( private val apiService: ApiService) : ViewM
         val itemState: MutableList<ManHoursReportDTO?> = mutableListOf(),
         val isLoading: Boolean = false
     )
+
+    private val _stateFileManHours = mutableStateOf(ItemStatesFile())
+    val stateFileManHours: State<ItemStatesFile> = _stateFileManHours
+
+    fun fetchFileForManHours(projectId: Int) {
+        viewModelScope.launch {
+            try {
+                _stateFileManHours.value = stateFileManHours.value.copy(isLoading = true)
+                val data = apiService.downloadFileForManHours(projectId)
+                _stateFileManHours.value = stateFileManHours.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateFileManHours.value = stateFileManHours.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    data class ItemStatesFile (
+        val itemState:  String? = null,
+        val isLoading: Boolean = false
+    )
 }

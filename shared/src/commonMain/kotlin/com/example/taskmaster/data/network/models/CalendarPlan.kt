@@ -4,7 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CalendarPlan(
+    val taskId: Int,
     val nameTask: String,
-    val execution: Int, // Количество дней на выполнение задачи
-    var start: Int = 0 // С какого дня начинается выполнение задачи (отображает зависимость задачи)
+    val execution_date: MutableList<String>,
+    val haveExecuter: Boolean
 )

@@ -105,7 +105,9 @@ fun NewLaborCostWindow(
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate = "$mDayOfMonth/${mMonth + 1}/$mYear"
+            mDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(
+                SimpleDateFormat("dd/M/yyyy").parse("$mDayOfMonth/${mMonth + 1}/$mYear")
+            )
         }, mYear, mMonth, mDay
     )
 
@@ -258,6 +260,7 @@ fun NewLaborCostWindow(
                     onClick = {
                         viewModel.createManHours(
                             ManHoursDTO(
+                                created_at = mDate,
                                 comment = comment,
                                 hours_spent = spendTime,
                                 activityid = laborCostCategory.id ?: 1,

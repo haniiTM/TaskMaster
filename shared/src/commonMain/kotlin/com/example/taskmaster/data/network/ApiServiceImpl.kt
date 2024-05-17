@@ -26,7 +26,6 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import io.ktor.client.statement.readText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
@@ -816,6 +815,65 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             mutableListOf()
+        }
+    }
+
+    override suspend fun downloadFile(projectId: Int): String? {
+        var name: String? = null
+
+        try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/excel/$projectId")
+            if (response.status.isSuccess()) {
+                name = "calendar_plan_$projectId.xlsx"
+                return name
+            }
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+        return name
+    }
+
+    override suspend fun downloadFileForManHours(projectId: Int): String? {
+        var name: String? = null
+
+        try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/manhours/excelreport/$projectId")
+            if (response.status.isSuccess()) {
+                name = "man-hours_$projectId.xlsx"
+                return name
+            }
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+        return name
+    }
+
+    override suspend fun deleteDependence(dependenceOn: Int): Boolean {
+        var success = false
+        try {
+            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/dependence/${dependenceOn}") {
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status.isSuccess()) {
+                println("Server addDependenceForTask: ${response.status}")
+                success = true
+                return success
+            } else {
+                println("Server returned error status: ${response.status}")
+                return success
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            return success
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            return success
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            return success
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            return success
         }
     }
 }

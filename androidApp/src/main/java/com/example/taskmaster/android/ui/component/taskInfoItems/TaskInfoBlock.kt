@@ -66,6 +66,7 @@ fun TaskInfoBlock(
     scope: Int,
     status: Int,
     userCount: Int,
+    taskIdDependenceOn: Int?,
     taskDependenceOn: String,
     typeofactivityid: Int,
     id: Int?,
@@ -101,7 +102,7 @@ fun TaskInfoBlock(
     var categoryExpanded by remember { mutableStateOf(false) }
     var dependenceAt by remember { mutableStateOf(false) }
     var taskName by remember {
-        mutableStateOf("")
+        mutableStateOf(taskDependenceOn)
     }
 
     var selectedTask: TaskDTO? by remember { mutableStateOf(null) }
@@ -206,7 +207,7 @@ fun TaskInfoBlock(
                                     fontWeight = FontWeight.Normal
                                 )
                                 Text(
-                                    text = taskName ?: taskDependenceOn,
+                                    text = taskName,
                                     color = Color.Black,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal,
@@ -262,13 +263,16 @@ fun TaskInfoBlock(
                         }
                     }
                     if(taskName != ""){
-                        IconButton(onClick = { taskName = ""
-                                    /*viewTaskModel.removeDependence(id, selectedTask?.id!!) { success ->
-                                        if (triggerRefresh != null && success) {
-                                            viewTaskModel.dataTaskById(id)
-                                            triggerRefresh(success)
-                                        }
-                                    }*/
+                        IconButton(onClick = {
+                            if(taskIdDependenceOn != null) {
+                                viewTaskModel.removeDependence(taskIdDependenceOn) { success ->
+                                    if (triggerRefresh != null && success) {
+                                        viewTaskModel.dataTaskById(id)
+                                        triggerRefresh(success)
+                                        taskName = ""
+                                    }
+                                }
+                            }
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.clear_icon),

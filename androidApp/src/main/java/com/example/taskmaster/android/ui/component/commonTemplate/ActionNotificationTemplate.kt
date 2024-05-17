@@ -75,7 +75,9 @@ fun ActionNotificationTemplate(
                 Button(
                     onClick = {
                         if (projectKey == true) {
-
+                            if(id != null) {
+                                viewModel.deleteTaskOrProject(id!!, parent!!, true)
+                            }
                         } else {
                             onConfirmation();
                             viewModel.deleteTaskOrProject(id!!, parent!!)
