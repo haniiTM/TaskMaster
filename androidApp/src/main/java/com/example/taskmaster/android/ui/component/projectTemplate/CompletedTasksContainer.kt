@@ -15,6 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,7 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.component.popupWindows.NewTaskWindow
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.theme.ShadowGray
 import org.koin.androidx.compose.getViewModel
@@ -40,6 +46,7 @@ fun CompletedTasksContainer(
         viewModel.getCompletedTask(id!!.toInt())
     }
     val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
+    var showDialog by remember{ mutableStateOf(false) }
 
     Box(
         contentAlignment = Alignment.TopCenter,
@@ -101,7 +108,14 @@ fun CompletedTasksContainer(
             }
 
             if (buttonTitle.isNotEmpty()) {
-                BoxButton(buttonTitle, id!!)
+                BoxButton(buttonTitle, cardContainerFlag = true){
+                    showDialog = !showDialog
+                }
+            }
+            if (showDialog) {
+                Dialog(onDismissRequest = { showDialog = !showDialog }) {
+                    NewTaskWindow(id = id!!, onDismissRequest = {showDialog = !showDialog})
+                }
             }
         }
     }

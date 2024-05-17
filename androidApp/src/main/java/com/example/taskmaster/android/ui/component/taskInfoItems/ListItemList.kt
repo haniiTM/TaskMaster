@@ -21,16 +21,17 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ListItemList(
-    viewModel: ManHoursViewModel = getViewModel(),
-    taskId: Int
+    laborCostViewModel: ManHoursViewModel = getViewModel(),
+    taskId: Int,
+    attachmentsListFlag: Boolean
 ) {
     LaunchedEffect(key1 = true) {
-        viewModel.getManHours(taskId)
+        laborCostViewModel.getManHours(taskId)
     }
 
     Box(
         modifier = Modifier
-            .padding(start = 14.dp, top = 26.dp, end = 14.dp)
+            .padding(start = 14.dp, top = 26.dp, end = 14.dp, bottom = 20.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(15.dp))
             .border(
@@ -40,9 +41,9 @@ fun ListItemList(
             .background(Color.White)
     ) {
         LazyColumn {
-            itemsIndexed(viewModel.state.value.itemState) { _, item ->
+            itemsIndexed(laborCostViewModel.state.value.itemState) { _, item ->
                 if (item != null) {
-                    ListItem(name = item.comment ?: "", item = item)
+                    ListItem(name = item.comment ?: "", item = item, attachmentsListFlag = attachmentsListFlag)
                 }
             }
         }

@@ -15,7 +15,7 @@
         android:allowBackup="false"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/SplashScreenDarkTheme">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -25,4 +25,4 @@
             </intent-filter>
         </activity>
     </application>
-</manifest> 
+</manifest>

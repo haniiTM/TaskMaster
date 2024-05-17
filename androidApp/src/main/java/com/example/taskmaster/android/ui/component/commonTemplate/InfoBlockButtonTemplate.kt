@@ -88,7 +88,7 @@ fun InfoBlockButtonTemplate(
                 if(param == 1){
                     Image(
                         painter = painterResource(id = R.drawable.solo_user_icon),
-                        contentDescription = "",
+                        contentDescription = "solo_user_icon",
                         modifier = Modifier
                             .size(14.dp)
                             .clip(
@@ -98,7 +98,7 @@ fun InfoBlockButtonTemplate(
                 }else{
                     Image(
                         painter = painterResource(id = R.drawable.users_group_icon),
-                        contentDescription = "",
+                        contentDescription = "users_group_icon",
                         modifier = Modifier
                             .size(14.dp)
                             .clip(

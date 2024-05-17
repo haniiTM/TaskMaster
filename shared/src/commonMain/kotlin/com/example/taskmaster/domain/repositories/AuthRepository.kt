@@ -10,6 +10,4 @@ interface AuthRepository {
     suspend fun getUserToken(): Flow<AccessToken?>
     suspend fun saveUserToken(accessToken: AccessTokenEntity)
     suspend fun deleteUserToken()
-
-
 }
