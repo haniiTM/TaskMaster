@@ -1,6 +1,7 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
 import android.app.DatePickerDialog
+import android.util.Log
 import android.widget.DatePicker
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -101,13 +102,20 @@ fun NewLaborCostWindow(
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
     mCalendar.time = Date()
-    var mDate by remember { mutableStateOf(currentDateAndTime) }
+
+    val displayDateFormat = SimpleDateFormat("dd/MM/yyyy")
+    val storageDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+    var mDateDisplay by remember { mutableStateOf(displayDateFormat.format(Date())) }
+    var mDateStorage by remember { mutableStateOf(storageDateFormat.format(Date())) }
+    Log.d("mDateStorage", mDateStorage.toString())
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(
-                SimpleDateFormat("dd/M/yyyy").parse("$mDayOfMonth/${mMonth + 1}/$mYear")
-            )
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(mYear, mMonth, mDayOfMonth)
+            mDateDisplay = displayDateFormat.format(selectedDate.time)
+            mDateStorage = storageDateFormat.format(selectedDate.time)
         }, mYear, mMonth, mDay
     )
 
@@ -149,7 +157,7 @@ fun NewLaborCostWindow(
                 ) {
                     Row(modifier = Modifier.padding(start = 10.dp)){
                         Text(text = "Дата: ", color = Color.Black)
-                        Text(text = mDate, color = Color.Black)
+                        Text(text = mDateDisplay, color = Color.Black)
                     }
                     Icon(
                         painter = painterResource(id = R.drawable.calendar_icon),
@@ -260,7 +268,7 @@ fun NewLaborCostWindow(
                     onClick = {
                         viewModel.createManHours(
                             ManHoursDTO(
-                                created_at = mDate,
+                                created_at = mDateStorage,
                                 comment = comment,
                                 hours_spent = spendTime,
                                 activityid = laborCostCategory.id ?: 1,

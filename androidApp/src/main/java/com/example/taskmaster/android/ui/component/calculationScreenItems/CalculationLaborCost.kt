@@ -43,11 +43,21 @@ fun TableHeader(dates: List<Date?>) {
         }
     }
 }
+
 @Composable
-fun TableRow(data: Pair<Int?, String?>, dates: List<Date?>, hoursData: List<Triple<Date?, String?, Int?>>) {
+fun TableRow(
+    data: Pair<Int?, String?>,
+    dates: List<Date?>,
+    hoursData: List<Triple<Date?, String?, Int?>>
+) {
     val uniqueDates = dates.distinct().filterNotNull().sorted()
 
-    Row(Modifier.fillMaxWidth().background(Color.White)) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .height(40.dp)
+            .background(Color.White)
+    ) {
         FirstTableDataCell(text = data.first.toString())
 
         uniqueDates.forEach { date ->
@@ -59,7 +69,11 @@ fun TableRow(data: Pair<Int?, String?>, dates: List<Date?>, hoursData: List<Trip
 }
 
 @Composable
-fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel(), testViewModel: UserroleprojectViewModel = getViewModel(), id: Int?) {
+fun CalculationOfLaborCosts(
+    laborCostViewModel: ManHoursViewModel = getViewModel(),
+    testViewModel: UserroleprojectViewModel = getViewModel(),
+    id: Int?
+) {
     Log.d("project id", id.toString())
     LaunchedEffect(key1 = id) {
         laborCostViewModel.getReportManHours(id!!)
@@ -67,16 +81,18 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
     }
     val laborCosts = laborCostViewModel.stateManHoursReport.value.itemState
     val dates = laborCosts.map { it?.createdAt?.toDate() }
+    Log.d("dates", dates.toString())
     val labors = laborCosts.map {
         Pair(it?.taskId ?: -1, it?.hoursSpent ?: "-")
     }.sortedBy { it.first }.distinct()
+    Log.d("labors", labors.toString())
     val uniqueDates = dates.distinct().filterNotNull().sorted()
     val hoursData = laborCosts.map {
         Triple(it?.createdAt?.toDate(), it?.hoursSpent ?: "-", it?.taskId)
     }
     Box(
         modifier = Modifier
-            .padding(horizontal = 14.dp, vertical = 26.dp)
+            .padding(start = 14.dp, end = 14.dp, top = 26.dp, bottom = 13.dp)
             .height(200.dp)
             .fillMaxWidth()
             .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(15.dp))
@@ -84,13 +100,27 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
         LazyRow(
             Modifier
                 .fillMaxSize()
-                .clip(shape = if(uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(15.dp, 0.dp, 0.dp, 15.dp)),
+                .clip(
+                    shape = if (uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
+                        15.dp,
+                        0.dp,
+                        0.dp,
+                        15.dp
+                    )
+                ),
         ) {
             item {
                 LazyColumn(
                     Modifier
                         .fillMaxSize()
-                        .clip(shape = if(uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(15.dp, 0.dp, 0.dp, 15.dp))
+                        .clip(
+                            shape = if (uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
+                                15.dp,
+                                0.dp,
+                                0.dp,
+                                15.dp
+                            )
+                        )
                 ) {
                     item { TableHeader(dates) }
                     itemsIndexed(labors) { _, rowData ->
@@ -101,6 +131,7 @@ fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel
         }
     }
 }
+
 @Composable
 fun TableHeaderCell(
     text: String
@@ -124,6 +155,7 @@ fun FirstTableDataCell(
     Box(
         modifier = Modifier
             .width(90.dp)
+            .height(40.dp)
             .border(BorderStroke(1.dp, Color.Black))
             .background(Color.LightGray), contentAlignment = Alignment.Center
     ) {
@@ -142,6 +174,7 @@ fun TableDataCell(
         Modifier
             .border(1.dp, Color.Black)
             .width(90.dp)
+            .height(40.dp)
             .padding(8.dp),
         textAlign = TextAlign.Center, color = Color.Black
     )
