@@ -133,15 +133,21 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
     }
 
     // Функция для удаления
-    fun deleteTaskOrProject(taskId: Int, parent: Int) {
+    fun deleteTaskOrProject(taskId: Int, parent: Int, deleteProj: Boolean = false) {
         viewModelScope.launch {
             try {
                 apiService.DeleteTaskOrProject(taskId)
             } catch(e: Exception) {
                 println("Exception in deleteTaskOrProject ${e}")
             }
-            getCompletedTask(parent)
-            getUnfulfilleddTask(parent)
+
+            if(deleteProj) {
+                getProject()
+            } else {
+                getCompletedTask(parent)
+                getUnfulfilleddTask(parent)
+            }
+
         }
     }
 
