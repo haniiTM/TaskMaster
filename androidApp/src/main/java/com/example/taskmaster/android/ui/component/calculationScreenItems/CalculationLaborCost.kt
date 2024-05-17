@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -58,10 +59,11 @@ fun TableRow(data: Pair<Int?, String?>, dates: List<Date?>, hoursData: List<Trip
 }
 
 @Composable
-fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel(), id: Int?) {
+fun CalculationOfLaborCosts(laborCostViewModel: ManHoursViewModel = getViewModel(), testViewModel: UserroleprojectViewModel = getViewModel(), id: Int?) {
     Log.d("project id", id.toString())
     LaunchedEffect(key1 = id) {
         laborCostViewModel.getReportManHours(id!!)
+        testViewModel.getCalendarPlan(id!!)
     }
     val laborCosts = laborCostViewModel.stateManHoursReport.value.itemState
     val dates = laborCosts.map { it?.createdAt?.toDate() }
