@@ -10,13 +10,13 @@ import shared
 
 class TaskInfo: ProjectInfo {
     var description: String
-
+    
     override init(_ dto: TaskDTO) {
         description = dto.content ?? "Нет описания"
         super.init(dto)
     }
-
-    override init(title: String, timerValue: UInt8, participiantsValue: UInt8) {
+    
+    override init(id: UInt8 = .random(in: 1...99), title: String, timerValue: UInt8, participiantsValue: UInt8) {
         description = "Emtpy desc"
         super.init(title: title, timerValue: timerValue, participiantsValue: participiantsValue)
     }

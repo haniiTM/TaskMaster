@@ -21,23 +21,23 @@ struct TaskListModel {
 
     //    MARK: Methods
     private mutating func setupDefaultTaskList() {
-        var reactNative = TaskInfo(title: "Изучение React Native",
+        let reactNative = TaskInfo(title: "Изучение React Native",
                                    timerValue: 24,
                                    participiantsValue: 3)
 
-        var graphQL = TaskInfo(title: "Изучение GraphQL",
+        let graphQL = TaskInfo(title: "Изучение GraphQL",
                                timerValue: 17,
                                participiantsValue: 3)
 
-        var tailwind = TaskInfo(title: "Изучение Tailwind",
+        let tailwind = TaskInfo(title: "Изучение Tailwind",
                                 timerValue: 13,
                                 participiantsValue: 3)
 
-        var dom = TaskInfo(title: "Изучение DOM",
+        let dom = TaskInfo(title: "Изучение DOM",
                            timerValue: 9,
                            participiantsValue: 3)
 
-        var ajax = TaskInfo(title: "Изучение Ajax",
+        let ajax = TaskInfo(title: "Изучение Ajax",
                             timerValue: 18,
                             participiantsValue: 3)
 
