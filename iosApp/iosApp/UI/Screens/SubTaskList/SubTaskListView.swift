@@ -29,7 +29,7 @@ struct SubTaskListView: View {
 
             DescriptionBody
 
-            NavigationLink(destination: AttachmentListView("")) {
+            NavigationLink(destination: AttachmentListView(title, taskId: model.id)) {
                 AttachmentsScreenInfoButton()
             }.foregroundColor(.primary)
 
