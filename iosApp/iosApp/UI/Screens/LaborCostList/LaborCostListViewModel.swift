@@ -6,15 +6,31 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-import Foundation
+import shared
 
-final class LaborCostListViewModel: LaborCostListViewModelProtocol, ObservableObject {
+@MainActor final class LaborCostListViewModel: ObservableObject {
     //    MARK: Props
-    var laborCostListSignal: Box<[String]?> = .init(nil)
-    private let model = LaborCostListModel()
+    private let laborCostListUseCase = KoinHelper().getLaborCostListUseCase()
+    @Published var laborCostList = [ManHoursDTO]()
 
     //    MARK: Methods
-    func updateDataSource() {
-        laborCostListSignal.value = model.laborCostList
+    func updateDataSource(_ taskId: UInt8) async {
+        do {
+            guard
+                let unwrappedLaborCostList = try await laborCostListUseCase.getLaborCostList(taskId: Int32(taskId)) as? [ManHoursDTO?]
+            else { return }
+
+            var nonOptionalLaborCostList = [ManHoursDTO]()
+
+            unwrappedLaborCostList.forEach { laborCost in
+                guard let laborCost = laborCost else { return }
+
+                nonOptionalLaborCostList.append(laborCost)
+            }
+
+            laborCostList = nonOptionalLaborCostList
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
