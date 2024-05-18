@@ -23,7 +23,7 @@ struct SubTaskListView: View {
     //    MARK: Body
     var body: some View {
         ProjectFrameView(title) {
-            NavigationLink(destination: TaskInfoListView(title, model: model /*viewModel.unCompletedSubTaskListSignal.first!*/)) {
+            NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.foregroundColor(.primary)
 

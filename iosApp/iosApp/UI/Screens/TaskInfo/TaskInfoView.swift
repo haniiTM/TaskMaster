@@ -8,16 +8,20 @@
 
 import SwiftUI
 
-struct TaskInfoListView: View {
+struct TaskInfoView: View {
     //    MARK: Props
+    @StateObject private var viewModel = TaskInfoViewModel()
+
+    private let taskId: UInt8
+
     private let projectTitle: String
     private let taskTitle: String
 
     private let participantTitle: String
-    private let participantAvatar: String
+    private let participantValue: String
 
     private let hoursDaysSpentTitle: String
-    private let urgentImageName: String
+    //    private let urgentImageName: String
     private let hoursDaysSpentValue: String
 
     private let timeEstimationTitle: String
@@ -26,32 +30,48 @@ struct TaskInfoListView: View {
     private let timeSpentTitle: String
     private let timeSpentValue: String
 
+    private let dependenceTitle: String
+    private let dependenceValue: String
+
+    private let categoryTitle: String
+    private let categoryValue: String
+
     private let taskStatusTitle: String
     private let taskStatusValue: String
 
     private let laborCostTitle: String
 
     //    MARK: Init
-    init(_ projectTitle: String, model: TaskInfo) {
+    init(_ projectTitle: String, taskId: UInt8) {
+        let model = DetailedTaskInfo()
+
+        self.taskId = taskId
         self.projectTitle = projectTitle
         taskTitle = model.title
 
-        participantTitle = TaskCardsConstants.Strings.Titles.participiantsTitle +
-        (model.participiantsValue.description)
-        participantAvatar = "person.crop.circle"
+        participantTitle = TaskCardsConstants.Strings.Titles.participiantsTitle
+        //        (model.participiantsValue.description)
+        participantValue = model.participiantsValue.description
+        //        participantAvatar = "person.crop.circle"
 
         hoursDaysSpentTitle = "Затрачиваемые часы / день"
-        urgentImageName = TaskCardsConstants.Strings.ImageNames.urgentImageName
-        hoursDaysSpentValue = "2:00"
+        //        urgentImageName = TaskCardsConstants.Strings.ImageNames.urgentImageName
+        hoursDaysSpentValue = model.allocatedTime.description
 
         timeEstimationTitle = "Оценка времени:"
         timeEstimationValue = model.timerValue.description
 
         timeSpentTitle = "Затрачено времени:"
-        timeSpentValue = "0:30"
+        timeSpentValue = model.spentTime.description
+
+        dependenceTitle = "Зависит от:"
+        dependenceValue = model.taskDependsOn.name
+
+        categoryTitle = "Категория:"
+        categoryValue = model.categoryId.description
 
         taskStatusTitle = "Статус задачи:"
-        taskStatusValue = "В работе"
+        taskStatusValue = model.statusId.description
 
         laborCostTitle = "Трудозатраты"
     }
@@ -59,35 +79,44 @@ struct TaskInfoListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
+            .task {
+                await viewModel.updateDataSource(taskId)
+            }
     }
 
     private var ViewBody: some View {
         ProjectFrameView(projectTitle) {
             TaskInfoCard
 
-            LaborCostCreationButton().foregroundColor(.primary)
-        }.navigationTitle("Инфо о задаче")
+            //            LaborCostCreationButton().foregroundColor(.primary)
+        }.navigationTitle(projectTitle)
     }
 
     private var TaskInfoCard: some View {
         VStack(spacing: 0) {
             Group {
-                Text(taskTitle)
+                Text(viewModel.taskInfo.title)
                 Divider()
 
-                ImageRow(participantTitle, participantAvatar)
+                TextRow(participantTitle, viewModel.taskInfo.participiantsValue.description)
                 Divider()
 
-                TextRow(hoursDaysSpentTitle, hoursDaysSpentValue)
+                TextRow(hoursDaysSpentTitle, viewModel.taskInfo.allocatedTime.description)
                 Divider()
 
-                TextRow(timeEstimationTitle, timeEstimationValue)
+                TextRow(timeEstimationTitle, viewModel.taskInfo.timerValue.description)
                 Divider()
 
-                TextRow(timeSpentTitle, timeSpentValue)
+                TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
                 Divider()
 
-                TextRow(taskStatusTitle, taskStatusValue)
+                TextRow(dependenceTitle, viewModel.taskInfo.taskDependsOn.name)
+                Divider()
+
+                TextRow(categoryTitle, viewModel.taskInfo.categoryId.description)
+                Divider()
+
+                TextRow(taskStatusTitle, viewModel.taskInfo.statusId.description)
                 Divider()
 
                 NavigationLink(destination: LaborCostListView("")) {
