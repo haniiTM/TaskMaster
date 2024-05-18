@@ -119,7 +119,7 @@ struct TaskInfoView: View {
                 TextRow(taskStatusTitle, viewModel.taskInfo.statusId.description)
                 Divider()
 
-                NavigationLink(destination: LaborCostListView("")) {
+                NavigationLink(destination: LaborCostListView(projectTitle, taskId: taskId)) {
                     //                    Button(laborCostTitle) {}
                     Text(laborCostTitle)
                 }.foregroundColor(.primary)
