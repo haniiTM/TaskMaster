@@ -33,7 +33,7 @@ struct LaborCostListView: View {
         List(viewModel.laborCostList, id: \.id) { laborCost in
             Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {}
                 .padding(8)
-                .foregroundColor(.primary)
+                .tint(.primary)
         }.navigationTitle(projectTitle)
         //            .padding()
         //        }

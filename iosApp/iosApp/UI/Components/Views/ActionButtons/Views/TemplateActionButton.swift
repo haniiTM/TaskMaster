@@ -31,8 +31,9 @@ struct TemplateActionButton<Content: View>: View {
             }
         }
         .padding()
+        .tint(.white)
         .background(
-            Color(uiColor: .secondarySystemBackground),
+            .tint,
             in: RoundedRectangle(cornerRadius: 8, style: .continuous)
         )
     }

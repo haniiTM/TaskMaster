@@ -19,11 +19,7 @@ struct ProjectListView: View {
                 NavigationLink(destination: TaskListView(project)) {
                     ProjectCardView(model: project)
                 }
-                .foregroundColor(.primary)
-                .background(
-                    Color(uiColor: .secondarySystemBackground),
-                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                )
+                .tint(.primary)
             }
         }
         .task {
@@ -33,7 +29,6 @@ struct ProjectListView: View {
         .toolbar {
             Button(action: {}) {
                 Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
-                    .foregroundColor(.primary)
             }
         }
     }

@@ -23,27 +23,27 @@ struct TaskListView: View {
         ProjectFrameView(model.title) {
             NavigationLink(destination: EstimationCalendarView(model)) {
                 EstimatesScreenInfoButton()
-            }.foregroundColor(.primary)
+            }
+            .tint(.primary)
 
-            TaskSectionBG {
+            TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
                 ForEach(viewModel.unCompletedTaskListSignal) { task in
                     NavigationLink(destination: SubTaskListView(model.title, model: task)) {
                         TaskCardView(model: task)
-                    }.foregroundColor(.primary)
+                    }.tint(.primary)
                 }
 
                 TaskCreationButton()
-                    .foregroundColor(.primary)
                     .onTapGesture {
                         viewModel.addUncompletedTask()
                     }
             }
 
-            CompletedTaskSectionBG {
+            CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
                 ForEach(viewModel.completedTaskListSignal) { task in
                     NavigationLink(destination: SubTaskListView(model.title, model: task)) {
                         TaskCardView(model: task)
-                    }.foregroundColor(.primary)
+                    }.tint(.primary)
                 }
             }
         }
@@ -53,8 +53,7 @@ struct TaskListView: View {
         .navigationTitle(model.title)
         .toolbar {
             Button(action: {}) {
-                Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
-                    .foregroundColor(.primary)
+                Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
             }
         }
     }

@@ -61,10 +61,11 @@ struct LoginScreenView: View {
 
                     label: {
                         Text(LoginScreenConstants.Strings.loginButtonTitle)
-                            .foregroundColor(.primary)
+                            .tint(.primary)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .padding(.horizontal)
+                            .background(.ultraThinMaterial)
                     }
                 )
             }

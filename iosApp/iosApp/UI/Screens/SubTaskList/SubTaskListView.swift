@@ -11,6 +11,7 @@ import SwiftUI
 struct SubTaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = SubTaskListViewModel()
+    @State private var descriptionState: String
     private let title: String
     private let model: TaskInfo
 
@@ -18,6 +19,7 @@ struct SubTaskListView: View {
     init(_ title: String, model: TaskInfo) {
         self.title = title
         self.model = model
+        descriptionState = model.description
     }
 
     //    MARK: Body
@@ -25,23 +27,23 @@ struct SubTaskListView: View {
         ProjectFrameView(title) {
             NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
-            }.foregroundColor(.primary)
+            }.tint(.primary)
 
             DescriptionBody
 
             NavigationLink(destination: AttachmentListView(title, taskId: model.id)) {
                 AttachmentsScreenInfoButton()
-            }.foregroundColor(.primary)
+            }.tint(.primary)
 
-            SubTaskSectionBG {
+            SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
                 ForEach(viewModel.unCompletedSubTaskListSignal) { subTask in
                     SubTaskCardView(model: subTask)
                 }
 
-                SubTaskCreationButton().foregroundColor(.primary)
+                SubTaskCreationButton()
             }
 
-            CompletedTaskSectionBG {
+            CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
                 ForEach(viewModel.completedSubTaskListSignal) { subTask in
                     SubTaskCardView(model: subTask)
                 }
@@ -51,18 +53,34 @@ struct SubTaskListView: View {
         .navigationTitle(title)
         .toolbar {
             Button(action: {}) {
-                Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
+                Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
             }
         }
 
     }
 
     private var DescriptionBody: some View {
-        Text(model.description)
-            .padding()
+        //        TextEditor(text: $descriptionState)
+        VStack(spacing: 8) {
+            Text(model.description)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding()
+                .padding(.bottom, 64)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+
+            Button(action: {}) {
+                Text("Сохранить")
+                    .frame(maxWidth: .infinity)
+                    .padding(8)
+            }
+            .tint(.white)
             .background(
-                Color(uiColor: .secondarySystemBackground),
+                .tint,
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
+        }
     }
 }

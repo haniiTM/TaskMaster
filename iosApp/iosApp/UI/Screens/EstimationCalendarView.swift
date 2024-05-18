@@ -24,7 +24,7 @@ struct EstimationCalendarView: View {
         ProjectFrameView(projectTitle) {
             CalendarSection("Календарный план")
             CalendarSection("Расчет трудозатрат")
-        }.navigationTitle("Таблицы")
+        }.navigationTitle(projectTitle)
     }
 
     //    MARK: Methods
@@ -33,28 +33,33 @@ struct EstimationCalendarView: View {
             Text(title).font(.title3)
 
             HStack(spacing: 32) {
-                Group {
-                    Button(action: {}) {
-                        Text("Выбор таблицы")
-                            .font(.subheadline)
-                            .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
+                Button(action: {}) {
+                    Text("Выбор таблицы")
+                        .font(.subheadline)
+                        .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
 
-                        Spacer()
+                    Spacer()
 
-                        Image(systemName: "arrow.down.circle")
-                    }.foregroundColor(.primary)
-
-                    Button(action: {}) {
-                        Text("Скачать")
-                            .font(.subheadline)
-                            .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
-
-                        Image(systemName: "square.and.arrow.down")
-                    }.foregroundColor(.primary)
+                    Image(systemName: "arrow.down.circle")
                 }
                 .padding(8)
+                .tint(.primary)
                 .background(
-                    Color(uiColor: .secondarySystemBackground),
+                    .ultraThinMaterial,
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+
+                Button(action: {}) {
+                    Text("Скачать")
+                        .font(.subheadline)
+                        .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
+
+                    Image(systemName: "square.and.arrow.down")
+                }
+                .padding(8)
+                .tint(.white)
+                .background(
+                    .tint,
                     in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                 )
             }
