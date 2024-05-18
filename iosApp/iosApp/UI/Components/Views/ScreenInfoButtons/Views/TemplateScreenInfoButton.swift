@@ -33,7 +33,7 @@ struct TemplateScreenInfoButton<Content: View>: View {
 //            }
             .padding()
             .background(
-                Color(uiColor: .secondarySystemBackground),
+                .ultraThinMaterial,
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
         }

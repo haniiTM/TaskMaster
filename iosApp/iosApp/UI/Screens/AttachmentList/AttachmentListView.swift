@@ -34,9 +34,9 @@ struct AttachmentListView: View {
     @ViewBuilder
     private var ViewBody: some View {
         ForEach(viewModel.attachmentListSignal, id: \.id) { attachment in
-            AttachmentCardView(attachment.comment ?? "Вложение №\(attachment.id ?? 0)").foregroundColor(.primary)
+            AttachmentCardView(attachment.comment ?? "Вложение №\(attachment.id ?? 0)")
         }.padding(.horizontal, 40)
 
-        AttachmentCreationButton().foregroundColor(.primary)
+        AttachmentCreationButton()
     }
 }

@@ -11,11 +11,13 @@ import SwiftUI
 struct TemplateTaskSectionBG<Content: View>: View {
     //    MARK: Props
     private let title: String
+    private let isEmpty: Bool
     @ViewBuilder private let content: () -> Content
 
     //    MARK: Init
-    init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
+    init(_ title: String, isEmpty: Bool, @ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.isEmpty = isEmpty
         self.content = content
     }
 
@@ -29,8 +31,18 @@ struct TemplateTaskSectionBG<Content: View>: View {
             Text(title)
                 .font(.title3)
 
-            VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
-                content()
+            if isEmpty {
+                Text("Задачи отсутствуют")
+                    .frame(maxWidth: .infinity)
+                    .padding(64)
+                    .background(
+                        Color(uiColor: .secondarySystemBackground),
+                        in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    )
+            } else {
+                VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
+                    content()
+                }
             }
         }
         .frame(maxWidth: .infinity)

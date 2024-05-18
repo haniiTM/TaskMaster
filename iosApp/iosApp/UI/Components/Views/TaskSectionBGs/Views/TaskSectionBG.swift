@@ -11,15 +11,17 @@ import SwiftUI
 struct TaskSectionBG<Content: View>: View {
     //    MARK: Props
     private let title: String
+    private let isEmpty: Bool
     @ViewBuilder private let content: () -> Content
 
     //    MARK: Init
-    init(@ViewBuilder content: @escaping () -> Content) {
+    init(isEmpty: Bool, @ViewBuilder content: @escaping () -> Content) {
         title = TaskSectionBGsConstants.Strings.taskSectionTitle
+        self.isEmpty = isEmpty
         self.content = content
     }
 
     var body: some View {
-        TemplateTaskSectionBG(title, content: content)
+        TemplateTaskSectionBG(title, isEmpty: isEmpty, content: content)
     }
 }

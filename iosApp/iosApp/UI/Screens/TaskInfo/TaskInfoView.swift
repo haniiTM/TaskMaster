@@ -88,48 +88,57 @@ struct TaskInfoView: View {
         ProjectFrameView(projectTitle) {
             TaskInfoCard
 
-            //            LaborCostCreationButton().foregroundColor(.primary)
+            LaborCostCreationButton()
         }.navigationTitle(projectTitle)
     }
 
     private var TaskInfoCard: some View {
-        VStack(spacing: 0) {
-            Group {
-                Text(viewModel.taskInfo.title)
-                Divider()
+        VStack(spacing: 8) {
+            VStack(spacing: 0) {
+                Group {
+                    Text(viewModel.taskInfo.title)
+                    Divider()
 
-                TextRow(participantTitle, viewModel.taskInfo.participiantsValue.description)
-                Divider()
+                    TextRow(participantTitle, viewModel.taskInfo.participiantsValue.description)
+                    Divider()
 
-                TextRow(hoursDaysSpentTitle, viewModel.taskInfo.allocatedTime.description)
-                Divider()
+                    TextRow(hoursDaysSpentTitle, viewModel.taskInfo.allocatedTime.description)
+                    Divider()
 
-                TextRow(timeEstimationTitle, viewModel.taskInfo.timerValue.description)
-                Divider()
+                    TextRow(timeEstimationTitle, viewModel.taskInfo.timerValue.description)
+                    Divider()
 
-                TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
-                Divider()
+                    TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
+                    Divider()
 
-                TextRow(dependenceTitle, viewModel.taskInfo.taskDependsOn.name)
-                Divider()
+                    TextRow(dependenceTitle, viewModel.taskInfo.taskDependsOn.name)
+                    Divider()
 
-                TextRow(categoryTitle, viewModel.taskInfo.categoryId.description)
-                Divider()
+                    TextRow(categoryTitle, viewModel.taskInfo.categoryId.description)
+                    Divider()
 
-                TextRow(taskStatusTitle, viewModel.taskInfo.statusId.description)
-                Divider()
+                    TextRow(taskStatusTitle, viewModel.taskInfo.statusId.description)
+                }.padding(.top, 8)
+            }
+            .padding(8)
+            .background(
+                .ultraThickMaterial,
+//                Color(uiColor: .secondarySystemBackground),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
 
-                NavigationLink(destination: LaborCostListView(projectTitle, taskId: taskId)) {
-                    //                    Button(laborCostTitle) {}
-                    Text(laborCostTitle)
-                }.foregroundColor(.primary)
-            }.padding(.bottom, 8)
-        }
-        .padding()
-        .background(
-            Color(uiColor: .secondarySystemBackground),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-        )
+            NavigationLink(destination: LaborCostListView(projectTitle, taskId: taskId)) {
+                //                    Button(laborCostTitle) {}
+                Text(laborCostTitle)
+                    .frame(maxWidth: .infinity)
+                    .padding(8)
+                    .background(
+                        Color(uiColor: .secondarySystemBackground),
+//                        ultraThickMaterial,
+                        in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    )
+            }.tint(.primary)
+        }.padding()
     }
 
     //    MARK: Methods
