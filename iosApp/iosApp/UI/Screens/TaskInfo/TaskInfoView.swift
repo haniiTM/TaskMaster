@@ -89,7 +89,7 @@ struct TaskInfoView: View {
             TaskInfoCard
 
             LaborCostCreationButton()
-        }.navigationTitle(projectTitle)
+        }
     }
 
     private var TaskInfoCard: some View {

@@ -94,6 +94,7 @@
 		28EA9D042BD590C700B31497 /* SubTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9D032BD590C700B31497 /* SubTaskListView.swift */; };
 		A2E9582C95F18A8536F1E55A /* Pods_TaskMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */; };
 		CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */; };
+		CEB16A1C2BF9EE4E0066BE40 /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB16A1B2BF9EE4E0066BE40 /* NavBar.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
 		CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */; };
 		CEC085FC2BF79B3800BBBEC2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */; };
@@ -192,6 +193,7 @@
 		91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TaskMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC99261B95ABAE38EAD8C7A /* Pods-TaskMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaskMaster.release.xcconfig"; path = "Target Support Files/Pods-TaskMaster/Pods-TaskMaster.release.xcconfig"; sourceTree = "<group>"; };
 		CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
+		CEB16A1B2BF9EE4E0066BE40 /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
 		CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
 		CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				28407DE62BD16926004B275D /* ActionButtons */,
 				28609CFE2BD15467005D2D01 /* ScreenInfoButtons */,
 				28750F0F2BD144D000E3006D /* TaskSectionBGs */,
+				CEB16A1B2BF9EE4E0066BE40 /* NavBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 				28EA9CF92BD5539300B31497 /* ProjectListModel.swift in Sources */,
 				288455EC2BD2DFD300DF64E5 /* TaskCardController.swift in Sources */,
 				28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */,
+				CEB16A1C2BF9EE4E0066BE40 /* NavBar.swift in Sources */,
 				2864E6B32BD39B0200504DE0 /* GradientBGConstants.swift in Sources */,
 				28EA9CFE2BD5812700B31497 /* TaskListModel.swift in Sources */,
 				CEC085FE2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift in Sources */,

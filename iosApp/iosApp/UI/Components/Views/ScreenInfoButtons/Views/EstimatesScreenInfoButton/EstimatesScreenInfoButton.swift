@@ -11,16 +11,18 @@ import SwiftUI
 struct EstimatesScreenInfoButton: View {
     //    MARK: Props
     private let title: String
+    private let imageName: String
     private let action: Openable
 
     //    MARK: Init
     init() {
         title = ScreenInfoButtonsConstants.Strings.Titles.estimatesTitle
+        imageName = "table.badge.more"
         action = EstimatesScreenInfoButtonAction()
     }
 
     //    MARK: Body
     var body: some View {
-        AttachmentsScreenInfoButton(title, action: action)
+        AttachmentsScreenInfoButton(title, imageName: imageName, action: action)
     }
 }

@@ -24,7 +24,7 @@ struct EstimationCalendarView: View {
         ProjectFrameView(projectTitle) {
             CalendarSection("Календарный план")
             CalendarSection("Расчет трудозатрат")
-        }.navigationTitle(projectTitle)
+        }
     }
 
     //    MARK: Methods

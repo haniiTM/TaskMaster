@@ -31,19 +31,20 @@ struct TemplateTaskSectionBG<Content: View>: View {
             Text(title)
                 .font(.title3)
 
-            if isEmpty {
-                Text("Задачи отсутствуют")
-                    .frame(maxWidth: .infinity)
-                    .padding(64)
-                    .background(
-                        Color(uiColor: .secondarySystemBackground),
-                        in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    )
-            } else {
-                VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
-                    content()
+            VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
+                if isEmpty {
+                    Text("Задачи отсутствуют")
+                        .frame(maxWidth: .infinity)
+                        .padding(64)
+                        .background(
+                            Color(uiColor: .secondarySystemBackground),
+                            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        )
                 }
+
+                content()
             }
+
         }
         .frame(maxWidth: .infinity)
         .padding()

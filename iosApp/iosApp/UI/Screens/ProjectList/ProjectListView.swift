@@ -14,21 +14,19 @@ struct ProjectListView: View {
 
     //    MARK: Body
     var body: some View {
+        ViewBody
+            .task {
+                await viewModel.updateDataSource()
+            }
+    }
+
+    private var ViewBody: some View {
         MainFrameView {
             ForEach(viewModel.projectList) { project in
                 NavigationLink(destination: TaskListView(project)) {
                     ProjectCardView(model: project)
                 }
                 .tint(.primary)
-            }
-        }
-        .task {
-            await viewModel.updateDataSource()
-        }
-        .navigationTitle("Все проекты")
-        .toolbar {
-            Button(action: {}) {
-                Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
             }
         }
     }
