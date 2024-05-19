@@ -26,11 +26,11 @@ struct TemplateScreenInfoButton<Content: View>: View {
 
     private var ViewBody: some View {
         HStack {
-//            Button(action: action.open) {
-                HStack {
-                    content()
-                }
-//            }
+            //            Button(action: action.open) {
+            HStack {
+                content()
+            }
+            //            }
             .padding()
             .background(
                 .ultraThinMaterial,

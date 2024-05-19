@@ -50,11 +50,5 @@ struct TaskListView: View {
         .task {
             await viewModel.updateDataSource(model.id)
         }
-        .navigationTitle(model.title)
-        .toolbar {
-            Button(action: {}) {
-                Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
-            }
-        }
     }
 }

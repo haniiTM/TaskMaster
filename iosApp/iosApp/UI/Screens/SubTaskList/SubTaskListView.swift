@@ -50,13 +50,6 @@ struct SubTaskListView: View {
             }
         }
         .task { await viewModel.updateDataSource(model.id) }
-        .navigationTitle(title)
-        .toolbar {
-            Button(action: {}) {
-                Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
-            }
-        }
-
     }
 
     private var DescriptionBody: some View {

@@ -25,7 +25,6 @@ struct AttachmentListView: View {
         ProjectFrameView(projectTitle) {
             ViewBody
         }
-        .navigationTitle(projectTitle)
         .task {
             await viewModel.updateDataSource(taskId)
         }

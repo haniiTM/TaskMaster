@@ -10,13 +10,14 @@ import SwiftUI
 
 struct TemplateTaskFrame<Content: View>: View {
     //    MARK: Props
+    @Environment(\.colorScheme) var colorScheme
+    @State private var statusBarHeight: CGFloat = .init()
+    @State private var frameBodyHeight: CGFloat = .init()
+    @ViewBuilder private let content: () -> Content
+
     private let title: String
     private let imageName: String
     private let action: Openable
-    @ViewBuilder private let content: () -> Content
-
-    @State private var statusBarHeight: CGFloat = .init()
-    @State private var frameBodyHeight: CGFloat = .init()
 
     //    MARK: Init
     init(_ title: String, imageName: String, action: Openable, @ViewBuilder content: @escaping () -> Content) {
@@ -28,7 +29,24 @@ struct TemplateTaskFrame<Content: View>: View {
 
     //    MARK: Body
     var body: some View {
+        //        NavBarView {
         ViewBody
+        //        }
+            .navigationTitle(title)
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {}) {
+                        Image(systemName: colorScheme == .dark ? "sun.min" : "moon")
+                    }
+                }
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {}) {
+                        Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
+                    }
+                }
+            }
     }
 
     private var ViewBody: some View {
@@ -43,13 +61,13 @@ struct TemplateTaskFrame<Content: View>: View {
             HStack {
                 Spacer()
 
-//                Text(title)
+                //                Text(title)
 
-//                Spacer()
+                //                Spacer()
 
-//                Button(action: action.open) {
-//                    Image(systemName: imageName)
-//                }
+                //                Button(action: action.open) {
+                //                    Image(systemName: imageName)
+                //                }
             }
             .padding()
             .background(GeometryReader { geo in
@@ -73,8 +91,8 @@ struct TemplateTaskFrame<Content: View>: View {
             .padding()
             .padding(.vertical)
         }
-//        .border(.secondary)
-//        .background(GradientBG())
+        //        .border(.secondary)
+        //        .background(GradientBG())
         .padding(.top, statusBarHeight - frameBodyHeight)
     }
 }
