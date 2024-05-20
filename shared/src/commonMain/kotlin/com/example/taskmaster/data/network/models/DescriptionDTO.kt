@@ -3,10 +3,15 @@ package com.example.taskmaster.data.network.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DescriptionDTO (
+data class DescriptionDTOFileDTO(
     val id: Int?,
-    var content: String?,
-    var file_resources: String?,
-    val photo_resources: String?,
-    val video_resources: String?
+    val file_resources: List<FileDTO>?
+)
+
+@Serializable
+class FileDTO (
+    val id : Int?,
+    val orig_filename : String?,
+    val descriptionId: Int?,
+    val type : String?
 )
