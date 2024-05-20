@@ -76,10 +76,11 @@ fun ActionNotificationTemplate(
                     onClick = {
                         if (projectKey == true) {
                             if(id != null) {
+                                onConfirmation()
                                 viewModel.deleteTaskOrProject(id!!, parent!!, true)
                             }
                         } else {
-                            onConfirmation();
+                            onConfirmation()
                             viewModel.deleteTaskOrProject(id!!, parent!!)
                         }
                     },
