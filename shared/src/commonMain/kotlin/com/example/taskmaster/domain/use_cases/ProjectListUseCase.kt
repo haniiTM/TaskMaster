@@ -8,4 +8,8 @@ class ProjectListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun getProjectList(): MutableList<TaskDTO?> {
         return apiService.fetchProject()
     }
+
+    suspend fun createProject(projectName: String) {
+        return apiService.createProject(projectName)
+    }
 }

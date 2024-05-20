@@ -33,9 +33,9 @@ struct TemplateTaskFrame<Content: View>: View {
         ViewBody
         //        }
             .navigationTitle(title)
-            .navigationBarBackButtonHidden()
+        //            .navigationBarBackButtonHidden()
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {}) {
                         Image(systemName: colorScheme == .dark ? "sun.min" : "moon")
                     }
