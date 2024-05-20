@@ -52,7 +52,7 @@ fun CalculationOfLaborCostsScreen(
 
     if (result != null) {
         LaunchedEffect(key1 = true) {
-            //viewModelURP.fetchFile(result)
+            viewModelURP.fetchFile(result)
             manHoursViewModel.fetchFileForManHours(result)
         }
     }
@@ -97,7 +97,17 @@ fun CalculationOfLaborCostsScreen(
                     }
                     Button(
                         onClick = {
+                            if (viewModelURP.stateFile.value.itemState != null && result != null &&
+                                mainActivityViewModel.accessToken.value?.tokenLong != null
+                            ) {
+                                val downloader = AndroidDownloader(context)
 
+                                downloader.downloadFile(
+                                    url = "http://5.35.85.206:8080/user_role_project/excel/$result",
+                                    token = mainActivityViewModel.accessToken.value?.tokenLong!!,
+                                    nameFile = viewModelURP.stateFile.value.itemState!!
+                                )
+                            }
                         },
                         modifier = Modifier
                             .height(40.dp)

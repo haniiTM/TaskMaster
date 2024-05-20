@@ -179,14 +179,12 @@ fun String.toGanttDate(): Date? {
     if (this == null || this == "null") {
         return null
     }
-    val formats = arrayOf("yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ss")
-    for (format in formats) {
-        val sdf = SimpleDateFormat(format, Locale.ENGLISH)
-        try {
-            return sdf.parse(this)
-        } catch (e: ParseException) {
-            // ignore
-        }
+    val format = "yyyy-MM-dd"
+    val sdf = SimpleDateFormat(format, Locale.ENGLISH)
+    try {
+        return sdf.parse(this)
+    } catch (e: ParseException) {
+        // ignore
     }
     return null
 }
