@@ -186,7 +186,7 @@ fun String.toDate(): Date? {
     if (this == null || this == "null") {
         return null
     }
-    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
     return sdf.parse(this)
 }
 

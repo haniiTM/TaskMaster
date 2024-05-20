@@ -107,15 +107,12 @@ fun NewLaborCostWindow(
     val storageDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
     var mDateDisplay by remember { mutableStateOf(displayDateFormat.format(Date())) }
-    var mDateStorage by remember { mutableStateOf(storageDateFormat.format(Date())) }
-    Log.d("mDateStorage", mDateStorage.toString())
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             val selectedDate = Calendar.getInstance()
             selectedDate.set(mYear, mMonth, mDayOfMonth)
             mDateDisplay = displayDateFormat.format(selectedDate.time)
-            mDateStorage = storageDateFormat.format(selectedDate.time)
         }, mYear, mMonth, mDay
     )
 
@@ -268,7 +265,7 @@ fun NewLaborCostWindow(
                     onClick = {
                         viewModel.createManHours(
                             ManHoursDTO(
-                                created_at = mDateStorage,
+                                created_at = mDateDisplay,
                                 comment = comment,
                                 hours_spent = spendTime,
                                 activityid = laborCostCategory.id ?: 1,
