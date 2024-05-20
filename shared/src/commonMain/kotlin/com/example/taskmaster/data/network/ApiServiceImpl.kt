@@ -4,7 +4,7 @@ import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.Dependence
-import com.example.taskmaster.data.network.models.DescriptionDTO
+import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.ManHoursReportDTO
 import com.example.taskmaster.data.network.models.PersonDTO
@@ -323,18 +323,7 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             return  mutableListOf() // возвращаем пустой список
         }
     }
-    override suspend fun fetchDescription(descrId: Int): MutableList<DescriptionDTO?> {
-        val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/description/${descrId}")
-        if (response.status.isSuccess()) {
-            val json = response.bodyAsText()
-            val description = Json.decodeFromString<MutableList<DescriptionDTO?>>(json)
-            println("Server returned description: ${description}")
-            return description
-        } else {
-            println("Server returned error status: ${response.status}")
-            return  mutableListOf() // возвращаем пустой список
-        }
-    }
+
     override suspend fun fetchStatus(): MutableList<StatusDTO?> {
         return try {
             val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/status")
@@ -874,6 +863,32 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             return success
+        }
+    }
+
+    override suspend fun listFileInTask(descriptionId: Int): DescriptionDTOFileDTO? {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/description/${descriptionId}")
+            if (response.status.isSuccess()) {
+                val files = response.body<DescriptionDTOFileDTO?>()
+                println("Server returned DescriptionDTOFileDTO: ${files}")
+                files
+            } else {
+                println("Server returned error status: ${response.status}")
+                null // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            null
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            null
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            null
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            null
         }
     }
 }
