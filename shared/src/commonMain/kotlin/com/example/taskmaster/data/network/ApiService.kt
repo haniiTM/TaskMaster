@@ -4,7 +4,7 @@ package com.example.taskmaster.data.network
 import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.CalendarPlan
-import com.example.taskmaster.data.network.models.DescriptionDTO
+import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.ManHoursReportDTO
 import com.example.taskmaster.data.network.models.PersonDTO
@@ -29,7 +29,6 @@ interface ApiService {
     suspend fun updateStatusTask(taskId: Int, statusId: Int, nameTask: String)
     suspend fun updateDescriptionTask(taskId: Int, description: String)
     suspend fun DeleteTaskOrProject(taskId: Int)
-    suspend fun fetchDescription(descrId: Int): MutableList<DescriptionDTO?>
     suspend fun registerUser(user: RegisterReceiveRemote)
     suspend fun createManHours(manHour: ManHoursDTO, taskId: Int): Boolean
     suspend fun fetchManHours(taskId: Int): MutableList<ManHoursDTO?>
@@ -64,5 +63,7 @@ interface ApiService {
     suspend fun deleteDependence(dependenceOn: Int): Boolean
     // Получение отчета по трудозатратам
     suspend fun downloadFileForManHours(projectId: Int): String?
+    // Список файлов (вложений) котрые есть в задаче
+    suspend fun listFileInTask(descriptionId: Int): DescriptionDTOFileDTO?
 }
 

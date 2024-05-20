@@ -4,9 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.network.ApiService
-import com.example.taskmaster.data.network.models.DescriptionDTO
+import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
 import kotlinx.coroutines.launch
 
 class DescriptionViewModel constructor( private val apiService: ApiService) : ViewModel() {
@@ -18,7 +17,7 @@ class DescriptionViewModel constructor( private val apiService: ApiService) : Vi
         viewModelScope.launch {
             try {
                 _state.value = state.value.copy(isLoading = true)
-                val descriptionData = apiService.fetchDescription(descrId)
+                val descriptionData = apiService.listFileInTask(descrId)
                 _state.value = state.value.copy(
                     itemState = descriptionData,
                     isLoading = false
@@ -30,7 +29,7 @@ class DescriptionViewModel constructor( private val apiService: ApiService) : Vi
     }
 
     data class ItemDescription (
-        val itemState: MutableList<DescriptionDTO?> = mutableListOf(),
+        val itemState: DescriptionDTOFileDTO? = null,
         val isLoading: Boolean = false
     )
 }

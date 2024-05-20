@@ -30,10 +30,16 @@ import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.DropdownMenuArea
 import com.example.taskmaster.android.ui.component.popupWindows.LaborCostInfo
+import com.example.taskmaster.data.network.models.FileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 
 @Composable
-fun ListItem(name: String, item : ManHoursDTO, attachmentsListFlag: Boolean){
+fun ListItem(
+    name: String,
+    itemManHours : ManHoursDTO? = null,
+    itemFile: FileDTO? = null,
+    attachmentsListFlag: Boolean
+){
     var showLaborCostInfo by remember {
         mutableStateOf(false)
     }
@@ -105,7 +111,7 @@ fun ListItem(name: String, item : ManHoursDTO, attachmentsListFlag: Boolean){
     )
     if(showLaborCostInfo) {
         Dialog(onDismissRequest = { showLaborCostInfo = !showLaborCostInfo }) {
-            LaborCostInfo(name, item)
+            LaborCostInfo(name, itemManHours!!)
         }
     }
 }
