@@ -82,9 +82,11 @@ fun CalculationOfLaborCosts(
     val laborCosts = laborCostViewModel.stateManHoursReport.value.itemState
     val dates = laborCosts.map { it?.createdAt?.toDate() }
     Log.d("dates", dates.toString())
-    val labors = laborCosts.map {
-        Pair(it?.taskId ?: -1, it?.hoursSpent ?: "-")
-    }.sortedBy { it.first }.distinct()
+    val uniqueTaskIds = laborCosts.mapNotNull { it?.taskId }.distinct()
+    val labors = uniqueTaskIds.map { taskId ->
+        val hoursSpent = laborCosts.firstOrNull { it?.taskId == taskId }?.hoursSpent ?: "-"
+        Pair(taskId, hoursSpent)
+    }
     Log.d("labors", labors.toString())
     val uniqueDates = dates.distinct().filterNotNull().sorted()
     val hoursData = laborCosts.map {
