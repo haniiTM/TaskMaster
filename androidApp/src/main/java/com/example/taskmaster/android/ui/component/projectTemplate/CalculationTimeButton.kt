@@ -22,18 +22,8 @@ import com.example.taskmaster.android.ui.navigation.NavigationItem
 fun CalculationTimeButton(
     navController: NavController,
     projectId: Int?,
-    viewModelURP: UserroleprojectViewModel = getViewModel(),
-    manHoursViewModel: ManHoursViewModel = getViewModel(),
     title: String?
 ) {
-    // Тестрование получение ответа от сервера
-    if (projectId != null) {
-        LaunchedEffect(key1 = true) {
-            //viewModelURP.getCalendarPlan(projectId)
-            manHoursViewModel.getReportManHours(projectId)
-        }
-    }
-
     Button(
         onClick = {
             navController.navigate(
