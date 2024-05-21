@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.screens
 
+import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
@@ -18,9 +19,18 @@ import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.projectTemplate.BoxButton
 import com.example.taskmaster.android.ui.component.taskInfoItems.ListItemList
+import com.example.taskmaster.android.ui.screens.description_screen.DescriptionViewModel
+import org.koin.androidx.compose.getViewModel
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 @Composable
-fun AttachmentsListScreen(navController: NavController, id: Int?, title: String?){
+fun AttachmentsListScreen(
+    navController: NavController,
+    id: Int?,
+    title: String?,
+    descriptionViewModel: DescriptionViewModel = getViewModel()
+){
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
     var selectedFileName by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
@@ -29,7 +39,22 @@ fun AttachmentsListScreen(navController: NavController, id: Int?, title: String?
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedFileUri = uri
-        selectedFileName = uri?.let { getFileName(context, it) }
+        uri?.let {
+            val byteArray = context.contentResolver.openInputStream(it)?.use { inputStream ->
+                getByteArrayFromInputStream(inputStream)
+            }
+
+            selectedFileName = uri?.let { getFileName(context, it) }
+
+            descriptionViewModel.uploadFile(
+                taskId = id!!,
+                data = byteArray!!,
+                fileName = selectedFileName!!
+            )
+            byteArray?.let { bytes ->
+                Log.d("ByteArray", bytes.contentToString())
+            }
+        }
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Header(
@@ -46,13 +71,25 @@ fun AttachmentsListScreen(navController: NavController, id: Int?, title: String?
         BoxButton(text = "Добавить вложение", cardContainerFlag = false) {
             filePickerLauncher.launch("application/*")
         }
-        selectedFileUri?.let { name ->
-            Log.d("name", name.toString())
+        selectedFileUri?.let { uri ->
+            val fileName = getFileName(context, uri)
+            Log.d("FileName", fileName.toString())
         }
     }
 }
 
-fun getFileName(context: android.content.Context, uri: Uri): String? {
+fun getByteArrayFromInputStream(inputStream: InputStream): ByteArray {
+    val buffer = ByteArrayOutputStream()
+    val data = ByteArray(25024)
+    var nRead: Int
+    while (inputStream.read(data, 0, data.size).also { nRead = it } != -1) {
+        buffer.write(data, 0, nRead)
+    }
+    buffer.flush()
+    return buffer.toByteArray()
+}
+
+fun getFileName(context: Context, uri: Uri): String? {
     var name: String? = null
     val cursor = context.contentResolver.query(uri, null, null, null, null)
     cursor?.use {
