@@ -202,11 +202,6 @@ fun NewTaskWindow(
                 )
                 Button(
                     onClick = {
-//                        val task = TaskDTO() {
-//                            name = taskTitle,
-//                            scope = taskAllocatedTime,
-//                            typeActivity = categoryId
-//                        }
                         val task = TaskDTO()
                         task.name = taskTitle
                         task.scope = taskAllocatedTime.toInt()

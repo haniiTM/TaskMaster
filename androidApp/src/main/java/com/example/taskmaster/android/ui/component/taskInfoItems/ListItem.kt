@@ -24,25 +24,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.taskmaster.android.AndroidDownloader
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.activity.MainActivityViewModel
 import com.example.taskmaster.android.ui.component.commonTemplate.DropdownMenuArea
 import com.example.taskmaster.android.ui.component.popupWindows.LaborCostInfo
 import com.example.taskmaster.data.network.models.FileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ListItem(
+    taskId: Int?,
     name: String,
-    itemManHours : ManHoursDTO? = null,
+    itemManHours: ManHoursDTO? = null,
     itemFile: FileDTO? = null,
+    mainActivityViewModel: MainActivityViewModel = getViewModel(),
     attachmentsListFlag: Boolean
-){
+) {
     var showLaborCostInfo by remember {
         mutableStateOf(false)
     }
+    val context = LocalContext.current
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -50,9 +57,16 @@ fun ListItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(45.dp)
-            .clickable { showLaborCostInfo = !showLaborCostInfo }, contentAlignment = Alignment.CenterStart
+            .then(if (!attachmentsListFlag) Modifier.clickable {
+                showLaborCostInfo = !showLaborCostInfo
+            } else Modifier),
+        contentAlignment = Alignment.CenterStart
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(text = name, modifier = Modifier.padding(horizontal = 12.dp), color = Color.Black)
             if (attachmentsListFlag) {
                 DropdownMenuArea(
@@ -74,6 +88,13 @@ fun ListItem(
                             DropdownMenuItem(
                                 text = { Text(text = "Скачать", color = Color.Black) },
                                 onClick = {
+                                    val downloader = AndroidDownloader(context)
+
+                                    downloader.downloadFile(
+                                        url = "http://5.35.85.206:8080/description/download/$taskId/${itemFile?.id}",
+                                        token = mainActivityViewModel.accessToken.value?.tokenLong!!,
+                                        nameFile = name
+                                    )
                                     expanded = !expanded
                                 },
                                 trailingIcon = {
@@ -103,13 +124,13 @@ fun ListItem(
             }
         }
     }
-    Divider (
+    Divider(
         color = MaterialTheme.colorScheme.outline,
         modifier = Modifier
             .height(1.dp)
             .fillMaxWidth()
     )
-    if(showLaborCostInfo) {
+    if (showLaborCostInfo) {
         Dialog(onDismissRequest = { showLaborCostInfo = !showLaborCostInfo }) {
             LaborCostInfo(name, itemManHours!!)
         }

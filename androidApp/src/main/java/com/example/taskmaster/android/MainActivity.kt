@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import com.example.taskmaster.android.di.presentationModule
+import com.example.taskmaster.android.ui.component.authScreenItems.AuthDa
 import com.example.taskmaster.android.ui.navigation.Navigation
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.theme.AppState
@@ -49,10 +50,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         AppState.darkTheme = AppSettings.getDarkTheme(this) // Устанавливаем состояние darkTheme
-
-        val onThemeUpdate: () -> Unit = {
-            AppState.darkTheme = !AppState.darkTheme
-        }
+        AuthDa.AuthTipa = AppSettings.getLoginValid(this)
         val appModules = listOf(presentationModule)
 
         initKoin {
@@ -113,3 +111,6 @@ fun LinearGradientBackground() {
             .background(gradient)
     )
 }
+
+
+

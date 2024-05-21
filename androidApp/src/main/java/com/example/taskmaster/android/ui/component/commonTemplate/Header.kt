@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
+import AppSettings
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -53,7 +55,7 @@ fun Header(
     val projectIdr by remember {
         mutableStateOf(projectId)
     }
-
+    val context = LocalContext.current
     var shouldNavigateToAuth by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     Row(
@@ -224,11 +226,11 @@ fun Header(
                         ActionNotificationTemplate(
                             onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
                             onConfirmation = {
-                                navController.popBackStack(
-                                    NavigationItem.Auth.route,
-                                    inclusive = false,
-                                    saveState = false
-                                )
+                                AppSettings.setLoginValid(context, false)
+                                navController.popBackStack(NavigationItem.Auth.route, inclusive = true)
+                                navController.navigate(NavigationItem.Auth.route) {
+                                    popUpTo(0) { inclusive = true } // This will clear the entire stack
+                                }
                             },
                             title = "Выход из аккаунта",
                             )

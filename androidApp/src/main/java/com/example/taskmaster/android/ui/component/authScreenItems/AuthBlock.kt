@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.authScreenItems
 
+import AppSettings
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -69,7 +70,8 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(10.dp).sizeIn(maxWidth = 278.dp)
+                .padding(10.dp)
+                .sizeIn(maxWidth = 278.dp)
         ) {
             UnifiedTextBox(
                 value = userLogin,
@@ -102,16 +104,17 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                                 isValid = it.tokenLong!!.isNotEmpty()
                                 val result = it.adminOrProjectManager
                                 if (isValid) {
+                                    AppSettings.setLoginValid(context, isValid)
                                     navController.navigate(
-                                        NavigationItem.Projects.passIdAndTitle(
-                                            success = result!!
-                                        )
-                                    )
+                                        NavigationItem.Projects.passIdAndTitle(success = result!!)
+                                    ) {
+                                        popUpTo(NavigationItem.Auth.route) { inclusive = true }
+                                    }
                                 } else {
                                     userPassword = ""
                                     showErrorMessage("Неверный логин или пароль", context = context)
                                 }
-                            }?: run {
+                            } ?: run {
                                 userPassword = ""
                                 showErrorMessage("Неверный логин или пароль", context = context)
                             }
@@ -145,4 +148,8 @@ private fun showErrorMessage(message: String, context: Context) {
         message,
         Toast.LENGTH_LONG
     ).show()
+}
+
+object AuthDa {
+    var AuthTipa by mutableStateOf(false)
 }
