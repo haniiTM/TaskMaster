@@ -47,13 +47,13 @@ fun ListItemList(
             if(attachmentsListFlag) {
                 itemsIndexed(descriptionViewModel.state.value.itemState?.file_resources ?: emptyList()) { _, item ->
                     if (item != null) {
-                        ListItem(name = "${item.orig_filename}.${item.type}" ?: "", itemFile = item, attachmentsListFlag = attachmentsListFlag)
+                        ListItem(name = "${item.orig_filename}.${item.type}" ?: "", itemFile = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
                     }
                 }
             } else {
                 itemsIndexed(laborCostViewModel.state.value.itemState) { _, item ->
                     if (item != null) {
-                        ListItem(name = item.comment ?: "", itemManHours = item, attachmentsListFlag = attachmentsListFlag)
+                        ListItem(name = item.comment ?: "", itemManHours = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
                     }
                 }
             }

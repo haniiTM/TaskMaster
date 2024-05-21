@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.taskmaster.android.ui.component.authScreenItems.AuthDa
 import com.example.taskmaster.android.ui.screens.AttachmentsListScreen
 import com.example.taskmaster.android.ui.screens.CalculationOfLaborCostsScreen
 import com.example.taskmaster.android.ui.screens.ProjectScreen
@@ -24,7 +25,7 @@ import com.taskmaster.ui.screens.AuthScreen
 fun Navigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.Auth.route
+        startDestination = if (AuthDa.AuthTipa) NavigationItem.Projects.route else NavigationItem.Auth.route
     ) {
 
         composable(route = NavigationItem.Auth.route) {

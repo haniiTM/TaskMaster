@@ -2,21 +2,15 @@ package com.example.taskmaster.android.ui.screens.task_screen
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.mappers.toDomain
 import com.example.taskmaster.data.network.ApiService
-import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.TaskByID
 import com.example.taskmaster.data.network.models.TaskDTO
-import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import com.example.taskmaster.domain.models.ItemProjectState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+
 class TaskViewModel constructor ( private val apiService: ApiService) : ViewModel()
 {
     private val _state = mutableStateOf(ItemProjectStates())

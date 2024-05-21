@@ -20,6 +20,7 @@ kotlinxCoroutines = "1.6.0"
 kotlinxSerialization = "1.2.2"
 coroutines = "1.7.0"
 serialization = "1.4.1"
+appcompat = "1.6.1"
 
 [libraries]
 # Compose
@@ -69,6 +70,7 @@ sqldelight-android = { group = "app.cash.sqldelight", name = "android-driver", v
 # iOS App
 ktor-ios = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 sqldelight-ios = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 [plugins]
 # Android
