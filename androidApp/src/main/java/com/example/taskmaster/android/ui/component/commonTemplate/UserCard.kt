@@ -33,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
+import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import org.koin.androidx.compose.getViewModel
 
@@ -44,7 +46,12 @@ fun UserCard(
     isSelected: Boolean,
     onCheckChanged: (Boolean) -> Unit,
     onDelete: () -> Unit,
-    viewModel: TypeOfActivityViewModel = getViewModel(),
+    projectId: Int = 0,
+    taskId: Int = 0,
+    personId: Int,
+    viewModel: NewUserViewModel = getViewModel(),
+    viewTaskModel: TaskViewModel = getViewModel(),
+    triggerRefresh: ((Boolean) -> Unit)? = null,
     role: String? = "",
 ) {
     var paddingValue = 12
@@ -153,6 +160,23 @@ fun UserCard(
                                 onClick = {
                                     onDelete()
                                     expanded = !expanded
+                                    if(taskId != 0) {
+                                        viewModel.removePersonFromTask(
+                                            taskId = taskId,
+                                            personId = personId
+                                        ) { success ->
+                                            // Вызов коллбэка после обновления данных
+                                            if (triggerRefresh != null && success) {
+                                                viewTaskModel.dataTaskById(taskId!!)
+                                                triggerRefresh(success)
+                                            }
+                                        }
+                                    } else {
+                                        viewModel.removePersonFromProject(
+                                            projectId = projectId,
+                                            personId = personId
+                                        )
+                                    }
                                 },
                                 trailingIcon = {
                                     Icon(
