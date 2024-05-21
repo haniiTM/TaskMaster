@@ -20,6 +20,8 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.delete
+import io.ktor.client.request.forms.formData
+import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.put
@@ -27,6 +29,8 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import kotlinx.serialization.Serializable
@@ -941,6 +945,23 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             null
+        }
+    }
+
+    override suspend fun sendFile(fileName: String, taskId: Int, data: ByteArray) {
+        val response: HttpResponse = httpClient.submitFormWithBinaryData(
+            url = "http://5.35.85.206:8080/description/upload/${taskId}",
+            formData = formData {
+                append("file", data, Headers.build {
+                    append(HttpHeaders.ContentType, "application/octet-stream")
+                    append(HttpHeaders.ContentDisposition, "filename=$fileName")
+                })
+            }
+        )
+        if (response.status.isSuccess()) {
+            println("Server returned response")
+        } else {
+            println("Server returned error status: ${response.status}")
         }
     }
 }
