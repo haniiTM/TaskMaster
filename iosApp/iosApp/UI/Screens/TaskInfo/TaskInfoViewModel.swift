@@ -14,7 +14,7 @@ import shared
     @Published private(set) var taskInfo = DetailedTaskInfo()
 
     //    MARK: Methods
-    func updateDataSource(_ id: UInt8) async {
+    func updateDataSource(_ id: UInt16) async {
         do {
             guard
                 let optionalTaskInfo = try await taskInfoUseCase.getTaskInfo(taskId: id)

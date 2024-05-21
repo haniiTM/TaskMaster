@@ -12,7 +12,7 @@ struct TaskInfoView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskInfoViewModel()
 
-    private let taskId: UInt8
+    private let taskId: UInt16
 
     private let projectTitle: String
     private let taskTitle: String
@@ -42,7 +42,7 @@ struct TaskInfoView: View {
     private let laborCostTitle: String
 
     //    MARK: Init
-    init(_ projectTitle: String, taskId: UInt8) {
+    init(_ projectTitle: String, taskId: UInt16) {
         let model = DetailedTaskInfo()
 
         self.taskId = taskId

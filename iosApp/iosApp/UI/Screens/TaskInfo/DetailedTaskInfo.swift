@@ -25,7 +25,7 @@ class DetailedTaskInfo: ProjectInfo {
     //    let haveNotChild: String
 
     init(_ task: TaskByID) {
-        let id = task.id as? UInt8 ?? 0
+        let id = task.id as? UInt16 ?? 0
         let title = task.name ?? "Задача"
         let participiantsValue = task.userCount as? UInt8 ?? 0
 
