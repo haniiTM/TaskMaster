@@ -155,4 +155,26 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
             }
         }
     }
+
+    fun removePersonFromProject(projectId: Int, personId: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.deletePersonFromProject(projectId, personId)
+                getPersonInProject(projectId)
+            } catch(e: Exception) {
+                println("Exception in ${e}")
+            }
+        }
+    }
+
+    fun removePersonFromTask(taskId: Int, personId: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.deletePersonFromTask(taskId, personId))
+                getPersonInTask(taskId)
+            } catch(e: Exception) {
+                println("Exception in ${e}")
+            }
+        }
+    }
 }
