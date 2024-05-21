@@ -70,5 +70,7 @@ interface ApiService {
     suspend fun downloadFileForManHours(projectId: Int): String?
     // Список файлов (вложений) котрые есть в задаче
     suspend fun listFileInTask(descriptionId: Int): DescriptionDTOFileDTO?
+    // Отправка файла на сервер
+    suspend fun sendFile(fileName: String, taskId: Int, data: ByteArray)
 }
 

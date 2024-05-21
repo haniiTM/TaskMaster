@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
+import com.example.taskmaster.data.network.models.ManHoursDTO
 import kotlinx.coroutines.launch
 
 class DescriptionViewModel constructor( private val apiService: ApiService) : ViewModel() {
@@ -32,4 +33,14 @@ class DescriptionViewModel constructor( private val apiService: ApiService) : Vi
         val itemState: DescriptionDTOFileDTO? = null,
         val isLoading: Boolean = false
     )
+
+    fun uploadFile(fileName: String, taskId: Int, data: ByteArray) {
+        viewModelScope.launch {
+            try {
+                apiService.sendFile(fileName, taskId, data)
+            } catch(e: Exception) {
+                println("Exception in ${e}")
+            }
+        }
+    }
 }
