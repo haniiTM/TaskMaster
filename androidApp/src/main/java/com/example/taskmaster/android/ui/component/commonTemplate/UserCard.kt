@@ -29,13 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
-import com.example.taskmaster.android.ui.screens.type_of_activity.TypeOfActivityViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -224,9 +222,9 @@ fun getIconForRole(role: String?): Int {
     return when (role) {
         "Backend" -> R.drawable.backend_role_icon
         "Frontend" -> R.drawable.frontend_role_icon
-        "UI/UX дизайн" -> R.drawable.tester_role_icon
-        "Тестирование" -> R.drawable.designer_role_icon
-        "Проект менеджер" -> R.drawable.project_manager_role_icon
+        "Тестирование" -> R.drawable.tester_role_icon
+        "UI/UX дизайн" -> R.drawable.designer_role_icon
+        "Проектный менеджмент" -> R.drawable.project_manager_role_icon
         "Админ" -> R.drawable.administrator_role_icon
         else -> R.drawable.warning
     }
