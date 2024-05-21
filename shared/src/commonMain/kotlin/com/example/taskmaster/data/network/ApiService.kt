@@ -44,7 +44,12 @@ interface ApiService {
     // Извлечение пользователей, которые еще не были добавлены к задаче
     suspend fun fetchPersonFreeForTask(projId: Int): MutableList<PersonDTO?>
     suspend fun linkUserTaskOrProject(urp: UserRoleProjectDTO): Boolean
+    // Удаление пользователя из системы
     suspend fun deletePersonFromSystem(personId: MutableList<Int>)
+    // Удаление пользователя из проекта
+    suspend fun deletePersonFromProject(projectId: Int, personId: Int)
+    // Удаление пользователя из задачи
+    suspend fun deletePersonFromTask(taskId: Int, personId: Int): Boolean
     // Обновление затрачиваемых часов для задачи
     suspend fun updateHoursSpent(urp: UserRoleProjectDTO, taskId: Int): Boolean
     // Обновление оценки часов для выполения задачи

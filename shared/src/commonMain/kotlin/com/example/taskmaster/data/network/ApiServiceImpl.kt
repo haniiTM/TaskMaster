@@ -635,6 +635,58 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
+    override suspend fun deletePersonFromProject(projectId: Int, personId: Int) {
+        try {
+            val response: HttpResponse = httpClient
+                .delete("http://5.35.85.206:8080/user_role_project/fromproject/${projectId}/${personId}") {
+                    contentType(ContentType.Application.Json)
+                }
+            if (response.status.isSuccess()) {
+                println("Server link user to task or project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun deletePersonFromTask(taskId: Int, personId: Int): Boolean {
+        var success = false
+        try {
+            val response: HttpResponse = httpClient
+                .delete("http://5.35.85.206:8080/user_role_project/fromtask/${taskId}/${personId}") {
+                    contentType(ContentType.Application.Json)
+                }
+            if (response.status.isSuccess()) {
+                println("Server link user to task or project: ${response.status}")
+                success = true
+                return success
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            return success
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            return success
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            return success
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            return success
+        }
+        return success
+    }
+
     override suspend fun updateHoursSpent(urp: UserRoleProjectDTO, taskId: Int): Boolean {
         var success = false
         try {
