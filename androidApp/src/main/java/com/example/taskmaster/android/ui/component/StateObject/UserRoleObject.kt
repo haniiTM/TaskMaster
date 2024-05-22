@@ -1,9 +1,9 @@
-package com.example.taskmaster.android.ui.theme
+package com.example.taskmaster.android.ui.component.StateObject
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
-object AppState {
-    var darkTheme by mutableStateOf(false)
+object RoleObject {
+    var PMOrAdmin by mutableStateOf(false)
 }
