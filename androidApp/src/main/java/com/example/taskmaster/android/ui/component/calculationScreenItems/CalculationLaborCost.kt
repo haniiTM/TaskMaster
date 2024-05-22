@@ -27,7 +27,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
 import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
+import com.example.taskmaster.android.ui.theme.Lime
 import org.koin.androidx.compose.getViewModel
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,9 +48,12 @@ fun TableHeader(dates: List<Date?>) {
 
 @Composable
 fun TableRow(
-    data: Pair<Int?, String?>,
+    data: Pair<Int?, String?>? = null,
+    ganttData: Pair<Int, Boolean>? = null,
     dates: List<Date?>,
-    hoursData: List<Triple<Date?, String?, Int?>>
+    hoursData: List<Triple<Date?, String?, Int?>>? = null,
+    calendarPlan: Boolean,
+    hoursGanttData: List<Triple<Date?, String?, Int?>>? = null
 ) {
     val uniqueDates = dates.distinct().filterNotNull().sorted()
 
@@ -58,12 +63,13 @@ fun TableRow(
             .height(40.dp)
             .background(Color.White)
     ) {
-        FirstTableDataCell(text = data.first.toString())
+        FirstTableDataCell(text = if(calendarPlan) ganttData?.first.toString() else data?.first.toString())
 
         uniqueDates.forEach { date ->
-            val matchingEntry = hoursData.find { it.first == date && it.third == data.first }
-            val matchingHour = matchingEntry?.second ?: "-"
-            TableDataCell(text = matchingHour)
+            val matchingEntry = if(calendarPlan) hoursGanttData?.find { it.first == date && it.third == ganttData?.first } else hoursData?.find { it.first == date && it.third == data?.first }
+            val matchingHour = if (calendarPlan) "" else matchingEntry?.second ?: "-"
+            val matchingHourColor = if (calendarPlan && matchingEntry?.second == "true") Lime else Color.White
+            TableDataCell(text = matchingHour, calendarPlan, matchingHourColor)
         }
     }
 }
@@ -71,13 +77,16 @@ fun TableRow(
 @Composable
 fun CalculationOfLaborCosts(
     laborCostViewModel: ManHoursViewModel = getViewModel(),
+    ganttViewModel: UserroleprojectViewModel = getViewModel(),
     testViewModel: UserroleprojectViewModel = getViewModel(),
-    id: Int?
+    id: Int?,
+    calendarPlan: Boolean
 ) {
     Log.d("project id", id.toString())
     LaunchedEffect(key1 = id) {
         laborCostViewModel.getReportManHours(id!!)
         testViewModel.getCalendarPlan(id!!)
+        ganttViewModel.getCalendarPlan(id!!)
     }
     val laborCosts = laborCostViewModel.stateManHoursReport.value.itemState
     val dates = laborCosts.map { it?.createdAt?.toDate() }
@@ -92,6 +101,19 @@ fun CalculationOfLaborCosts(
     val hoursData = laborCosts.map {
         Triple(it?.createdAt?.toDate(), it?.hoursSpent ?: "-", it?.taskId)
     }
+    val gantt = ganttViewModel.state.value.itemState
+    val ganttDatesAsString = gantt.filterNotNull().flatMap { it.execution_date }
+    val ganttDatesAsDates = ganttDatesAsString.mapNotNull { it?.toGanttDate() }
+    val ganttValue = gantt.map {
+        Pair(it?.taskId ?: -1, it?.haveExecuter ?: false)
+    }.sortedBy { it.first }.distinct()
+    Log.d("ganttValue", ganttValue.toString())
+    val hoursGanttData = gantt.flatMap { task ->
+        task?.execution_date?.map { date ->
+            Triple(date?.toGanttDate(), task.haveExecuter?.toString() ?: "-", task.taskId)
+        } ?: emptyList()
+    }
+    val uniqueGanttDates = ganttDatesAsDates.distinct().filterNotNull().sorted()
     Box(
         modifier = Modifier
             .padding(start = 14.dp, end = 14.dp, top = 26.dp, bottom = 13.dp)
@@ -99,34 +121,69 @@ fun CalculationOfLaborCosts(
             .fillMaxWidth()
             .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(15.dp))
     ) {
-        LazyRow(
-            Modifier
-                .fillMaxSize()
-                .clip(
-                    shape = if (uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
-                        15.dp,
-                        0.dp,
-                        0.dp,
-                        15.dp
-                    )
-                ),
-        ) {
-            item {
-                LazyColumn(
-                    Modifier
-                        .fillMaxSize()
-                        .clip(
-                            shape = if (uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
-                                15.dp,
-                                0.dp,
-                                0.dp,
-                                15.dp
-                            )
+        if (calendarPlan) {
+            LazyRow(
+                Modifier
+                    .fillMaxSize()
+                    .clip(
+                        shape = if (uniqueGanttDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
+                            15.dp,
+                            0.dp,
+                            0.dp,
+                            15.dp
                         )
-                ) {
-                    item { TableHeader(dates) }
-                    itemsIndexed(labors) { _, rowData ->
-                        TableRow(rowData, dates, hoursData)
+                    ),
+            ) {
+                item {
+                    LazyColumn(
+                        Modifier
+                            .fillMaxSize()
+                            .clip(
+                                shape = if (uniqueGanttDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
+                                    15.dp,
+                                    0.dp,
+                                    0.dp,
+                                    15.dp
+                                )
+                            )
+                    ) {
+                        item { TableHeader(ganttDatesAsDates) }
+                        itemsIndexed(ganttValue) { _, rowData ->
+                            TableRow(ganttData = rowData, dates = ganttDatesAsDates, hoursGanttData = hoursGanttData, calendarPlan = calendarPlan)
+                        }
+                    }
+                }
+            }
+        } else {
+            LazyRow(
+                Modifier
+                    .fillMaxSize()
+                    .clip(
+                        shape = if (uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
+                            15.dp,
+                            0.dp,
+                            0.dp,
+                            15.dp
+                        )
+                    ),
+            ) {
+                item {
+                    LazyColumn(
+                        Modifier
+                            .fillMaxSize()
+                            .clip(
+                                shape = if (uniqueDates.size >= 3) RoundedCornerShape(15.dp) else RoundedCornerShape(
+                                    15.dp,
+                                    0.dp,
+                                    0.dp,
+                                    15.dp
+                                )
+                            )
+                    ) {
+                        item { TableHeader(dates) }
+                        itemsIndexed(labors) { _, rowData ->
+                            TableRow(data = rowData, dates = dates, hoursData = hoursData, calendarPlan = calendarPlan)
+                        }
                     }
                 }
             }
@@ -169,17 +226,29 @@ fun FirstTableDataCell(
 
 @Composable
 fun TableDataCell(
-    text: String
+    text: String,
+    calendarPlan: Boolean,
+    backgroundColor: Color
 ) {
-    Text(
-        text = text,
-        Modifier
-            .border(1.dp, Color.Black)
-            .width(90.dp)
-            .height(40.dp)
-            .padding(8.dp),
-        textAlign = TextAlign.Center, color = Color.Black
-    )
+    if (calendarPlan){
+        Box(
+            modifier = Modifier
+                .border(1.dp, Color.Black)
+                .width(90.dp)
+                .height(40.dp)
+                .background(backgroundColor)
+        ) {}
+    } else {
+        Text(
+            text = text,
+            Modifier
+                .border(1.dp, Color.Black)
+                .width(90.dp)
+                .height(40.dp)
+                .padding(8.dp),
+            textAlign = TextAlign.Center, color = Color.Black
+        )
+    }
 }
 
 fun String.toDate(): Date? {
@@ -193,4 +262,18 @@ fun String.toDate(): Date? {
 fun formatDate(date: Date): String {
     val sdf = SimpleDateFormat("dd/MM/yy", Locale.ENGLISH)
     return sdf.format(date)
+}
+
+fun String.toGanttDate(): Date? {
+    if (this == null || this == "null") {
+        return null
+    }
+    val format = "yyyy-MM-dd"
+    val sdf = SimpleDateFormat(format, Locale.ENGLISH)
+    try {
+        return sdf.parse(this)
+    } catch (e: ParseException) {
+        // ignore
+    }
+    return null
 }

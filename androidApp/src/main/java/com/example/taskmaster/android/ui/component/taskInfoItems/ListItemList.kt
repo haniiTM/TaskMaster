@@ -53,7 +53,7 @@ fun ListItemList(
             } else {
                 itemsIndexed(laborCostViewModel.state.value.itemState) { _, item ->
                     if (item != null) {
-                        ListItem(name = item.comment ?: "", itemManHours = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
+                        ListItem(itemManHours = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
                     }
                 }
             }
