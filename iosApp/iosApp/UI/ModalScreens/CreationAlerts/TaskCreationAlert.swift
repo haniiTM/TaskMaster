@@ -30,6 +30,11 @@ struct TaskCreationAlert: View {
     }
 
     private var ViewBody: some View {
+        TaskCreationForm
+            .task { await viewModel.getCategoryList() }
+    }
+
+    private var TaskCreationForm: some View {
         Group {
             TextField(text: $title) {
                 Text("Название задачи")
@@ -42,9 +47,11 @@ struct TaskCreationAlert: View {
             }
 
             Menu {
-                Button("Backend") {
-                    categoryId = 0
-                    categoryMenuTitle = "Backend"
+                ForEach(viewModel.categoryListSignal, id: \.id) { category in
+                    Button(category.name) {
+                        categoryId = UInt8(category.id)
+                        categoryMenuTitle = category.name
+                    }
                 }
             } label: {
                 HStack {

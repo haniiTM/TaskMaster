@@ -13,6 +13,7 @@ import shared
     private let taskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()
     @Published private(set) var completedTaskListSignal = [TaskInfo]()
+    @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
 
     //    MARK: Methods
     func updateDataSource(_ id: UInt16) async {
@@ -24,6 +25,26 @@ import shared
 
             unCompletedTaskListSignal = optionalUnCompletedTaskList.decodedDtoList()
             completedTaskListSignal = optionalCompletedTaskList.decodedDtoList()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func getCategoryList() async {
+        do {
+            guard
+                let optionalCategoryList = try await taskListUseCase.getTaskCategoryList() as? [TypeOfActivityDTO?]
+            else { return }
+
+            var categoryList = [TypeOfActivityDTO]()
+
+            optionalCategoryList.forEach { category in
+                guard let category = category else { return }
+                
+                categoryList.append(category)
+            }
+
+            categoryListSignal = categoryList
         } catch {
             print(error.localizedDescription)
         }
