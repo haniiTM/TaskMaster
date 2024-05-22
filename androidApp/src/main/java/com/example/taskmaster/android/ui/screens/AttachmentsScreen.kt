@@ -59,13 +59,11 @@ fun AttachmentsListScreen(
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Header(
             text = title ?: "Заголовок отсутствует",
-            iconItem = R.drawable.more,
             actionIcons = listOf(
                 R.drawable.search1_icon, R.drawable.users_icon
             ),
             navController = navController,
-            actionTitle = listOf("Поиск", "Пользователи"),
-            projectScreenKey = false
+            actionTitle = listOf("Поиск", "Пользователи")
         )
         ListItemList(taskId = id ?: 0, attachmentsListFlag = true)
         BoxButton(text = "Добавить вложение", cardContainerFlag = false) {

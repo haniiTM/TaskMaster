@@ -18,7 +18,6 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
     Column {
         Header(
             text = title ?: "Заголовок отсутствует",
-            iconItem = R.drawable.more,
             actionIcons = listOf(
                 R.drawable.search1_icon, R.drawable.users_icon
             ),
@@ -26,7 +25,7 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
             actionTitle = listOf("Поиск", "Пользователи"),
             projectScreenKey = false,
             projectId = id
-        )
+            )
         LazyColumn(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {

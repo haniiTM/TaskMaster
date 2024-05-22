@@ -2,6 +2,7 @@ package com.example.taskmaster.android.ui.component.commonTemplate
 
 import AppSettings
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -45,7 +46,6 @@ import com.example.taskmaster.android.ui.navigation.NavigationItem
 fun Header(
     projectScreenKey: Boolean = false,
     text: String,
-    iconItem: Int,
     actionIcons: List<Int>,
     navController: NavController,
     result: Boolean = false,
@@ -84,7 +84,10 @@ fun Header(
             DropdownMenuArea(
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded }) {
-                IconButton(onClick = { expanded = !expanded }) {
+                IconButton(onClick = {
+                    expanded = !expanded
+                    Log.d("qwerty", actionTitle.toString())
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.more),
                         contentDescription = "menu_icon",
@@ -96,7 +99,10 @@ fun Header(
                         modifier = Modifier
                             .fillMaxWidth(0.5f)
                             .background(Color.White)
-                            .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
+                            .border(
+                                BorderStroke(1.dp, Color.Black),
+                                shape = RoundedCornerShape(15.dp)
+                            )
                     ) {
                         val itemsToDisplay = if (RoleObject.PMOrAdmin) {
                             // Для администратора
@@ -115,14 +121,18 @@ fun Header(
 
                         itemsToDisplay.forEachIndexed { index, item ->
                             val isLastItem = index == itemsToDisplay.size - 1
-                            val iconColor = if (isLastItem) Color.Red else Color.Black
+                            val iconColor = if(projectScreenKey)if (isLastItem) Color.Red else Color.Black else Color.Black
                             DropdownMenuItem(
                                 onClick = {
                                     selectedItem = item
-                                    if (item == actionTitle[4]) {
-                                        shouldNavigateToAuth = true
+                                    if (projectScreenKey) {
+                                        if (item == actionTitle[4]) {
+                                            shouldNavigateToAuth = true
+                                        } else {
+                                            showDialog = true
+                                        }
                                     } else {
-                                        showDialog = true
+                                        showDialog = !showDialog
                                     }
                                     expanded = false
                                 },
@@ -151,24 +161,50 @@ fun Header(
             }
             if (showDialog) {
                 Dialog(onDismissRequest = { showDialog = false }) {
-                    if (RoleObject.PMOrAdmin) {
-                        when (selectedItem) {
-                            actionTitle[0] -> SearchPopUpWindow { showDialog = false }
-                            actionTitle[1] -> NewUserWindow (onDismissRequest = {showDialog = false})
-                            actionTitle[2] -> UserList(
-                                checkBoxAble = true,
-                                addRoleButton = false,
-                                buttonText = "Удалить",
-                                showPersonInProject = false,
-                                removeUserWindowKey = true
-                            )
-                            actionTitle[3] -> NewProjectWindow (onDismissRequest = {showDialog = false})
-                            actionTitle[4] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                    if (projectScreenKey) {
+                        if (RoleObject.PMOrAdmin) {
+                            when (selectedItem) {
+                                actionTitle[0] -> SearchPopUpWindow { showDialog = false }
+                                actionTitle[1] -> NewUserWindow(onDismissRequest = {
+                                    showDialog = false
+                                })
+
+                                actionTitle[2] -> UserList(
+                                    checkBoxAble = true,
+                                    addRoleButton = false,
+                                    buttonText = "Удалить",
+                                    showPersonInProject = false,
+                                    removeUserWindowKey = true
+                                )
+
+                                actionTitle[3] -> NewProjectWindow(onDismissRequest = {
+                                    showDialog = false
+                                })
+
+                                actionTitle[4] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                            }
+                        } else {
+                            when (selectedItem) {
+                                actionTitle[0] -> SearchPopUpWindow { showDialog = false }
+                                actionTitle[1] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                            }
                         }
-                    } else {
+                    } else if (!projectScreenKey && RoleObject.PMOrAdmin) {
                         when (selectedItem) {
                             actionTitle[0] -> SearchPopUpWindow { showDialog = false }
-                            actionTitle[4] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                            actionTitle[1] -> UserList(
+                                checkBoxAble = false,
+                                addRoleButton = true,
+                                buttonText = "Добавить пользователя",
+                                paddingValue = 20,
+                                projectId = projectIdr!!,
+                                showPersonInProject = true,
+                                removeUserWindowKey = false
+                            )
+                        }
+                    }else{
+                        when(selectedItem){
+                            actionTitle[0] -> SearchPopUpWindow { showDialog = false }
                         }
                     }
                 }
@@ -178,6 +214,7 @@ fun Header(
                     ActionNotificationTemplate(
                         onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
                         onConfirmation = {
+                            shouldNavigateToAuth = !shouldNavigateToAuth
                             AppSettings.setLoginValid(context, false)
                             navController.popBackStack(NavigationItem.Auth.route, inclusive = true)
                             navController.navigate(NavigationItem.Auth.route) {
@@ -188,6 +225,8 @@ fun Header(
                     )
                 }
             }
+
         }
     }
 }
+

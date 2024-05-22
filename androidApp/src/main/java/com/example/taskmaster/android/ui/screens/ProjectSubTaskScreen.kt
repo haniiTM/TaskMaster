@@ -36,14 +36,12 @@ fun ProjectSubTaskScreen(
         Column(modifier = Modifier.fillMaxWidth()) {
             Header(
                 text = title ?: "Заголовок отсутствует",
-                iconItem = R.drawable.more,
                 actionIcons = listOf(
                     R.drawable.search1_icon, R.drawable.users_icon
                 ),
                 navController = navController,
                 actionTitle = listOf("Поиск", "Пользователи"),
-                projectScreenKey = false,
-                projectId = id,
+                projectId = id
             )
 
             LazyColumn(
