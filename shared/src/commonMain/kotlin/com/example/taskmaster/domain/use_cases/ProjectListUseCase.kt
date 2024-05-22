@@ -12,4 +12,8 @@ class ProjectListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun createProject(projectName: String) {
         return apiService.createProject(projectName)
     }
+
+    suspend fun deleteProject(projectId: Int) {
+        return apiService.DeleteTaskOrProject(projectId)
+    }
 }

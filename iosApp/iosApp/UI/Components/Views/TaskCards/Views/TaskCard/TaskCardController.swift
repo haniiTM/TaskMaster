@@ -9,10 +9,12 @@
 final class TaskCardController: TaskCardControllerProtocol {
     //    MARK: Props
     let model: any TaskInfoProtocol
+    private let viewModel: TaskCardViewModelProtocol
 
     //    MARK: Init
-    required init(model: any TaskInfoProtocol) {
+    init(model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol) {
         self.model = model
+        self.viewModel = viewModel
     }
 
     //    MARK: Methods

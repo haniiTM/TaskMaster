@@ -99,6 +99,7 @@
 		CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */; };
 		CEC085FC2BF79B3800BBBEC2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */; };
 		CEC085FE2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */; };
+		CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */; };
 		CED37B322BFCF4FC00F9629D /* ViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B312BFCF4FC00F9629D /* ViewModelProtocols.swift */; };
 		CED37B352BFCFC0500F9629D /* ProjectListNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B342BFCFC0500F9629D /* ProjectListNavBar.swift */; };
 		CED37B372BFCFC8500F9629D /* TaskListNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B362BFCFC8500F9629D /* TaskListNavBar.swift */; };
@@ -203,6 +204,7 @@
 		CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
 		CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoProtocol.swift; sourceTree = "<group>"; };
+		CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCreationAlert.swift; sourceTree = "<group>"; };
 		CED37B312BFCF4FC00F9629D /* ViewModelProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocols.swift; sourceTree = "<group>"; };
 		CED37B342BFCFC0500F9629D /* ProjectListNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListNavBar.swift; sourceTree = "<group>"; };
 		CED37B362BFCFC8500F9629D /* TaskListNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListNavBar.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 		289BFD372BD1914C00099EAE /* ModalScreens */ = {
 			isa = PBXGroup;
 			children = (
+				CEC601082BFDFD000016DC0F /* CreationAlerts */,
 			);
 			path = ModalScreens;
 			sourceTree = "<group>";
@@ -686,6 +689,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		CEC601082BFDFD000016DC0F /* CreationAlerts */ = {
+			isa = PBXGroup;
+			children = (
+				CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */,
+			);
+			path = CreationAlerts;
+			sourceTree = "<group>";
+		};
 		CED37B302BFCF4B200F9629D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -833,6 +844,7 @@
 				28609D042BD15A42005D2D01 /* ScreenInfoButton.swift in Sources */,
 				2864E6AE2BD38F7600504DE0 /* TaskCardsProtocols.swift in Sources */,
 				28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */,
+				CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */,
 				CED37B352BFCFC0500F9629D /* ProjectListNavBar.swift in Sources */,
 				289BFD2F2BD18F5F00099EAE /* ActionButtonsConstants.swift in Sources */,
 				CED37B3B2BFD1E8E00F9629D /* ProjectCreationAlert.swift in Sources */,

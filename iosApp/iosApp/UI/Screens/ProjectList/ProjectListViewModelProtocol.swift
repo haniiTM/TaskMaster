@@ -8,10 +8,4 @@
 
 import Foundation
 
-protocol ProjectListViewModelProtocol: AnyObject {
-    //    MARK: Props
-    var projectListSignal: Box<[TaskInfo]?> { get }
-
-    //    MARK: Methods
-    func updateDataSource()
-}
+protocol ProjectListViewModelProtocol: TaskCardViewModelProtocol, Searchable {}

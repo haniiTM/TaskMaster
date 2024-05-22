@@ -8,7 +8,7 @@
 
 import shared
 
-@MainActor final class TaskListViewModel: ObservableObject {
+@MainActor final class TaskListViewModel: ObservableObject, TaskListViewModelProtocol {
     //    MARK: Props
     private let taskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()
@@ -37,5 +37,13 @@ import shared
     func addCompletedTask() {
 
         //        updateDataSource()
+    }
+
+    func deleteCard(_ id: UInt16) async {
+
+    }
+
+    func search() async {
+
     }
 }

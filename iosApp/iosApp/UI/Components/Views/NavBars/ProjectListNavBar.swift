@@ -38,8 +38,17 @@ struct ProjectListNavBar<Content: View>: View {
             Label("Добавить пользователя", systemImage: "person.crop.circle.badge.plus")
         }
 
+        Button(action: {}) {
+            Label("Удалить пользователя", systemImage: "person.crop.circle.badge.minus")
+        }
+
         Button(action: { alertManager.addProjectState.toggle() }) {
             Label("Добавить проект", systemImage: "plus.rectangle.on.rectangle")
+        }
+
+        Button(role: .destructive, action: {}) {
+            Label("Выйти", systemImage: "rectangle.portrait.and.arrow.right")
+                .tint(Color(uiColor: .systemPink))
         }
     }
 }

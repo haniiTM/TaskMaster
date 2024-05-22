@@ -8,7 +8,7 @@
 
 import shared
 
-@MainActor final class SubTaskListViewModel: ObservableObject {
+@MainActor final class SubTaskListViewModel: ObservableObject, SubTaskListViewModelProtocol {
     //    MARK: Props
     private let subTaskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedSubTaskListSignal = [TaskInfo]()
@@ -27,5 +27,13 @@ import shared
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func deleteCard(_ id: UInt16) async {
+
+    }
+
+    func search() async {
+        
     }
 }
