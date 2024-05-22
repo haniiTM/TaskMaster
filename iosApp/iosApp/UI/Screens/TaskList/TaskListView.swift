@@ -11,6 +11,7 @@ import SwiftUI
 struct TaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskListViewModel()
+    @StateObject private var stateManager = TaskListAlertManager()
     private let model: ProjectInfo
 
     //    MARK: Init
@@ -20,6 +21,11 @@ struct TaskListView: View {
 
     //    MARK: Body
     var body: some View {
+        ViewBody
+            .task { await viewModel.updateDataSource(model.id) }
+    }
+
+    private var ViewBody: some View {
         ProjectFrameView(model.title) {
             NavigationLink(destination: EstimationCalendarView(model)) {
                 EstimatesScreenInfoButton()
@@ -33,7 +39,7 @@ struct TaskListView: View {
                     }.tint(.primary)
                 }
 
-                TaskCreationButton()
+                TaskCreationButton(stateManager: stateManager)
                     .onTapGesture {
                         viewModel.addUncompletedTask()
                     }
@@ -46,9 +52,8 @@ struct TaskListView: View {
                     }.tint(.primary)
                 }
             }
-        }
-        .task {
-            await viewModel.updateDataSource(model.id)
+        }.sheet(isPresented: $stateManager.addTaskState) {
+            TaskCreationAlert(alertManager: stateManager, viewModel: viewModel)
         }
     }
 }
