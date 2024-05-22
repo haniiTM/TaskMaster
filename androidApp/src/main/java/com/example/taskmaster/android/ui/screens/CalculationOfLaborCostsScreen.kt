@@ -33,7 +33,6 @@ import com.example.taskmaster.android.AndroidDownloader
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.activity.MainActivityViewModel
 import com.example.taskmaster.android.ui.component.calculationScreenItems.CalculationOfLaborCosts
-import com.example.taskmaster.android.ui.component.calculationScreenItems.CalendarPlan
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
 import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
@@ -128,7 +127,7 @@ fun CalculationOfLaborCostsScreen(
                         )
                     }
                 }
-                CalendarPlan(id = result)
+                CalculationOfLaborCosts(id = result, calendarPlan = true)
             }
             Column {
                 Row(
@@ -185,7 +184,7 @@ fun CalculationOfLaborCostsScreen(
                         )
                     }
                 }
-                CalculationOfLaborCosts(id = result)
+                CalculationOfLaborCosts(id = result, calendarPlan = false)
             }
         }
     }
