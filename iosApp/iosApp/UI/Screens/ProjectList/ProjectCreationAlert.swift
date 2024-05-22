@@ -19,15 +19,26 @@ struct ProjectCreationAlert: View {
     }
 
     var body: some View {
-        VStack {
-            TextField("Название проекта", text: $text)
-
-            Button("Создать проект") {
-                Task {
-                    await viewModel.createProject(text)
-                    alertManager.addProjectState.toggle()
-                }
-            }
+        TemplateCreationAlert("Создать проект")
+        { ViewBody } action: {
+            Task { await addProject(text) }
         }
+    }
+
+    private var ViewBody: some View {
+        TextField(text: $text) {
+            Text("Название проекта")
+                .padding()
+        }
+        .padding()
+        .background(
+            .secondary,
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
+        )
+    }
+
+    private func addProject(_ title: String) async {
+        await viewModel.createProject(title)
+        alertManager.addProjectState.toggle()
     }
 }

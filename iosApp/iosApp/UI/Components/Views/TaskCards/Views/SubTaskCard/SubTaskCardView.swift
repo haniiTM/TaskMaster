@@ -13,8 +13,8 @@ struct SubTaskCardView: View {
     private let controller: SubTaskCardControllerProtocol
 
     //    MARK: Init
-    init(model: TaskInfo) {
-        controller = SubTaskCardController(model: model)
+    init(model: TaskInfo, viewModel: TaskCardViewModelProtocol) {
+        controller = SubTaskCardController(model: model, viewModel: viewModel)
     }
 
     //    MARK: Body

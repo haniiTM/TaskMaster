@@ -8,11 +8,13 @@
 
 final class SubTaskCardController: SubTaskCardControllerProtocol {
     //    MARK: Props
+    private let viewModel: TaskCardViewModelProtocol
     let model: any TaskInfoProtocol
 
     //    MARK: Init
-    required init(model: any TaskInfoProtocol) {
+    required init(model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol) {
         self.model = model
+        self.viewModel = viewModel
     }
 
     //    MARK: Methods

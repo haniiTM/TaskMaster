@@ -13,8 +13,8 @@ struct ProjectCardView: View {
     private let controller: ProjectCardControllerProtocol
 
     //    MARK: Init
-    init(model: ProjectInfo) {
-        controller = ProjectCardController(model: model)
+    init(model: ProjectInfo, viewModel: ProjectListViewModelProtocol) {
+        controller = ProjectCardController(model: model, viewModel: viewModel)
     }
 
     //    MARK: Body
@@ -33,10 +33,6 @@ struct ProjectCardView: View {
                 .multilineTextAlignment(.leading)
 
             Spacer()
-
-//            if controller.isUrgent {
-//                Image(systemName: controller.urgentImageName)
-//            }
         }
 
         Text(controller.participiantsTitle)

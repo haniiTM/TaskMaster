@@ -12,7 +12,7 @@ protocol TaskCardActions: Openable & Removable {}
 protocol CardInfoProtocol {
     var model: any TaskInfoProtocol { get }
 
-    init(model: any TaskInfoProtocol)
+    init(model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol)
 }
 
 protocol TaskTitleProvider: CardInfoProtocol {
