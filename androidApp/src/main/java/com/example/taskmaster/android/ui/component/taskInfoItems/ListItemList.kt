@@ -16,16 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.taskmaster.android.ui.screens.description_screen.DescriptionViewModel
 import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ListItemList(
     laborCostViewModel: ManHoursViewModel = getViewModel(),
+    descriptionViewModel: DescriptionViewModel = getViewModel(),
     taskId: Int,
     attachmentsListFlag: Boolean
 ) {
     LaunchedEffect(key1 = true) {
+        descriptionViewModel.getDescription(taskId)
         laborCostViewModel.getManHours(taskId)
     }
 
@@ -41,11 +44,20 @@ fun ListItemList(
             .background(Color.White)
     ) {
         LazyColumn {
-            itemsIndexed(laborCostViewModel.state.value.itemState) { _, item ->
-                if (item != null) {
-                    ListItem(name = item.comment ?: "", item = item, attachmentsListFlag = attachmentsListFlag)
+            if(attachmentsListFlag) {
+                itemsIndexed(descriptionViewModel.state.value.itemState?.file_resources ?: emptyList()) { _, item ->
+                    if (item != null) {
+                        ListItem(name = "${item.orig_filename}.${item.type}" ?: "", itemFile = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
+                    }
+                }
+            } else {
+                itemsIndexed(laborCostViewModel.state.value.itemState) { _, item ->
+                    if (item != null) {
+                        ListItem(name = item.comment ?: "", itemManHours = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
+                    }
                 }
             }
+
         }
     }
 }

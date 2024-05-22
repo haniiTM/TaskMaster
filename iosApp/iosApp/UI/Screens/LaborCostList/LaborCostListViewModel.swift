@@ -14,7 +14,7 @@ import shared
     @Published var laborCostList = [ManHoursDTO]()
 
     //    MARK: Methods
-    func updateDataSource(_ taskId: UInt8) async {
+    func updateDataSource(_ taskId: UInt16) async {
         do {
             guard
                 let unwrappedLaborCostList = try await laborCostListUseCase.getLaborCostList(taskId: Int32(taskId)) as? [ManHoursDTO?]

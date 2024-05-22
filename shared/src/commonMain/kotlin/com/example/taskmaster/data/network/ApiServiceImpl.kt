@@ -4,7 +4,7 @@ import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.data.network.models.ActivityDTO
 import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.Dependence
-import com.example.taskmaster.data.network.models.DescriptionDTO
+import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.ManHoursReportDTO
 import com.example.taskmaster.data.network.models.PersonDTO
@@ -20,6 +20,8 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.delete
+import io.ktor.client.request.forms.formData
+import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.put
@@ -27,6 +29,8 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import kotlinx.serialization.Serializable
@@ -323,18 +327,7 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             return  mutableListOf() // возвращаем пустой список
         }
     }
-    override suspend fun fetchDescription(descrId: Int): MutableList<DescriptionDTO?> {
-        val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/description/${descrId}")
-        if (response.status.isSuccess()) {
-            val json = response.bodyAsText()
-            val description = Json.decodeFromString<MutableList<DescriptionDTO?>>(json)
-            println("Server returned description: ${description}")
-            return description
-        } else {
-            println("Server returned error status: ${response.status}")
-            return  mutableListOf() // возвращаем пустой список
-        }
-    }
+
     override suspend fun fetchStatus(): MutableList<StatusDTO?> {
         return try {
             val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/status")
@@ -646,6 +639,58 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         }
     }
 
+    override suspend fun deletePersonFromProject(projectId: Int, personId: Int) {
+        try {
+            val response: HttpResponse = httpClient
+                .delete("http://5.35.85.206:8080/user_role_project/fromproject/${projectId}/${personId}") {
+                    contentType(ContentType.Application.Json)
+                }
+            if (response.status.isSuccess()) {
+                println("Server link user to task or project: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun deletePersonFromTask(taskId: Int, personId: Int): Boolean {
+        var success = false
+        try {
+            val response: HttpResponse = httpClient
+                .delete("http://5.35.85.206:8080/user_role_project/fromtask/${taskId}/${personId}") {
+                    contentType(ContentType.Application.Json)
+                }
+            if (response.status.isSuccess()) {
+                println("Server link user to task or project: ${response.status}")
+                success = true
+                return success
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            return success
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            return success
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            return success
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            return success
+        }
+        return success
+    }
+
     override suspend fun updateHoursSpent(urp: UserRoleProjectDTO, taskId: Int): Boolean {
         var success = false
         try {
@@ -874,6 +919,49 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
         } catch (e: Exception) {
             println("Error: ${e.message}")
             return success
+        }
+    }
+
+    override suspend fun listFileInTask(descriptionId: Int): DescriptionDTOFileDTO? {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/description/${descriptionId}")
+            if (response.status.isSuccess()) {
+                val files = response.body<DescriptionDTOFileDTO?>()
+                println("Server returned DescriptionDTOFileDTO: ${files}")
+                files
+            } else {
+                println("Server returned error status: ${response.status}")
+                null // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            null
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            null
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            null
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            null
+        }
+    }
+
+    override suspend fun sendFile(fileName: String, taskId: Int, data: ByteArray) {
+        val response: HttpResponse = httpClient.submitFormWithBinaryData(
+            url = "http://5.35.85.206:8080/description/upload/${taskId}",
+            formData = formData {
+                append("file", data, Headers.build {
+                    append(HttpHeaders.ContentType, "application/octet-stream")
+                    append(HttpHeaders.ContentDisposition, "filename=$fileName")
+                })
+            }
+        )
+        if (response.status.isSuccess()) {
+            println("Server returned response")
+        } else {
+            println("Server returned error status: ${response.status}")
         }
     }
 }

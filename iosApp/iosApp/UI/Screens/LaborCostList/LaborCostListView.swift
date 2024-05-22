@@ -11,11 +11,11 @@ import SwiftUI
 struct LaborCostListView: View {
     //    MARK: Props
     @StateObject private var viewModel = LaborCostListViewModel()
-    private let taskId: UInt8
+    private let taskId: UInt16
     private let projectTitle: String
 
     //    MARK: Init
-    init(_ projectTitle: String, taskId: UInt8) {
+    init(_ projectTitle: String, taskId: UInt16) {
         self.taskId = taskId
         self.projectTitle = projectTitle
     }

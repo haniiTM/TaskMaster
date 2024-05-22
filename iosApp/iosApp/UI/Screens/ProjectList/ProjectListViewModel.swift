@@ -9,7 +9,7 @@
 import SwiftUI
 import shared
 
-@MainActor final class ProjectListViewModel: ObservableObject {
+@MainActor final class ProjectListViewModel: ObservableObject, Searchable {
     //    MARK: Props
     private let projectListUseCase = KoinHelper().getProjectListUseCase()
     @Published private(set) var projectList = [ProjectInfo]()
@@ -26,4 +26,14 @@ import shared
             print(error.localizedDescription)
         }
     }
+
+    func createProject(_ title: String) async {
+        do {
+            try await projectListUseCase.createProject(projectName: title)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func search() async {}
 }

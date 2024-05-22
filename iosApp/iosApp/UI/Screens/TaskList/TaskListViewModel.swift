@@ -15,7 +15,7 @@ import shared
     @Published private(set) var completedTaskListSignal = [TaskInfo]()
 
     //    MARK: Methods
-    func updateDataSource(_ id: UInt8) async {
+    func updateDataSource(_ id: UInt16) async {
         do {
             guard
                 let optionalUnCompletedTaskList = try await taskListUseCase.getUncompletedTaskList(idProj: id) as? [TaskDTO?],

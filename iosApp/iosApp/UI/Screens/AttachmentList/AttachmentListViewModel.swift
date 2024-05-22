@@ -14,7 +14,7 @@ import shared
     private let attachmentListUseCase = KoinHelper().getLaborCostListUseCase()
 
     //    MARK: Methods
-    func updateDataSource(_ taskId: UInt8) async {
+    func updateDataSource(_ taskId: UInt16) async {
         do {
             guard
                 let unwrappedAttachmentList = try await attachmentListUseCase.getLaborCostList(taskId: .init(taskId)) as? [ManHoursDTO?]

@@ -12,8 +12,8 @@ import shared
 struct LoginScreenView: View {
     //    MARK: Props
     @StateObject private var viewModel = LoginScreenViewModel()
-    @State private var loginTextFieldState = ""
-    @State private var passwordTextFieldState = ""
+    @State private var loginTextFieldState = "user1"
+    @State private var passwordTextFieldState = "22"
 
     //    MARK: Body
     var body: some View {

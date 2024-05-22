@@ -150,6 +150,9 @@ fun UserList(
                             actionButton = addRoleButton,
                             item = "${item.surname} ${item.name} ${item.patronymic}",
                             isSelected = isSelected,
+                            projectId = projectId,
+                            taskId= id,
+                            personId = item.id!!,
                             onCheckChanged = { isSelected ->
                                 if (isSelected) {
                                     selectedUsers.value += item.id!!
@@ -158,7 +161,8 @@ fun UserList(
                                 }
                             },
                             onDelete = {},
-                            role = item.role
+                            role = item.role,
+                            triggerRefresh = triggerRefresh
                         )
                     }
                 }

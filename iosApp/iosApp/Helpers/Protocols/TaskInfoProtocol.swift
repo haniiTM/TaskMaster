@@ -7,7 +7,7 @@
 //
 
 protocol TaskInfoProtocol: Identifiable {
-    var id: UInt8 { get }
+    var id: UInt16 { get }
     var title: String { get }
     var timerValue: UInt8 { get }
     var participiantsValue: UInt8 { get }

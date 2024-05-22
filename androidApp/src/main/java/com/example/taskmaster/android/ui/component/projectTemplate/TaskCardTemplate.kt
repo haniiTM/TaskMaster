@@ -45,6 +45,7 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false, projectTitle: String) {
+
     var showDialog by remember {
         mutableStateOf(false)
     }

@@ -16,7 +16,7 @@ class TaskInfo: ProjectInfo {
         super.init(dto)
     }
     
-    override init(id: UInt8 = .random(in: 1...99), title: String, timerValue: UInt8, participiantsValue: UInt8) {
+    override init(id: UInt16 = .random(in: 1...99), title: String, timerValue: UInt8, participiantsValue: UInt8) {
         description = "Emtpy desc"
         super.init(title: title, timerValue: timerValue, participiantsValue: participiantsValue)
     }
