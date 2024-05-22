@@ -1,6 +1,5 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -141,7 +140,6 @@ fun UserCard(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded }) {
                     IconButton(onClick = { expanded = !expanded }) {
-                        Log.d("expanded", expanded.toString())
                         Icon(
                             painter = painterResource(id = R.drawable.more),
                             contentDescription = "menu_icon",

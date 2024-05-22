@@ -4,6 +4,7 @@ import AppSettings
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.login_screen.LoginViewModel
@@ -65,7 +67,12 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
         }
     }
 
-
+    LaunchedEffect(isValid) {
+        if (isValid) {
+            // Обновить состояние RoleObject.PMOrAdmin после успешного входа
+            RoleObject.PMOrAdmin = AppSettings.getUserRole(context)
+        }
+    }
     Box {
         Column(
             modifier = Modifier
@@ -100,6 +107,8 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                         // пользователь адмнином или прект-менеджером
                         viewModel.dataToken(userLogin, userPassword).observeForever { success ->
                             println(success)
+                            AppSettings.setUserRole(context, success.adminOrProjectManager!!)
+                            Log.d("AppSettings.setUserRole", success.adminOrProjectManager!!.toString())
                             success?.let {
                                 isValid = it.tokenLong!!.isNotEmpty()
                                 val result = it.adminOrProjectManager
@@ -148,8 +157,4 @@ private fun showErrorMessage(message: String, context: Context) {
         message,
         Toast.LENGTH_LONG
     ).show()
-}
-
-object AuthDa {
-    var AuthTipa by mutableStateOf(false)
 }

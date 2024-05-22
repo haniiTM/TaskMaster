@@ -1,6 +1,7 @@
 package com.example.taskmaster.android
 
 import AppSettings
+import AppSettings.getUserRole
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.WindowManager
@@ -22,10 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import com.example.taskmaster.android.di.presentationModule
-import com.example.taskmaster.android.ui.component.authScreenItems.AuthDa
+import com.example.taskmaster.android.ui.component.StateObject.AppState
+import com.example.taskmaster.android.ui.component.StateObject.AuthValidObject
+import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.navigation.Navigation
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
-import com.example.taskmaster.android.ui.theme.AppState
 import com.example.taskmaster.android.ui.theme.AppTheme
 import com.example.taskmaster.di.initKoin
 import com.example.taskmaster.domain.utils.NapierInit
@@ -50,7 +52,8 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         AppState.darkTheme = AppSettings.getDarkTheme(this) // Устанавливаем состояние darkTheme
-        AuthDa.AuthTipa = AppSettings.getLoginValid(this)
+        AuthValidObject.AuthValid = AppSettings.getLoginValid(this)
+        RoleObject.PMOrAdmin = getUserRole(this)
         val appModules = listOf(presentationModule)
 
         initKoin {
