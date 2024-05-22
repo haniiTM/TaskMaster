@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
+import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.component.projectTemplate.ProjectCard
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import org.koin.androidx.compose.getViewModel
@@ -65,13 +67,19 @@ fun ProjectScreen(
                 "Добавить проект",
                 "Выйти"
             ),
-            /*showSearchLine = { showSearchLine = !showSearchLine })
+            activeMenu = true,
+            showSearchLine = { showSearchLine = true })
         if (showSearchLine) {
-            UnifiedTextBox(
-                value = searchText,
-                onValueChange = { newValue -> searchText = newValue }*/
-        )
-
+            Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
+                UnifiedTextBox(
+                    value = searchText,
+                    onValueChange = { newValue -> searchText = newValue },
+                    roundedDownAngle = 15,
+                    roundedTopAngle = 15,
+                    placeholder = "Поиск"
+                )
+            }
+        }
         LazyColumn(
             modifier = Modifier.padding(horizontal = 14.dp), state = rememberLazyListState()
         ) {

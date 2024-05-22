@@ -6,17 +6,22 @@ import android.provider.OpenableColumns
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
+import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.component.projectTemplate.BoxButton
 import com.example.taskmaster.android.ui.component.taskInfoItems.ListItemList
 import com.example.taskmaster.android.ui.screens.description_screen.DescriptionViewModel
@@ -30,10 +35,14 @@ fun AttachmentsListScreen(
     id: Int?,
     title: String?,
     descriptionViewModel: DescriptionViewModel = getViewModel()
-){
+) {
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
     var selectedFileName by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    var searchText by remember { mutableStateOf("") }
+    var showSearchLine by remember {
+        mutableStateOf(false)
+    }
 
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -63,9 +72,21 @@ fun AttachmentsListScreen(
                 R.drawable.search1_icon, R.drawable.users_icon
             ),
             navController = navController,
-            actionTitle = listOf("Поиск", "Пользователи")
-        )
-        ListItemList(taskId = id ?: 0, attachmentsListFlag = true)
+            actionTitle = listOf("Поиск", "Пользователи"),
+            activeMenu = true,
+            showSearchLine = { showSearchLine = true })
+        if (showSearchLine) {
+            Box(modifier = Modifier.padding(horizontal = 14.dp)) {
+                UnifiedTextBox(
+                    value = searchText,
+                    onValueChange = { newValue -> searchText = newValue },
+                    roundedDownAngle = 15,
+                    roundedTopAngle = 15,
+                    placeholder = "Поиск"
+                )
+            }
+        }
+        ListItemList(taskId = id ?: 0, attachmentsListFlag = true, searchText = searchText)
         BoxButton(text = "Добавить вложение", cardContainerFlag = false) {
             filePickerLauncher.launch("application/*")
         }

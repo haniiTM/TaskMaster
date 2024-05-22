@@ -65,6 +65,7 @@ fun CalculationOfLaborCostsScreen(
             navController = navController,
             actionTitle = listOf("Поиск", "Пользователи"),
             projectId = result,
+            showSearchLine = {}
             )
         Column(modifier = Modifier.padding(top = 15.dp)){
             Column(
