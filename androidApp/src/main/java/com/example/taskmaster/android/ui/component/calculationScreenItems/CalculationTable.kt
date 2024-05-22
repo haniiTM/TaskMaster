@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
 import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import com.example.taskmaster.android.ui.theme.Lime
@@ -48,6 +51,9 @@ fun TableHeader(dates: List<Date?>) {
 
 @Composable
 fun TableRow(
+    navController: NavController,
+    navId: Int?,
+    title: String,
     data: Pair<Int?, String?>? = null,
     ganttData: Pair<Int, Boolean>? = null,
     dates: List<Date?>,
@@ -63,7 +69,7 @@ fun TableRow(
             .height(40.dp)
             .background(Color.White)
     ) {
-        FirstTableDataCell(text = if(calendarPlan) ganttData?.first.toString() else data?.first.toString())
+        FirstTableDataCell(text = if(calendarPlan) ganttData?.first.toString() else data?.first.toString(), navController, navId, title)
 
         uniqueDates.forEach { date ->
             val matchingEntry = if(calendarPlan) hoursGanttData?.find { it.first == date && it.third == ganttData?.first } else hoursData?.find { it.first == date && it.third == data?.first }
@@ -75,12 +81,14 @@ fun TableRow(
 }
 
 @Composable
-fun CalculationOfLaborCosts(
+fun CalculationTable(
     laborCostViewModel: ManHoursViewModel = getViewModel(),
     ganttViewModel: UserroleprojectViewModel = getViewModel(),
     testViewModel: UserroleprojectViewModel = getViewModel(),
     id: Int?,
-    calendarPlan: Boolean
+    calendarPlan: Boolean,
+    navController: NavController,
+    title: String?
 ) {
     Log.d("project id", id.toString())
     LaunchedEffect(key1 = id) {
@@ -90,13 +98,11 @@ fun CalculationOfLaborCosts(
     }
     val laborCosts = laborCostViewModel.stateManHoursReport.value.itemState
     val dates = laborCosts.map { it?.createdAt?.toDate() }
-    Log.d("dates", dates.toString())
     val uniqueTaskIds = laborCosts.mapNotNull { it?.taskId }.distinct()
     val labors = uniqueTaskIds.map { taskId ->
         val hoursSpent = laborCosts.firstOrNull { it?.taskId == taskId }?.hoursSpent ?: "-"
         Pair(taskId, hoursSpent)
     }
-    Log.d("labors", labors.toString())
     val uniqueDates = dates.distinct().filterNotNull().sorted()
     val hoursData = laborCosts.map {
         Triple(it?.createdAt?.toDate(), it?.hoursSpent ?: "-", it?.taskId)
@@ -149,7 +155,7 @@ fun CalculationOfLaborCosts(
                     ) {
                         item { TableHeader(ganttDatesAsDates) }
                         itemsIndexed(ganttValue) { _, rowData ->
-                            TableRow(ganttData = rowData, dates = ganttDatesAsDates, hoursGanttData = hoursGanttData, calendarPlan = calendarPlan)
+                            TableRow(ganttData = rowData, dates = ganttDatesAsDates, hoursGanttData = hoursGanttData, calendarPlan = calendarPlan, navController = navController, navId = rowData.first, title = title ?: "Заголовок отсутствует")
                         }
                     }
                 }
@@ -182,7 +188,7 @@ fun CalculationOfLaborCosts(
                     ) {
                         item { TableHeader(dates) }
                         itemsIndexed(labors) { _, rowData ->
-                            TableRow(data = rowData, dates = dates, hoursData = hoursData, calendarPlan = calendarPlan)
+                            TableRow(data = rowData, dates = dates, hoursData = hoursData, calendarPlan = calendarPlan, navController = navController, navId = rowData.first, title = title ?: "Заголовок отсутствует")
                         }
                     }
                 }
@@ -209,14 +215,25 @@ fun TableHeaderCell(
 
 @Composable
 fun FirstTableDataCell(
-    text: String
+    text: String,
+    navController: NavController,
+    navId: Int?,
+    title: String
 ) {
     Box(
         modifier = Modifier
             .width(90.dp)
             .height(40.dp)
             .border(BorderStroke(1.dp, Color.Black))
-            .background(Color.LightGray), contentAlignment = Alignment.Center
+            .background(Color.LightGray)
+            .clickable {
+                navController.navigate(
+                    NavigationItem.TaskInfo.passIdAndTitle(
+                        navId!!.toInt(),
+                        title
+                    )
+                )
+            }, contentAlignment = Alignment.Center
     ) {
         Text(
             text = text, Modifier.padding(8.dp), color = Color.Black
