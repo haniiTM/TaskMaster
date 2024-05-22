@@ -43,7 +43,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun ListItem(
     taskId: Int?,
-    name: String,
+    name: String? = null,
     itemManHours: ManHoursDTO? = null,
     itemFile: FileDTO? = null,
     mainActivityViewModel: MainActivityViewModel = getViewModel(),
@@ -54,10 +54,10 @@ fun ListItem(
     }
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val maxWidth = (screenWidth * 0.6f)
-    val parts = name.split(".")
+    val parts = name?.split(".")
     var fileName = ""
     var extension = ""
-    if (parts.size == 2) {
+    if (parts?.size == 2) {
         fileName = parts[0]
         extension = "." + parts[1]
     }
@@ -79,13 +79,13 @@ fun ListItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(.8f)) {
-                Text(text = fileName, modifier = Modifier
-                    .padding(start = 12.dp)
-                    .sizeIn(maxWidth = maxWidth), color = Color.Black, overflow = TextOverflow.Ellipsis)
-                Text(text = extension, color = Color.Black)
-            }
-            if (attachmentsListFlag) {
+            if(attachmentsListFlag){
+                Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(.75f)) {
+                    Text(text = fileName, modifier = Modifier
+                        .padding(start = 12.dp)
+                        .sizeIn(maxWidth = maxWidth), color = Color.Black, overflow = TextOverflow.Ellipsis)
+                    Text(text = extension, color = Color.Black)
+                }
                 DropdownMenuArea(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded }) {
@@ -110,7 +110,7 @@ fun ListItem(
                                     downloader.downloadFile(
                                         url = "http://5.35.85.206:8080/description/download/$taskId/${itemFile?.id}",
                                         token = mainActivityViewModel.accessToken.value?.tokenLong!!,
-                                        nameFile = name
+                                        nameFile = name!!
                                     )
                                     expanded = !expanded
                                 },
@@ -138,6 +138,12 @@ fun ListItem(
                         }
                     }
                 }
+            }else{
+                Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(.75f)) {
+                    Text(text = itemManHours?.comment.toString(), modifier = Modifier
+                        .padding(start = 12.dp)
+                        .sizeIn(maxWidth = maxWidth), color = Color.Black, overflow = TextOverflow.Ellipsis)
+                }
             }
         }
     }
@@ -149,7 +155,7 @@ fun ListItem(
     )
     if (showLaborCostInfo) {
         Dialog(onDismissRequest = { showLaborCostInfo = !showLaborCostInfo }) {
-            LaborCostInfo(name, itemManHours!!)
+            LaborCostInfo(name ?: "", itemManHours!!)
         }
     }
 }

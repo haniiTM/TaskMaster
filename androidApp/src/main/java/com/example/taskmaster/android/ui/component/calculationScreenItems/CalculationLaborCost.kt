@@ -35,7 +35,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun TableHeader(dates: List<Date?>, calendarPlan: Boolean) {
+fun TableHeader(dates: List<Date?>) {
     val uniqueDates = dates.distinct().filterNotNull().sorted()
 
     Row(Modifier.background(Color.LightGray)) {
@@ -147,7 +147,7 @@ fun CalculationOfLaborCosts(
                                 )
                             )
                     ) {
-                        item { TableHeader(ganttDatesAsDates, calendarPlan) }
+                        item { TableHeader(ganttDatesAsDates) }
                         itemsIndexed(ganttValue) { _, rowData ->
                             TableRow(ganttData = rowData, dates = ganttDatesAsDates, hoursGanttData = hoursGanttData, calendarPlan = calendarPlan)
                         }
@@ -180,7 +180,7 @@ fun CalculationOfLaborCosts(
                                 )
                             )
                     ) {
-                        item { TableHeader(dates, calendarPlan) }
+                        item { TableHeader(dates) }
                         itemsIndexed(labors) { _, rowData ->
                             TableRow(data = rowData, dates = dates, hoursData = hoursData, calendarPlan = calendarPlan)
                         }
