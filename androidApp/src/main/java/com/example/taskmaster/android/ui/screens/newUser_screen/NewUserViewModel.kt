@@ -8,6 +8,7 @@ import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import kotlinx.coroutines.launch
 
 class NewUserViewModel constructor( private val apiService: ApiService) : ViewModel() {
@@ -24,6 +25,20 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
                 apiService.registerUser(user)
             } catch(e: Exception) {
                 println("Exception in createNewUser ${e}")
+            }
+        }
+    }
+
+    // Привязка пользователя к проекту
+    fun linkUserToTaskOrProject(urp: UserRoleProjectDTO, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.linkUserTaskOrProject(urp))
+                if (urp.projectid != 0) {
+                    getPersonInProject(urp.projectid!!)
+                }
+            } catch(e: Exception) {
+                println("Exception in link user to task or project $e")
             }
         }
     }

@@ -53,7 +53,6 @@ fun UserList(
     addingPersonInProj: Boolean = false, // Флаг для добавления пользователей в проект
     addingPersonInTask: Boolean = false, // Флаг для добавления пользователей в задачу
     viewModel: NewUserViewModel = getViewModel(),
-    viewModelURP: UserroleprojectViewModel = getViewModel(),
     viewTaskModel: TaskViewModel = getViewModel(),
     onCloseButtonClick: (() -> Unit)? = null,
     removeUserWindowKey: Boolean,
@@ -197,15 +196,11 @@ fun UserList(
                                     )
                                 }
 
-                                viewModelURP.linkUserToTaskOrProject(urp) { success ->
+                                viewModel.linkUserToTaskOrProject(urp) { success ->
                                     if (triggerRefresh != null && success) {
                                         viewTaskModel.dataTaskById(id)
                                         triggerRefresh(success)
                                     }
-                                }
-
-                                if (projectId != 0) {
-                                    viewModel.getPersonInProject(projectId)
                                 }
                             }
                         }
