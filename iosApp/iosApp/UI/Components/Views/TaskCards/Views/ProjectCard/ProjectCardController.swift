@@ -6,17 +6,25 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
+import SwiftUI
+
 final class ProjectCardController: ProjectCardControllerProtocol {
     //    MARK: Props
-    let model: TaskInfo
+    private var viewModel: TaskCardViewModelProtocol
+    let model: any TaskInfoProtocol
 
     //    MARK: Init
-    required init(model: TaskInfo) {
+    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
         self.model = model
+        self.viewModel = viewModel
     }
 
     //    MARK: Methods
     func open() {}
 
-    func remove() {}
+    func remove() async {
+        Task {
+            await viewModel.deleteCard(model.id)
+        }
+    }
 }

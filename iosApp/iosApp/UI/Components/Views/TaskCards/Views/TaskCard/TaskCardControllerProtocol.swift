@@ -7,9 +7,6 @@
 //
 
 protocol TaskCardControllerProtocol: TaskCardActions,
-                                     TaskNumberTitleProvider,
                                      TaskTitleProvider,
                                      TimerTitleProvider,
-                                     UrgencyValueProvider,
-                                     UrgentImageNameProvider,
-                                     CategoriesTitleProvider {}
+                                     ParticipiantsTitleProvider {}

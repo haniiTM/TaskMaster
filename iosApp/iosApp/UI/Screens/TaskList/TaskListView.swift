@@ -11,74 +11,46 @@ import SwiftUI
 struct TaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskListViewModel()
-    @State private var unCompletedTaskList: [TaskInfo] = []
-    @State private var completedTaskList: [TaskInfo] = []
-    private let title: String
+    @StateObject private var stateManager = TaskListAlertManager()
+    private let model: ProjectInfo
 
     //    MARK: Init
-    init(_ title: String) {
-        self.title = title
-        //        viewModel.projectListSignal.bind { projectList in
-        //            guard let projectList = projectList else { return }
-        //            self.projectList = projectList
-        //        }
-
+    init(_ model: ProjectInfo) {
+        self.model = model
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(title) {
-            NavigationLink(destination: EstimationCalendarView("")) {
+        ViewBody
+            .task { await viewModel.updateDataSource(model.id) }
+    }
+
+    private var ViewBody: some View {
+        ProjectFrameView(model.title) {
+            NavigationLink(destination: EstimationCalendarView(model)) {
                 EstimatesScreenInfoButton()
-            }.foregroundColor(.primary)
+            }
+            .tint(.primary)
 
-            TaskSectionBG {
-                ForEach(unCompletedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView("")) {
-                        TaskCardView(model: task)
-                    }.foregroundColor(.primary)
+            TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
+                ForEach(viewModel.unCompletedTaskListSignal) { task in
+                    NavigationLink(destination: SubTaskListView(model.title, model: task)) {
+                        TaskCardView(model.id, model: task, viewModel: viewModel)
+                    }.tint(.primary)
                 }
 
-                TaskCreationButton()
-                    .foregroundColor(.primary)
-                    .onTapGesture {
-                        viewModel.addUncompletedTask()
-                    }
+                TaskCreationButton(stateManager: stateManager)
             }
 
-            CompletedTaskSectionBG {
-                ForEach(completedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView("")) {
-                        TaskCardView(model: task)
-                    }.foregroundColor(.primary)
+            CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
+                ForEach(viewModel.completedTaskListSignal) { task in
+                    NavigationLink(destination: SubTaskListView(model.title, model: task)) {
+                        TaskCardView(model.id, model: task, viewModel: viewModel)
+                    }.tint(.primary)
                 }
-
-                TaskCreationButton()
-                    .foregroundColor(.primary)
-                    .onTapGesture {
-                        viewModel.addCompletedTask()
-                    }
             }
-        }
-        .onAppear {
-            viewModel.unCompletedTaskListSignal.bind { taskList in
-                guard let taskList = taskList else { return }
-                unCompletedTaskList = taskList
-            }
-
-            viewModel.completedTaskListSignal.bind { taskList in
-                guard let taskList = taskList else { return }
-                completedTaskList = taskList
-            }
-
-            viewModel.updateDataSource()
-        }
-        .navigationTitle("Сайт Nissan")
-        .toolbar {
-            Button(action: {}) {
-                Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
-                    .foregroundColor(.primary)
-            }
+        }.sheet(isPresented: $stateManager.addTaskState) {
+            TaskCreationAlert(model.id, alertManager: stateManager, viewModel: viewModel)
         }
     }
 }

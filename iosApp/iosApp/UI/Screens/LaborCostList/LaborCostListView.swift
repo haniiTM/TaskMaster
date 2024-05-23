@@ -10,26 +10,32 @@ import SwiftUI
 
 struct LaborCostListView: View {
     //    MARK: Props
-    private let viewModel: LaborCostListViewModelProtocol
-    private let title: String
-    private let laborCostList: [String]
+    @StateObject private var viewModel = LaborCostListViewModel()
+    private let taskId: UInt16
+    private let projectTitle: String
 
     //    MARK: Init
-    init(_ title: String) {
-        self.title = title
-        viewModel = LaborCostListViewModel()
-        viewModel.updateDataSource()
-        laborCostList = viewModel.laborCostListSignal.value ?? .init()
+    init(_ projectTitle: String, taskId: UInt16) {
+        self.taskId = taskId
+        self.projectTitle = projectTitle
     }
 
     //    MARK: Body
     var body: some View {
-//        ProjectFrameView(title) {
-            List(laborCostList, id: \.self) { laborCost in
-                Button(laborCost) {}.padding(8).foregroundColor(.primary)
+        ViewBody
+            .task {
+                await viewModel.updateDataSource(taskId)
             }
-//            .padding()
-            .navigationTitle("Трудозатраты")
-//        }
+    }
+
+    private var ViewBody: some View {
+        //        ProjectFrameView(title) {
+        List(viewModel.laborCostList, id: \.id) { laborCost in
+            Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {}
+                .padding(8)
+                .tint(.primary)
+        }.navigationTitle(projectTitle)
+        //            .padding()
+        //        }
     }
 }

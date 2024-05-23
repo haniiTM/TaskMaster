@@ -8,15 +8,24 @@
 
 final class SubTaskCardController: SubTaskCardControllerProtocol {
     //    MARK: Props
-    let model: TaskInfo
+    private let parentId: UInt16
+    private let viewModel: TaskCardViewModelProtocol
+    let model: any TaskInfoProtocol
 
     //    MARK: Init
-    required init(model: TaskInfo) {
+    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
+        self.parentId = projectId
         self.model = model
+        self.viewModel = viewModel
     }
 
     //    MARK: Methods
     func open() {}
 
-    func remove() {}
+    func remove() async {
+        Task {
+            await viewModel.deleteCard(model.id)
+            await viewModel.updateDataSource(parentId)
+        }
+    }
 }

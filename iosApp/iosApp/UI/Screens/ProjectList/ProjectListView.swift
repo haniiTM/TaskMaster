@@ -11,37 +11,26 @@ import SwiftUI
 struct ProjectListView: View {
     //    MARK: Props
     @StateObject private var viewModel = ProjectListViewModel()
-    @State private var projectList: [TaskInfo] = []
-    @State private var model = ProjectListModel()
-
-    //    MARK: Init
-    init() {
-//        viewModel.projectListSignal.bind { projectList in
-//            guard let projectList = projectList else { return }
-//            self.projectList = projectList
-//        }
-    }
+    @StateObject private var alertManager = ProjectListAlertManager()
 
     //    MARK: Body
     var body: some View {
-        MainFrameView {
-            ForEach(viewModel.projectListSignal.value ?? .init()) { project in
-                NavigationLink(destination: TaskListView(.init())) {
-                    ProjectCardView(model: project)
-                }
-                .foregroundColor(.primary)
-                .background(
-                    Color(uiColor: .secondarySystemBackground),
-                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                )
+        ViewBody
+            .task {
+                await viewModel.updateDataSource(0)
             }
-        }.onAppear { viewModel.updateDataSource() }
-            .navigationTitle("Все проекты")
-            .toolbar {
-                Button(action: {}) {
-                    Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
-                        .foregroundColor(.primary)
+    }
+
+    private var ViewBody: some View {
+        MainFrameView(viewModel: viewModel, alertManager: alertManager) {
+            ForEach(viewModel.projectList.reversed()) { project in
+                NavigationLink(destination: TaskListView(project)) {
+                    ProjectCardView(model: project, viewModel: viewModel)
                 }
+                .tint(.primary)
             }
+        }.sheet(isPresented: $alertManager.addProjectState) {
+            ProjectCreationAlert(alertManager: alertManager, viewModel: viewModel)
+        }
     }
 }

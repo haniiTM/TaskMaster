@@ -8,8 +8,8 @@
 
 struct ProjectListModel {
     //    MARK: Props
-    var projectList: [TaskInfo] { privateProjectList }
-    private var privateProjectList: [TaskInfo] = .init()
+    var projectList: [ProjectInfo] { privateProjectList }
+    private var privateProjectList: [ProjectInfo] = .init()
 
     //    MARK: Init
     init() {
@@ -18,29 +18,24 @@ struct ProjectListModel {
 
     //    MARK: Methods
     private mutating func setupDefaultProjects() {
-        let nissan = TaskInfo(title: "Сайт Nissan",
-                              timerValue: 72,
-                              isUrgent: true,
-                              participiantsValue: 7)
+        let nissan = ProjectInfo(title: "Сайт Nissan",
+                                 timerValue: 72,
+                                 participiantsValue: 7)
 
-        let fanzilla = TaskInfo(title: "Мобильное приложение FanZilla",
-                                timerValue: 27,
-                                isUrgent: false,
-                                participiantsValue: 3)
+        let fanzilla = ProjectInfo(title: "Мобильное приложение FanZilla",
+                                   timerValue: 27,
+                                   participiantsValue: 3)
 
-        let kommersant = TaskInfo(title: "Мобильное приложение Kommersant",
-                                  timerValue: 42,
-                                  isUrgent: false,
-                                  participiantsValue: 4)
+        let kommersant = ProjectInfo(title: "Мобильное приложение Kommersant",
+                                     timerValue: 42,
+                                     participiantsValue: 4)
 
-        let vedomosti = TaskInfo(title: "Мобильное приложение Vedomosti",
-                                timerValue: 54,
-                                isUrgent: true,
-                                participiantsValue: 5)
+        let vedomosti = ProjectInfo(title: "Мобильное приложение Vedomosti",
+                                    timerValue: 54,
+                                    participiantsValue: 5)
 
-        let kalibro = TaskInfo(title: "Мобильное приложение Kalibro",
+        let kalibro = ProjectInfo(title: "Мобильное приложение Kalibro",
                                   timerValue: 24,
-                                  isUrgent: true,
                                   participiantsValue: 2)
 
         privateProjectList = [nissan, fanzilla, kommersant, vedomosti, kalibro]

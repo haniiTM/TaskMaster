@@ -11,9 +11,9 @@ import CoreGraphics
 enum LoginScreenConstants {
     //    MARK: Strings
     enum Strings {
-        static let loginTextFieldTitle = "Login"
-        static let passwordTextFieldTitle = "Password"
-        static let loginButtonTitle = "Log In"
+        static let loginTextFieldTitle = "Логин"
+        static let passwordTextFieldTitle = "Пароль"
+        static let loginButtonTitle = "Войти"
     }
 
     //    MARK: Numbers

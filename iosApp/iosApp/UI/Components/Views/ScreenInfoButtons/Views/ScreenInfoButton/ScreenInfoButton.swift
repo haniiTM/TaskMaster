@@ -36,7 +36,7 @@ struct ScreenInfoButton: View {
     init(_ title: String, isUrgent: Bool) {
         self.title = title
         self.isUrgent = isUrgent
-        
+
         urgentImageName = TaskCardsConstants.Strings.ImageNames.urgentImageName
         imageName = ScreenInfoButtonsConstants.Strings.ImageNames.infoImageName
         action = ScreenInfoButtonAction()
@@ -49,12 +49,6 @@ struct ScreenInfoButton: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        if isUrgent {
-            Image(systemName: urgentImageName)
-        }
-
-        Spacer()
-
         Text(title)
             .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
             .minimumScaleFactor(ScreenInfoButtonsConstants.Numbers.minimumScaleFactor)

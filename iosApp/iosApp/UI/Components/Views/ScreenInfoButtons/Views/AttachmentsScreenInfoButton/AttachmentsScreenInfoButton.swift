@@ -11,6 +11,7 @@ import SwiftUI
 struct AttachmentsScreenInfoButton: View {
     //    MARK: Props
     private let title: String
+    private let imageName: String
     private let action: Openable
 
     //    MARK: Init
@@ -18,14 +19,16 @@ struct AttachmentsScreenInfoButton: View {
     /// - Parameters:
     ///   - title: A string representing the title of the view.
     ///   - action: A closure representing the action to be performed when the view is interacted with.
-    init(_ title: String, action: Openable) {
+    init(_ title: String, imageName: String, action: Openable) {
         self.title = title
+        self.imageName = imageName
         self.action = action
     }
 
     /// Initializes the view with default realization.
     init() {
         title = ScreenInfoButtonsConstants.Strings.Titles.attachmentsTitle
+        imageName = "paperclip"
         action = AttachmentsScreenInfoButtonAction()
     }
 
@@ -36,12 +39,12 @@ struct AttachmentsScreenInfoButton: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Spacer()
-
         Text(title)
             .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
             .minimumScaleFactor(ScreenInfoButtonsConstants.Numbers.minimumScaleFactor)
 
         Spacer()
+
+        Image(systemName: imageName)
     }
 }
