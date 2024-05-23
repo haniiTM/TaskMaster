@@ -61,10 +61,12 @@ import shared
     }
 
     func deleteCard(_ id: UInt16) async {
-
+        do {
+            try await subTaskListUseCase.deleteTask(id: Int32(id))
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    func search() async {
-        
-    }
+    func search() async {}
 }
