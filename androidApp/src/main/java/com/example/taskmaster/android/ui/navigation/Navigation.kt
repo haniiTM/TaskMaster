@@ -49,7 +49,7 @@ fun Navigation(navController: NavHostController) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
                 type = NavType.StringType
-            }, navArgument(PROJECT_ID_ARGUMENT_KEY){
+            },navArgument(PROJECT_ID_ARGUMENT_KEY) {
                 type = NavType.IntType
             })
         ) { backStackEntry ->
@@ -57,7 +57,7 @@ fun Navigation(navController: NavHostController) {
             val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
             val projectId = backStackEntry.arguments?.getInt(PROJECT_ID_ARGUMENT_KEY)
 
-            ProjectTaskScreen(navController = navController, id = id, title = title)
+            ProjectTaskScreen(navController = navController, id = id, title = title, projectId)
         }
 
         composable(

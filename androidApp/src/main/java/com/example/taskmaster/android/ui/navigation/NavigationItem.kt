@@ -7,7 +7,7 @@ const val PROJECT_TITLE_ARGUMENT_KEY = "projectTitle"
 const val TASK_TITLE_ARGUMENT_KEY = "name"
 const val PROJECT_SUBTASK_ARGUMENT_KEY = "id"
 const val PROJECT_INFO_ARGUMENT_KEY = "id"
-const val PROJECT_ID_ARGUMENT_KEY = "id"
+const val PROJECT_ID_ARGUMENT_KEY = "project_id"
 const val TASK_DESCRIPTION_ARGUMENT_KEY = "description"
 const val USER_ROLE_ARGUMENT_KEY = "result"
 sealed class NavigationItem(
@@ -21,14 +21,14 @@ sealed class NavigationItem(
             return "projects/$success"
         }
     }
-    data object ProjectTask : NavigationItem("projectTask/{$PROJECT_TASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null) {
-        fun passIdAndTitle(id: Int, title: String): String {
-            return "projectTask/$id/$title"
+    data object ProjectTask : NavigationItem("projectTask/{$PROJECT_TASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}/{$PROJECT_ID_ARGUMENT_KEY}", "R.string.title_auth", null) {
+        fun passIdAndTitle(id: Int, title: String, projectId: Int): String {
+            return "projectTask/$id/$title/$projectId"
         }
     }
-    data object ProjectSubTask : NavigationItem("projectSubTask/{$PROJECT_SUBTASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}/{$TASK_TITLE_ARGUMENT_KEY}/{$TASK_DESCRIPTION_ARGUMENT_KEY}", "R.string.title_auth", null) {
-        fun passIdAndTitle(id: Int, title: String, taskTitle: String, taskDescription: String): String {
-            return "projectSubTask/$id/$title/$taskTitle/$taskDescription"
+    data object ProjectSubTask : NavigationItem("projectSubTask/{$PROJECT_SUBTASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}/{$TASK_TITLE_ARGUMENT_KEY}/{$TASK_DESCRIPTION_ARGUMENT_KEY}/{$PROJECT_ID_ARGUMENT_KEY}", "R.string.title_auth", null) {
+        fun passIdAndTitle(id: Int, title: String, taskTitle: String, taskDescription: String, projectId: Int): String {
+            return "projectSubTask/$id/$title/$taskTitle/$taskDescription/$projectId"
         }
     }
     data object TaskInfo : NavigationItem("taskInfo/{$PROJECT_INFO_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null){

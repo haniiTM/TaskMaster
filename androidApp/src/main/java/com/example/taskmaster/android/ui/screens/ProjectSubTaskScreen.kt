@@ -49,7 +49,7 @@ fun ProjectSubTaskScreen(
                 ),
                 navController = navController,
                 actionTitle = listOf("Пользователи"),
-                projectId = id,
+                projectId = projectId,
                 activeMenu = true,
                 onShowSearchLineChange = { showSearchLine = !showSearchLine }
             )
@@ -102,6 +102,7 @@ fun ProjectSubTaskScreen(
                         id = id,
                         projectTitle = title ?: "Заголовок отсутствует",
                         searchText = searchText,
+                        projectId = projectId
                     )
                 }
 
@@ -113,6 +114,7 @@ fun ProjectSubTaskScreen(
                         id = id,
                         projectTitle = title ?: "Заголовок отсутствует",
                         searchText = searchText,
+                        projectId = projectId
                     )
                 }
             }
