@@ -67,7 +67,14 @@ fun ListItemList(
             if(attachmentsListFlag) {
                 itemsIndexed(filteredAttachments.value) { _, item ->
                     if (item != null) {
-                        ListItem(name = "${item.orig_filename}.${item.type}" ?: "", itemFile = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
+                        ListItem(
+                            name = "${item.orig_filename}.${item.type}" ?: "",
+                            itemFile = item,
+                            attachmentsListFlag = attachmentsListFlag,
+                            taskId = taskId,
+                            descriptionId = item.descriptionId,
+                            fileId = item.id
+                        )
                     }
                 }
             } else {
