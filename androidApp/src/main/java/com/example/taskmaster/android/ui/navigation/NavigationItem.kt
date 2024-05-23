@@ -26,9 +26,9 @@ sealed class NavigationItem(
             return "projectTask/$id/$title"
         }
     }
-    data object ProjectSubTask : NavigationItem("projectSubTask/{$PROJECT_SUBTASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}/{$TASK_TITLE_ARGUMENT_KEY}/{$TASK_DESCRIPTION_ARGUMENT_KEY}/{$PROJECT_ID_ARGUMENT_KEY}", "R.string.title_auth", null) {
-        fun passIdAndTitle(id: Int, title: String, taskTitle: String, taskDescription: String, projectId: Int): String {
-            return "projectSubTask/$id/$title/$taskTitle/$taskDescription/$projectId"
+    data object ProjectSubTask : NavigationItem("projectSubTask/{$PROJECT_SUBTASK_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}/{$TASK_TITLE_ARGUMENT_KEY}/{$TASK_DESCRIPTION_ARGUMENT_KEY}", "R.string.title_auth", null) {
+        fun passIdAndTitle(id: Int, title: String, taskTitle: String, taskDescription: String): String {
+            return "projectSubTask/$id/$title/$taskTitle/$taskDescription"
         }
     }
     data object TaskInfo : NavigationItem("taskInfo/{$PROJECT_INFO_ARGUMENT_KEY}/{$PROJECT_TITLE_ARGUMENT_KEY}", "R.string.title_auth", null){
