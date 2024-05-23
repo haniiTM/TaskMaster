@@ -22,7 +22,7 @@ struct AttachmentListView: View {
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(projectTitle) {
+        ProjectFrameView(projectTitle, viewModel: viewModel) {
             ViewBody
         }
         .task {

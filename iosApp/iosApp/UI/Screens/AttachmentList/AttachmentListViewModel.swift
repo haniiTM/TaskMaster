@@ -8,7 +8,11 @@
 
 import shared
 
-@MainActor final class AttachmentListViewModel: ObservableObject {
+@MainActor final class AttachmentListViewModel: ObservableObject, Searchable {
+    func search() async {
+        
+    }
+
     //    MARK: Props
     @Published var attachmentListSignal = [ManHoursDTO]()
     private let attachmentListUseCase = KoinHelper().getLaborCostListUseCase()

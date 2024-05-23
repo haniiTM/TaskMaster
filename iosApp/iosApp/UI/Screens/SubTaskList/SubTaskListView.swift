@@ -31,7 +31,7 @@ struct SubTaskListView: View {
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(title) {
+        ProjectFrameView(title, viewModel: viewModel) {
             NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.tint(.primary)

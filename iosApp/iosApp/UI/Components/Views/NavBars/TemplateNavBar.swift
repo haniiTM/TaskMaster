@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TemplateNavBar<Content: View, NavBarItems: View>: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var themeManager: ThemeManager
 
     @ViewBuilder private let content: () -> Content
     @ViewBuilder private let navBarItems: () -> NavBarItems
@@ -31,19 +32,19 @@ struct TemplateNavBar<Content: View, NavBarItems: View>: View {
     var body: some View {
         content()
             .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+        //            .toolbarRole(.editor)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {}) {
-                        Image(systemName: colorScheme == .dark ? "sun.min" : "moon")
-                    }
-                }
-
-                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
+                        Button(action: { themeManager.isDarkThemeActive.toggle() }) {
+                            Label("Сменить тему", systemImage: colorScheme == .dark ? "sun.min" : "moon.circle")
+                        }
+
                         Button(action: {
                             Task { await viewModel.search() }
                         }) {
-                            Label("Поиск", systemImage: "magnifyingglass.circle")
+                            Label("Поиск", systemImage: Constants.Strings.ImageNames.searchActionImageName)
                         }
 
                         navBarItems()

@@ -23,7 +23,14 @@ struct TemplateCreationAlert<Content: View>: View {
         VStack {
             VStack(spacing: 64) {
                 VStack {
-                    content()
+                    Group {
+                        content()
+                    }
+                    .padding()
+                    .background(
+                        .secondary.opacity(0.4),
+                        in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
+                    )
                 }
 
                 VStack {

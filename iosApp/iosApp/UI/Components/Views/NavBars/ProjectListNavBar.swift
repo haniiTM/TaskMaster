@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ProjectListNavBar<Content: View>: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     @ViewBuilder private let content: () -> Content
     @ObservedObject private var alertManager: ProjectListAlertManager
 
@@ -46,7 +48,7 @@ struct ProjectListNavBar<Content: View>: View {
             Label("Добавить проект", systemImage: "plus.rectangle.on.rectangle")
         }
 
-        Button(role: .destructive, action: {}) {
+        Button(role: .destructive, action: { authViewModel.isAuthenticated = false }) {
             Label("Выйти", systemImage: "rectangle.portrait.and.arrow.right")
                 .tint(Color(uiColor: .systemPink))
         }

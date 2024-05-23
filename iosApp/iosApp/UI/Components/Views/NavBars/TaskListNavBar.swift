@@ -33,11 +33,7 @@ struct TaskListNavBar<Content: View>: View {
     @ViewBuilder
     private var ViewBody: some View {
         Button(action: {}) {
-            Label("Добавить пользователя", systemImage: "person.crop.circle.badge.plus")
-        }
-
-        Button(action: {}) {
-            Label("Добавить проект", systemImage: "plus.rectangle.on.rectangle")
+            Label("Пользователи", systemImage: "person.crop.rectangle.stack")
         }
     }
 }

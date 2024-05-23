@@ -11,17 +11,20 @@ import SwiftUI
 struct ProjectFrameView<Content: View>: View {
     // MARK: Props
     private let title: String
+    private let viewModel: Searchable
     @ViewBuilder private let content: () -> Content
 
     // MARK: Init
-    init(_ title: String,
-         @ViewBuilder content: @escaping () -> Content) {
+    init(_ title: String, viewModel: Searchable, @ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.viewModel = viewModel
         self.content = content
     }
 
     // MARK: Body
     var body: some View {
-        TemplateTaskFrame(content: content)
+        TaskListNavBar(title: title, viewModel: viewModel){
+            TemplateTaskFrame(content: content)
+        }
     }
 }
