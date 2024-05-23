@@ -40,9 +40,6 @@ struct TaskListView: View {
                 }
 
                 TaskCreationButton(stateManager: stateManager)
-                    .onTapGesture {
-                        viewModel.addUncompletedTask()
-                    }
             }
 
             CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
@@ -53,7 +50,7 @@ struct TaskListView: View {
                 }
             }
         }.sheet(isPresented: $stateManager.addTaskState) {
-            TaskCreationAlert(alertManager: stateManager, viewModel: viewModel)
+            TaskCreationAlert(model.id, alertManager: stateManager, viewModel: viewModel)
         }
     }
 }

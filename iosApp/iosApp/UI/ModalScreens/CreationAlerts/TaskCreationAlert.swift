@@ -7,17 +7,20 @@
 //
 
 import SwiftUI
+import shared
 
 struct TaskCreationAlert: View {
     @ObservedObject private var viewModel: TaskListViewModel
     @ObservedObject private var alertManager: TaskListAlertManager
 
+    private let parentId: UInt16
     @State private var title = ""
     @State private var estimatedTime = ""
     @State private var categoryMenuTitle = "Выбор категории"
     @State private var categoryId: UInt8 = 0
 
-    init(alertManager: TaskListAlertManager, viewModel: TaskListViewModel) {
+    init(_ parentId: UInt16, alertManager: TaskListAlertManager, viewModel: TaskListViewModel) {
+        self.parentId = parentId
         self.alertManager = alertManager
         self.viewModel = viewModel
     }
@@ -71,7 +74,16 @@ struct TaskCreationAlert: View {
     }
 
     private func addTask(_ title: String, estimatedTime: String, categoryId: UInt8) async {
-        //        await viewModel.createTask(title)
+        let taskDto = TaskDTO()
+        taskDto.name = title
+
+        let scope = Int32(estimatedTime) ?? 0
+        taskDto.scope = .init(int: scope)
+
+        let typeofactivityid = Int32(categoryId)
+        taskDto.typeofactivityid = .init(int: typeofactivityid)
+
+        await viewModel.createTask(parentId, taskDto: taskDto)
         alertManager.addTaskState.toggle()
     }
 }

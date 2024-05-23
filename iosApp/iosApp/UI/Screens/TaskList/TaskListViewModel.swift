@@ -40,7 +40,7 @@ import shared
 
             optionalCategoryList.forEach { category in
                 guard let category = category else { return }
-                
+
                 categoryList.append(category)
             }
 
@@ -50,21 +50,19 @@ import shared
         }
     }
 
-    func addUncompletedTask() {
+    func createTask(_ parentId: UInt16, taskDto: TaskDTO) async {
+        do {
+            try await taskListUseCase.createTask(task: taskDto, parentId: Int32(parentId))
 
-        //        updateDataSource()
+            await updateDataSource(parentId)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    func addCompletedTask() {
+    func addCompletedTask() {}
 
-        //        updateDataSource()
-    }
+    func deleteCard(_ id: UInt16) async {}
 
-    func deleteCard(_ id: UInt16) async {
-
-    }
-
-    func search() async {
-
-    }
+    func search() async {}
 }

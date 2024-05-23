@@ -17,4 +17,8 @@ class TaskListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun getTaskCategoryList(): MutableList<TypeOfActivityDTO?> {
         return apiService.fetchTypeOfActivity()
     }
+
+    suspend fun createTask(task: TaskDTO, parentId: Int) {
+        return apiService.createTask(task, parentId)
+    }
 }
