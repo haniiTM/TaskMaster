@@ -34,8 +34,9 @@ struct TemplateTaskSectionBG<Content: View>: View {
             VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
                 if isEmpty {
                     Text("Задачи отсутствуют")
+                        .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
-                        .padding(64)
+                        .padding(48)
                         .background(
                             Color(uiColor: .secondarySystemBackground),
                             in: RoundedRectangle(cornerRadius: 8, style: .continuous)
