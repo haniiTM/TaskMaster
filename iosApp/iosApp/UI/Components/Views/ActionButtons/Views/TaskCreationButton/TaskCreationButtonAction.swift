@@ -7,5 +7,11 @@
 //
 
 struct TaskCreationButtonAction: Openable {
-    func open() {}
+    private let stateManager: TaskListAlertManager
+
+    init(stateManager: TaskListAlertManager) {
+        self.stateManager = stateManager
+    }
+
+    func open() { stateManager.addTaskState.toggle() }
 }

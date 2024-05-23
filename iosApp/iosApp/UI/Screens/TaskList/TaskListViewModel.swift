@@ -13,6 +13,7 @@ import shared
     private let taskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()
     @Published private(set) var completedTaskListSignal = [TaskInfo]()
+    @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
 
     //    MARK: Methods
     func updateDataSource(_ id: UInt16) async {
@@ -29,21 +30,39 @@ import shared
         }
     }
 
-    func addUncompletedTask() {
+    func getCategoryList() async {
+        do {
+            guard
+                let optionalCategoryList = try await taskListUseCase.getTaskCategoryList() as? [TypeOfActivityDTO?]
+            else { return }
 
-        //        updateDataSource()
+            var categoryList = [TypeOfActivityDTO]()
+
+            optionalCategoryList.forEach { category in
+                guard let category = category else { return }
+
+                categoryList.append(category)
+            }
+
+            categoryListSignal = categoryList
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    func addCompletedTask() {
+    func createTask(_ parentId: UInt16, taskDto: TaskDTO) async {
+        do {
+            try await taskListUseCase.createTask(task: taskDto, parentId: Int32(parentId))
 
-        //        updateDataSource()
+            await updateDataSource(parentId)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    func deleteCard(_ id: UInt16) async {
+    func addCompletedTask() {}
 
-    }
+    func deleteCard(_ id: UInt16) async {}
 
-    func search() async {
-
-    }
+    func search() async {}
 }
