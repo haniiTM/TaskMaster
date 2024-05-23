@@ -47,7 +47,14 @@ fun ListItemList(
             if(attachmentsListFlag) {
                 itemsIndexed(descriptionViewModel.state.value.itemState?.file_resources ?: emptyList()) { _, item ->
                     if (item != null) {
-                        ListItem(name = "${item.orig_filename}.${item.type}" ?: "", itemFile = item, attachmentsListFlag = attachmentsListFlag, taskId = taskId)
+                        ListItem(
+                            name = "${item.orig_filename}.${item.type}" ?: "",
+                            itemFile = item,
+                            attachmentsListFlag = attachmentsListFlag,
+                            taskId = taskId,
+                            descriptionId = item.descriptionId,
+                            fileId = item.id
+                        )
                     }
                 }
             } else {

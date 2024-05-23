@@ -36,6 +36,7 @@ import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.activity.MainActivityViewModel
 import com.example.taskmaster.android.ui.component.commonTemplate.DropdownMenuArea
 import com.example.taskmaster.android.ui.component.popupWindows.LaborCostInfo
+import com.example.taskmaster.android.ui.screens.description_screen.DescriptionViewModel
 import com.example.taskmaster.data.network.models.FileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import org.koin.androidx.compose.getViewModel
@@ -46,7 +47,10 @@ fun ListItem(
     name: String? = null,
     itemManHours: ManHoursDTO? = null,
     itemFile: FileDTO? = null,
+    descriptionId: Int? = null,
+    fileId: Int? = null,
     mainActivityViewModel: MainActivityViewModel = getViewModel(),
+    descriptionViewModel: DescriptionViewModel = getViewModel(),
     attachmentsListFlag: Boolean
 ) {
     var showLaborCostInfo by remember {
@@ -126,6 +130,13 @@ fun ListItem(
                                 text = { Text(text = "Удалить", color = Color.Red) },
                                 onClick = {
                                     expanded = !expanded
+                                    if(taskId != null && descriptionId != null && fileId != null) {
+                                        descriptionViewModel.removeFile(
+                                            taskId = taskId,
+                                            descriptionId = descriptionId,
+                                            fileId = fileId
+                                        )
+                                    }
                                 },
                                 trailingIcon = {
                                     Icon(
