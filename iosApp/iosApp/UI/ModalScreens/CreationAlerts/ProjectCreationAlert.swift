@@ -30,11 +30,6 @@ struct ProjectCreationAlert: View {
             Text("Название проекта")
                 .padding()
         }
-        .padding()
-        .background(
-            .secondary,
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
-        )
     }
 
     private func addProject(_ title: String) async {

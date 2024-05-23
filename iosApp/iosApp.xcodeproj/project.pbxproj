@@ -109,6 +109,7 @@
 		CED37B3B2BFD1E8E00F9629D /* ProjectCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B3A2BFD1E8E00F9629D /* ProjectCreationAlert.swift */; };
 		CEE483982BFF53E6005A9596 /* SubTaskListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE483972BFF53E6005A9596 /* SubTaskListStateManager.swift */; };
 		CEE4839A2BFF55F4005A9596 /* SubTaskCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE483992BFF55F4005A9596 /* SubTaskCreationAlert.swift */; };
+		CEE4839C2BFFA8AD005A9596 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4839B2BFFA8AD005A9596 /* StartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +219,7 @@
 		CED37B3A2BFD1E8E00F9629D /* ProjectCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreationAlert.swift; sourceTree = "<group>"; };
 		CEE483972BFF53E6005A9596 /* SubTaskListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskListStateManager.swift; sourceTree = "<group>"; };
 		CEE483992BFF55F4005A9596 /* SubTaskCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskCreationAlert.swift; sourceTree = "<group>"; };
+		CEE4839B2BFFA8AD005A9596 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -674,6 +676,7 @@
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+				CEE4839B2BFFA8AD005A9596 /* StartView.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
 			path = iosApp;
@@ -888,6 +891,7 @@
 				2894CEBE2BD92C8600B8AB1C /* SubTaskCardControllerProtocol.swift in Sources */,
 				288455D82BD2AFB100DF64E5 /* Protocols.swift in Sources */,
 				28E796062BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift in Sources */,
+				CEE4839C2BFFA8AD005A9596 /* StartView.swift in Sources */,
 				2864E6CC2BD3EE2900504DE0 /* Box.swift in Sources */,
 				28EA9D022BD5813B00B31497 /* TaskListViewModelProtocol.swift in Sources */,
 				287638FA2BB1B87B00B55DBF /* Logo.swift in Sources */,

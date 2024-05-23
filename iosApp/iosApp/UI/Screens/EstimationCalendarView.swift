@@ -12,16 +12,18 @@ struct EstimationCalendarView: View {
     //    MARK: Props
     private let projectId: UInt16
     private let projectTitle: String
+    private let viewModel: Searchable
 
     //    MARK: Init
-    init(_ model: ProjectInfo) {
+    init(_ model: ProjectInfo, viewModel: Searchable) {
         projectId = model.id
         projectTitle = model.title
+        self.viewModel = viewModel
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(projectTitle) {
+        ProjectFrameView(projectTitle, viewModel: viewModel) {
             CalendarSection("Календарный план")
             CalendarSection("Расчет трудозатрат")
         }
@@ -40,7 +42,7 @@ struct EstimationCalendarView: View {
 
                     Spacer()
 
-                    Image(systemName: "arrow.down.circle")
+                    Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
                 }
                 .padding(8)
                 .tint(.primary)

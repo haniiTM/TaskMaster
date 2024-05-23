@@ -23,10 +23,12 @@ struct MainFrameView<Content: View>: View {
 
     //    MARK: Body
     var body: some View {
-        ProjectListNavBar(title: TaskFramesConstants.Strings.Titles.mainFrameTitle,
-                          viewModel: viewModel,
-                          alertManager: alertManager) {
-            TemplateTaskFrame(content: content)
+        NavigationView {
+            ProjectListNavBar(title: TaskFramesConstants.Strings.Titles.mainFrameTitle,
+                              viewModel: viewModel,
+                              alertManager: alertManager) {
+                TemplateTaskFrame(content: content)
+            }
         }
     }
 }

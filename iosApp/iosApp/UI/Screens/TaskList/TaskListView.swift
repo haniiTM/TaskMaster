@@ -26,8 +26,8 @@ struct TaskListView: View {
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(model.title) {
-            NavigationLink(destination: EstimationCalendarView(model)) {
+        ProjectFrameView(model.title, viewModel: viewModel) {
+            NavigationLink(destination: EstimationCalendarView(model, viewModel: viewModel)) {
                 EstimatesScreenInfoButton()
             }
             .tint(.primary)

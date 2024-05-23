@@ -12,7 +12,7 @@ enum Constants {
         //    MARK: Image names
         enum ImageNames {
             static let extraActionsImageName = "ellipsis"
-            static let searchActionImageName = "magnifyingglass"
+            static let searchActionImageName = "rectangle.and.text.magnifyingglass"
         }
     }
 }

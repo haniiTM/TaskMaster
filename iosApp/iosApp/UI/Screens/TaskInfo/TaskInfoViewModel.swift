@@ -8,7 +8,11 @@
 
 import shared
 
-@MainActor final class TaskInfoViewModel: ObservableObject {
+@MainActor final class TaskInfoViewModel: ObservableObject, Searchable {
+    func search() async {
+        
+    }
+
     //    MARK: Props
     private let taskInfoUseCase = KoinHelper().getTaskInfoUseCase()
     @Published private(set) var taskInfo = DetailedTaskInfo()

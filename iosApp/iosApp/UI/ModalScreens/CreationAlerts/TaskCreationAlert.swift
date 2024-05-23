@@ -37,40 +37,34 @@ struct TaskCreationAlert: View {
             .task { await viewModel.getCategoryList() }
     }
 
+    @ViewBuilder
     private var TaskCreationForm: some View {
-        Group {
-            TextField(text: $title) {
-                Text("Название задачи")
-                    .padding()
-            }
-
-            TextField(text: $estimatedTime) {
-                Text("Временная оценка")
-                    .padding()
-            }
-
-            Menu {
-                ForEach(viewModel.categoryListSignal, id: \.id) { category in
-                    Button(category.name) {
-                        categoryId = UInt8(category.id)
-                        categoryMenuTitle = category.name
-                    }
-                }
-            } label: {
-                HStack {
-                    Text(categoryMenuTitle)
-
-                    Spacer()
-
-                    Image(systemName: "arrowshape.right.circle")
-                }
-            }.tint(.primary)
+        TextField(text: $title) {
+            Text("Название задачи")
+                .padding()
         }
-        .padding()
-        .background(
-            .secondary,
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
-        )
+
+        TextField(text: $estimatedTime) {
+            Text("Временная оценка")
+                .padding()
+        }
+
+        Menu {
+            ForEach(viewModel.categoryListSignal, id: \.id) { category in
+                Button(category.name) {
+                    categoryId = UInt8(category.id)
+                    categoryMenuTitle = category.name
+                }
+            }
+        } label: {
+            HStack {
+                Text(categoryMenuTitle)
+
+                Spacer()
+
+                Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
+            }
+        }.tint(.primary)
     }
 
     private func addTask(_ title: String, estimatedTime: String, categoryId: UInt8) async {

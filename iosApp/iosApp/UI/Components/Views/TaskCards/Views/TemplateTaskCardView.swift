@@ -41,11 +41,12 @@ struct TemplateTaskCardView<Content: View>: View {
         }
         .contextMenu {
             Button(
+                role: .destructive,
                 action: {
                     Task { await controller.remove() }
                 }
             ) {
-                Label("Удалить", systemImage: "trash.square")
+                Label("Удалить", systemImage: "trash")
             }
         }
     }
