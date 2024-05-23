@@ -8,6 +8,7 @@
 
 protocol TaskCardViewModelProtocol {
     func deleteCard(_ id: UInt16) async
+    func updateDataSource(_ parentId: UInt16) async
 }
 
 protocol Searchable {

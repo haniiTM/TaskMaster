@@ -8,11 +8,13 @@
 
 final class SubTaskCardController: SubTaskCardControllerProtocol {
     //    MARK: Props
+    private let parentId: UInt16
     private let viewModel: TaskCardViewModelProtocol
     let model: any TaskInfoProtocol
 
     //    MARK: Init
-    required init(model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol) {
+    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
+        self.parentId = projectId
         self.model = model
         self.viewModel = viewModel
     }

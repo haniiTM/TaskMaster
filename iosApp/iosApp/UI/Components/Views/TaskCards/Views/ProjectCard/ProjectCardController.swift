@@ -14,7 +14,7 @@ final class ProjectCardController: ProjectCardControllerProtocol {
     let model: any TaskInfoProtocol
 
     //    MARK: Init
-    required init(model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol) {
+    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
         self.model = model
         self.viewModel = viewModel
     }

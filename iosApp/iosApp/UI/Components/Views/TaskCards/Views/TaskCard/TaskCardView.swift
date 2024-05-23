@@ -21,8 +21,8 @@ struct TaskCardView: View {
     }
 
     /// Initializes the view with default realization.
-    init(model: TaskInfo, viewModel: TaskCardViewModelProtocol) {
-        controller = TaskCardController(model: model, viewModel: viewModel)
+    init(_ parentId: UInt16, model: TaskInfo, viewModel: TaskCardViewModelProtocol) {
+        controller = TaskCardController(parentId, model: model, viewModel: viewModel)
     }
 
     //    MARK: Body

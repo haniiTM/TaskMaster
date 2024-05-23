@@ -15,7 +15,7 @@ import shared
     @Published private(set) var projectList = [ProjectInfo]()
 
     //    MARK: Methods
-    func updateDataSource() async {
+    func updateDataSource(_ parentId: UInt16) async {
         do {
             guard
                 let taskList = try await projectListUseCase.getProjectList() as? [TaskDTO?]
@@ -30,7 +30,7 @@ import shared
     func createProject(_ title: String) async {
         do {
             try await projectListUseCase.createProject(projectName: title)
-            await updateDataSource()
+            await updateDataSource(0)
         } catch {
             print(error.localizedDescription)
         }
@@ -39,7 +39,7 @@ import shared
     func deleteCard(_ id: UInt16) async {
         do {
             try await projectListUseCase.deleteProject(projectId: Int32(id))
-            await updateDataSource()
+            await updateDataSource(0)
         } catch {
             print(error.localizedDescription)
         }

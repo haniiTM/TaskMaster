@@ -14,7 +14,7 @@ struct ProjectCardView: View {
 
     //    MARK: Init
     init(model: ProjectInfo, viewModel: ProjectListViewModelProtocol) {
-        controller = ProjectCardController(model: model, viewModel: viewModel)
+        controller = ProjectCardController(model.id, model: model, viewModel: viewModel)
     }
 
     //    MARK: Body
