@@ -84,7 +84,8 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                 value = userLogin,
                 onValueChange = { newValue -> userLogin = newValue },
                 placeholder = " Логин",
-                roundedTopAngle = 5,
+                roundedTopRightAngle = 5,
+                roundedTopLeftAngle = 5,
                 spacer = 20,
                 borderWidth = 1
             )

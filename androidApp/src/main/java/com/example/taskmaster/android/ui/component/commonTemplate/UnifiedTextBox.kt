@@ -41,8 +41,10 @@ fun UnifiedTextBox(
     passwordVisibleValue: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     keyboardType: KeyboardType = KeyboardType.Email,
-    roundedTopAngle: Int = 0,
-    roundedDownAngle: Int = 0,
+    roundedTopLeftAngle: Int = 0,
+    roundedTopRightAngle: Int = 0,
+    roundedDownRightAngle: Int = 0,
+    roundedDownLeftAngle: Int = 0,
     spacer: Int = 0,
     borderWidth: Int = 0,
     icon: Int = 0,
@@ -57,12 +59,12 @@ fun UnifiedTextBox(
     val textFieldModifier = Modifier
         .clip(
             RoundedCornerShape(
-                roundedTopAngle.dp, roundedTopAngle.dp, roundedDownAngle.dp, roundedDownAngle.dp
+                roundedTopLeftAngle.dp, roundedTopRightAngle.dp, roundedDownRightAngle.dp, roundedDownLeftAngle.dp
             )
         )
         .border(
             BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline),
-            shape = RoundedCornerShape(roundedTopAngle.dp, roundedTopAngle.dp)
+            shape = RoundedCornerShape(roundedTopLeftAngle.dp, roundedTopRightAngle.dp, roundedDownRightAngle.dp, roundedDownLeftAngle.dp)
         )
         .background(color = Color.White)
         .height(TextFieldHeight)
