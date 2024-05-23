@@ -72,5 +72,7 @@ interface ApiService {
     suspend fun listFileInTask(descriptionId: Int): DescriptionDTOFileDTO?
     // Отправка файла на сервер
     suspend fun sendFile(fileName: String, taskId: Int, data: ByteArray)
+    // Удаление файла
+    suspend fun deleteFile(descriptionId: Int, fileId: Int)
 }
 
