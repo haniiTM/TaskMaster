@@ -30,7 +30,7 @@ class DetailedTaskInfo: ProjectInfo {
         let participiantsValue = task.userCount as? UInt8 ?? 0
 
         allocatedTime = task.spentTime as? UInt8 ?? self.allocatedTime
-        let timerValue = task.score as? UInt8 ?? 0
+        let timerValue = task.score as? UInt16 ?? 0
         spentTime = task.spentedTime ?? self.spentTime
 
         let taskDependsOn = TaskDependsOn(task.taskDependenceOn)

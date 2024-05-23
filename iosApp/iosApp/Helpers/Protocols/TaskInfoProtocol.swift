@@ -9,6 +9,6 @@
 protocol TaskInfoProtocol: Identifiable {
     var id: UInt16 { get }
     var title: String { get }
-    var timerValue: UInt8 { get }
+    var timerValue: UInt16 { get }
     var participiantsValue: UInt8 { get }
 }

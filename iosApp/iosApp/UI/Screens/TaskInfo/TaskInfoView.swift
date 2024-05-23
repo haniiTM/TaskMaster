@@ -87,8 +87,6 @@ struct TaskInfoView: View {
     private var ViewBody: some View {
         ProjectFrameView(projectTitle) {
             TaskInfoCard
-
-            LaborCostCreationButton()
         }
     }
 
