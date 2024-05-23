@@ -31,21 +31,24 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
         Header(
             text = title ?: "Заголовок отсутствует",
             actionIcons = listOf(
-                R.drawable.search1_icon, R.drawable.users_icon
+                R.drawable.users_icon
             ),
             navController = navController,
-            actionTitle = listOf("Поиск", "Пользователи"),
+            actionTitle = listOf("Пользователи"),
             projectScreenKey = false,
             projectId = id,
             activeMenu = true,
-            showSearchLine = { showSearchLine = true })
+            onShowSearchLineChange = { showSearchLine = !showSearchLine }
+        )
         if (showSearchLine) {
             Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
                 UnifiedTextBox(
                     value = searchText,
                     onValueChange = { newValue -> searchText = newValue },
-                    roundedDownAngle = 15,
-                    roundedTopAngle = 15,
+                    roundedDownLeftAngle = 15,
+                    roundedDownRightAngle = 15,
+                    roundedTopRightAngle = 15,
+                    roundedTopLeftAngle = 15,
                     placeholder = "Поиск"
                 )
             }

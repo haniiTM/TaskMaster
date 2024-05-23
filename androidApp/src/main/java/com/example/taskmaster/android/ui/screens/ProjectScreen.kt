@@ -1,7 +1,7 @@
 package com.example.taskmaster.android.ui.screens
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -53,7 +53,6 @@ fun ProjectScreen(
             projectScreenKey = true,
             text = "Все проекты",
             actionIcons = listOf(
-                R.drawable.search1_icon,
                 R.drawable.add_user_icon,
                 R.drawable.remove_user_icon,
                 R.drawable.add_project_icon,
@@ -61,21 +60,26 @@ fun ProjectScreen(
             ),
             navController = navController,
             actionTitle = listOf(
-                "Поиск",
                 "Добавить пользователя",
                 "Удалить пользователя",
                 "Добавить проект",
                 "Выйти"
             ),
             activeMenu = true,
-            showSearchLine = { showSearchLine = true })
+            onShowSearchLineChange = { showSearchLine = !showSearchLine }
+        )
         if (showSearchLine) {
-            Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
+            Row(
+                modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)
+            ) {
                 UnifiedTextBox(
                     value = searchText,
                     onValueChange = { newValue -> searchText = newValue },
-                    roundedDownAngle = 15,
-                    roundedTopAngle = 15,
+                    roundedDownLeftAngle = 15,
+                    roundedDownRightAngle = 15,
+                    roundedTopRightAngle = 15,
+                    roundedTopLeftAngle = 15,
+                    borderWidth = 1,
                     placeholder = "Поиск"
                 )
             }

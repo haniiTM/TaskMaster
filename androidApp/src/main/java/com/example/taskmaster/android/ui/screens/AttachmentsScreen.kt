@@ -69,19 +69,22 @@ fun AttachmentsListScreen(
         Header(
             text = title ?: "Заголовок отсутствует",
             actionIcons = listOf(
-                R.drawable.search1_icon, R.drawable.users_icon
+                R.drawable.users_icon
             ),
             navController = navController,
-            actionTitle = listOf("Поиск", "Пользователи"),
+            actionTitle = listOf("Пользователи"),
             activeMenu = true,
-            showSearchLine = { showSearchLine = true })
+            onShowSearchLineChange = { showSearchLine = !showSearchLine }
+            )
         if (showSearchLine) {
             Box(modifier = Modifier.padding(horizontal = 14.dp)) {
                 UnifiedTextBox(
                     value = searchText,
                     onValueChange = { newValue -> searchText = newValue },
-                    roundedDownAngle = 15,
-                    roundedTopAngle = 15,
+                    roundedDownLeftAngle = 15,
+                    roundedDownRightAngle = 15,
+                    roundedTopRightAngle = 15,
+                    roundedTopLeftAngle = 15,
                     placeholder = "Поиск"
                 )
             }

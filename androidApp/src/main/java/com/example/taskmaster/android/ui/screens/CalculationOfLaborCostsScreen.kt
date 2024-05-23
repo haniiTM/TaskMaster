@@ -60,12 +60,12 @@ fun CalculationOfLaborCostsScreen(
         Header(
             text = title ?: "Заголовок отсутствует",
             actionIcons = listOf(
-                R.drawable.search1_icon, R.drawable.users_icon
+                R.drawable.users_icon
             ),
             navController = navController,
-            actionTitle = listOf("Поиск", "Пользователи"),
+            actionTitle = listOf("Пользователи"),
             projectId = result,
-            showSearchLine = {}
+            onShowSearchLineChange = {  }
             )
         Column(modifier = Modifier.padding(top = 15.dp)){
             Column(
