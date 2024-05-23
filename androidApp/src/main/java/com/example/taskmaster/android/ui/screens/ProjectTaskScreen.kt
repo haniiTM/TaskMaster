@@ -22,7 +22,7 @@ import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTask
 import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
 
 @Composable
-fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?, projectId: Int?) {
+fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?) {
     var searchText by remember { mutableStateOf("") }
     var showSearchLine by remember {
         mutableStateOf(false)
@@ -67,8 +67,7 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?, pr
                     navController = navController,
                     id = id,
                     projectTitle = title ?: "Заголовок отсутствует",
-                    searchText = searchText,
-                    projectId = projectId
+                    searchText = searchText
                 )
             }
 
@@ -80,7 +79,6 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?, pr
                     id = id,
                     projectTitle = title ?: "Заголовок отсутствует",
                     searchText = searchText,
-                    projectId = projectId
                 )
             }
         }

@@ -42,8 +42,7 @@ fun UncompletedTasksContainer(
     id: Int?,
     viewModel: TaskViewModel = getViewModel(),
     projectTitle: String,
-    searchText: String,
-    projectId: Int?
+    searchText: String
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getUnfulfilleddTask(id!!.toInt())
@@ -108,7 +107,6 @@ fun UncompletedTasksContainer(
                                 context = LocalContext.current,
                                 navController = navController,
                                 projectTitle = projectTitle,
-                                projectId = projectId
                             )
                         }
                     }

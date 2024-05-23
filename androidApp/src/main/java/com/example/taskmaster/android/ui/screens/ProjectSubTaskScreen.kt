@@ -102,7 +102,6 @@ fun ProjectSubTaskScreen(
                         id = id,
                         projectTitle = title ?: "Заголовок отсутствует",
                         searchText = searchText,
-                        projectId = projectId
                     )
                 }
 
@@ -114,7 +113,6 @@ fun ProjectSubTaskScreen(
                         id = id,
                         projectTitle = title ?: "Заголовок отсутствует",
                         searchText = searchText,
-                        projectId = projectId
                     )
                 }
             }
