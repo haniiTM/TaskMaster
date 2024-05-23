@@ -34,6 +34,9 @@ class NewUserViewModel constructor( private val apiService: ApiService) : ViewMo
         viewModelScope.launch {
             try {
                 callback(apiService.linkUserTaskOrProject(urp))
+                if (urp.projectid != 0) {
+                    getPersonInProject(urp.projectid!!)
+                }
             } catch(e: Exception) {
                 println("Exception in link user to task or project $e")
             }

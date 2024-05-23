@@ -200,9 +200,6 @@ fun UserList(
                                     if (triggerRefresh != null && success) {
                                         viewTaskModel.dataTaskById(id)
                                         triggerRefresh(success)
-                                        if (projectId != 0) {
-                                            viewModel.getPersonInProject(projectId)
-                                        }
                                     }
                                 }
                             }
