@@ -49,12 +49,15 @@ fun Navigation(navController: NavHostController) {
                 type = NavType.IntType
             }, navArgument(PROJECT_TITLE_ARGUMENT_KEY) {
                 type = NavType.StringType
+            }, navArgument(PROJECT_ID_ARGUMENT_KEY){
+                type = NavType.IntType
             })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt(PROJECT_TASK_ARGUMENT_KEY)
             val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
+            val projectId = backStackEntry.arguments?.getInt(PROJECT_ID_ARGUMENT_KEY)
 
-            ProjectTaskScreen(navController = navController, id = id, title = title)
+            ProjectTaskScreen(navController = navController, id = id, title = title, projectId)
         }
 
         composable(
@@ -67,18 +70,22 @@ fun Navigation(navController: NavHostController) {
                 type = NavType.StringType
             }, navArgument(TASK_DESCRIPTION_ARGUMENT_KEY) {
                 type = NavType.StringType
+            }, navArgument(PROJECT_ID_ARGUMENT_KEY){
+                type = NavType.IntType
             })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt(PROJECT_SUBTASK_ARGUMENT_KEY)
             val title = backStackEntry.arguments?.getString(PROJECT_TITLE_ARGUMENT_KEY)
             val taskTitle = backStackEntry.arguments?.getString(TASK_TITLE_ARGUMENT_KEY)
             val taskDescription = backStackEntry.arguments?.getString(TASK_DESCRIPTION_ARGUMENT_KEY)
+            val projectId = backStackEntry.arguments?.getInt(PROJECT_ID_ARGUMENT_KEY)
             ProjectSubTaskScreen(
                 navController = navController,
                 id = id,
                 title = title,
                 taskTitle = taskTitle,
-                taskDescription = taskDescription
+                taskDescription = taskDescription,
+                projectId = projectId
             )
         }
 

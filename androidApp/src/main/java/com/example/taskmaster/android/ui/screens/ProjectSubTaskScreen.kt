@@ -30,6 +30,7 @@ fun ProjectSubTaskScreen(
     title: String?,
     taskTitle: String?,
     taskDescription: String?,
+    projectId: Int?
 ) {
     Log.d("taskId", id.toString())
     var description by remember {
@@ -100,7 +101,8 @@ fun ProjectSubTaskScreen(
                         navController = navController,
                         id = id,
                         projectTitle = title ?: "Заголовок отсутствует",
-                        searchText = searchText
+                        searchText = searchText,
+                        projectId = projectId
                     )
                 }
 
@@ -111,7 +113,8 @@ fun ProjectSubTaskScreen(
                         navController = navController,
                         id = id,
                         projectTitle = title ?: "Заголовок отсутствует",
-                        searchText = searchText
+                        searchText = searchText,
+                        projectId = projectId
                     )
                 }
             }
