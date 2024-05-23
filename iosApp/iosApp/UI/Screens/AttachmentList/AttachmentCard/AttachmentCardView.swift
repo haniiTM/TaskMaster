@@ -33,6 +33,7 @@ struct AttachmentCardView: View {
             }
         }
         .padding()
+        .tint(.primary)
         .background(
             Color(uiColor: .secondarySystemBackground),
             in: RoundedRectangle(cornerRadius: 8, style: .continuous)

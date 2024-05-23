@@ -11,60 +11,77 @@ import SwiftUI
 struct SubTaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = SubTaskListViewModel()
-    @State private var subTaskList: [TaskInfo] = []
-    private let title: String
+    @StateObject private var stateManager = SubTaskListStateManager()
 
-    @State private var model = SubTaskListModel()
+    @State private var descriptionState: String
+    private let title: String
+    private let model: TaskInfo
 
     //    MARK: Init
-    init(_ title: String) {
+    init(_ title: String, model: TaskInfo) {
         self.title = title
-        //        viewModel.projectListSignal.bind { projectList in
-        //            guard let projectList = projectList else { return }
-        //            self.projectList = projectList
-        //        }
+        self.model = model
+        descriptionState = model.description
     }
 
     //    MARK: Body
     var body: some View {
+        ViewBody
+            .task { await viewModel.updateDataSource(model.id) }
+    }
+
+    private var ViewBody: some View {
         ProjectFrameView(title) {
-            NavigationLink(destination: TaskInfoListView("", model: model.subTaskList.first!)) {
-                ScreenInfoButton("Изучение React Native", isUrgent: false)
-            }.foregroundColor(.primary)
+            NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
+                ScreenInfoButton(model.title, isUrgent: false)
+            }.tint(.primary)
 
             DescriptionBody
 
-            NavigationLink(destination: AttachmentListView("")) {
+            NavigationLink(destination: AttachmentListView(title, taskId: model.id)) {
                 AttachmentsScreenInfoButton()
-            }.foregroundColor(.primary)
+            }.tint(.primary)
 
-            SubTaskSectionBG {
-                ForEach(model.subTaskList) { subTask in
-                    SubTaskCardView(model: subTask)
+            SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
+                ForEach(viewModel.unCompletedSubTaskListSignal) { subTask in
+                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
 
-                SubTaskCreationButton().foregroundColor(.primary)
+                SubTaskCreationButton(stateManager: stateManager)
             }
 
-            CompletedTaskSectionBG {
-                SubTaskCreationButton().foregroundColor(.primary)
-            }
-        }.onAppear { viewModel.updateDataSource() }
-            .navigationTitle("Сайт Nissan")
-            .toolbar {
-                Button(action: {}) {
-                    Image(systemName: Constants.Strings.ImageNames.searchActionImageName)
+            CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
+                ForEach(viewModel.completedSubTaskListSignal) { subTask in
+                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
             }
-        
+        }.sheet(isPresented: $stateManager.isCreationAlertShown) {
+            SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+        }
     }
 
     private var DescriptionBody: some View {
-        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure.")
-            .padding()
+        //        TextEditor(text: $descriptionState)
+        VStack(spacing: 8) {
+            Text(model.description)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding()
+                .padding(.bottom, 64)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+
+            Button(action: {}) {
+                Text("Сохранить")
+                    .frame(maxWidth: .infinity)
+                    .padding(8)
+            }
+            .tint(.white)
             .background(
-                Color(uiColor: .secondarySystemBackground),
+                .tint,
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
+        }
     }
 }

@@ -11,5 +11,5 @@ protocol Openable {
 }
 
 protocol Removable {
-    func remove()
+    func remove() async
 }

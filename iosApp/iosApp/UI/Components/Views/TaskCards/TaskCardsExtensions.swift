@@ -19,11 +19,11 @@ extension TimerTitleProvider {
     }
 }
 
-extension UrgencyValueProvider {
-    var isUrgent: Bool {
-        model.isUrgent
-    }
-}
+//extension UrgencyValueProvider {
+//    var isUrgent: Bool {
+//        model.isUrgent
+//    }
+//}
 
 extension UrgentImageNameProvider {
     var urgentImageName: String {
@@ -35,12 +35,12 @@ extension UrgentImageNameProvider {
 extension ParticipiantsTitleProvider {
     var participiantsTitle: String {
         let participiantsTitle = TaskCardsConstants.Strings.Titles.participiantsTitle
-        let emptyTitle = TaskCardsConstants.Strings.EmptyTitles.emptyStringTitle
+//        let emptyTitle = TaskCardsConstants.Strings.EmptyTitles.emptyStringTitle
 
         let participiantsValueNumber = model.participiantsValue
         let participiantsValueString =
-        participiantsValueNumber?.description ??
-        emptyTitle
+        participiantsValueNumber.description
+//        emptyTitle
 
         let resultString =
         participiantsTitle +
@@ -51,43 +51,43 @@ extension ParticipiantsTitleProvider {
 }
 
 // MARK: - Task
-extension TaskNumberTitleProvider {
-    var taskNumberTitle: String {
-        let localNumberTitle = TaskCardsConstants.Strings.Titles.numberTitle
-        let emptyNumberTitle = TaskCardsConstants.Strings.EmptyTitles.emptyNumberTitle
+//extension TaskNumberTitleProvider {
+//    var taskNumberTitle: String {
+//        let localNumberTitle = TaskCardsConstants.Strings.Titles.numberTitle
+//        let emptyNumberTitle = TaskCardsConstants.Strings.EmptyTitles.emptyNumberTitle
+//
+//        var finalString = localNumberTitle
+//
+//        if let parentNumberValue = model.parentNumber {
+//            let parentNumberTitle = parentNumberValue.description
+//            let numbersSeparator = TaskCardsConstants.Strings.Separators.numbersSeparator
+//
+//            finalString +=
+//            parentNumberTitle +
+//            numbersSeparator
+//        }
+//
+//        let numberValue = model.numberValue
+//        let numberTitle =
+//        numberValue?.description ??
+//        emptyNumberTitle
+//
+//        finalString += numberTitle
+//
+//        return finalString
+//    }
+//}
 
-        var finalString = localNumberTitle
-
-        if let parentNumberValue = model.parentNumber {
-            let parentNumberTitle = parentNumberValue.description
-            let numbersSeparator = TaskCardsConstants.Strings.Separators.numbersSeparator
-
-            finalString +=
-            parentNumberTitle +
-            numbersSeparator
-        }
-
-        let numberValue = model.numberValue
-        let numberTitle =
-        numberValue?.description ??
-        emptyNumberTitle
-
-        finalString += numberTitle
-
-        return finalString
-    }
-}
-
-extension CategoriesTitleProvider {
-    var categoriesTitle: String {
-        let emptyCategoriesTitle = TaskCardsConstants.Strings.EmptyTitles.emptyCategoriesTitle
-        let categoriesSeparator = TaskCardsConstants.Strings.Separators.categoriesSeparator
-        let categoriesValue = model.categories
-
-        let resultString =
-        categoriesValue?.joined(separator: categoriesSeparator) ??
-        emptyCategoriesTitle
-
-        return resultString
-    }
-}
+//extension CategoriesTitleProvider {
+//    var categoriesTitle: String {
+//        let emptyCategoriesTitle = TaskCardsConstants.Strings.EmptyTitles.emptyCategoriesTitle
+//        let categoriesSeparator = TaskCardsConstants.Strings.Separators.categoriesSeparator
+//        let categoriesValue = model.categories
+//
+//        let resultString =
+//        categoriesValue?.joined(separator: categoriesSeparator) ??
+//        emptyCategoriesTitle
+//
+//        return resultString
+//    }
+//}

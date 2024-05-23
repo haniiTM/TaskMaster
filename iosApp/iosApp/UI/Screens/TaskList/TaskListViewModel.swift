@@ -6,27 +6,69 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-import Foundation
+import shared
 
-final class TaskListViewModel: TaskListViewModelProtocol, ObservableObject {
+@MainActor final class TaskListViewModel: ObservableObject, TaskListViewModelProtocol {
     //    MARK: Props
-    @Published var unCompletedTaskListSignal: Box<[TaskInfo]?> = .init(nil)
-    @Published var completedTaskListSignal: Box<[TaskInfo]?> = .init(nil)
-    private var model = TaskListModel()
+    private let taskListUseCase = KoinHelper().getTaskListUseCase()
+    @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()
+    @Published private(set) var completedTaskListSignal = [TaskInfo]()
+    @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
 
     //    MARK: Methods
-    func updateDataSource() {
-        unCompletedTaskListSignal.value = model.uncompletedTaskList
-        completedTaskListSignal.value = model.completedTaskList
+    func updateDataSource(_ parentId: UInt16) async {
+        do {
+            guard
+                let optionalUnCompletedTaskList = try await taskListUseCase.getUncompletedTaskList(idProj: parentId) as? [TaskDTO?],
+                let optionalCompletedTaskList = try await taskListUseCase.getCompletedTaskList(idProj: parentId) as? [TaskDTO?]
+            else { return }
+
+            unCompletedTaskListSignal = optionalUnCompletedTaskList.decodedDtoList()
+            completedTaskListSignal = optionalCompletedTaskList.decodedDtoList()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    func addUncompletedTask() {
-        model.addUncompletedTask()
-        updateDataSource()
+    func getCategoryList() async {
+        do {
+            guard
+                let optionalCategoryList = try await taskListUseCase.getTaskCategoryList() as? [TypeOfActivityDTO?]
+            else { return }
+
+            var categoryList = [TypeOfActivityDTO]()
+
+            optionalCategoryList.forEach { category in
+                guard let category = category else { return }
+
+                categoryList.append(category)
+            }
+
+            categoryListSignal = categoryList
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    func addCompletedTask() {
-        model.addCompletedTask()
-        updateDataSource()
+    func createTask(_ parentId: UInt16, taskDto: TaskDTO) async {
+        do {
+            try await taskListUseCase.createTask(task: taskDto, parentId: Int32(parentId))
+
+            await updateDataSource(parentId)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
+
+    func addCompletedTask() {}
+
+    func deleteCard(_ id: UInt16) async {
+        do {
+            try await taskListUseCase.deleteTask(id: Int32(id))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func search() async {}
 }

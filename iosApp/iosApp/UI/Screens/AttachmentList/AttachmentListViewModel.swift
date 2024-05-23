@@ -6,15 +6,30 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-import Foundation
+import shared
 
-final class AttachmentListViewModel: AttachmentListViewModelProtocol, ObservableObject {
+@MainActor final class AttachmentListViewModel: ObservableObject {
     //    MARK: Props
-    var attachmentListSignal: Box<[String]?> = .init(nil)
-    private let model = AttachmentListModel()
+    @Published var attachmentListSignal = [ManHoursDTO]()
+    private let attachmentListUseCase = KoinHelper().getLaborCostListUseCase()
 
     //    MARK: Methods
-    func updateDataSource() {
-        attachmentListSignal.value = model.attachmentList
+    func updateDataSource(_ taskId: UInt16) async {
+        do {
+            guard
+                let unwrappedAttachmentList = try await attachmentListUseCase.getLaborCostList(taskId: .init(taskId)) as? [ManHoursDTO?]
+            else { return }
+
+            var attachmentList = [ManHoursDTO]()
+            unwrappedAttachmentList.forEach { attachment in
+                guard let attachment = attachment else { return }
+
+                attachmentList.append(attachment)
+            }
+
+            attachmentListSignal = attachmentList
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

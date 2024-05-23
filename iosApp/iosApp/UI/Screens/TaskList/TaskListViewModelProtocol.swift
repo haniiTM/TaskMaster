@@ -8,13 +8,4 @@
 
 import Foundation
 
-protocol TaskListViewModelProtocol: AnyObject {
-    //    MARK: Props
-    var unCompletedTaskListSignal: Box<[TaskInfo]?> { get }
-    var completedTaskListSignal: Box<[TaskInfo]?> { get }
-
-    //    MARK: Methods
-    func updateDataSource()
-    func addUncompletedTask()
-    func addCompletedTask()
-}
+protocol TaskListViewModelProtocol: ProjectListViewModelProtocol {}

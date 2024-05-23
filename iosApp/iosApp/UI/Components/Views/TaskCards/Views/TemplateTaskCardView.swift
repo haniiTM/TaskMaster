@@ -12,7 +12,6 @@ struct TemplateTaskCardView<Content: View>: View {
     //    MARK: Props
     private let controller: TaskCardActions
     @ViewBuilder private let content: () -> Content
-    @State private var isButtonVisible = true
 
     //    MARK: Init
     init(controller: TaskCardActions, @ViewBuilder content: @escaping () -> Content) {
@@ -27,35 +26,27 @@ struct TemplateTaskCardView<Content: View>: View {
 
     private var ViewBody: some View {
         VStack {
-            if isButtonVisible {
-//                Button(action: controller.open) {
-                    HStack {
-                        VStack(alignment: .leading, spacing: TaskCardsConstants.Numbers.lineSpacing) {
-                            content()
-                        }
+            HStack {
+                VStack(alignment: .leading, spacing: TaskCardsConstants.Numbers.lineSpacing) {
+                    content()
+                }
 
-                        Spacer()
-                    }
-//                }
-                .padding()
-                .background(
-                    Color(uiColor: .secondarySystemBackground),
-                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                )
-                .transition(.move(edge: .trailing))
-                .animation(.easeInOut)
+                Spacer()
+            }
+            .padding()
+            .background(
+                Color(uiColor: .secondarySystemBackground),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
+        }
+        .contextMenu {
+            Button(
+                action: {
+                    Task { await controller.remove() }
+                }
+            ) {
+                Label("Удалить", systemImage: "trash.square")
             }
         }
-        .gesture(
-            DragGesture()
-                .onEnded { value in
-                    if value.translation.width < -100 {
-                        withAnimation {
-                            isButtonVisible = false
-                            controller.remove()
-                        }
-                    }
-                }
-        )
     }
 }

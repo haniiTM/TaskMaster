@@ -10,26 +10,32 @@ import SwiftUI
 
 struct AttachmentListView: View {
     //    MARK: Props
-    private let viewModel: AttachmentListViewModelProtocol
-    private let title: String
-    private let attachmentList: [String]
+    @StateObject private var viewModel = AttachmentListViewModel()
+    private let taskId: UInt16
+    private let projectTitle: String
 
     //    MARK: Init
-    init(_ title: String) {
-        self.title = title
-        viewModel = AttachmentListViewModel()
-        viewModel.updateDataSource()
-        attachmentList = viewModel.attachmentListSignal.value ?? .init()
+    init(_ projectTitle: String, taskId: UInt16) {
+        self.taskId = taskId
+        self.projectTitle = projectTitle
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(title) {
-            ForEach(attachmentList, id: \.self) { attachment in
-                AttachmentCardView(attachment).foregroundColor(.primary)
-            }.padding(.horizontal, 40)
+        ProjectFrameView(projectTitle) {
+            ViewBody
+        }
+        .task {
+            await viewModel.updateDataSource(taskId)
+        }
+    }
 
-            AttachmentCreationButton().foregroundColor(.primary)
-        }.navigationTitle("Вложения")
+    @ViewBuilder
+    private var ViewBody: some View {
+        ForEach(viewModel.attachmentListSignal, id: \.id) { attachment in
+            AttachmentCardView(attachment.comment ?? "Вложение №\(attachment.id ?? 0)")
+        }.padding(.horizontal, 40)
+
+        AttachmentCreationButton()
     }
 }

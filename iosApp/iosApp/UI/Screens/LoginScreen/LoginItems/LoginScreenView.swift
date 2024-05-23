@@ -12,13 +12,8 @@ import shared
 struct LoginScreenView: View {
     //    MARK: Props
     @StateObject private var viewModel = LoginScreenViewModel()
-    @State private var loginTextFieldState = ""
-    @State private var passwordTextFieldState = ""
-//    @State private var isNavigationAllowState = false
-
-//    init() {
-//        isNavigationAllowState = viewModel.isTokenValid
-//    }
+    @State private var loginTextFieldState = "user1"
+    @State private var passwordTextFieldState = "22"
 
     //    MARK: Body
     var body: some View {
@@ -66,10 +61,11 @@ struct LoginScreenView: View {
 
                     label: {
                         Text(LoginScreenConstants.Strings.loginButtonTitle)
-                            .foregroundColor(.primary)
+                            .tint(.primary)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .padding(.horizontal)
+                            .background(.ultraThinMaterial)
                     }
                 )
             }
