@@ -42,7 +42,8 @@ fun CompletedTasksContainer(
     id: Int?,
     viewModel: TaskViewModel = getViewModel(),
     projectTitle: String,
-    searchText: String
+    searchText: String,
+    projectId: Int?
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getCompletedTask(id!!.toInt())
@@ -109,7 +110,8 @@ fun CompletedTasksContainer(
                                 context = LocalContext.current,
                                 navController = navController,
                                 completed = true,
-                                projectTitle = projectTitle
+                                projectTitle = projectTitle,
+                                projectId = projectId
                             )
                         }
                     }
