@@ -11,6 +11,8 @@ import SwiftUI
 struct SubTaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = SubTaskListViewModel()
+    @StateObject private var stateManager = SubTaskListStateManager()
+
     @State private var descriptionState: String
     private let title: String
     private let model: TaskInfo
@@ -45,7 +47,7 @@ struct SubTaskListView: View {
                     SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
 
-                SubTaskCreationButton()
+                SubTaskCreationButton(stateManager: stateManager)
             }
 
             CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
@@ -53,6 +55,8 @@ struct SubTaskListView: View {
                     SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
             }
+        }.sheet(isPresented: $stateManager.isCreationAlertShown) {
+            SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
         }
     }
 

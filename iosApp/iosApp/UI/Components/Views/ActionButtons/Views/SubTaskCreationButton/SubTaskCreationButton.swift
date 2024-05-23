@@ -15,10 +15,10 @@ struct SubTaskCreationButton: View {
     private let action: Openable
 
     //    MARK: Init
-    init() {
+    init(stateManager: SubTaskListStateManager) {
         title = ActionButtonsConstants.Strings.Titles.subTaskTitle
         imageName = ActionButtonsConstants.Strings.ImageNames.subTaskImageName
-        action = SubTaskCreationButtonAction()
+        action = SubTaskCreationButtonAction(stateManager: stateManager)
     }
 
     //    MARK: Body
