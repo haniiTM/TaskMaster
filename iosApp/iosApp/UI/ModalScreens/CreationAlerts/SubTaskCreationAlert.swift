@@ -34,7 +34,7 @@ struct SubTaskCreationAlert: View {
 
     private var ViewBody: some View {
         SubTaskCreationForm
-//            .task { await viewModel.getCategoryList() }
+            .task { await viewModel.getCategoryList() }
     }
 
     private var SubTaskCreationForm: some View {
@@ -50,12 +50,12 @@ struct SubTaskCreationAlert: View {
             }
 
             Menu {
-//                ForEach(viewModel.categoryListSignal, id: \.id) { category in
-//                    Button(category.name) {
-//                        categoryId = UInt8(category.id)
-//                        categoryMenuTitle = category.name
-//                    }
-//                }
+                ForEach(viewModel.categoryListSignal, id: \.id) { category in
+                    Button(category.name) {
+                        categoryId = UInt8(category.id)
+                        categoryMenuTitle = category.name
+                    }
+                }
             } label: {
                 HStack {
                     Text(categoryMenuTitle)
@@ -83,7 +83,7 @@ struct SubTaskCreationAlert: View {
         let typeofactivityid = Int32(categoryId)
         taskDto.typeofactivityid = .init(int: typeofactivityid)
 
-//        await viewModel.createTask(parentId, taskDto: taskDto)
+        await viewModel.createTask(parentId, taskDto: taskDto)
         stateManager.isCreationAlertShown.toggle()
     }
 }

@@ -14,7 +14,7 @@ enum TaskCardsConstants {
         //        MARK: Titles
         enum Titles {
             static let numberTitle = "Задача №"
-            static let timerTitle: (UInt8) -> String = { hours in
+            static let timerTitle: (UInt16) -> String = { hours in
                 "Время на выполнение: \(hours) часов"
             }
             static let participiantsTitle = "Участники: "
