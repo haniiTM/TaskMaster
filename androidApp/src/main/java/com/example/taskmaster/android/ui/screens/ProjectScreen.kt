@@ -22,12 +22,14 @@ import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.component.projectTemplate.ProjectCard
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
+import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ProjectScreen(
     navController: NavController,
     viewModel: TaskViewModel = getViewModel(),
+    viewModelURP: UserroleprojectViewModel = getViewModel(),
     result: Boolean
 ) {
 
@@ -37,6 +39,7 @@ fun ProjectScreen(
     }
     LaunchedEffect(key1 = true) {
         viewModel.getProject()
+        viewModelURP.getNotification()
     }
 
     val projects = viewModel.state.value.itemProjectState
