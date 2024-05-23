@@ -78,7 +78,7 @@ fun UncompletedTasksContainer(
                 color = Color.Black
             )
 
-            if (uncompletedTasks.isEmpty()) {
+            if (uncompletedTasks.isEmpty() || filteredUncomplitedTask.value.isEmpty()) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
