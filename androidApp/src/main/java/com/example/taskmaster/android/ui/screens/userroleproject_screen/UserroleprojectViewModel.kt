@@ -12,17 +12,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class UserroleprojectViewModel constructor(private val apiService: ApiService) : ViewModel() {
-    // Привязка пользователя к проекту
-    fun linkUserToTaskOrProject(urp: UserRoleProjectDTO, callback: (Boolean) -> Unit) {
-        viewModelScope.launch {
-            try {
-                callback(apiService.linkUserTaskOrProject(urp))
-            } catch(e: Exception) {
-                println("Exception in link user to task or project $e")
-            }
-        }
-    }
-
     // Смена кол-во часов, которые пользователь может выделять в день
     fun changeHoursSpent(urp: UserRoleProjectDTO, taskId: Int, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
