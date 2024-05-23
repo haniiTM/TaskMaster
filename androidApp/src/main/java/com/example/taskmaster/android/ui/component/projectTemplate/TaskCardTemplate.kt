@@ -44,7 +44,7 @@ import me.saket.swipe.SwipeableActionsBox
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false, projectTitle: String) {
+fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false, projectTitle: String, projectId: Int?) {
 
     var showDialog by remember {
         mutableStateOf(false)
@@ -102,7 +102,7 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
             .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content ?: "Описание отсутствует")) }
+            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content ?: "Описание отсутствует", projectId!!)) }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),
