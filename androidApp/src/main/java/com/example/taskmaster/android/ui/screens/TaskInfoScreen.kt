@@ -56,13 +56,12 @@ fun TaskInfoScreen(
     Column {
         Header(
             text = title ?: "Заголовок отсутствует",
-            iconItem = R.drawable.more,
             actionIcons = listOf(
-                R.drawable.search1_icon, R.drawable.users_icon
+                R.drawable.users_icon
             ),
             navController = navController,
-            actionTitle = listOf("Поиск", "Пользователи"),
-            projectScreenKey = false
+            actionTitle = listOf("Пользователи"),
+            onShowSearchLineChange = {  }
         )
 
         Box(

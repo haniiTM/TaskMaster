@@ -964,4 +964,25 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("Server returned error status: ${response.status}")
         }
     }
+
+    override suspend fun deleteFile(descriptionId: Int, fileId: Int) {
+        try {
+            val response: HttpResponse = httpClient.delete("http://5.35.85.206:8080/description/${descriptionId}/${fileId}") {
+                contentType(ContentType.Application.Json)
+            }
+            if (response.status.isSuccess()) {
+                println("Server addDependenceForTask: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
 }

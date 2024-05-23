@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,13 +41,21 @@ fun UncompletedTasksContainer(
     navController: NavController,
     id: Int?,
     viewModel: TaskViewModel = getViewModel(),
-    projectTitle: String
+    projectTitle: String,
+    searchText: String
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getUnfulfilleddTask(id!!.toInt())
     }
     val uncompletedTasks = viewModel.stateUnfulfilleddTask.value.itemTaskState
     var showDialog by remember{ mutableStateOf(false)}
+    val filteredUncomplitedTask = remember(searchText, uncompletedTasks) {
+        derivedStateOf {
+            uncompletedTasks.reversed().filter { task ->
+                task!!.name!!.contains(searchText, ignoreCase = true)
+            }
+        }
+    }
 
     Box(
         contentAlignment = Alignment.TopCenter,
@@ -91,7 +100,7 @@ fun UncompletedTasksContainer(
                         .heightIn(min = 232.dp, max = 345.dp)
                         .background(ShadowGray)
                 ) {
-                    itemsIndexed(uncompletedTasks) { _, item ->
+                    itemsIndexed(filteredUncomplitedTask.value) { _, item ->
                         if (item != null) {
                             ItemProject(
                                 item = item,

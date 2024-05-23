@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
@@ -37,7 +40,6 @@ import com.example.taskmaster.android.ui.component.StateObject.AppState
 import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.component.popupWindows.NewProjectWindow
 import com.example.taskmaster.android.ui.component.popupWindows.NewUserWindow
-import com.example.taskmaster.android.ui.component.popupWindows.SearchPopUpWindow
 import com.example.taskmaster.android.ui.navigation.NavigationItem
 
 @SuppressLint("SuspiciousIndentation")
@@ -45,12 +47,13 @@ import com.example.taskmaster.android.ui.navigation.NavigationItem
 fun Header(
     projectScreenKey: Boolean = false,
     text: String,
-    iconItem: Int,
     actionIcons: List<Int>,
     navController: NavController,
     result: Boolean = false,
     actionTitle: List<String> = emptyList(),
-    projectId: Int? = 0
+    projectId: Int? = 0,
+    activeMenu: Boolean = false,
+    onShowSearchLineChange: () -> Unit
 ) {
     val projectIdr by remember { mutableStateOf(projectId) }
     val context = LocalContext.current
@@ -75,119 +78,160 @@ fun Header(
         )
         Text(
             text = text,
-            modifier = Modifier.weight(1.5f),
+            modifier = Modifier.weight(1.5f).fillMaxWidth(.6f),
             textAlign = TextAlign.Center,
+            overflow = TextOverflow.Ellipsis,
             color = Color.Black
         )
-
-        MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
-            DropdownMenuArea(
-                expanded = expanded,
-                onExpandedChange = { expanded = !expanded }) {
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.more),
-                        contentDescription = "menu_icon",
-                        tint = Color.Black
-                    )
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f)
-                            .background(Color.White)
-                            .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
-                    ) {
-                        val itemsToDisplay = if (RoleObject.PMOrAdmin) {
-                            // Для администратора
-                            actionTitle
-                        } else {
-                            // Для пользователя только пункты поиска и выхода
-                            actionTitle.filterIndexed { index, _ -> index == 0 || index == 4 }
-                        }
-                        val iconsToDisplay = if (RoleObject.PMOrAdmin) {
-                            // Для администратора
-                            actionIcons
-                        } else {
-                            // Для пользователя только пункты поиска и выхода
-                            actionIcons.filterIndexed { index, _ -> index == 0 || index == 4 }
-                        }
-
-                        itemsToDisplay.forEachIndexed { index, item ->
-                            val isLastItem = index == itemsToDisplay.size - 1
-                            val iconColor = if (isLastItem) Color.Red else Color.Black
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedItem = item
-                                    if (item == actionTitle[4]) {
-                                        shouldNavigateToAuth = true
-                                    } else {
-                                        showDialog = true
-                                    }
-                                    expanded = false
-                                },
-                                text = { Text(text = item) },
-                                trailingIcon = {
-                                    Icon(
-                                        painter = painterResource(id = iconsToDisplay[index]),
-                                        contentDescription = "action_icon",
-                                        tint = iconColor
-                                    )
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = MenuDefaults.itemColors(textColor = iconColor)
-                            )
-                            if (index < itemsToDisplay.size - 1) {
-                                Divider(
-                                    color = MaterialTheme.colorScheme.outline,
-                                    modifier = Modifier
-                                        .height(1.dp)
-                                        .fillMaxWidth()
+        Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
+                Icon(painter = painterResource(id = R.drawable.search1_icon), contentDescription = "",
+                    modifier = Modifier.clickable { onShowSearchLineChange() })
+            MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
+                DropdownMenuArea(
+                    expanded = expanded,
+                    onExpandedChange = { expanded = !expanded }) {
+                    IconButton(onClick = {
+                        if (activeMenu) expanded = !expanded
+                    }) {
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.more
+                            ),
+                            contentDescription = "menu_icon",
+                            tint = if (activeMenu) Color.Black else Color.Transparent
+                        )
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .background(Color.White)
+                                .border(
+                                    BorderStroke(1.dp, Color.Black),
+                                    shape = RoundedCornerShape(15.dp)
                                 )
+                        ) {
+                            val itemsToDisplay = if (RoleObject.PMOrAdmin) {
+                                // Для администратора
+                                actionTitle
+                            } else {
+                                // Для пользователя только пункты поиска и выхода
+                                actionTitle.filterIndexed { index, _ -> index == 3 }
+                            }
+                            val iconsToDisplay = if (RoleObject.PMOrAdmin) {
+                                // Для администратора
+                                actionIcons
+                            } else {
+                                // Для пользователя только пункты поиска и выхода
+                                actionIcons.filterIndexed { index, _ -> index == 3 }
+                            }
+
+                            itemsToDisplay.forEachIndexed { index, item ->
+                                val isLastItem = index == itemsToDisplay.size - 1
+                                val iconColor =
+                                    if (projectScreenKey) if (isLastItem) Color.Red else Color.Black else Color.Black
+                                DropdownMenuItem(
+                                    onClick = {
+                                        selectedItem = item
+                                        if (projectScreenKey) {
+                                            if (item == actionTitle[3]) {
+                                                shouldNavigateToAuth = true
+                                            } else showDialog = !showDialog
+                                        } else {
+                                            showDialog = !showDialog
+                                        }
+                                        expanded = false
+                                    },
+                                    text = { Text(text = item) },
+                                    trailingIcon = {
+                                        Icon(
+                                            painter = painterResource(id = iconsToDisplay[index]),
+                                            contentDescription = "action_icon",
+                                            tint = iconColor
+                                        )
+                                    },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = MenuDefaults.itemColors(textColor = iconColor)
+                                )
+                                if (index < itemsToDisplay.size - 1) {
+                                    Divider(
+                                        color = MaterialTheme.colorScheme.outline,
+                                        modifier = Modifier
+                                            .height(1.dp)
+                                            .fillMaxWidth()
+                                    )
+                                }
                             }
                         }
                     }
-                }
-            }
-            if (showDialog) {
-                Dialog(onDismissRequest = { showDialog = false }) {
-                    if (RoleObject.PMOrAdmin) {
-                        when (selectedItem) {
-                            actionTitle[0] -> SearchPopUpWindow { showDialog = false }
-                            actionTitle[1] -> NewUserWindow (onDismissRequest = {showDialog = false})
-                            actionTitle[2] -> UserList(
-                                checkBoxAble = true,
-                                addRoleButton = false,
-                                buttonText = "Удалить",
-                                showPersonInProject = false,
-                                removeUserWindowKey = true
+                    if (showDialog) {
+                        Dialog(onDismissRequest = { showDialog = false }) {
+                            if (projectScreenKey) {
+                                if (RoleObject.PMOrAdmin) {
+                                    when (selectedItem) {
+                                        actionTitle[0] -> NewUserWindow(onDismissRequest = {
+                                            showDialog = false
+                                        })
+
+                                        actionTitle[1] -> UserList(
+                                            checkBoxAble = true,
+                                            addRoleButton = false,
+                                            buttonText = "Удалить",
+                                            showPersonInProject = false,
+                                            removeUserWindowKey = true
+                                        )
+
+                                        actionTitle[2] -> NewProjectWindow(onDismissRequest = {
+                                            showDialog = false
+                                        })
+
+                                        actionTitle[3] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                                    }
+                                } else {
+                                    when (selectedItem) {
+                                        actionTitle[0] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                                    }
+                                }
+                            } else if (!projectScreenKey && RoleObject.PMOrAdmin) {
+                                when (selectedItem) {
+                                    actionTitle[0] -> UserList(
+                                        checkBoxAble = false,
+                                        addRoleButton = true,
+                                        buttonText = "Добавить пользователя",
+                                        paddingValue = 20,
+                                        projectId = projectIdr!!,
+                                        showPersonInProject = true,
+                                        removeUserWindowKey = false
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    if (shouldNavigateToAuth) {
+                        Dialog(onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth }) {
+                            ActionNotificationTemplate(
+                                onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
+                                onConfirmation = {
+                                    shouldNavigateToAuth = !shouldNavigateToAuth
+                                    AppSettings.setLoginValid(context, false)
+                                    navController.popBackStack(
+                                        NavigationItem.Auth.route,
+                                        inclusive = true
+                                    )
+                                    navController.navigate(NavigationItem.Auth.route) {
+                                        popUpTo(0) {
+                                            inclusive = true
+                                        } // This will clear the entire stack
+                                    }
+                                },
+                                title = "Выход из аккаунта",
                             )
-                            actionTitle[3] -> NewProjectWindow (onDismissRequest = {showDialog = false})
-                            actionTitle[4] -> shouldNavigateToAuth = !shouldNavigateToAuth
-                        }
-                    } else {
-                        when (selectedItem) {
-                            actionTitle[0] -> SearchPopUpWindow { showDialog = false }
-                            actionTitle[4] -> shouldNavigateToAuth = !shouldNavigateToAuth
                         }
                     }
-                }
-            }
-            if (shouldNavigateToAuth) {
-                Dialog(onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth }) {
-                    ActionNotificationTemplate(
-                        onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
-                        onConfirmation = {
-                            AppSettings.setLoginValid(context, false)
-                            navController.popBackStack(NavigationItem.Auth.route, inclusive = true)
-                            navController.navigate(NavigationItem.Auth.route) {
-                                popUpTo(0) { inclusive = true } // This will clear the entire stack
-                            }
-                        },
-                        title = "Выход из аккаунта",
-                    )
+
                 }
             }
         }
     }
 }
+
