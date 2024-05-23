@@ -9,6 +9,4 @@
 protocol ProjectCardControllerProtocol: TaskCardActions,
                                         TaskTitleProvider,
                                         TimerTitleProvider,
-                                        UrgencyValueProvider,
-                                        UrgentImageNameProvider,
                                         ParticipiantsTitleProvider {}

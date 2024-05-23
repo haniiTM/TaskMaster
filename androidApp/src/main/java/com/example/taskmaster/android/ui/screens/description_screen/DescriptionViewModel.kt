@@ -38,6 +38,18 @@ class DescriptionViewModel constructor( private val apiService: ApiService) : Vi
         viewModelScope.launch {
             try {
                 apiService.sendFile(fileName, taskId, data)
+                getDescription(taskId)
+            } catch(e: Exception) {
+                println("Exception in ${e}")
+            }
+        }
+    }
+
+    fun removeFile(taskId: Int, descriptionId: Int, fileId: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.deleteFile(descriptionId, fileId)
+                getDescription(taskId)
             } catch(e: Exception) {
                 println("Exception in ${e}")
             }

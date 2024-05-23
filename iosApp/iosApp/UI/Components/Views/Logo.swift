@@ -25,26 +25,12 @@ struct Logo: View {
     let appIcon: String
 
     var body: some View {
-        HStack(alignment: .center) {
-            if let image = UIImage(named: appIcon) {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
-
-            Spacer()
-
-            VStack() {
-                Text("Welcome to the")
-                    .font(.title3)
-
-                Text("SÉBBIA")
-                    .font(.largeTitle)
-            }
-//            .padding()
-//            .padding()
+        if let image = UIImage(named: appIcon) {
+            Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .padding(.horizontal, 64)
         }
-        .fixedSize()
-        .accessibilityElement(children: .ignore)
     }
 }

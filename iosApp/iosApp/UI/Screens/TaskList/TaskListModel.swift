@@ -21,68 +21,50 @@ struct TaskListModel {
 
     //    MARK: Methods
     private mutating func setupDefaultTaskList() {
-        var reactNative = TaskInfo(title: "Изучение React Native",
+        let reactNative = TaskInfo(title: "Изучение React Native",
                                    timerValue: 24,
-                                   isUrgent: true,
-                                   categories: ["Frontend", "Mobile"],
-                                   isCompleted: false)
+                                   participiantsValue: 3)
 
-        var graphQL = TaskInfo(title: "Изучение GraphQL",
+        let graphQL = TaskInfo(title: "Изучение GraphQL",
                                timerValue: 17,
-                               isUrgent: true,
-                               categories: ["Backend"],
-                               isCompleted: false)
+                               participiantsValue: 3)
 
-        var tailwind = TaskInfo(title: "Изучение Tailwind",
+        let tailwind = TaskInfo(title: "Изучение Tailwind",
                                 timerValue: 13,
-                                isUrgent: false,
-                                categories: ["Frontend"],
-                                isCompleted: false)
+                                participiantsValue: 3)
 
-        var dom = TaskInfo(title: "Изучение DOM",
+        let dom = TaskInfo(title: "Изучение DOM",
                            timerValue: 9,
-                           isUrgent: false,
-                           categories: ["Frontend"],
-                           isCompleted: true)
+                           participiantsValue: 3)
 
-        var ajax = TaskInfo(title: "Изучение Ajax",
+        let ajax = TaskInfo(title: "Изучение Ajax",
                             timerValue: 18,
-                            isUrgent: false,
-                            categories: ["Frontend"],
-                            isCompleted: true)
+                            participiantsValue: 3)
 
         let localUncompletedTaskList = [reactNative, graphQL, tailwind]
         let localCompletedTaskList = [dom, ajax]
 
         localUncompletedTaskList.enumerated().forEach { index, task in
-            let task = TaskInfo(numberValue: UInt8(index) + 1,
-                                title: task.title,
+            let task = TaskInfo(title: task.title,
                                 timerValue: task.timerValue,
-                                isUrgent: task.isUrgent,
-                                categories: task.categories,
-                                isCompleted: task.isCompleted)
+                                participiantsValue: 3)
 
             privateUncompletedTaskList.append(task)
         }
 
         localCompletedTaskList.enumerated().forEach { index, task in
-            let task = TaskInfo(numberValue: UInt8(index) + 1,
-                                title: task.title,
+            let task = TaskInfo(title: task.title,
                                 timerValue: task.timerValue,
-                                isUrgent: task.isUrgent,
-                                categories: task.categories,
-                                isCompleted: task.isCompleted)
+                                participiantsValue: 3)
 
             privateCompletedTaskList.append(task)
         }
     }
 
     mutating func addUncompletedTask() {
-        let newTask = TaskInfo(title: "Example Task",
+        let newTask = TaskInfo(title: "Aboba",
                                timerValue: 0,
-                               isUrgent: false,
-                               categories: ["Example Categories"],
-                               isCompleted: false)
+                               participiantsValue: 3)
         privateUncompletedTaskList.append(newTask)
     }
 

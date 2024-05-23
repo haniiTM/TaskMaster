@@ -9,22 +9,22 @@
 import SwiftUI
 
 struct ProjectFrameView<Content: View>: View {
-    //    MARK: Props
+    // MARK: Props
     private let title: String
-    private let action: Openable = ProjectFrameAction()
+    private let viewModel: Searchable
     @ViewBuilder private let content: () -> Content
 
-    //    MARK: Init
-    init(_ title: String, @ViewBuilder content: @escaping () -> Content) {
+    // MARK: Init
+    init(_ title: String, viewModel: Searchable, @ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.viewModel = viewModel
         self.content = content
     }
 
-    //    MARK: Body
+    // MARK: Body
     var body: some View {
-        TemplateTaskFrame(title,
-                          imageName: Constants.Strings.ImageNames.searchActionImageName,
-                          action: action,
-                          content: content)
+        TaskListNavBar(title: title, viewModel: viewModel){
+            TemplateTaskFrame(content: content)
+        }
     }
 }

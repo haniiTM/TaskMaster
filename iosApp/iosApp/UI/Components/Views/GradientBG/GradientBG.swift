@@ -35,7 +35,7 @@ struct GradientBG: View {
             //
             //                Divider().background(Color.white).padding(.trailing, 128)
             //            }
-            //            .foregroundColor(.white)
+            //            .foregroundStyle(.white)
             //            .padding(.horizontal, 24)
             //            .padding(.bottom, 64)
         }

@@ -10,19 +10,23 @@ import SwiftUI
 
 struct EstimationCalendarView: View {
     //    MARK: Props
+    private let projectId: UInt16
     private let projectTitle: String
+    private let viewModel: Searchable
 
     //    MARK: Init
-    init(_ projectTitle: String) {
-        self.projectTitle = projectTitle
+    init(_ model: ProjectInfo, viewModel: Searchable) {
+        projectId = model.id
+        projectTitle = model.title
+        self.viewModel = viewModel
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(projectTitle) {
+        ProjectFrameView(projectTitle, viewModel: viewModel) {
             CalendarSection("Календарный план")
             CalendarSection("Расчет трудозатрат")
-        }.navigationTitle("Таблицы")
+        }
     }
 
     //    MARK: Methods
@@ -31,28 +35,33 @@ struct EstimationCalendarView: View {
             Text(title).font(.title3)
 
             HStack(spacing: 32) {
-                Group {
-                    Button(action: {}) {
-                        Text("Выбор таблицы")
-                            .font(.subheadline)
-                            .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
+                Button(action: {}) {
+                    Text("Выбор таблицы")
+                        .font(.subheadline)
+                        .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
 
-                        Spacer()
+                    Spacer()
 
-                        Image(systemName: "arrow.down.circle")
-                    }.foregroundColor(.primary)
-
-                    Button(action: {}) {
-                        Text("Скачать")
-                            .font(.subheadline)
-                            .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
-
-                        Image(systemName: "square.and.arrow.down")
-                    }.foregroundColor(.primary)
+                    Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
                 }
                 .padding(8)
+                .tint(.primary)
                 .background(
-                    Color(uiColor: .secondarySystemBackground),
+                    .ultraThinMaterial,
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+
+                Button(action: {}) {
+                    Text("Скачать")
+                        .font(.subheadline)
+                        .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
+
+                    Image(systemName: "square.and.arrow.down")
+                }
+                .padding(8)
+                .tint(.white)
+                .background(
+                    .tint,
                     in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                 )
             }

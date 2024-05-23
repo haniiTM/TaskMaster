@@ -12,21 +12,20 @@ import shared
 @MainActor final class LoginScreenViewModel: ObservableObject {
     //    MARK: Props
     private let accessTokenDtoUseCase = KoinHelper().getAccessTokenDtoUseCase()
-    @Published var isTokenValid = false
 
     //    MARK: Methods
-    func loginUser(name: String, password: String) async {
+    func loginUser(name: String, password: String) async -> Bool {
         do {
             guard
                 let tokenDto = try await accessTokenDtoUseCase.fetchUserToken(login: name,
                                                                               password: password),
                 let token = tokenDto.tokenLong
-            else { return }
+            else { return false }
 
-            token.isEmpty ? print("Error: wrong login or password!") : isTokenValid.toggle()
-
+            return token.isEmpty ? false : true
         } catch {
             print(error.localizedDescription)
+            return false
         }
     }
 }

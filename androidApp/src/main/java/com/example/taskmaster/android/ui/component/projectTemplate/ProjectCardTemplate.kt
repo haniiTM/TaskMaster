@@ -86,7 +86,7 @@ fun ProjectCard(item: ItemProjectState, navController: NavController) {
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
             .border(BorderStroke(1.dp, MaterialTheme.colorScheme.outline), shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate(NavigationItem.ProjectTask.passIdAndTitle(id = item.id.toInt(), title = item.projectTitle)) }
+            .clickable { navController.navigate(NavigationItem.ProjectTask.passIdAndTitle(id = item.id.toInt(), title = item.projectTitle, item.id.toInt())) }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),

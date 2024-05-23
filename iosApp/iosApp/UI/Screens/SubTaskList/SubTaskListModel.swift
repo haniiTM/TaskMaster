@@ -20,28 +20,22 @@ struct SubTaskListModel {
     private mutating func setupDefaultSubTaskList() {
         let reactNativeSyntax = TaskInfo(title: "Изучение синтаксиса",
                                          timerValue: 8,
-                                         isUrgent: true,
-                                         categories: ["Frontend"])
+                                         participiantsValue: 3)
 
         let reactNativeUI = TaskInfo(title: "Изучение графических элементов React Native",
                                      timerValue: 6,
-                                     isUrgent: false,
-                                     categories: ["Frontend", "Mobile"])
+                                     participiantsValue: 3)
 
         let redux = TaskInfo(title: "Изучение Redux",
                              timerValue: 10,
-                             isUrgent: false,
-                             categories: ["Mobile"])
+                             participiantsValue: 3)
 
         let localSubTaskList = [reactNativeSyntax, reactNativeUI, redux]
 
         localSubTaskList.enumerated().forEach { index, task in
-            let task = TaskInfo(parentNumber: 1,
-                                numberValue: UInt8(index) + 1,
-                                title: task.title,
+            let task = TaskInfo(title: task.title,
                                 timerValue: task.timerValue,
-                                isUrgent: task.isUrgent,
-                                categories: task.categories)
+                                participiantsValue: 3)
 
             privateSubTaskList.append(task)
         }

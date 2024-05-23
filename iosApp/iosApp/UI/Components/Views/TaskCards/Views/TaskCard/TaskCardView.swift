@@ -21,8 +21,8 @@ struct TaskCardView: View {
     }
 
     /// Initializes the view with default realization.
-    init(model: TaskInfo) {
-        controller = TaskCardController(model: model)
+    init(_ parentId: UInt16, model: TaskInfo, viewModel: TaskCardViewModelProtocol) {
+        controller = TaskCardController(parentId, model: model, viewModel: viewModel)
     }
 
     //    MARK: Body
@@ -32,8 +32,8 @@ struct TaskCardView: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Text(controller.taskNumberTitle)
-            .font(.footnote)
+        //        Text(controller.taskNumberTitle)
+        //            .font(.footnote)
 
         Text(controller.taskTitle)
             .multilineTextAlignment(.leading)
@@ -45,12 +45,12 @@ struct TaskCardView: View {
 
             Spacer()
 
-            if controller.isUrgent {
-                Image(systemName: controller.urgentImageName)
-            }
+            //            if controller.isUrgent {
+            //                Image(systemName: controller.urgentImageName)
+            //            }
         }
 
-        Text(controller.categoriesTitle)
+        Text(controller.participiantsTitle)
             .font(.footnote)
     }
 }

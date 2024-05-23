@@ -7,14 +7,43 @@
 //
 
 import SwiftUI
+import shared
 
-final class ProjectListViewModel: ProjectListViewModelProtocol, ObservableObject {
+@MainActor final class ProjectListViewModel: ObservableObject, ProjectListViewModelProtocol {
     //    MARK: Props
-    var projectListSignal: Box<[TaskInfo]?> = .init(nil)
-    private let model = ProjectListModel()
+    private let projectListUseCase = KoinHelper().getProjectListUseCase()
+    @Published private(set) var projectList = [ProjectInfo]()
 
     //    MARK: Methods
-    func updateDataSource() {
-        projectListSignal.value = model.projectList
+    func updateDataSource(_ parentId: UInt16) async {
+        do {
+            guard
+                let taskList = try await projectListUseCase.getProjectList() as? [TaskDTO?]
+            else { return }
+
+            projectList = taskList.decodedDtoList()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
+
+    func createProject(_ title: String) async {
+        do {
+            try await projectListUseCase.createProject(projectName: title)
+            await updateDataSource(0)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func deleteCard(_ id: UInt16) async {
+        do {
+            try await projectListUseCase.deleteProject(projectId: Int32(id))
+            await updateDataSource(0)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func search() async {}
 }

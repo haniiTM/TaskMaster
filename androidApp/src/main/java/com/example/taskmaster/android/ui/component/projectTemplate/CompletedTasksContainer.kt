@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,13 +41,22 @@ fun CompletedTasksContainer(
     navController: NavController,
     id: Int?,
     viewModel: TaskViewModel = getViewModel(),
-    projectTitle: String
+    projectTitle: String,
+    searchText: String,
+    projectId: Int?
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getCompletedTask(id!!.toInt())
     }
     val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
     var showDialog by remember{ mutableStateOf(false) }
+    val filteredComplitedTask = remember(searchText, completedTasks) {
+        derivedStateOf {
+            completedTasks.reversed().filter { task ->
+                task!!.name!!.contains(searchText, ignoreCase = true)
+            }
+        }
+    }
 
     Box(
         contentAlignment = Alignment.TopCenter,
@@ -68,7 +78,7 @@ fun CompletedTasksContainer(
                 color = Color.Black
             )
 
-            if (completedTasks.isEmpty()) {
+            if (completedTasks.isEmpty() || filteredComplitedTask.value.isEmpty()) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
@@ -93,14 +103,15 @@ fun CompletedTasksContainer(
                         .heightIn(min = 232.dp, max = 345.dp)
                         .background(ShadowGray)
                 ) {
-                    itemsIndexed(completedTasks) { _, item ->
+                    itemsIndexed(filteredComplitedTask.value) { _, item ->
                         if (item != null) {
                             ItemProject(
                                 item = item,
                                 context = LocalContext.current,
                                 navController = navController,
                                 completed = true,
-                                projectTitle = projectTitle
+                                projectTitle = projectTitle,
+                                projectId = projectId
                             )
                         }
                     }

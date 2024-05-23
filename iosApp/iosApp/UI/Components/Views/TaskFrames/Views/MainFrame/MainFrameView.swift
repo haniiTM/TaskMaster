@@ -10,19 +10,25 @@ import SwiftUI
 
 struct MainFrameView<Content: View>: View {
     //    MARK: Props
-    private let action: Openable = MainFrameAction()
     @ViewBuilder private let content: () -> Content
+    private let viewModel: Searchable
+    private let alertManager: ProjectListAlertManager
 
     //    MARK: Init
-    init(@ViewBuilder content: @escaping () -> Content) {
+    init(viewModel: Searchable, alertManager: ProjectListAlertManager, @ViewBuilder content: @escaping () -> Content) {
+        self.viewModel = viewModel
+        self.alertManager = alertManager
         self.content = content
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateTaskFrame(TaskFramesConstants.Strings.Titles.mainFrameTitle,
-                          imageName: Constants.Strings.ImageNames.extraActionsImageName,
-                          action: action,
-                          content: content)
+        NavigationView {
+            ProjectListNavBar(title: TaskFramesConstants.Strings.Titles.mainFrameTitle,
+                              viewModel: viewModel,
+                              alertManager: alertManager) {
+                TemplateTaskFrame(content: content)
+            }
+        }
     }
 }

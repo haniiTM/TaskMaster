@@ -11,20 +11,15 @@ import shared
 
 struct LoginScreenView: View {
     //    MARK: Props
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var viewModel = LoginScreenViewModel()
-    @State private var loginTextFieldState = ""
-    @State private var passwordTextFieldState = ""
-//    @State private var isNavigationAllowState = false
 
-//    init() {
-//        isNavigationAllowState = viewModel.isTokenValid
-//    }
+    @State private var loginTextFieldState = "user1"
+    @State private var passwordTextFieldState = "22"
 
     //    MARK: Body
     var body: some View {
-        NavigationView {
-            ViewBody
-        }
+        ViewBody
     }
 
     private var ViewBody: some View {
@@ -55,24 +50,31 @@ struct LoginScreenView: View {
         Group {
             TextFieldsBody
 
-            NavigationLink(destination: ProjectListView(), isActive: $viewModel.isTokenValid) {
-                Button(
-                    action: {
-                        Task {
-                            await viewModel.loginUser(name: loginTextFieldState,
-                                                      password: passwordTextFieldState)
-                        }
-                    },
+            Button(
+                action: {
+                    Task {
+                        let isAuthenticated = await viewModel.loginUser(name: loginTextFieldState,
+                                                                        password: passwordTextFieldState)
 
-                    label: {
-                        Text(LoginScreenConstants.Strings.loginButtonTitle)
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .padding(.horizontal)
+                        if isAuthenticated {
+                            loginTextFieldState = ""
+                            passwordTextFieldState = ""
+                            authViewModel.isAuthenticated = true
+                        } else {
+                            print("Eror: incorrect login or password!")
+                        }
                     }
-                )
-            }
+                },
+
+                label: {
+                    Text(LoginScreenConstants.Strings.loginButtonTitle)
+                        .tint(.primary)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .padding(.horizontal)
+                        .background(.ultraThinMaterial)
+                }
+            )
         }
         .font(.subheadline)
         .background(

@@ -6,10 +6,4 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-protocol SubTaskListViewModelProtocol: AnyObject {
-    //    MARK: Props
-    var subTaskListSignal: Box<[TaskInfo]?> { get }
-
-    //    MARK: Methods
-    func updateDataSource()
-}
+protocol SubTaskListViewModelProtocol: TaskListViewModelProtocol {}
