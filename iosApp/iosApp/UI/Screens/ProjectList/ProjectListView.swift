@@ -17,7 +17,7 @@ struct ProjectListView: View {
     var body: some View {
         ViewBody
             .task {
-                await viewModel.updateDataSource()
+                await viewModel.updateDataSource(0)
             }
     }
 

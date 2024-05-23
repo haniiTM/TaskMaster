@@ -24,6 +24,11 @@ struct SubTaskListView: View {
 
     //    MARK: Body
     var body: some View {
+        ViewBody
+            .task { await viewModel.updateDataSource(model.id) }
+    }
+
+    private var ViewBody: some View {
         ProjectFrameView(title) {
             NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
@@ -37,7 +42,7 @@ struct SubTaskListView: View {
 
             SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
                 ForEach(viewModel.unCompletedSubTaskListSignal) { subTask in
-                    SubTaskCardView(model: subTask, viewModel: viewModel)
+                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
 
                 SubTaskCreationButton()
@@ -45,11 +50,10 @@ struct SubTaskListView: View {
 
             CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
                 ForEach(viewModel.completedSubTaskListSignal) { subTask in
-                    SubTaskCardView(model: subTask, viewModel: viewModel)
+                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
             }
         }
-        .task { await viewModel.updateDataSource(model.id) }
     }
 
     private var DescriptionBody: some View {

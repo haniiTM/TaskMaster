@@ -16,11 +16,11 @@ import shared
     @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
 
     //    MARK: Methods
-    func updateDataSource(_ id: UInt16) async {
+    func updateDataSource(_ parentId: UInt16) async {
         do {
             guard
-                let optionalUnCompletedTaskList = try await taskListUseCase.getUncompletedTaskList(idProj: id) as? [TaskDTO?],
-                let optionalCompletedTaskList = try await taskListUseCase.getCompletedTaskList(idProj: id) as? [TaskDTO?]
+                let optionalUnCompletedTaskList = try await taskListUseCase.getUncompletedTaskList(idProj: parentId) as? [TaskDTO?],
+                let optionalCompletedTaskList = try await taskListUseCase.getCompletedTaskList(idProj: parentId) as? [TaskDTO?]
             else { return }
 
             unCompletedTaskListSignal = optionalUnCompletedTaskList.decodedDtoList()
@@ -62,7 +62,13 @@ import shared
 
     func addCompletedTask() {}
 
-    func deleteCard(_ id: UInt16) async {}
+    func deleteCard(_ id: UInt16) async {
+        do {
+            try await taskListUseCase.deleteTask(id: Int32(id))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 
     func search() async {}
 }
