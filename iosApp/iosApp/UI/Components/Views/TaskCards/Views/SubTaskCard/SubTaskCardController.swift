@@ -22,5 +22,10 @@ final class SubTaskCardController: SubTaskCardControllerProtocol {
     //    MARK: Methods
     func open() {}
 
-    func remove() {}
+    func remove() async {
+        Task {
+            await viewModel.deleteCard(model.id)
+            await viewModel.updateDataSource(parentId)
+        }
+    }
 }
