@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
-import com.example.taskmaster.android.ui.screens.userroleproject_screen.UserroleprojectViewModel
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import org.koin.androidx.compose.getViewModel
 
@@ -150,7 +150,7 @@ fun UserList(
                             item = "${item.surname} ${item.name} ${item.patronymic}",
                             isSelected = isSelected,
                             projectId = projectId,
-                            taskId= id,
+                            taskId = id,
                             personId = item.id!!,
                             onCheckChanged = { isSelected ->
                                 if (isSelected) {
@@ -172,54 +172,55 @@ fun UserList(
                     .height(1.dp)
                     .fillMaxWidth()
             )
+            if (RoleObject.PMOrAdmin) {
+                Button(
+                    onClick = {
+                        if (!removeUserWindowKey) {
+                            if (onCloseButtonClick == null) {
+                                showWindow = true
+                            } else {
+                                onCloseButtonClick()
+                                if (selectedUsers.value.isNotEmpty()) {
+                                    val selectedUsersList = mutableListOf<Int>()
+                                    selectedUsersList.addAll(selectedUsers.value)
 
-            Button(
-                onClick = {
-                    if (!removeUserWindowKey) {
-                        if (onCloseButtonClick == null) {
-                            showWindow = true
-                        } else {
-                            onCloseButtonClick()
-                            if (selectedUsers.value.isNotEmpty()) {
-                                val selectedUsersList = mutableListOf<Int>()
-                                selectedUsersList.addAll(selectedUsers.value)
+                                    val urp = if (id != 0) {
+                                        UserRoleProjectDTO(
+                                            userid = selectedUsersList,
+                                            current_task_id = id
+                                        )
+                                    } else {
+                                        UserRoleProjectDTO(
+                                            userid = selectedUsersList,
+                                            projectid = projectId
+                                        )
+                                    }
 
-                                val urp = if (id != 0) {
-                                    UserRoleProjectDTO(
-                                        userid = selectedUsersList,
-                                        current_task_id = id
-                                    )
-                                } else {
-                                    UserRoleProjectDTO(
-                                        userid = selectedUsersList,
-                                        projectid = projectId
-                                    )
-                                }
-
-                                viewModel.linkUserToTaskOrProject(urp) { success ->
-                                    if (triggerRefresh != null && success) {
-                                        viewTaskModel.dataTaskById(id)
-                                        triggerRefresh(success)
+                                    viewModel.linkUserToTaskOrProject(urp) { success ->
+                                        if (triggerRefresh != null && success) {
+                                            viewTaskModel.dataTaskById(id)
+                                            triggerRefresh(success)
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            val selectedUsersList = mutableListOf<Int>()
+                            selectedUsersList.addAll(selectedUsers.value)
+                            if (selectedUsers.value.isNotEmpty()) {
+                                viewModel.deletePerson(selectedUsersList)
+                            }
                         }
-                    } else {
-                        val selectedUsersList = mutableListOf<Int>()
-                        selectedUsersList.addAll(selectedUsers.value)
-                        if (selectedUsers.value.isNotEmpty()) {
-                            viewModel.deletePerson(selectedUsersList)
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(35.dp),
-                colors = ButtonDefaults.buttonColors(Color.White),
-                shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp)
-            ) {
-                Text(text = buttonText, color = Color.Black)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(35.dp),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp)
+                ) {
+                    Text(text = buttonText, color = Color.Black)
+                }
             }
         }
     }

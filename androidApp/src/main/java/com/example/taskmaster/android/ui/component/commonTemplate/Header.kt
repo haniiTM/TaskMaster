@@ -93,11 +93,12 @@ fun Header(
             if (showSearchButton) {
                 Icon(painter = painterResource(id = R.drawable.search1_icon),
                     contentDescription = "",
-                    modifier = Modifier.clickable { onShowSearchLineChange() },
+                    modifier = Modifier.then(if(!(projectScreenKey || RoleObject.PMOrAdmin)){Modifier.padding(end = 20.dp)}else{Modifier}).clickable { onShowSearchLineChange() },
                     tint = Color.Black
                 )
             }
             MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
+                if (projectScreenKey || RoleObject.PMOrAdmin)
                 DropdownMenuArea(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded }) {

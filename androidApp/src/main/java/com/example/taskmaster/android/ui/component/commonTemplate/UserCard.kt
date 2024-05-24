@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.screens.newUser_screen.NewUserViewModel
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import org.koin.androidx.compose.getViewModel
@@ -135,7 +136,7 @@ fun UserCard(
                     )
                 }
             }
-            if (actionButton) {
+            if (actionButton && RoleObject.PMOrAdmin) {
                 DropdownMenuArea(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded }) {
