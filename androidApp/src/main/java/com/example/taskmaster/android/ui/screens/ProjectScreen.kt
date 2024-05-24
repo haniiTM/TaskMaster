@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -16,9 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
+import com.example.taskmaster.android.ui.component.commonTemplate.NotificationTemplate
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.component.projectTemplate.ProjectCard
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
@@ -32,7 +36,9 @@ fun ProjectScreen(
     viewModelURP: UserroleprojectViewModel = getViewModel(),
     result: Boolean
 ) {
-
+    var showNotification by remember {
+        mutableStateOf(true)
+    }
     var searchText by remember { mutableStateOf("") }
     var showSearchLine by remember {
         mutableStateOf(false)
@@ -40,8 +46,10 @@ fun ProjectScreen(
     LaunchedEffect(key1 = true) {
         viewModel.getProject()
         viewModelURP.getNotification()
+        showNotification = true
     }
 
+    val notificationTaskList = viewModelURP.stateNotification.value.itemState
     val projects = viewModel.state.value.itemProjectState
     val filteredProjects = remember(searchText, projects) {
         derivedStateOf {
@@ -83,7 +91,9 @@ fun ProjectScreen(
                     roundedTopRightAngle = 15,
                     roundedTopLeftAngle = 15,
                     borderWidth = 1,
-                    placeholder = "Поиск"
+                    placeholder = "Поиск",
+                    icon = R.drawable.clear_icon,
+                    clearUnit = { searchText = "" }
                 )
             }
         }
@@ -95,6 +105,12 @@ fun ProjectScreen(
                     ProjectCard(item = item, navController = navController)
                 }
             }
+        }
+    }
+    Log.d("notificationTaskList", notificationTaskList.toString())
+    if (!notificationTaskList.isEmpty() && !RoleObject.PMOrAdmin && showNotification){
+        Dialog(onDismissRequest = { showNotification = false }) {
+            NotificationTemplate(notificationTaskList, navController)
         }
     }
 }

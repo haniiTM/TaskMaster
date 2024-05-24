@@ -42,6 +42,8 @@ fun NewProjectWindow(onDismissRequest: () -> Unit, viewModel: TaskViewModel = ge
     var projectTitle by remember {
         mutableStateOf("")
     }
+    var isValid by remember { mutableStateOf(false) }
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -70,19 +72,24 @@ fun NewProjectWindow(onDismissRequest: () -> Unit, viewModel: TaskViewModel = ge
                 UnifiedTextBox(
                     value = projectTitle,
                     onValueChange = { newValue -> projectTitle = newValue },
-                    placeholder = "Название проекта"
+                    placeholder = "Название проекта",
+                    isError = projectTitle.isEmpty()
                 )
+                isValid = if(projectTitle.isNotEmpty()) true else false
                 Button(
                     onClick = {
-                        onDismissRequest()
-                        viewModel.createProject(projectTitle)
+                        if (isValid) {
+                            onDismissRequest()
+                            viewModel.createProject(projectTitle)
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),
-                    colors = ButtonDefaults.buttonColors(Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, disabledContainerColor = Color.Gray),
                     shape = RoundedCornerShape(0),
-                    contentPadding = PaddingValues(horizontal = 12.dp)
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                    enabled = isValid
                 ) {
                     Text(text = "Создать", color = Color.Black)
                 }

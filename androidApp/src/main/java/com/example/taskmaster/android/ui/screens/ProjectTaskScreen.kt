@@ -49,7 +49,9 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?, pr
                     roundedDownRightAngle = 15,
                     roundedTopRightAngle = 15,
                     roundedTopLeftAngle = 15,
-                    placeholder = "Поиск"
+                    placeholder = "Поиск",
+                    icon = R.drawable.clear_icon,
+                    clearUnit = { searchText = "" }
                 )
             }
         }

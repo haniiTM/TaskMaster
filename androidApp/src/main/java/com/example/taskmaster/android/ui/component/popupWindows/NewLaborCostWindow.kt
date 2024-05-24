@@ -1,7 +1,6 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
 import android.app.DatePickerDialog
-import android.util.Log
 import android.widget.DatePicker
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -105,7 +105,7 @@ fun NewLaborCostWindow(
 
     val displayDateFormat = SimpleDateFormat("dd/MM/yyyy")
     val storageDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-
+    var isValid by remember { mutableStateOf(false) }
     var mDateDisplay by remember { mutableStateOf(displayDateFormat.format(Date())) }
     val mDatePickerDialog = DatePickerDialog(
         mContext,
@@ -121,6 +121,7 @@ fun NewLaborCostWindow(
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .clip(shape = RoundedCornerShape(15.dp))
+                .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
         ) {
             Column(
                 modifier = Modifier
@@ -168,7 +169,8 @@ fun NewLaborCostWindow(
                 UnifiedTextBox(
                     value = comment,
                     onValueChange = { newValue -> comment = newValue },
-                    placeholder = "Комментарий"
+                    placeholder = "Комментарий",
+                    isError = comment.isEmpty()
                 )
                 UnifiedTextBox(
                     value = spendTime,
@@ -176,7 +178,8 @@ fun NewLaborCostWindow(
                     icon = R.drawable.clock_icon,
                     prefix = { Text(text = "Затрачено: ", color = Color.Black) },
                     timeUnifiedTextFieldKey = true,
-                    keyboardType = KeyboardType.Number
+                    keyboardType = KeyboardType.Number,
+                    isError = spendTime.isEmpty()
                 )
                 Button(
                     onClick = { categoryExpanded = true },
@@ -202,12 +205,21 @@ fun NewLaborCostWindow(
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
                                 )
-                                Icon(
-                                    painter = painterResource(id = R.drawable.arrow_circle_right_icon),
-                                    contentDescription = "arrow_circle_right_icon",
-                                    modifier = Modifier.rotate(90f),
-                                    tint = Color.Black,
-                                )
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.warning),
+                                        contentDescription = "",
+                                        tint = Color.Red,
+                                        modifier = Modifier.size(20.dp).padding(end = 5.dp)
+                                    )
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.arrow_circle_right_icon),
+                                        contentDescription = "arrow_circle_right_icon",
+                                        modifier = Modifier.rotate(90f),
+                                        tint = Color.Black,
+                                    )
+                                }
+
                             } else {
                                 Text(
                                     text = "Деятельность:",
@@ -220,7 +232,9 @@ fun NewLaborCostWindow(
                                     color = Color.Black,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Normal,
-                                    modifier = Modifier.width(IntrinsicSize.Max).fillMaxWidth(0.5f),
+                                    modifier = Modifier
+                                        .width(IntrinsicSize.Max)
+                                        .fillMaxWidth(0.5f),
                                     overflow = TextOverflow.Ellipsis
                                 )
                             }
@@ -261,32 +275,36 @@ fun NewLaborCostWindow(
                         .height(1.dp)
                         .fillMaxWidth()
                 )
+                isValid = if(mDateDisplay.isNotEmpty() && comment.isNotEmpty() && laborCostCategory.name!!.isNotEmpty() && spendTime.isNotEmpty()) true else false
                 Button(
                     onClick = {
-                        viewModel.createManHours(
-                            ManHoursDTO(
-                                created_at = mDateDisplay,
-                                comment = comment,
-                                hours_spent = spendTime,
-                                activityid = laborCostCategory.id ?: 1,
-                                taskid = taskId,
-                            ),
-                            taskId
-                        ) { success ->
-                            // Вызов коллбэка после обновления данных
-                            if (triggerRefresh != null && success) {
-                                viewTaskModel.dataTaskById(taskId!!)
-                                triggerRefresh(success)
+                        if(isValid){
+                            viewModel.createManHours(
+                                ManHoursDTO(
+                                    created_at = mDateDisplay,
+                                    comment = comment,
+                                    hours_spent = spendTime,
+                                    activityid = laborCostCategory.id ?: 1,
+                                    taskid = taskId,
+                                ),
+                                taskId
+                            ) { success ->
+                                // Вызов коллбэка после обновления данных
+                                if (triggerRefresh != null && success) {
+                                    viewTaskModel.dataTaskById(taskId!!)
+                                    triggerRefresh(success)
+                                }
                             }
+                            onDismissRequest()
                         }
-                        onDismissRequest()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),
-                    colors = ButtonDefaults.buttonColors(Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, disabledContainerColor = Color.Gray),
                     shape = RoundedCornerShape(0),
-                    contentPadding = PaddingValues(horizontal = 12.dp)
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                    enabled = isValid
                 ) {
                     Text(text = "Создать", color = Color.Black)
                 }

@@ -1,15 +1,18 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,15 +21,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.navigation.NavigationItem
+import com.example.taskmaster.data.network.models.Notification
+
+fun taskList(ids: List<Int?>, titles: List<String?>, tasksNames: List<String?>) {
+    val tasks = Triple(ids, titles, tasksNames)
+    val abc = tasks.first
+    Log.d("tasks", tasks.toString())
+    Log.d("abc", abc.toString())
+}
 
 @Composable
-fun NotificationTemplate() {
-    val gradient = Brush.verticalGradient(0f to MaterialTheme.colorScheme.secondary, 1f to MaterialTheme.colorScheme.surfaceTint)
+fun NotificationTemplate(
+    notificationTaskList: MutableList<Notification?>,
+    navController: NavController
+) {
+    val gradient = Brush.verticalGradient(
+        0f to MaterialTheme.colorScheme.secondary,
+        1f to MaterialTheme.colorScheme.surfaceTint
+    )
+    val taskIds = notificationTaskList.filterNotNull().flatMap { it.listTask.map { it.taskId } }
+    val titles = notificationTaskList.map { value -> value?.projectName }
+    val taskNames = notificationTaskList.filterNotNull().flatMap { it.listTask.map { it.taskName } }
+
+    Log.d("taskId", taskIds.toString())
+    Log.d("title", titles.toString())
+    Log.d("taskName", taskNames.toString())
+
     Box(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -34,7 +60,7 @@ fun NotificationTemplate() {
             .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(25.dp))
             .background(gradient)
             .width(292.dp)
-            .height(306.dp),
+            .height(356.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -48,20 +74,34 @@ fun NotificationTemplate() {
             )
             Text(
                 text = stringResource(id = R.string.notification_subtitle),
-                color = Color.Black,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onTertiary,
                 modifier = Modifier.padding(bottom = 15.dp, start = 17.dp, end = 17.dp)
             )
             Text(
                 text = stringResource(id = R.string.notification_text),
-                textAlign = TextAlign.Center,
-                color = Color.Black,
+                textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onTertiary,
                 modifier = Modifier.padding(bottom = 25.dp, start = 17.dp, end = 17.dp)
             )
-            Icon(
-                painter = painterResource(id = R.drawable.warning),
-                contentDescription = "warning_icon",
-                tint = Color.Red
-            )
+            val triples = taskIds.mapIndexed { index, taskId ->
+                Triple(taskId, titles.getOrNull(index), taskNames.getOrNull(index))
+            }
+            LazyColumn {
+                itemsIndexed(triples) { _, item ->
+
+                    Text(
+                        text = item.third!!,
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        modifier = Modifier.padding(bottom = 5.dp).clickable {
+                            navController.navigate(
+                                NavigationItem.TaskInfo.passIdAndTitle(
+                                    id = item.first!!,
+                                    title = item.second!!
+                                )
+                            )
+                        })
+                }
+            }
         }
     }
 }

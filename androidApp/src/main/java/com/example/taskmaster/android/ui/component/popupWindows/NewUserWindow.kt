@@ -1,6 +1,8 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -54,6 +57,7 @@ fun NewUserWindow(
         viewModel.getTypeActivity()
     }
     val typeActivity = viewModel.state.value.itemState
+    var isValid by remember { mutableStateOf(false) }
 
     val linearGradient =
         Brush.verticalGradient(
@@ -95,7 +99,7 @@ fun NewUserWindow(
         Box(
             modifier = Modifier
                 .padding(horizontal = 38.dp)
-                .clip(shape = RoundedCornerShape(15.dp))
+                .clip(shape = RoundedCornerShape(15.dp)).border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
         ) {
             Column(
                 modifier = Modifier
@@ -119,22 +123,26 @@ fun NewUserWindow(
                 UnifiedTextBox(
                     value = surname,
                     onValueChange = { newValue -> surname = newValue },
-                    placeholder = "Фамилия"
+                    placeholder = "Фамилия",
+                    isError = surname.isEmpty()
                 )
                 UnifiedTextBox(
                     value = name,
                     onValueChange = { newValue -> name = newValue },
-                    placeholder = "Имя"
+                    placeholder = "Имя",
+                    isError = name.isEmpty()
                 )
                 UnifiedTextBox(
                     value = login,
                     onValueChange = { newValue -> login = newValue },
-                    placeholder = "Логин"
+                    placeholder = "Логин",
+                    isError = login.isEmpty()
                 )
                 UnifiedTextBox(
                     value = password,
                     onValueChange = { newValue -> password = newValue },
-                    placeholder = "Пароль"
+                    placeholder = "Пароль",
+                    isError = password.isEmpty()
                 )
                 Button(
                     onClick = { expanded = true },
@@ -158,12 +166,20 @@ fun NewUserWindow(
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal
                                 )
-                                Icon(
-                                    painter = painterResource(id = R.drawable.arrow_circle_right_icon),
-                                    contentDescription = "arrow_circle_right_icon",
-                                    modifier = Modifier.rotate(90f),
-                                    tint = Color.Black
-                                )
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.warning),
+                                        contentDescription = "",
+                                        tint = Color.Red,
+                                        modifier = Modifier.size(20.dp).padding(end = 5.dp)
+                                    )
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.arrow_circle_right_icon),
+                                        contentDescription = "arrow_circle_right_icon",
+                                        modifier = Modifier.rotate(90f),
+                                        tint = Color.Black,
+                                    )
+                                }
                             } else {
                                 Text(
                                     text = "Роль:",
@@ -226,23 +242,28 @@ fun NewUserWindow(
                         }
                     }
                 }
+                isValid = if(name.isNotEmpty() && surname.isNotEmpty() && login.isNotEmpty() && password.isNotEmpty() && roleValue.isNotEmpty()) true else false
+
                 Button(
                     onClick = {
-                        onDismissRequest()
-                        viewModelNewUser.createNewUser(
-                            firstName = name,
-                            lastName = surname,
-                            login = login,
-                            password = password,
-                            role = role
-                        )
+                        if(isValid){
+                            onDismissRequest()
+                            viewModelNewUser.createNewUser(
+                                firstName = name,
+                                lastName = surname,
+                                login = login,
+                                password = password,
+                                role = role
+                            )
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),
-                    colors = ButtonDefaults.buttonColors(Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, disabledContainerColor = Color.Gray),
                     shape = RoundedCornerShape(0),
-                    contentPadding = PaddingValues(horizontal = 12.dp)
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                    enabled = isValid
                 ) {
                     Text(text = "Добавить", color = Color.Black)
                 }

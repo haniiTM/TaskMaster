@@ -53,7 +53,8 @@ fun Header(
     actionTitle: List<String> = emptyList(),
     projectId: Int? = 0,
     activeMenu: Boolean = false,
-    onShowSearchLineChange: () -> Unit
+    onShowSearchLineChange: () -> Unit = {},
+    showSearchButton: Boolean = true
 ) {
     val projectIdr by remember { mutableStateOf(projectId) }
     val context = LocalContext.current
@@ -78,14 +79,24 @@ fun Header(
         )
         Text(
             text = text,
-            modifier = Modifier.weight(1.5f).fillMaxWidth(.6f),
+            modifier = Modifier
+                .weight(1.5f)
+                .fillMaxWidth(.6f),
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
             color = Color.Black
         )
-        Row(horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically) {
-                Icon(painter = painterResource(id = R.drawable.search1_icon), contentDescription = "",
-                    modifier = Modifier.clickable { onShowSearchLineChange() }, tint = Color.Black)
+        Row(
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (showSearchButton) {
+                Icon(painter = painterResource(id = R.drawable.search1_icon),
+                    contentDescription = "",
+                    modifier = Modifier.clickable { onShowSearchLineChange() },
+                    tint = Color.Black
+                )
+            }
             MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
                 DropdownMenuArea(
                     expanded = expanded,
@@ -185,11 +196,13 @@ fun Header(
                                             showDialog = false
                                         })
 
-                                        actionTitle[3] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                                        actionTitle[3] -> shouldNavigateToAuth =
+                                            !shouldNavigateToAuth
                                     }
                                 } else {
                                     when (selectedItem) {
-                                        actionTitle[0] -> shouldNavigateToAuth = !shouldNavigateToAuth
+                                        actionTitle[0] -> shouldNavigateToAuth =
+                                            !shouldNavigateToAuth
                                     }
                                 }
                             } else if (!projectScreenKey && RoleObject.PMOrAdmin) {
@@ -208,7 +221,9 @@ fun Header(
                         }
                     }
                     if (shouldNavigateToAuth) {
-                        Dialog(onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth }) {
+                        Dialog(onDismissRequest = {
+                            shouldNavigateToAuth = !shouldNavigateToAuth
+                        }) {
                             ActionNotificationTemplate(
                                 onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
                                 onConfirmation = {
