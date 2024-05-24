@@ -65,9 +65,9 @@ fun CalculationOfLaborCostsScreen(
             navController = navController,
             actionTitle = listOf("Пользователи"),
             projectId = result,
-            onShowSearchLineChange = {  }
-            )
-        Column(modifier = Modifier.padding(top = 15.dp)){
+            showSearchButton = false
+        )
+        Column(modifier = Modifier.padding(top = 15.dp)) {
             Column(
                 modifier = Modifier.padding(bottom = 40.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +75,9 @@ fun CalculationOfLaborCostsScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.padding(horizontal = 14.dp).fillMaxWidth()
+                    modifier = Modifier
+                        .padding(horizontal = 14.dp)
+                        .fillMaxWidth()
                 ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
@@ -84,7 +86,10 @@ fun CalculationOfLaborCostsScreen(
                             .height(40.dp)
                             .clip(shape = RoundedCornerShape(10.dp))
                             .background(Color.White)
-                            .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(10.dp)),
+                            .border(
+                                BorderStroke(1.dp, Color.Black),
+                                shape = RoundedCornerShape(10.dp)
+                            ),
                     ) {
                         Text(
                             text = "Календарный план",
@@ -126,13 +131,20 @@ fun CalculationOfLaborCostsScreen(
                         )
                     }
                 }
-                CalculationTable(id = result, calendarPlan = true, navController = navController, title = title)
+                CalculationTable(
+                    id = result,
+                    calendarPlan = true,
+                    navController = navController,
+                    title = title
+                )
             }
             Column {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.padding(horizontal = 14.dp).fillMaxWidth()
+                    modifier = Modifier
+                        .padding(horizontal = 14.dp)
+                        .fillMaxWidth()
                 ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
@@ -141,7 +153,10 @@ fun CalculationOfLaborCostsScreen(
                             .height(40.dp)
                             .clip(shape = RoundedCornerShape(10.dp))
                             .background(Color.White)
-                            .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(10.dp)),
+                            .border(
+                                BorderStroke(1.dp, Color.Black),
+                                shape = RoundedCornerShape(10.dp)
+                            ),
                     ) {
                         Text(
                             text = "Трудозатраты",
@@ -183,7 +198,12 @@ fun CalculationOfLaborCostsScreen(
                         )
                     }
                 }
-                CalculationTable(id = result, calendarPlan = false, navController = navController, title = title)
+                CalculationTable(
+                    id = result,
+                    calendarPlan = false,
+                    navController = navController,
+                    title = title
+                )
             }
         }
     }

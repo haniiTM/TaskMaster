@@ -43,7 +43,9 @@ fun TaskLaborCostListScreen(navController: NavController, id: Int?, title: Strin
                     roundedDownRightAngle = 15,
                     roundedTopRightAngle = 15,
                     roundedTopLeftAngle = 15,
-                    placeholder = "Поиск"
+                    placeholder = "Поиск",
+                    icon = R.drawable.clear_icon,
+                    clearUnit = { searchText = "" }
                 )
             }
         }

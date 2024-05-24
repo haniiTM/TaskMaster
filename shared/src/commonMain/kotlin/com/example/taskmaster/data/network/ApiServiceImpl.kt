@@ -7,6 +7,7 @@ import com.example.taskmaster.data.network.models.Dependence
 import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.ManHoursReportDTO
+import com.example.taskmaster.data.network.models.Notification
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
@@ -983,6 +984,33 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             println("300 error: ${e.message}")
         } catch (e: Exception) {
             println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun getNotification(): MutableList<Notification?> {
+        return try {
+            val response: HttpResponse = httpClient.get("http://5.35.85.206:8080/user_role_project/notification")
+            if (response.status.isSuccess()) {
+                val json = response.bodyAsText()
+                val typeActiv = Json.decodeFromString<MutableList<Notification?>>(json)
+                println("Server returned typeActiv: ${typeActiv}")
+                return typeActiv
+            } else {
+                println("Server returned error status: ${response.status}")
+                mutableListOf() // возвращаем пустой список
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            mutableListOf()
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            mutableListOf()
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            mutableListOf()
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            mutableListOf()
         }
     }
 }

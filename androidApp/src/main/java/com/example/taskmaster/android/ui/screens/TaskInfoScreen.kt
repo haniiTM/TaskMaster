@@ -61,7 +61,7 @@ fun TaskInfoScreen(
             ),
             navController = navController,
             actionTitle = listOf("Пользователи"),
-            onShowSearchLineChange = {  }
+            showSearchButton = false
         )
 
         Box(

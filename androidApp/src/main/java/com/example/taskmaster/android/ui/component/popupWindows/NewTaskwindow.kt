@@ -1,6 +1,8 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -55,21 +57,6 @@ fun NewTaskWindow(
     LaunchedEffect(key1 = true) {
         viewModel.getTypeActivity()
     }
-    val typeActivity = viewModel.state.value.itemState
-    var taskTitle by remember {
-        mutableStateOf("")
-    }
-    var taskDependence by remember {
-        mutableStateOf("")
-    }
-    var taskAllocatedTime by remember {
-        mutableStateOf("")
-    }
-    var taskCategory by remember {
-        mutableStateOf("")
-    }
-
-    var categoryId by remember { mutableStateOf(0) }
     val linearGradient =
         Brush.verticalGradient(
             listOf(
@@ -77,14 +64,22 @@ fun NewTaskWindow(
                 MaterialTheme.colorScheme.onSecondary
             )
         )
+    val typeActivity = viewModel.state.value.itemState
+    var taskTitle by remember { mutableStateOf("") }
+    var taskDependence by remember { mutableStateOf("") }
+    var taskAllocatedTime by remember { mutableStateOf("") }
+    var taskCategory by remember { mutableStateOf("") }
+
+    var categoryId by remember { mutableStateOf(0) }
     var categoryExpanded by remember { mutableStateOf(false) }
 
+    var isValid by remember { mutableStateOf(false) }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
                 .padding(horizontal = 38.dp)
-                .clip(shape = RoundedCornerShape(15.dp))
+                .clip(shape = RoundedCornerShape(15.dp)).border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(15.dp))
         ) {
             Column(
                 modifier = Modifier
@@ -108,13 +103,15 @@ fun NewTaskWindow(
                 UnifiedTextBox(
                     value = taskTitle,
                     onValueChange = { newValue -> taskTitle = newValue },
-                    placeholder = "Название задачи"
+                    placeholder = "Название задачи",
+                    isError = taskTitle.isEmpty()
                 )
                 UnifiedTextBox(
                     value = taskAllocatedTime,
                     onValueChange = { newValue -> taskAllocatedTime = newValue },
                     prefix = { Text(text = "Временная оценка: ", color = Color.Black) },
-                    timeUnifiedTextFieldKey = true
+                    timeUnifiedTextFieldKey = true,
+                    isError = taskAllocatedTime.isEmpty()
                 )
                 Button(
                     onClick = { categoryExpanded = true },
@@ -194,6 +191,7 @@ fun NewTaskWindow(
                         }
                     }
                 }
+                isValid = if(taskTitle.isNotEmpty() && taskAllocatedTime.isNotEmpty() && taskCategory.isNotEmpty()) true else false
                 Divider(
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier
@@ -202,19 +200,22 @@ fun NewTaskWindow(
                 )
                 Button(
                     onClick = {
-                        val task = TaskDTO()
-                        task.name = taskTitle
-                        task.scope = taskAllocatedTime.toInt()
-                        task.typeofactivityid = categoryId
-                        viewModelTask.createTask(task, id)
-                        onDismissRequest()
+                        if (isValid) {
+                            val task = TaskDTO()
+                            task.name = taskTitle
+                            task.scope = taskAllocatedTime.toInt()
+                            task.typeofactivityid = categoryId
+                            viewModelTask.createTask(task, id)
+                            onDismissRequest()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(45.dp),
-                    colors = ButtonDefaults.buttonColors(Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, disabledContainerColor = Color.Gray),
                     shape = RoundedCornerShape(0),
-                    contentPadding = PaddingValues(horizontal = 12.dp)
+                    contentPadding = PaddingValues(horizontal = 12.dp),
+                    enabled = isValid
                 ) {
                     Text(text = "Создать", color = Color.Black)
                 }

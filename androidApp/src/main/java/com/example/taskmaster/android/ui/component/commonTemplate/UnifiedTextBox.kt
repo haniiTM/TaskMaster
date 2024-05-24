@@ -6,9 +6,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.component.popupWindows.MaskVisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,19 +55,30 @@ fun UnifiedTextBox(
     prefix: @Composable (() -> Unit)? = null,
     timeUnifiedTextFieldKey: Boolean = false,
     passwordTransformationKey: Boolean = false,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    isError: Boolean = false,
+    clearUnit: () -> Unit = {},
+    auth: Boolean = false
 ) {
     val passwordVisible = remember { mutableStateOf(passwordVisibleValue) }
     val timeMask = MaskVisualTransformation("##:##")
     val textFieldModifier = Modifier
         .clip(
             RoundedCornerShape(
-                roundedTopLeftAngle.dp, roundedTopRightAngle.dp, roundedDownRightAngle.dp, roundedDownLeftAngle.dp
+                roundedTopLeftAngle.dp,
+                roundedTopRightAngle.dp,
+                roundedDownRightAngle.dp,
+                roundedDownLeftAngle.dp
             )
         )
         .border(
             BorderStroke(borderWidth.dp, MaterialTheme.colorScheme.outline),
-            shape = RoundedCornerShape(roundedTopLeftAngle.dp, roundedTopRightAngle.dp, roundedDownRightAngle.dp, roundedDownLeftAngle.dp)
+            shape = RoundedCornerShape(
+                roundedTopLeftAngle.dp,
+                roundedTopRightAngle.dp,
+                roundedDownRightAngle.dp,
+                roundedDownLeftAngle.dp
+            )
         )
         .background(color = Color.White)
         .height(TextFieldHeight)
@@ -102,20 +116,50 @@ fun UnifiedTextBox(
                 ),
                 contentPadding = PaddingValues(horizontal = 10.dp),
                 trailingIcon = {
-                    if (icon != 0) {
-                        Icon(painter = painterResource(
-                            id = if (changeIcon != 0) {
-                                if (passwordVisible.value) icon else changeIcon
-                            } else {
-                                icon
+                    if (isError) {
+                        Row {
+                            Icon(
+                                painter = painterResource(id = R.drawable.warning),
+                                contentDescription = "",
+                                tint = Color.Red,
+                                modifier = Modifier.size(15.dp)
+                            )
+                            if (icon != 0) {
+                                Icon(painter = painterResource(
+                                    id = if (changeIcon != 0) {
+                                        if (passwordVisible.value) icon else changeIcon
+                                    } else {
+                                        icon
+                                    }
+                                ),
+                                    contentDescription = "Toggle Password Visibility",
+                                    tint = Color.Black,
+                                    modifier = Modifier.clickable {
+                                        passwordVisible.value = !passwordVisible.value
+                                    })
                             }
-                        ),
-                            contentDescription = "Toggle Password Visibility",
-                            tint = Color.Black,
-                            modifier = Modifier.clickable {
-                                    passwordVisible.value = !passwordVisible.value
-                            })
+                        }
+                    } else {
+                        if (icon != 0) {
+                            Icon(painter = painterResource(
+                                id = if (changeIcon != 0) {
+                                    if (passwordVisible.value) icon else changeIcon
+                                } else {
+                                    icon
+                                }
+                            ),
+                                contentDescription = "Toggle Password Visibility",
+                                tint = Color.Black,
+                                modifier = Modifier.clickable {
+                                    if(auth){
+                                        passwordVisible.value = !passwordVisible.value
+                                    }else{
+                                        clearUnit()
+                                    }
+                                })
+                        }
                     }
+
                 },
                 prefix = prefix
             )

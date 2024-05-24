@@ -7,6 +7,7 @@ import com.example.taskmaster.data.network.models.CalendarPlan
 import com.example.taskmaster.data.network.models.DescriptionDTOFileDTO
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.ManHoursReportDTO
+import com.example.taskmaster.data.network.models.Notification
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.StatusDTO
@@ -74,5 +75,7 @@ interface ApiService {
     suspend fun sendFile(fileName: String, taskId: Int, data: ByteArray)
     // Удаление файла
     suspend fun deleteFile(descriptionId: Int, fileId: Int)
+    // Получение оповещений
+    suspend fun getNotification(): MutableList<Notification?>
 }
 

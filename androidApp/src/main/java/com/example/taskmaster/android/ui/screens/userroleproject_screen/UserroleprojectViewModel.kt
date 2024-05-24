@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.CalendarPlan
+import com.example.taskmaster.data.network.models.Notification
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import kotlinx.coroutines.launch
 import java.io.File
@@ -67,6 +68,30 @@ class UserroleprojectViewModel constructor(private val apiService: ApiService) :
 
     data class ItemStatesFile (
         val itemState:  String? = null,
+        val isLoading: Boolean = false
+    )
+
+    private val _stateNotification = mutableStateOf(ItemStatesNotification())
+    val stateNotification: State<ItemStatesNotification> = _stateNotification
+
+    // Получение отчета по календарному плану за определенный проект
+    fun getNotification() {
+        viewModelScope.launch {
+            try {
+                _stateNotification.value = stateNotification.value.copy(isLoading = true)
+                val data = apiService.getNotification()
+                _stateNotification.value = stateNotification.value.copy(
+                    itemState = data,
+                    isLoading = false
+                )
+            } catch(e: Exception) {
+                _stateNotification.value = stateNotification.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    data class ItemStatesNotification (
+        val itemState: MutableList<Notification?> = mutableListOf(),
         val isLoading: Boolean = false
     )
 }
