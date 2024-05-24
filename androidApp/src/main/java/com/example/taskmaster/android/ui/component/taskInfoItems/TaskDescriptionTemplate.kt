@@ -22,15 +22,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun TaskDescription(description: String?, viewModel: TaskViewModel = getViewModel(), taskId: Int?, onValueChange: (String) -> Unit,
+fun TaskDescription(
+    description: String?,
+    viewModel: TaskViewModel = getViewModel(),
+    taskId: Int?,
+    onValueChange: (String) -> Unit,
 ) {
     var descriptionTask by remember { mutableStateOf(description ?: "Описание отсутствует") }
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
     Column(
         modifier = Modifier
             .padding(start = 14.dp, top = 6.dp, end = 14.dp)
@@ -39,14 +48,14 @@ fun TaskDescription(description: String?, viewModel: TaskViewModel = getViewMode
     ) {
         TextField(
             value = descriptionTask,
-            onValueChange = {newValue -> descriptionTask = newValue},
+            onValueChange = { newValue -> descriptionTask = newValue },
             modifier = Modifier
                 .height(130.dp)
                 .fillMaxWidth()
                 .border(
                     BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline),
                     shape = RoundedCornerShape(25.dp, 25.dp, 0.dp, 0.dp)
-                ),
+                ).focusRequester(focusRequester),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
@@ -55,14 +64,17 @@ fun TaskDescription(description: String?, viewModel: TaskViewModel = getViewMode
             textStyle = LocalTextStyle.current.copy(Color.Black)
         )
         Button(
-            onClick = { viewModel.updateDescription(
-                taskId = taskId ?: 0,
-                description =  if(descriptionTask.length == 0) {
-                    "Описание отсутствует"
-                } else {
-                    descriptionTask
-                }
-                ) },
+            onClick = {
+                viewModel.updateDescription(
+                    taskId = taskId ?: 0,
+                    description = if (descriptionTask.length == 0) {
+                        "Описание отсутствует"
+                    } else {
+                        descriptionTask
+                    }
+                )
+                focusManager.clearFocus() // This will dismiss the keyboard and remove focus
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .border(

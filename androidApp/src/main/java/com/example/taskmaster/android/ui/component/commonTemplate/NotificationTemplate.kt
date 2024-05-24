@@ -45,13 +45,6 @@ fun NotificationTemplate(
         0f to MaterialTheme.colorScheme.secondary,
         1f to MaterialTheme.colorScheme.surfaceTint
     )
-    val taskIds = notificationTaskList.filterNotNull().flatMap { it.listTask.map { it.taskId } }
-    val titles = notificationTaskList.map { value -> value?.projectName }
-    val taskNames = notificationTaskList.filterNotNull().flatMap { it.listTask.map { it.taskName } }
-
-    Log.d("taskId", taskIds.toString())
-    Log.d("title", titles.toString())
-    Log.d("taskName", taskNames.toString())
 
     Box(
         modifier = Modifier
@@ -83,23 +76,24 @@ fun NotificationTemplate(
                 textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onTertiary,
                 modifier = Modifier.padding(bottom = 25.dp, start = 17.dp, end = 17.dp)
             )
-            val triples = taskIds.mapIndexed { index, taskId ->
-                Triple(taskId, titles.getOrNull(index), taskNames.getOrNull(index))
-            }
             LazyColumn {
-                itemsIndexed(triples) { _, item ->
-
-                    Text(
-                        text = item.third!!,
-                        color = MaterialTheme.colorScheme.onTertiary,
-                        modifier = Modifier.padding(bottom = 5.dp).clickable {
-                            navController.navigate(
-                                NavigationItem.TaskInfo.passIdAndTitle(
-                                    id = item.first!!,
-                                    title = item.second!!
-                                )
+                notificationTaskList.forEach { notification ->
+                    notification?.let {
+                        itemsIndexed(notification.listTask) { index, task ->
+                            Text(
+                                text = task.taskName ?: "",
+                                color = MaterialTheme.colorScheme.onTertiary,
+                                modifier = Modifier.padding(bottom = 5.dp).clickable {
+                                    navController.navigate(
+                                        NavigationItem.TaskInfo.passIdAndTitle(
+                                            id = task.taskId ?: -1,
+                                            title = it.projectName ?: ""
+                                        )
+                                    )
+                                }
                             )
-                        })
+                        }
+                    }
                 }
             }
         }

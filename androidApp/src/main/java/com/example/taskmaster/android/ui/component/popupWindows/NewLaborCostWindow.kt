@@ -275,7 +275,7 @@ fun NewLaborCostWindow(
                         .height(1.dp)
                         .fillMaxWidth()
                 )
-                isValid = if(mDateDisplay.isNotEmpty() && comment.isNotEmpty() && laborCostCategory.name!!.isNotEmpty() && spendTime.isNotEmpty()) true else false
+                isValid = if(mDateDisplay.isNotEmpty() && comment.isNotEmpty() && laborCostCategory.name?.isNotEmpty() == true && spendTime.isNotEmpty()) true else false
                 Button(
                     onClick = {
                         if(isValid){
