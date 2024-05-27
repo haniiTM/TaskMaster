@@ -11,6 +11,7 @@ import SwiftUI
 struct TaskInfoView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskInfoViewModel()
+    @StateObject private var stateManager = TaskInfoStateManager()
 
     private let taskId: UInt16
 
@@ -88,7 +89,9 @@ struct TaskInfoView: View {
         ProjectFrameView(projectTitle, viewModel: viewModel) {
             TaskInfoCard
 
-            LaborCostCreationButton()
+            LaborCostCreationButton(stateManager)
+        }.sheet(isPresented: $stateManager.isCreationAlertShown) {
+            LaborCostCreationAlert(taskId, stateManager: stateManager)
         }
     }
 
@@ -123,7 +126,7 @@ struct TaskInfoView: View {
             .padding(8)
             .background(
                 .ultraThickMaterial,
-//                Color(uiColor: .secondarySystemBackground),
+                //                Color(uiColor: .secondarySystemBackground),
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
 
@@ -134,7 +137,7 @@ struct TaskInfoView: View {
                     .padding(8)
                     .background(
                         Color(uiColor: .secondarySystemBackground),
-//                        ultraThickMaterial,
+                        //                        ultraThickMaterial,
                         in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                     )
             }.tint(.primary)
