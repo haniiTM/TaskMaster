@@ -34,7 +34,7 @@ struct ProjectListView: View {
             ProjectCreationAlert(alertManager: stateManager, viewModel: viewModel)
         }
         .sheet(isPresented: $stateManager.addUserState) {
-            UserCreationAlert(stateManager)
+            UserCreationAlert(stateManager, viewModel: viewModel)
         }
     }
 }
