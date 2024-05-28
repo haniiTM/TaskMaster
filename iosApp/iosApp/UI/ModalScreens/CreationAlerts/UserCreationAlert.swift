@@ -7,33 +7,40 @@
 //
 
 import SwiftUI
+import shared
 
 struct UserCreationAlert: View {
-    //    @ObservedObject private var viewModel: ProjectListViewModel
+    @ObservedObject private var viewModel: ProjectListViewModel
     @ObservedObject private var stateManager: ProjectListStateManager
 
     @State private var lastName = ""
     @State private var firstName = ""
+
     @State private var login = ""
     @State private var password = ""
+
     @State private var roleTitle = "Роль"
     @State private var roleId: UInt8 = 0
 
-    init(_ stateManager: ProjectListStateManager/*, viewModel: ProjectListViewModel*/) {
+    init(_ stateManager: ProjectListStateManager, viewModel: ProjectListViewModel) {
         self.stateManager = stateManager
-        //        self.viewModel = viewModel
+        self.viewModel = viewModel
     }
 
     var body: some View {
         TemplateCreationAlert("Добавить пользователя")
         { ViewBody } action: {
-            //            Task { await addProject(text) }
-            addUser()
+            Task { await createUser() }
         }
     }
 
-    @ViewBuilder
     private var ViewBody: some View {
+        UserCreationForm
+            .task { await viewModel.updateUserRoleList() }
+    }
+
+    @ViewBuilder
+    private var UserCreationForm: some View {
         TextField(text: $lastName) {
             Text("Фамилия")
                 .padding()
@@ -55,12 +62,12 @@ struct UserCreationAlert: View {
         }
 
         Menu {
-//            ForEach(viewModel.categoryListSignal, id: \.id) { category in
-//            Button(category.name) {
-//                    categoryId = UInt8(category.id)
-//                    categoryMenuTitle = category.name
-//                }
-//            }
+            ForEach(viewModel.userRoleListSignal, id: \.id) { role in
+                Button(role.name) {
+                    roleId = UInt8(role.id)
+                    roleTitle = role.name
+                }
+            }
         } label: {
             HStack {
                 Text(roleTitle)
@@ -72,8 +79,13 @@ struct UserCreationAlert: View {
         }.tint(.primary)
     }
 
-    private func addUser() /*async*/ {
-        //        await viewModel.createProject(title)
+    private func createUser() async {
+        let user = RegisterReceiveRemote(login: login,
+                                         password: password,
+                                         fio: lastName + " " + firstName,
+                                         role: roleTitle)
+
+        await viewModel.createUser(user)
         stateManager.addUserState.toggle()
     }
 }
