@@ -12,14 +12,14 @@ struct ProjectListNavBar<Content: View>: View {
     @EnvironmentObject var authViewModel: AuthViewModel
 
     @ViewBuilder private let content: () -> Content
-    @ObservedObject private var alertManager: ProjectListAlertManager
+    @ObservedObject private var alertManager: ProjectListStateManager
 
     private let title: String
     private let viewModel: Searchable
 
     init(title: String,
          viewModel: Searchable,
-         alertManager: ProjectListAlertManager,
+         alertManager: ProjectListStateManager,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title
         self.viewModel = viewModel
@@ -36,7 +36,7 @@ struct ProjectListNavBar<Content: View>: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Button(action: {}) {
+        Button(action: { alertManager.addUserState.toggle() }) {
             Label("Добавить пользователя", systemImage: "person.crop.circle.badge.plus")
         }
 

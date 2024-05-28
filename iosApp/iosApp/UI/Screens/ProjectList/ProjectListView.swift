@@ -11,7 +11,7 @@ import SwiftUI
 struct ProjectListView: View {
     //    MARK: Props
     @StateObject private var viewModel = ProjectListViewModel()
-    @StateObject private var alertManager = ProjectListAlertManager()
+    @StateObject private var stateManager = ProjectListStateManager()
 
     //    MARK: Body
     var body: some View {
@@ -22,15 +22,19 @@ struct ProjectListView: View {
     }
 
     private var ViewBody: some View {
-        MainFrameView(viewModel: viewModel, alertManager: alertManager) {
+        MainFrameView(viewModel: viewModel, alertManager: stateManager) {
             ForEach(viewModel.projectList.reversed()) { project in
                 NavigationLink(destination: TaskListView(project)) {
                     ProjectCardView(model: project, viewModel: viewModel)
                 }
                 .tint(.primary)
             }
-        }.sheet(isPresented: $alertManager.addProjectState) {
-            ProjectCreationAlert(alertManager: alertManager, viewModel: viewModel)
+        }
+        .sheet(isPresented: $stateManager.addProjectState) {
+            ProjectCreationAlert(alertManager: stateManager, viewModel: viewModel)
+        }
+        .sheet(isPresented: $stateManager.addUserState) {
+            UserCreationAlert(stateManager)
         }
     }
 }
