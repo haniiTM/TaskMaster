@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import shared
 
 struct LaborCostListView: View {
     //    MARK: Props
     @StateObject private var viewModel = LaborCostListViewModel()
     @StateObject private var stateManager = LaborCostListStateManager()
+    @State private var model: ManHoursDTO
 
     private let taskId: UInt16
     private let projectTitle: String
@@ -20,6 +22,13 @@ struct LaborCostListView: View {
     init(_ projectTitle: String, taskId: UInt16) {
         self.taskId = taskId
         self.projectTitle = projectTitle
+        model = .init(id: nil,
+                      created_at: nil,
+                      hours_spent: nil,
+                      comment: nil,
+                      taskid: nil,
+                      projectid: nil,
+                      activityid: nil)
     }
 
     //    MARK: Body
@@ -29,7 +38,7 @@ struct LaborCostListView: View {
                 await viewModel.updateDataSource(taskId)
             }
             .sheet(isPresented: $stateManager.isInfoAlertShown) {
-                LaborCostInfoAlert(stateManager)
+                LaborCostInfoAlert(model, stateManager: stateManager)
             }
     }
 
@@ -37,10 +46,11 @@ struct LaborCostListView: View {
         //        ProjectFrameView(title) {
         List(viewModel.laborCostList, id: \.id) { laborCost in
             Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {
+                model = laborCost
                 stateManager.isInfoAlertShown.toggle()
             }
-                .padding(8)
-                .tint(.primary)
+            .padding(8)
+            .tint(.primary)
         }.navigationTitle(projectTitle)
         //            .padding()
         //        }
