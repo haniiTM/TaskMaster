@@ -386,10 +386,10 @@
 				28EA9CF32BD5508E00B31497 /* ProjectList */,
 				28EA9CFC2BD5811300B31497 /* TaskList */,
 				28EA9D052BD590CE00B31497 /* SubTaskList */,
-				28E795FB2BD9674A00D402E4 /* AttachmentList */,
-				28E796102BD9A93F00D402E4 /* LaborCostList */,
-				28E796192BD9B34C00D402E4 /* TaskInfo */,
 				28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */,
+				28E796192BD9B34C00D402E4 /* TaskInfo */,
+				28E796102BD9A93F00D402E4 /* LaborCostList */,
+				28E795FB2BD9674A00D402E4 /* AttachmentList */,
 				2864E6CB2BD3EE2900504DE0 /* Box.swift */,
 			);
 			path = Screens;

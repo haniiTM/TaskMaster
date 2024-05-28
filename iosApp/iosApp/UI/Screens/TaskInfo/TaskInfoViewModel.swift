@@ -9,16 +9,13 @@
 import shared
 
 @MainActor final class TaskInfoViewModel: ObservableObject, Searchable {
-    func search() async {
-        
-    }
-
     //    MARK: Props
     private let taskInfoUseCase = KoinHelper().getTaskInfoUseCase()
     @Published private(set) var taskInfo = DetailedTaskInfo()
+    @Published private(set) var activityListSignal = [ActivityDTO]()
 
     //    MARK: Methods
-    func updateDataSource(_ id: UInt16) async {
+    func getTaskInfo(_ id: UInt16) async {
         do {
             guard
                 let optionalTaskInfo = try await taskInfoUseCase.getTaskInfo(taskId: id)
@@ -29,4 +26,34 @@ import shared
             print(error.localizedDescription)
         }
     }
+
+    func getActivityList() async {
+        do {
+            guard
+                let optionalActivityList = try await taskInfoUseCase.getActivityList() as? [ActivityDTO?]
+            else { return }
+
+            var activityList = [ActivityDTO]()
+            
+            optionalActivityList.forEach { activity in
+                guard let activity = activity else { return }
+
+                activityList.append(activity)
+            }
+
+            activityListSignal = activityList
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func createLaborCost(_ taskId: UInt16, laborCost: ManHoursDTO) async {
+        do {
+            try await taskInfoUseCase.createLaborCost(manHour: laborCost, taskId: Int32(taskId))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func search() async {}
 }
