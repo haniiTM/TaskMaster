@@ -8,6 +8,7 @@
 
 import SwiftUI
 
-final class ProjectListAlertManager: ObservableObject {
+final class ProjectListStateManager: ObservableObject {
     @Published var addProjectState = false
+    @Published var addUserState = false
 }
