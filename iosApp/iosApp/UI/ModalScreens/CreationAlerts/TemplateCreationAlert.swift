@@ -26,6 +26,7 @@ struct TemplateCreationAlert<Content: View>: View {
                     Group {
                         content()
                     }
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .background(
                         .secondary.opacity(0.4),
