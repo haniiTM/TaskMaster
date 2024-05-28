@@ -97,6 +97,8 @@
 		CEB16A1C2BF9EE4E0066BE40 /* TemplateNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
 		CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */; };
+		CEBB132A2C05E9EC0017B33D /* LaborCostInfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */; };
+		CEBB132C2C05ECAE0017B33D /* LaborCostListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB132B2C05ECAE0017B33D /* LaborCostListStateManager.swift */; };
 		CEC085FC2BF79B3800BBBEC2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */; };
 		CEC085FE2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */; };
 		CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */; };
@@ -209,6 +211,8 @@
 		CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateNavBar.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
 		CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
+		CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostInfoAlert.swift; sourceTree = "<group>"; };
+		CEBB132B2C05ECAE0017B33D /* LaborCostListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListStateManager.swift; sourceTree = "<group>"; };
 		CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoProtocol.swift; sourceTree = "<group>"; };
 		CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCreationAlert.swift; sourceTree = "<group>"; };
@@ -592,6 +596,7 @@
 			children = (
 				28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */,
 				28E7960E2BD9935600D402E4 /* LaborCostListView.swift */,
+				CEBB132B2C05ECAE0017B33D /* LaborCostListStateManager.swift */,
 				28E796112BD9A95100D402E4 /* LaborCostListViewModel.swift */,
 				28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */,
 			);
@@ -714,6 +719,7 @@
 				CEC6010B2BFE62D30016DC0F /* TaskCreationAlert.swift */,
 				CEE483992BFF55F4005A9596 /* SubTaskCreationAlert.swift */,
 				CED72D1E2C048BCF00518AC1 /* LaborCostCreationAlert.swift */,
+				CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */,
 			);
 			path = CreationAlerts;
 			sourceTree = "<group>";
@@ -896,6 +902,7 @@
 				28E796042BD96EAD00D402E4 /* AttachmentCreationButtonAction.swift in Sources */,
 				2894CEBE2BD92C8600B8AB1C /* SubTaskCardControllerProtocol.swift in Sources */,
 				288455D82BD2AFB100DF64E5 /* Protocols.swift in Sources */,
+				CEBB132A2C05E9EC0017B33D /* LaborCostInfoAlert.swift in Sources */,
 				28E796062BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift in Sources */,
 				CEE4839C2BFFA8AD005A9596 /* StartView.swift in Sources */,
 				2864E6CC2BD3EE2900504DE0 /* Box.swift in Sources */,
@@ -921,6 +928,7 @@
 				289BFD312BD18F9100099EAE /* ScreenInfoButtonsConstants.swift in Sources */,
 				28DE0A362BCEAF17001F819C /* TaskCardModel.swift in Sources */,
 				2894CEBA2BD8FA2200B8AB1C /* ProjectCardControllerProtocol.swift in Sources */,
+				CEBB132C2C05ECAE0017B33D /* LaborCostListStateManager.swift in Sources */,
 				287638F02BB1AE6000B55DBF /* LoginScreenView.swift in Sources */,
 				28E796162BD9A98F00D402E4 /* LaborCostListModel.swift in Sources */,
 				288BA0C42BD6394B000E3A82 /* SubTaskCreationButtonAction.swift in Sources */,
