@@ -81,7 +81,7 @@ struct TaskInfoView: View {
     var body: some View {
         ViewBody
             .task {
-                await viewModel.updateDataSource(taskId)
+                await viewModel.getTaskInfo(taskId)
             }
     }
 
@@ -91,7 +91,7 @@ struct TaskInfoView: View {
 
             LaborCostCreationButton(stateManager)
         }.sheet(isPresented: $stateManager.isCreationAlertShown) {
-            LaborCostCreationAlert(taskId, stateManager: stateManager)
+            LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
         }
     }
 

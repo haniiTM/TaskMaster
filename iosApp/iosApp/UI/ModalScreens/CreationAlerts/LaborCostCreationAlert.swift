@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct LaborCostCreationAlert: View {
-    //    @ObservedObject private var viewModel: SubTaskListViewModel
+    @ObservedObject private var viewModel: TaskInfoViewModel
     @ObservedObject private var stateManager: TaskInfoStateManager
 
     private let taskId: UInt16
@@ -20,27 +20,26 @@ struct LaborCostCreationAlert: View {
     @State private var activityMenuTitle = "Деятельность"
     @State private var activityId: UInt8 = 0
 
-    init(_ taskId: UInt16, stateManager: TaskInfoStateManager/*, viewModel: SubTaskListViewModel*/) {
+    init(_ taskId: UInt16, stateManager: TaskInfoStateManager, viewModel: TaskInfoViewModel) {
         self.taskId = taskId
         self.stateManager = stateManager
-        //        self.viewModel = viewModel
+        self.viewModel = viewModel
     }
 
     var body: some View {
         TemplateCreationAlert("Добавить трудозатрату")
         { ViewBody } action: {
-            //            Task { await addLaborCost(title, estimatedTime: estimatedTime, categoryId: categoryId) }
-            addLaborCost()
+            Task { await addLaborCost() }
         }
     }
 
     private var ViewBody: some View {
-        SubTaskCreationForm
-        //            .task { await viewModel.getActivityList() }
+        LaborCostCreationForm
+            .task { await viewModel.getActivityList() }
     }
 
     @ViewBuilder
-    private var SubTaskCreationForm: some View {
+    private var LaborCostCreationForm: some View {
         DatePicker("Дата", selection: $date, displayedComponents: .date)
 
         TextField(text: $note) {
@@ -54,12 +53,12 @@ struct LaborCostCreationAlert: View {
         }
 
         Menu {
-            //            ForEach(viewModel.activityListSignal, id: \.id) { activity in
-            //                Button(activity.name) {
-            //                    categoryId = UInt8(activity.id)
-            //                    categoryMenuTitle = activity.name
-            //                }
-            //            }
+            ForEach(viewModel.activityListSignal, id: \.id) { activity in
+                Button(activity.name ?? "-") {
+                    activityId = UInt8(activity.id ?? 0)
+                    activityMenuTitle = activity.name ?? "-"
+                }
+            }
         } label: {
             HStack {
                 Text(activityMenuTitle)
@@ -71,18 +70,32 @@ struct LaborCostCreationAlert: View {
         }.tint(.primary)
     }
 
-    private func addLaborCost() {
-        //        let taskDto = TaskDTO()
-        //        taskDto.name = title
-        //
-        //        let scope = Int32(estimatedTime) ?? 0
-        //        taskDto.scope = .init(int: scope)
-        //
-        //        let typeofactivityid = Int32(categoryId)
-        //        taskDto.typeofactivityid = .init(int: typeofactivityid)
+    private func addLaborCost() async {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let created_at = dateFormatter.string(from: date)
 
-        //        await viewModel.createTask(parentId, taskDto: taskDto)
+        let hours_spent = spentTime.replacingOccurrences(of: ":", with: "")
+
+        let taskIdInt32 = Int32(taskId)
+        let taskid = KotlinInt(int: taskIdInt32)
+
+        let activityIdInt32 = Int32(activityId)
+        let activityid = KotlinInt(int: activityIdInt32)
+
+        let laborCost = ManHoursDTO(id: nil,
+                                    created_at: created_at,
+                                    hours_spent: hours_spent,
+                                    comment: note,
+                                    taskid: taskid,
+                                    projectid: nil,
+                                    activityid: activityid)
+
+        print(laborCost)
+
+        await viewModel.createLaborCost(taskId, laborCost: laborCost)
+        await viewModel.getTaskInfo(taskId)
+        
         stateManager.isCreationAlertShown.toggle()
     }
-
 }
