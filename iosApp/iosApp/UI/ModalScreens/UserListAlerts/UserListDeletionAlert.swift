@@ -7,37 +7,43 @@
 //
 
 import SwiftUI
+import shared
 
 struct UserListDeletionAlert: View {
+    @ObservedObject private var viewModel: ProjectListViewModel
+    @State private var userIdList = [KotlinInt]()
     private let action: () -> Void
     private let stateManager: ProjectListStateManager
 
-    init(_ stateManager: ProjectListStateManager, action: @escaping () -> Void) {
+    init(_ stateManager: ProjectListStateManager,
+         viewModel: ProjectListViewModel,
+         action: @escaping () -> Void) {
         self.stateManager = stateManager
+        self.viewModel = viewModel
         self.action = action
     }
 
-    init(_ stateManager: ProjectListStateManager) {
+    init(_ stateManager: ProjectListStateManager,
+         viewModel: ProjectListViewModel) {
         self.stateManager = stateManager
-
-        action = {
-            stateManager.deleteUserState.toggle()
-        }
+        self.viewModel = viewModel
+        action = {}
     }
 
     var body: some View {
-        UserListAlertTemplate("Delete", action: action) { item in
-            HStack {
-                Button(action: {}, label: {
-                    Image(systemName: "square")
-                })
-
-                Text(item)
-
-                Spacer()
-
-                Image(systemName: "crown")
+        UserListAlertTemplate(
+            "Удалить",
+            viewModel: viewModel,
+            action: {
+                Task { await deleteUser() }
             }
+        ) { user in
+            UserCard(userIdList: $userIdList, user: user)
         }
+    }
+
+    private func deleteUser() async {
+        await viewModel.deleteUser(userIdList)
+        stateManager.deleteUserState.toggle()
     }
 }

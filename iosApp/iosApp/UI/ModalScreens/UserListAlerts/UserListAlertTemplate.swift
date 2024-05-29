@@ -7,26 +7,36 @@
 //
 
 import SwiftUI
+import shared
 
 struct UserListAlertTemplate<Content: View>: View {
-    private let list = ["Ivan Ivanov", "Ilia Ilich", "Roma Romavich"]
+    @ObservedObject private var viewModel: ProjectListViewModel
 
     private let title: String
     private let action: () -> Void
-    private var content: (String) -> Content
+    private var content: (PersonDTO) -> Content
 
     init(_ title: String,
+         viewModel: ProjectListViewModel,
          action: @escaping () -> Void,
-         content: @escaping (String) -> Content) {
+         content: @escaping (PersonDTO) -> Content) {
         self.title = title
+        self.viewModel = viewModel
         self.action = action
         self.content = content
     }
 
     var body: some View {
+        ViewBody
+            .task {
+                await viewModel.updateUserList()
+            }
+    }
+
+    private var ViewBody: some View {
         VStack(spacing: 0) {
-            List(list, id: \.self) { item in
-                content(item)
+            List(viewModel.userListSignal, id: \.id) { user in
+                content(user)
             }
             .listStyle(.grouped)
             .frame(height: 165)
