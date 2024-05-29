@@ -96,5 +96,13 @@ import shared
         }
     }
 
+    func deleteUser(_ idList: [KotlinInt]) async {
+        do {
+            try await projectListUseCase.deleteUser(id: .init(array: idList))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
     func search() async {}
 }
