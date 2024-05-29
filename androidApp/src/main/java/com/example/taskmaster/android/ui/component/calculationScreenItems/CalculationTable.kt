@@ -1,6 +1,5 @@
 package com.example.taskmaster.android.ui.component.calculationScreenItems
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -90,7 +89,6 @@ fun CalculationTable(
     navController: NavController,
     title: String?
 ) {
-    Log.d("project id", id.toString())
     LaunchedEffect(key1 = id) {
         laborCostViewModel.getReportManHours(id!!)
         testViewModel.getCalendarPlan(id!!)
@@ -113,7 +111,6 @@ fun CalculationTable(
     val ganttValue = gantt.map {
         Pair(it?.taskId ?: -1, it?.haveExecuter ?: false)
     }.sortedBy { it.first }.distinct()
-    Log.d("ganttValue", ganttValue.toString())
     val hoursGanttData = gantt.flatMap { task ->
         task?.execution_date?.map { date ->
             Triple(date?.toGanttDate(), task.haveExecuter?.toString() ?: "-", task.taskId)

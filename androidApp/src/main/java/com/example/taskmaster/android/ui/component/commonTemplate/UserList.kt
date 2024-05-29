@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

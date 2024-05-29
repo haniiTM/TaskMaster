@@ -60,9 +60,6 @@ fun AttachmentsListScreen(
                 data = byteArray!!,
                 fileName = selectedFileName!!
             )
-            byteArray?.let { bytes ->
-                Log.d("ByteArray", bytes.contentToString())
-            }
         }
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -94,10 +91,6 @@ fun AttachmentsListScreen(
         ListItemList(taskId = id ?: 0, attachmentsListFlag = true, searchText = searchText)
         BoxButton(text = "Добавить вложение", cardContainerFlag = false) {
             filePickerLauncher.launch("application/*")
-        }
-        selectedFileUri?.let { uri ->
-            val fileName = getFileName(context, uri)
-            Log.d("FileName", fileName.toString())
         }
     }
 }

@@ -107,7 +107,6 @@ fun ProjectScreen(
             }
         }
     }
-    Log.d("notificationTaskList", notificationTaskList.toString())
     if (!notificationTaskList.isEmpty() && !RoleObject.PMOrAdmin && showNotification){
         Dialog(onDismissRequest = { showNotification = false }) {
             NotificationTemplate(notificationTaskList, navController)
