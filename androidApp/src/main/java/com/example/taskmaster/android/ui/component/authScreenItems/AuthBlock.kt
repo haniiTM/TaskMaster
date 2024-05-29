@@ -114,7 +114,6 @@ fun AuthBlock(navController: NavController, viewModel: LoginViewModel = getViewM
                                 val result = it.adminOrProjectManager
                                 if (isValid) {
                                     AppSettings.setUserRole(context, success.adminOrProjectManager!!)
-                                    Log.d("AppSettings.setUserRole", success.adminOrProjectManager!!.toString())
                                     AppSettings.setLoginValid(context, isValid)
                                     navController.navigate(
                                         NavigationItem.Projects.passIdAndTitle(success = result!!)

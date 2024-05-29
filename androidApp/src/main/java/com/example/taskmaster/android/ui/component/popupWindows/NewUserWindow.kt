@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.popupWindows
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -253,7 +254,7 @@ fun NewUserWindow(
                                 lastName = surname,
                                 login = login,
                                 password = password,
-                                role = role
+                                role = roleValue
                             )
                         }
                     },

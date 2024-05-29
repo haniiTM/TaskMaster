@@ -32,7 +32,6 @@ fun ProjectSubTaskScreen(
     taskDescription: String?,
     projectId: Int?
 ) {
-    Log.d("taskId", id.toString())
     var description by remember {
         mutableStateOf("")
     }

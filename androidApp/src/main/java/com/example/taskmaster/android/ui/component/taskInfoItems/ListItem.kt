@@ -94,7 +94,6 @@ fun ListItem(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded }) {
                     IconButton(onClick = { expanded = !expanded }) {
-                        Log.d("expanded", expanded.toString())
                         Icon(
                             painter = painterResource(id = R.drawable.more),
                             contentDescription = "menu_icon",

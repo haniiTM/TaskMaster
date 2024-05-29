@@ -1,6 +1,5 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,13 +27,6 @@ import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.navigation.NavigationItem
 import com.example.taskmaster.data.network.models.Notification
-
-fun taskList(ids: List<Int?>, titles: List<String?>, tasksNames: List<String?>) {
-    val tasks = Triple(ids, titles, tasksNames)
-    val abc = tasks.first
-    Log.d("tasks", tasks.toString())
-    Log.d("abc", abc.toString())
-}
 
 @Composable
 fun NotificationTemplate(
