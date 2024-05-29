@@ -90,162 +90,167 @@ fun Header(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (showSearchButton) {
-                Icon(painter = painterResource(id = R.drawable.search1_icon),
-                    contentDescription = "",
-                    modifier = Modifier.then(if(!(projectScreenKey || RoleObject.PMOrAdmin)){Modifier.padding(end = 20.dp)}else{Modifier}).clickable { onShowSearchLineChange() },
-                    tint = Color.Black
-                )
-            }
+            Icon(
+                painter = painterResource(id = R.drawable.search1_icon),
+                contentDescription = "",
+                modifier = Modifier
+                    .then(
+                        if (!(projectScreenKey || RoleObject.PMOrAdmin)) {
+                            Modifier.padding(end = 20.dp)
+                        } else {
+                            Modifier
+                        }
+                    )
+                    .clickable { if (showSearchButton) onShowSearchLineChange() },
+                tint = if (showSearchButton) Color.Black else Color.Transparent
+            )
             MaterialTheme(shapes = MaterialTheme.shapes.copy(extraSmall = RoundedCornerShape(15.dp))) {
                 if (projectScreenKey || RoleObject.PMOrAdmin)
-                DropdownMenuArea(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = !expanded }) {
-                    IconButton(onClick = {
-                        if (activeMenu) expanded = !expanded
-                    }) {
-                        Icon(
-                            painter = painterResource(
-                                id = R.drawable.more
-                            ),
-                            contentDescription = "menu_icon",
-                            tint = if (activeMenu) Color.Black else Color.Transparent
-                        )
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .background(Color.White)
-                                .border(
-                                    BorderStroke(1.dp, Color.Black),
-                                    shape = RoundedCornerShape(15.dp)
-                                )
-                        ) {
-                            val itemsToDisplay = if (RoleObject.PMOrAdmin) {
-                                // Для администратора
-                                actionTitle
-                            } else {
-                                // Для пользователя только пункты поиска и выхода
-                                actionTitle.filterIndexed { index, _ -> index == 3 }
-                            }
-                            val iconsToDisplay = if (RoleObject.PMOrAdmin) {
-                                // Для администратора
-                                actionIcons
-                            } else {
-                                // Для пользователя только пункты поиска и выхода
-                                actionIcons.filterIndexed { index, _ -> index == 3 }
-                            }
-
-                            itemsToDisplay.forEachIndexed { index, item ->
-                                val isLastItem = index == itemsToDisplay.size - 1
-                                val iconColor =
-                                    if (projectScreenKey) if (isLastItem) Color.Red else Color.Black else Color.Black
-                                DropdownMenuItem(
-                                    onClick = {
-                                        selectedItem = item
-                                        if (projectScreenKey) {
-                                            if (item == actionTitle[3]) {
-                                                shouldNavigateToAuth = true
-                                            } else showDialog = !showDialog
-                                        } else {
-                                            showDialog = !showDialog
-                                        }
-                                        expanded = false
-                                    },
-                                    text = { Text(text = item) },
-                                    trailingIcon = {
-                                        Icon(
-                                            painter = painterResource(id = iconsToDisplay[index]),
-                                            contentDescription = "action_icon",
-                                            tint = iconColor
-                                        )
-                                    },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    colors = MenuDefaults.itemColors(textColor = iconColor)
-                                )
-                                if (index < itemsToDisplay.size - 1) {
-                                    Divider(
-                                        color = MaterialTheme.colorScheme.outline,
-                                        modifier = Modifier
-                                            .height(1.dp)
-                                            .fillMaxWidth()
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    if (showDialog) {
-                        Dialog(onDismissRequest = { showDialog = false }) {
-                            if (projectScreenKey) {
-                                if (RoleObject.PMOrAdmin) {
-                                    when (selectedItem) {
-                                        actionTitle[0] -> NewUserWindow(onDismissRequest = {
-                                            showDialog = false
-                                        })
-
-                                        actionTitle[1] -> UserList(
-                                            checkBoxAble = true,
-                                            addRoleButton = false,
-                                            buttonText = "Удалить",
-                                            showPersonInProject = false,
-                                            removeUserWindowKey = true
-                                        )
-
-                                        actionTitle[2] -> NewProjectWindow(onDismissRequest = {
-                                            showDialog = false
-                                        })
-
-                                        actionTitle[3] -> shouldNavigateToAuth =
-                                            !shouldNavigateToAuth
-                                    }
-                                } else {
-                                    when (selectedItem) {
-                                        actionTitle[0] -> shouldNavigateToAuth =
-                                            !shouldNavigateToAuth
-                                    }
-                                }
-                            } else if (!projectScreenKey && RoleObject.PMOrAdmin) {
-                                when (selectedItem) {
-                                    actionTitle[0] -> UserList(
-                                        checkBoxAble = false,
-                                        addRoleButton = true,
-                                        buttonText = "Добавить пользователя",
-                                        paddingValue = 20,
-                                        projectId = projectIdr!!,
-                                        showPersonInProject = true,
-                                        removeUserWindowKey = false
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    if (shouldNavigateToAuth) {
-                        Dialog(onDismissRequest = {
-                            shouldNavigateToAuth = !shouldNavigateToAuth
+                    DropdownMenuArea(
+                        expanded = expanded,
+                        onExpandedChange = { expanded = !expanded }) {
+                        IconButton(onClick = {
+                            if (activeMenu) expanded = !expanded
                         }) {
-                            ActionNotificationTemplate(
-                                onDismissRequest = { shouldNavigateToAuth = !shouldNavigateToAuth },
-                                onConfirmation = {
-                                    shouldNavigateToAuth = !shouldNavigateToAuth
-                                    AppSettings.setLoginValid(context, false)
-                                    navController.popBackStack(
-                                        NavigationItem.Auth.route,
-                                        inclusive = true
-                                    )
-                                    navController.navigate(NavigationItem.Auth.route) {
-                                        popUpTo(0) {
-                                            inclusive = true
-                                        } // This will clear the entire stack
-                                    }
-                                },
-                                title = "Выход из аккаунта",
+                            Icon(
+                                painter = painterResource(
+                                    id = R.drawable.more
+                                ),
+                                contentDescription = "menu_icon",
+                                tint = if (activeMenu) Color.Black else Color.Transparent
                             )
-                        }
-                    }
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false },
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .background(Color.White)
+                                    .border(
+                                        BorderStroke(1.dp, Color.Black),
+                                        shape = RoundedCornerShape(15.dp)
+                                    )
+                            ) {
+                                val itemsToDisplay = if (RoleObject.PMOrAdmin) {
+                                    actionTitle
+                                } else {
+                                    actionTitle.filterIndexed { index, _ -> index == 3 }
+                                }
+                                val iconsToDisplay = if (RoleObject.PMOrAdmin) {
+                                    actionIcons
+                                } else {
+                                    actionIcons.filterIndexed { index, _ -> index == 3 }
+                                }
 
-                }
+                                itemsToDisplay.forEachIndexed { index, item ->
+                                    val isLastItem = index == itemsToDisplay.size - 1
+                                    val iconColor =
+                                        if (projectScreenKey) if (isLastItem) Color.Red else Color.Black else Color.Black
+                                    DropdownMenuItem(
+                                        onClick = {
+                                            selectedItem = item
+                                            if (projectScreenKey) {
+                                                if (item == actionTitle[3]) {
+                                                    shouldNavigateToAuth = true
+                                                } else showDialog = !showDialog
+                                            } else {
+                                                showDialog = !showDialog
+                                            }
+                                            expanded = false
+                                        },
+                                        text = { Text(text = item) },
+                                        trailingIcon = {
+                                            Icon(
+                                                painter = painterResource(id = iconsToDisplay[index]),
+                                                contentDescription = "action_icon",
+                                                tint = iconColor
+                                            )
+                                        },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        colors = MenuDefaults.itemColors(textColor = iconColor)
+                                    )
+                                    if (index < itemsToDisplay.size - 1) {
+                                        Divider(
+                                            color = MaterialTheme.colorScheme.outline,
+                                            modifier = Modifier
+                                                .height(1.dp)
+                                                .fillMaxWidth()
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        if (showDialog) {
+                            Dialog(onDismissRequest = { showDialog = false }) {
+                                if (projectScreenKey) {
+                                    if (RoleObject.PMOrAdmin) {
+                                        when (selectedItem) {
+                                            actionTitle[0] -> NewUserWindow(onDismissRequest = {
+                                                showDialog = false
+                                            })
+
+                                            actionTitle[1] -> UserList(
+                                                checkBoxAble = true,
+                                                addRoleButton = false,
+                                                buttonText = "Удалить",
+                                                showPersonInProject = false,
+                                                removeUserWindowKey = true
+                                            )
+
+                                            actionTitle[2] -> NewProjectWindow(onDismissRequest = {
+                                                showDialog = false
+                                            })
+
+                                            actionTitle[3] -> shouldNavigateToAuth =
+                                                !shouldNavigateToAuth
+                                        }
+                                    } else {
+                                        when (selectedItem) {
+                                            actionTitle[0] -> shouldNavigateToAuth =
+                                                !shouldNavigateToAuth
+                                        }
+                                    }
+                                } else if (!projectScreenKey && RoleObject.PMOrAdmin) {
+                                    when (selectedItem) {
+                                        actionTitle[0] -> UserList(
+                                            checkBoxAble = false,
+                                            addRoleButton = true,
+                                            buttonText = "Добавить пользователя",
+                                            paddingValue = 20,
+                                            projectId = projectIdr!!,
+                                            showPersonInProject = true,
+                                            removeUserWindowKey = false
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        if (shouldNavigateToAuth) {
+                            Dialog(onDismissRequest = {
+                                shouldNavigateToAuth = !shouldNavigateToAuth
+                            }) {
+                                ActionNotificationTemplate(
+                                    onDismissRequest = {
+                                        shouldNavigateToAuth = !shouldNavigateToAuth
+                                    },
+                                    onConfirmation = {
+                                        shouldNavigateToAuth = !shouldNavigateToAuth
+                                        AppSettings.setLoginValid(context, false)
+                                        navController.popBackStack(
+                                            NavigationItem.Auth.route,
+                                            inclusive = true
+                                        )
+                                        navController.navigate(NavigationItem.Auth.route) {
+                                            popUpTo(0) {
+                                                inclusive = true
+                                            } // This will clear the entire stack
+                                        }
+                                    },
+                                    title = "Выход из аккаунта",
+                                )
+                            }
+                        }
+
+                    }
             }
         }
     }
