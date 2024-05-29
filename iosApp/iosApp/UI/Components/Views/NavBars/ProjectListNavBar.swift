@@ -12,7 +12,7 @@ struct ProjectListNavBar<Content: View>: View {
     @EnvironmentObject var authViewModel: AuthViewModel
 
     @ViewBuilder private let content: () -> Content
-    @ObservedObject private var alertManager: ProjectListStateManager
+    @ObservedObject private var stateManager: ProjectListStateManager
 
     private let title: String
     private let viewModel: Searchable
@@ -23,7 +23,7 @@ struct ProjectListNavBar<Content: View>: View {
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title
         self.viewModel = viewModel
-        self.alertManager = alertManager
+        self.stateManager = alertManager
         self.content = content
     }
 
@@ -36,15 +36,15 @@ struct ProjectListNavBar<Content: View>: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Button(action: { alertManager.addUserState.toggle() }) {
+        Button(action: { stateManager.addUserState.toggle() }) {
             Label("Добавить пользователя", systemImage: "person.crop.circle.badge.plus")
         }
 
-        Button(action: {}) {
+        Button(action: { stateManager.deleteUserState.toggle() }) {
             Label("Удалить пользователя", systemImage: "person.crop.circle.badge.minus")
         }
 
-        Button(action: { alertManager.addProjectState.toggle() }) {
+        Button(action: { stateManager.addProjectState.toggle() }) {
             Label("Добавить проект", systemImage: "plus.rectangle.on.rectangle")
         }
 
