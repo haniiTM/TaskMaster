@@ -11,14 +11,20 @@ import SwiftUI
 struct UserListDeletionAlert: View {
     private let action: () -> Void
     private let stateManager: ProjectListStateManager
+    private let viewModel: ProjectListViewModel
 
-    init(_ stateManager: ProjectListStateManager, action: @escaping () -> Void) {
+    init(_ stateManager: ProjectListStateManager,
+         viewModel: ProjectListViewModel,
+         action: @escaping () -> Void) {
         self.stateManager = stateManager
+        self.viewModel = viewModel
         self.action = action
     }
 
-    init(_ stateManager: ProjectListStateManager) {
+    init(_ stateManager: ProjectListStateManager,
+         viewModel: ProjectListViewModel) {
         self.stateManager = stateManager
+        self.viewModel = viewModel
 
         action = {
             stateManager.deleteUserState.toggle()
@@ -26,13 +32,15 @@ struct UserListDeletionAlert: View {
     }
 
     var body: some View {
-        UserListAlertTemplate("Delete", action: action) { item in
+        UserListAlertTemplate("Delete",
+                              viewModel: viewModel,
+                              action: action) { user in
             HStack {
                 Button(action: {}, label: {
                     Image(systemName: "square")
                 })
 
-                Text(item)
+                Text("\(user.surname) \(user.name)")
 
                 Spacer()
 

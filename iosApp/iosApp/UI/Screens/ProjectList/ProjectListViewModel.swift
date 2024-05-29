@@ -15,6 +15,7 @@ import shared
 
     @Published private(set) var projectList = [ProjectInfo]()
     @Published private(set) var userRoleListSignal = [TypeOfActivityDTO]()
+    @Published private(set) var userListSignal = [PersonDTO]()
 
     //    MARK: Methods
     func updateDataSource(_ parentId: UInt16) async {
@@ -70,6 +71,26 @@ import shared
     func createUser(_ user: RegisterReceiveRemote) async {
         do {
             try await projectListUseCase.createUser(user: user)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func updateUserList() async {
+        do {
+            guard
+                let userDtoList = try await projectListUseCase.getUserList() as? [PersonDTO?]
+            else { return }
+
+            var userList = [PersonDTO]()
+
+            userDtoList.forEach { user in
+                guard let user = user else { return }
+
+                userList.append(user)
+            }
+
+            userListSignal = userList
         } catch {
             print(error.localizedDescription)
         }
