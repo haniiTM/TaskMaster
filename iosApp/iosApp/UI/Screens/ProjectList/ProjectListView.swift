@@ -36,5 +36,8 @@ struct ProjectListView: View {
         .sheet(isPresented: $stateManager.addUserState) {
             UserCreationAlert(stateManager, viewModel: viewModel)
         }
+        .sheet(isPresented: $stateManager.deleteUserState, content: {
+            UserListDeletionAlert(stateManager)
+        })
     }
 }

@@ -108,10 +108,12 @@
 		CED37B322BFCF4FC00F9629D /* ViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B312BFCF4FC00F9629D /* ViewModelProtocols.swift */; };
 		CED37B352BFCFC0500F9629D /* ProjectListNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B342BFCFC0500F9629D /* ProjectListNavBar.swift */; };
 		CED37B372BFCFC8500F9629D /* TaskListNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B362BFCFC8500F9629D /* TaskListNavBar.swift */; };
-		CED37B392BFD1E4400F9629D /* ProjectListAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B382BFD1E4400F9629D /* ProjectListAlertManager.swift */; };
+		CED37B392BFD1E4400F9629D /* ProjectListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B382BFD1E4400F9629D /* ProjectListStateManager.swift */; };
 		CED37B3B2BFD1E8E00F9629D /* ProjectCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED37B3A2BFD1E8E00F9629D /* ProjectCreationAlert.swift */; };
 		CED72D1F2C048BCF00518AC1 /* LaborCostCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED72D1E2C048BCF00518AC1 /* LaborCostCreationAlert.swift */; };
 		CED72D212C04B4BF00518AC1 /* TaskInfoStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED72D202C04B4BF00518AC1 /* TaskInfoStateManager.swift */; };
+		CED884AD2C07251500617B3D /* UserListAlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED884AC2C07251500617B3D /* UserListAlertTemplate.swift */; };
+		CED884B02C073FD900617B3D /* UserListDeletionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED884AF2C073FD900617B3D /* UserListDeletionAlert.swift */; };
 		CEE483982BFF53E6005A9596 /* SubTaskListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE483972BFF53E6005A9596 /* SubTaskListStateManager.swift */; };
 		CEE4839A2BFF55F4005A9596 /* SubTaskCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE483992BFF55F4005A9596 /* SubTaskCreationAlert.swift */; };
 		CEE4839C2BFFA8AD005A9596 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE4839B2BFFA8AD005A9596 /* StartView.swift */; };
@@ -223,10 +225,12 @@
 		CED37B312BFCF4FC00F9629D /* ViewModelProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocols.swift; sourceTree = "<group>"; };
 		CED37B342BFCFC0500F9629D /* ProjectListNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListNavBar.swift; sourceTree = "<group>"; };
 		CED37B362BFCFC8500F9629D /* TaskListNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListNavBar.swift; sourceTree = "<group>"; };
-		CED37B382BFD1E4400F9629D /* ProjectListAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListAlertManager.swift; sourceTree = "<group>"; };
+		CED37B382BFD1E4400F9629D /* ProjectListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListStateManager.swift; sourceTree = "<group>"; };
 		CED37B3A2BFD1E8E00F9629D /* ProjectCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreationAlert.swift; sourceTree = "<group>"; };
 		CED72D1E2C048BCF00518AC1 /* LaborCostCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostCreationAlert.swift; sourceTree = "<group>"; };
 		CED72D202C04B4BF00518AC1 /* TaskInfoStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoStateManager.swift; sourceTree = "<group>"; };
+		CED884AC2C07251500617B3D /* UserListAlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAlertTemplate.swift; sourceTree = "<group>"; };
+		CED884AF2C073FD900617B3D /* UserListDeletionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDeletionAlert.swift; sourceTree = "<group>"; };
 		CEE483972BFF53E6005A9596 /* SubTaskListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskListStateManager.swift; sourceTree = "<group>"; };
 		CEE483992BFF55F4005A9596 /* SubTaskCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTaskCreationAlert.swift; sourceTree = "<group>"; };
 		CEE4839B2BFFA8AD005A9596 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -546,6 +550,7 @@
 		289BFD372BD1914C00099EAE /* ModalScreens */ = {
 			isa = PBXGroup;
 			children = (
+				CED884AE2C07252A00617B3D /* UserListAlerts */,
 				CEC601082BFDFD000016DC0F /* CreationAlerts */,
 			);
 			path = ModalScreens;
@@ -623,7 +628,7 @@
 				28EA9CF12BD5507C00B31497 /* ProjectListView.swift */,
 				28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */,
 				28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */,
-				CED37B382BFD1E4400F9629D /* ProjectListAlertManager.swift */,
+				CED37B382BFD1E4400F9629D /* ProjectListStateManager.swift */,
 				CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */,
 			);
 			path = ProjectList;
@@ -744,6 +749,15 @@
 				CED37B362BFCFC8500F9629D /* TaskListNavBar.swift */,
 			);
 			path = NavBars;
+			sourceTree = "<group>";
+		};
+		CED884AE2C07252A00617B3D /* UserListAlerts */ = {
+			isa = PBXGroup;
+			children = (
+				CED884AC2C07251500617B3D /* UserListAlertTemplate.swift */,
+				CED884AF2C073FD900617B3D /* UserListDeletionAlert.swift */,
+			);
+			path = UserListAlerts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -871,6 +885,7 @@
 				28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2864E6C52BD3DD2C00504DE0 /* UserInfo.swift in Sources */,
+				CED884AD2C07251500617B3D /* UserListAlertTemplate.swift in Sources */,
 				28609D042BD15A42005D2D01 /* ScreenInfoButton.swift in Sources */,
 				2864E6AE2BD38F7600504DE0 /* TaskCardsProtocols.swift in Sources */,
 				28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */,
@@ -917,12 +932,13 @@
 				28750F112BD1450100E3006D /* TaskSectionBG.swift in Sources */,
 				28407DE82BD16976004B275D /* LaborCostCreationButton.swift in Sources */,
 				288BA0BD2BD6354E000E3A82 /* SubTaskListViewModel.swift in Sources */,
+				CED884B02C073FD900617B3D /* UserListDeletionAlert.swift in Sources */,
 				2864E6B02BD3949700504DE0 /* GradientBG.swift in Sources */,
 				28E796212BD9D8CA00D402E4 /* EstimationCalendarView.swift in Sources */,
 				CED72D212C04B4BF00518AC1 /* TaskInfoStateManager.swift in Sources */,
 				289BFD2B2BD18AD200099EAE /* SubTaskCardView.swift in Sources */,
 				28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */,
-				CED37B392BFD1E4400F9629D /* ProjectListAlertManager.swift in Sources */,
+				CED37B392BFD1E4400F9629D /* ProjectListStateManager.swift in Sources */,
 				28E7960A2BD96FDA00D402E4 /* AttachmentListModel.swift in Sources */,
 				2894CEC02BD92FDD00B8AB1C /* TaskCardControllerProtocol.swift in Sources */,
 				2864E6CE2BD409A900504DE0 /* LoginError.swift in Sources */,
