@@ -342,6 +342,18 @@ fun TaskInfoBlock(
                                         onClick = {
                                             categoryExpanded = false
                                             taskCategory = item?.name ?: ""
+
+                                            val task = TaskDTO()
+                                            task.typeofactivityid = item?.id
+                                            viewTaskModel.changeTask(
+                                                taskDTO = task,
+                                                taskId = id
+                                            ) { success ->
+                                                if (triggerRefresh != null && success) {
+                                                    viewTaskModel.dataTaskById(id)
+                                                    triggerRefresh(success)
+                                                }
+                                            }
                                         },
                                         text = {
                                             Text(
