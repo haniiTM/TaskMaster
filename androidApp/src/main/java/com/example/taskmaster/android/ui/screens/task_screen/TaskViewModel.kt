@@ -236,4 +236,14 @@ class TaskViewModel constructor ( private val apiService: ApiService) : ViewMode
             }
         }
     }
+
+    fun changeTask(taskDTO: TaskDTO, taskId: Int, callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                callback(apiService.updateTask(taskDTO, taskId))
+            } catch(e: Exception) {
+                println("Exception in link user to task or project $e")
+            }
+        }
+    }
 }
