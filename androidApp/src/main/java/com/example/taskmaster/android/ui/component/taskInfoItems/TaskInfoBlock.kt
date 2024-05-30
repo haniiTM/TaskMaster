@@ -419,6 +419,18 @@ fun TaskInfoBlock(
                                                 viewModel.state.value.itemState.find { item ->
                                                     item?.id == status
                                                 }?.name!!
+
+                                                val task = TaskDTO()
+                                                task.status = item?.id
+                                                viewTaskModel.changeTask(
+                                                    taskDTO = task,
+                                                    taskId = id
+                                                ) { success ->
+                                                    if (triggerRefresh != null && success) {
+                                                        viewTaskModel.dataTaskById(id)
+                                                        triggerRefresh(success)
+                                                    }
+                                                }
                                             }
                                         },
                                         text = {

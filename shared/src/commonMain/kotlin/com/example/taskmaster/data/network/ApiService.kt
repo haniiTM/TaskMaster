@@ -79,5 +79,8 @@ interface ApiService {
     suspend fun getNotification(): MutableList<Notification?>
 
     suspend fun updateManHours(id: Int, comment: String)
+
+    // Обновление задачи
+    suspend fun updateTask(taskDTO: TaskDTO, taskId: Int): Boolean
 }
 
