@@ -15,11 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.RefreshableScreen
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.component.projectTemplate.CalculationTimeButton
 import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTasksContainer
 import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
+import kotlinx.coroutines.delay
 
 @Composable
 fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?, projectId: Int?) {
@@ -27,63 +29,77 @@ fun ProjectTaskScreen(navController: NavController, id: Int?, title: String?, pr
     var showSearchLine by remember {
         mutableStateOf(false)
     }
-    Column {
-        Header(
-            text = title ?: "Заголовок отсутствует",
-            actionIcons = listOf(
-                R.drawable.users_icon
-            ),
-            navController = navController,
-            actionTitle = listOf("Пользователи"),
-            projectScreenKey = false,
-            projectId = id,
-            activeMenu = true,
-            onShowSearchLineChange = { showSearchLine = !showSearchLine }
-        )
-        if (showSearchLine) {
-            Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
-                UnifiedTextBox(
-                    value = searchText,
-                    onValueChange = { newValue -> searchText = newValue },
-                    roundedDownLeftAngle = 15,
-                    roundedDownRightAngle = 15,
-                    roundedTopRightAngle = 15,
-                    roundedTopLeftAngle = 15,
-                    placeholder = "Поиск",
-                    icon = R.drawable.clear_icon,
-                    clearUnit = { searchText = "" }
-                )
-            }
-        }
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            item {
-                CalculationTimeButton(projectId = id, navController = navController, title = title)
-            }
+    var isRefreshing by remember { mutableStateOf(false) }
 
-            item {
-                UncompletedTasksContainer(
-                    title = "Задачи",
-                    buttonTitle = "Добавить задачу",
-                    navController = navController,
-                    id = id,
-                    projectTitle = title ?: "Заголовок отсутствует",
-                    searchText = searchText,
-                    projectId = projectId
-                )
+    suspend fun refresh() {
+        isRefreshing = true
+        delay(2000)
+        isRefreshing = false
+    }
+    RefreshableScreen(
+        isRefreshing = isRefreshing,
+        onRefresh = { refresh() }
+    ) {
+        Column {
+            Header(
+                text = title ?: "Заголовок отсутствует",
+                actionIcons = listOf(
+                    R.drawable.users_icon
+                ),
+                navController = navController,
+                actionTitle = listOf("Пользователи"),
+                projectScreenKey = false,
+                projectId = id,
+                activeMenu = true,
+                onShowSearchLineChange = { showSearchLine = !showSearchLine }
+            )
+            if (showSearchLine) {
+                Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
+                    UnifiedTextBox(
+                        value = searchText,
+                        onValueChange = { newValue -> searchText = newValue },
+                        roundedDownLeftAngle = 15,
+                        roundedDownRightAngle = 15,
+                        roundedTopRightAngle = 15,
+                        roundedTopLeftAngle = 15,
+                        placeholder = "Поиск",
+                        icon = R.drawable.clear_icon,
+                        clearUnit = { searchText = "" }
+                    )
+                }
             }
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                item {
+                    CalculationTimeButton(projectId = id, navController = navController, title = title)
+                }
 
-            item {
-                CompletedTasksContainer(
-                    title = "Выполнено",
-                    buttonTitle = "",
-                    navController = navController,
-                    id = id,
-                    projectTitle = title ?: "Заголовок отсутствует",
-                    searchText = searchText,
-                    projectId = projectId
-                )
+                item {
+                    UncompletedTasksContainer(
+                        title = "Задачи",
+                        buttonTitle = "Добавить задачу",
+                        navController = navController,
+                        id = id,
+                        projectTitle = title ?: "Заголовок отсутствует",
+                        searchText = searchText,
+                        projectId = projectId,
+                        listUpdate = isRefreshing
+                    )
+                }
+
+                item {
+                    CompletedTasksContainer(
+                        title = "Выполнено",
+                        buttonTitle = "",
+                        navController = navController,
+                        id = id,
+                        projectTitle = title ?: "Заголовок отсутствует",
+                        searchText = searchText,
+                        projectId = projectId,
+                        listUpdate = isRefreshing
+                    )
+                }
             }
         }
     }

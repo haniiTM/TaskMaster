@@ -27,7 +27,6 @@ import com.example.taskmaster.android.ui.component.StateObject.AppState
 import com.example.taskmaster.android.ui.component.StateObject.AuthValidObject
 import com.example.taskmaster.android.ui.component.StateObject.RoleObject
 import com.example.taskmaster.android.ui.navigation.Navigation
-import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.android.ui.theme.AppTheme
 import com.example.taskmaster.di.initKoin
 import com.example.taskmaster.domain.utils.NapierInit
@@ -35,7 +34,6 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.compose.getViewModel
 import org.koin.core.logger.Level
 
 
@@ -80,9 +78,7 @@ class MainActivity : ComponentActivity() {
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
-private fun MainScreen(
-    viewModel: TaskViewModel = getViewModel()
-) {
+private fun MainScreen() {
     val navController = rememberAnimatedNavController()
     Scaffold(
         bottomBar = {}
@@ -114,6 +110,3 @@ fun LinearGradientBackground() {
             .background(gradient)
     )
 }
-
-
-
