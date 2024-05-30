@@ -4,11 +4,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.ManHoursDTO
 import com.example.taskmaster.data.network.models.ManHoursReportDTO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -94,4 +92,15 @@ class ManHoursViewModel constructor( private val apiService: ApiService) : ViewM
         val itemState:  String? = null,
         val isLoading: Boolean = false
     )
+
+    fun updateManHours(id: Int, comment: String, taskId: Int) {
+        viewModelScope.launch {
+            try {
+                apiService.updateManHours(id, comment)
+                getManHours(taskId)
+            } catch(e: Exception) {
+                println("Exception in ${e}")
+            }
+        }
+    }
 }
