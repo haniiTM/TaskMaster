@@ -49,11 +49,11 @@ fun CompletedTasksContainer(
     LaunchedEffect(key1 = true) {
         viewModel.getCompletedTask(id!!.toInt())
     }
-    if(listUpdate){
+    if (listUpdate) {
         viewModel.getCompletedTask(id!!.toInt())
     }
     val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
-    var showDialog by remember{ mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
     val filteredComplitedTask = remember(searchText, completedTasks) {
         derivedStateOf {
             completedTasks.reversed().filter { task ->
@@ -97,9 +97,7 @@ fun CompletedTasksContainer(
                         color = Color.Black
                     )
                 }
-            }
-
-            if (completedTasks.isNotEmpty()) {
+            } else {
                 LazyColumn(
                     modifier = Modifier
                         .padding(start = 7.dp, end = 14.dp, bottom = 7.dp)
@@ -123,13 +121,13 @@ fun CompletedTasksContainer(
             }
 
             if (buttonTitle.isNotEmpty()) {
-                BoxButton(buttonTitle, cardContainerFlag = true){
+                BoxButton(buttonTitle, cardContainerFlag = true) {
                     showDialog = !showDialog
                 }
             }
             if (showDialog) {
                 Dialog(onDismissRequest = { showDialog = !showDialog }) {
-                    NewTaskWindow(id = id!!, onDismissRequest = {showDialog = !showDialog})
+                    NewTaskWindow(id = id!!, onDismissRequest = { showDialog = !showDialog })
                 }
             }
         }
