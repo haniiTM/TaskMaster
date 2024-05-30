@@ -109,7 +109,7 @@ fun NewTaskWindow(
                 UnifiedTextBox(
                     value = taskAllocatedTime,
                     onValueChange = { newValue -> taskAllocatedTime = newValue },
-                    prefix = { Text(text = "Временная оценка: ", color = Color.Black) },
+                    prefix = { Text(text = "Оценка времени: ", color = Color.Black) },
                     timeUnifiedTextFieldKey = true,
                     isError = taskAllocatedTime.isEmpty()
                 )
