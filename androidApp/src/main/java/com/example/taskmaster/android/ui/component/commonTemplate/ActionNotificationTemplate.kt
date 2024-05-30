@@ -22,19 +22,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ActionNotificationTemplate(
+    buttonDisplay: Boolean = true,
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     title: String,
     viewModel: TaskViewModel = getViewModel(),
     id: Int? = 0,
     parent: Int? = 0,
-    projectKey: Boolean? = false
+    projectKey: Boolean? = false,
+    text : String = "Вы уверены?"
 ) {
     val gradient = Brush.verticalGradient(
         0f to MaterialTheme.colorScheme.secondary,
@@ -63,44 +66,47 @@ fun ActionNotificationTemplate(
                 color = MaterialTheme.colorScheme.error
             )
             Text(
-                text = "Вы уверены?",
+                text = text,
                 color = MaterialTheme.colorScheme.onTertiary,
-                modifier = Modifier.padding(bottom = 19.dp)
+                modifier = Modifier.padding(bottom = 19.dp),
+                textAlign = TextAlign.Center
             )
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 44.dp)
-                    .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(
-                    onClick = {
-                        if (projectKey == true) {
-                            if(id != null) {
+            if(buttonDisplay){
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 44.dp)
+                        .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Button(
+                        onClick = {
+                            if (projectKey == true) {
+                                if(id != null) {
+                                    onConfirmation()
+                                    viewModel.deleteTaskOrProject(id!!, parent!!, true)
+                                }
+                            } else {
                                 onConfirmation()
-                                viewModel.deleteTaskOrProject(id!!, parent!!, true)
+                                viewModel.deleteTaskOrProject(id!!, parent!!)
                             }
-                        } else {
-                            onConfirmation()
-                            viewModel.deleteTaskOrProject(id!!, parent!!)
-                        }
-                    },
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier.defaultMinSize(minWidth = 72.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        Color.White
-                    )
-                ) {
-                    Text(text = "Да", color = Color.Black, fontWeight = FontWeight.Normal)
-                }
-                Button(
-                    onClick = { onDismissRequest() },
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier.defaultMinSize(minWidth = 72.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        Color.White
-                    )
-                ) {
-                    Text(text = "Нет", color = Color.Black, fontWeight = FontWeight.Normal)
+                        },
+                        shape = RoundedCornerShape(10.dp),
+                        modifier = Modifier.defaultMinSize(minWidth = 72.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            Color.White
+                        )
+                    ) {
+                        Text(text = "Да", color = Color.Black, fontWeight = FontWeight.Normal)
+                    }
+                    Button(
+                        onClick = { onDismissRequest() },
+                        shape = RoundedCornerShape(10.dp),
+                        modifier = Modifier.defaultMinSize(minWidth = 72.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            Color.White
+                        )
+                    ) {
+                        Text(text = "Нет", color = Color.Black, fontWeight = FontWeight.Normal)
+                    }
                 }
             }
         }

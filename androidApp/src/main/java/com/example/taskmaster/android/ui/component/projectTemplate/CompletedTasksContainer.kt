@@ -43,9 +43,13 @@ fun CompletedTasksContainer(
     viewModel: TaskViewModel = getViewModel(),
     projectTitle: String,
     searchText: String,
-    projectId: Int?
+    projectId: Int?,
+    listUpdate: Boolean
 ) {
     LaunchedEffect(key1 = true) {
+        viewModel.getCompletedTask(id!!.toInt())
+    }
+    if(listUpdate){
         viewModel.getCompletedTask(id!!.toInt())
     }
     val completedTasks = viewModel.stateCompletedTask.value.itemTaskState
