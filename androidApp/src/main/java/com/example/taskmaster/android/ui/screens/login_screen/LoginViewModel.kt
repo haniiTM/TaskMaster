@@ -8,8 +8,8 @@ import com.example.taskmaster.data.network.models.AccessTokenDto
 import com.example.taskmaster.domain.repositories.AuthRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel constructor(private val authRepository: AuthRepository) : ViewModel() {
-    suspend fun fetchUserToken(login: String, password: String): AccessTokenDto? {
+class LoginViewModel (private val authRepository: AuthRepository) : ViewModel() {
+    private suspend fun fetchUserToken(login: String, password: String): AccessTokenDto? {
         return authRepository.fetchUserToken(login, password)
     }
 
@@ -18,12 +18,7 @@ class LoginViewModel constructor(private val authRepository: AuthRepository) : V
         if (login != null && password != null && login.isNotEmpty() && password.isNotEmpty()) {
             viewModelScope.launch {
                 val success = fetchUserToken(login, password)
-                if (success == null) {
-                    resultLiveData.postValue(AccessTokenDto(tokenLong = ""))
-                } else {
-                    resultLiveData.postValue(success)
-                }
-                resultLiveData.postValue(success)
+                resultLiveData.postValue(success ?: AccessTokenDto(tokenLong = ""))
             }
         } else {
             resultLiveData.postValue(AccessTokenDto(tokenLong = ""))

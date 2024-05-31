@@ -1013,4 +1013,58 @@ class ApiServiceImpl constructor(private val httpClient: HttpClient) : ApiServic
             mutableListOf()
         }
     }
+
+    override suspend fun updateManHours(id: Int, comment: String) {
+        try {
+            var manHours : ManHoursDTO = ManHoursDTO()
+            manHours.comment = comment
+            val response: HttpResponse = httpClient.put("http://5.35.85.206:8080/manhours/${id}") {
+                contentType(ContentType.Application.Json)
+                setBody(manHours)
+            }
+            if (response.status.isSuccess()) {
+                println("Server update manHours: ${response.status}")
+            } else {
+                println("Server returned error status: ${response.status}")
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun updateTask(taskDTO: TaskDTO, taskId: Int): Boolean {
+        var success = false
+        try {
+            val response: HttpResponse = httpClient.put("http://5.35.85.206:8080/task/update/${taskId}") {
+                contentType(ContentType.Application.Json)
+                setBody(taskDTO)
+            }
+            if (response.status.isSuccess()) {
+                println("Server link user to task or project: ${response.status}")
+                success = true
+                return success
+            } else {
+                println("Server returned error status: ${response.status}")
+                return success
+            }
+        } catch (e: ServerResponseException) {
+            println("500 error: ${e.message}")
+            return success
+        } catch (e: ClientRequestException) {
+            println("400 error: ${e.message}")
+            return success
+        } catch (e: RedirectResponseException) {
+            println("300 error: ${e.message}")
+            return success
+        } catch (e: Exception) {
+            println("Error: ${e.message}")
+            return success
+        }
+    }
 }

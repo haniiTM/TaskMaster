@@ -1,12 +1,12 @@
 package com.example.taskmaster.android.ui.component.commonTemplate
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -99,6 +100,21 @@ fun UserList(
     var showWindow by remember {
         mutableStateOf(false)
     }
+    val itemsList = if (id != 0 && !showPersonInProject) {
+        viewModel.stateInTask.value.itemState
+    } else if (id != 0 && addingPersonInTask) {
+        // Получение списка свободных сотрудников для добавления в задачу
+        viewModel.stateFreeForTask.value.itemState
+    } else if (projectId != 0 && id == 0 && addingPersonInProj) {
+        // Получение списка свободных сотрудников
+        viewModel.stateFreeFromProject.value.itemState
+    } else if (projectId != 0 && showPersonInProject) {
+        // Получение списка сотрудников в проекте
+        viewModel.stateInProject.value.itemState
+    } else {
+        // Получение списка всех сотрудников
+        viewModel.state.value.itemState
+    }
     Box(
         modifier = Modifier
             .padding(horizontal = paddingValue.dp)
@@ -124,56 +140,48 @@ fun UserList(
                     )
                 }
             }
-            LazyColumn(
-                state = rememberLazyListState(), modifier = Modifier.sizeIn(maxHeight = 180.dp)
-            ) {
-                val itemsList = if (id != 0 && !showPersonInProject) {
-                    viewModel.stateInTask.value.itemState
-                } else if (id != 0 && addingPersonInTask) {
-                    // Получение списка свободных сотрудников для добавления в задачу
-                    viewModel.stateFreeForTask.value.itemState
-                } else if (projectId != 0 && id == 0 && addingPersonInProj) {
-                    // Получение списка свободных сотрудников
-                    viewModel.stateFreeFromProject.value.itemState
-                } else if (projectId != 0 && showPersonInProject) {
-                    // Получение списка сотрудников в проекте
-                    viewModel.stateInProject.value.itemState
-                } else {
-                    // Получение списка всех сотрудников
-                    viewModel.state.value.itemState
-                }
-                itemsIndexed(itemsList) { _, item ->
-                    if (item != null) {
-                        val isSelected = selectedUsers.value.contains(item.id!!)
-                        UserCard(
-                            checkBoxAble = checkBoxAble,
-                            actionButton = addRoleButton,
-                            item = "${item.surname} ${item.name} ${item.patronymic}",
-                            isSelected = isSelected,
-                            projectId = projectId,
-                            taskId = id,
-                            personId = item.id!!,
-                            onCheckChanged = { isSelected ->
-                                if (isSelected) {
-                                    selectedUsers.value += item.id!!
-                                } else {
-                                    selectedUsers.value -= item.id!!
-                                }
-                            },
-                            onDelete = {},
-                            role = item.role,
-                            triggerRefresh = triggerRefresh
-                        )
+            if(itemsList.isNotEmpty()){
+                LazyColumn(
+                    state = rememberLazyListState(), modifier = Modifier.sizeIn(maxHeight = 180.dp)
+                ) {
+                    itemsIndexed(itemsList) { _, item ->
+                        if (item != null) {
+                            val isSelected = selectedUsers.value.contains(item.id!!)
+                            UserCard(
+                                checkBoxAble = checkBoxAble,
+                                actionButton = addRoleButton,
+                                item = "${item.surname} ${item.name} ${item.patronymic}",
+                                isSelected = isSelected,
+                                projectId = projectId,
+                                taskId = id,
+                                personId = item.id!!,
+                                onCheckChanged = { isSelected ->
+                                    if (isSelected) {
+                                        selectedUsers.value += item.id!!
+                                    } else {
+                                        selectedUsers.value -= item.id!!
+                                    }
+                                },
+                                onDelete = {},
+                                role = item.role,
+                                triggerRefresh = triggerRefresh
+                            )
+                        }
                     }
                 }
+            }else{
+                Row(modifier = Modifier.fillMaxWidth().height(45.dp).background(Color.White), verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Пользователи отсутствуют", color = Color.Black, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                }
             }
-            Divider(
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier
-                    .height(1.dp)
-                    .fillMaxWidth()
-            )
+
             if (RoleObject.PMOrAdmin) {
+                Divider(
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .height(1.dp)
+                        .fillMaxWidth()
+                )
                 Button(
                     onClick = {
                         if (!removeUserWindowKey) {
@@ -215,7 +223,7 @@ fun UserList(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(35.dp),
+                        .height(45.dp),
                     colors = ButtonDefaults.buttonColors(Color.White),
                     shape = RoundedCornerShape(0.dp, 0.dp, 15.dp, 15.dp),
                     contentPadding = PaddingValues(horizontal = 12.dp)

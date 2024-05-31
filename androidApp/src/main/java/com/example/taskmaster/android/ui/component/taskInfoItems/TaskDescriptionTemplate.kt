@@ -1,5 +1,6 @@
 package com.example.taskmaster.android.ui.component.taskInfoItems
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.example.taskmaster.android.ui.screens.task_screen.TaskViewModel
@@ -40,6 +42,10 @@ fun TaskDescription(
     var descriptionTask by remember { mutableStateOf(description ?: "Описание отсутствует") }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
+    var isSave by remember {
+        mutableStateOf(false)
+    }
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .padding(start = 14.dp, top = 6.dp, end = 14.dp)
@@ -55,7 +61,8 @@ fun TaskDescription(
                 .border(
                     BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline),
                     shape = RoundedCornerShape(25.dp, 25.dp, 0.dp, 0.dp)
-                ).focusRequester(focusRequester),
+                )
+                .focusRequester(focusRequester),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
@@ -73,7 +80,8 @@ fun TaskDescription(
                         descriptionTask
                     }
                 )
-                focusManager.clearFocus() // This will dismiss the keyboard and remove focus
+                focusManager.clearFocus()
+                isSave = !isSave
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -89,6 +97,14 @@ fun TaskDescription(
             shape = RoundedCornerShape(0.dp, 0.dp, 25.dp, 25.dp)
         ) {
             Text(text = "Сохранить", color = Color.Black)
+        }
+        if (isSave){
+            Toast.makeText(
+                context,
+                "Сохранено",
+                Toast.LENGTH_LONG
+            ).show()
+            isSave = !isSave
         }
     }
 }
