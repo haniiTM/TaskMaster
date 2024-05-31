@@ -6,9 +6,7 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-protocol TaskInfoProtocol: Identifiable {
-    var id: UInt16 { get }
-    var title: String { get }
-    var timerValue: UInt16 { get }
-    var participiantsValue: UInt8 { get }
+protocol TaskInfoProtocol: ProjectInfoProtocol {
+    var description: String { get }
+    var statusId: UInt8 { get }
 }

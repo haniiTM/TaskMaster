@@ -25,4 +25,12 @@ class TaskListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun deleteTask(id: Int) {
         return apiService.DeleteTaskOrProject(id)
     }
+
+    suspend fun updateStatus(
+        taskId: Int,
+        statusId: Int,
+        nameTask: String
+    ) {
+        return apiService.updateStatusTask(taskId, statusId, nameTask)
+    }
 }

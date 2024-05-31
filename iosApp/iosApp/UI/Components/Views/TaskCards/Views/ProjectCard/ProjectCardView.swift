@@ -8,18 +8,32 @@
 
 import SwiftUI
 
-struct ProjectCardView: View {
+struct ProjectCardView<ContextItems: View>: View {
     //    MARK: Props
     private let controller: ProjectCardControllerProtocol
+    @ViewBuilder private let contextItems: () -> ContextItems
 
     //    MARK: Init
-    init(model: ProjectInfo, viewModel: ProjectListViewModelProtocol) {
+    init(model: any TaskInfoProtocol,
+         viewModel: ProjectCardViewModelProtocol,
+         @ViewBuilder contextItems: @escaping () -> ContextItems) {
         controller = ProjectCardController(model.id, model: model, viewModel: viewModel)
+        self.contextItems = contextItems
+    }
+
+    init(controller: ProjectCardControllerProtocol,
+         @ViewBuilder contextItems: @escaping () -> ContextItems) {
+        self.controller = controller
+        self.contextItems = contextItems
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateTaskCardView(controller: controller) { ViewBody }
+        TemplateTaskCardView {
+            ViewBody
+        } contextItems: {
+            ContextItem
+        }
     }
 
     @ViewBuilder
@@ -37,5 +51,19 @@ struct ProjectCardView: View {
 
         Text(controller.participiantsTitle)
             .font(.subheadline)
+    }
+
+    @ViewBuilder
+    private var ContextItem: some View {
+        contextItems()
+
+        Button(
+            role: .destructive,
+            action: {
+                Task { await controller.remove() }
+            }
+        ) {
+            Label("Удалить", systemImage: "trash")
+        }
     }
 }
