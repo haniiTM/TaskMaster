@@ -25,7 +25,7 @@ struct ProjectListView: View {
         MainFrameView(viewModel: viewModel, alertManager: stateManager) {
             ForEach(viewModel.projectList.reversed()) { project in
                 NavigationLink(destination: TaskListView(project)) {
-                    ProjectCardView(model: project, viewModel: viewModel)
+                    ProjectCardView(model: project, viewModel: viewModel) { EmptyView() }
                 }
                 .tint(.primary)
             }

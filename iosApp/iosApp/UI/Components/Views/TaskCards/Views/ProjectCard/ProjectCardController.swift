@@ -10,11 +10,11 @@ import SwiftUI
 
 final class ProjectCardController: ProjectCardControllerProtocol {
     //    MARK: Props
-    private var viewModel: TaskCardViewModelProtocol
+    private var viewModel: ProjectCardViewModelProtocol
     let model: any TaskInfoProtocol
 
     //    MARK: Init
-    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
+    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any ProjectCardViewModelProtocol) {
         self.model = model
         self.viewModel = viewModel
     }

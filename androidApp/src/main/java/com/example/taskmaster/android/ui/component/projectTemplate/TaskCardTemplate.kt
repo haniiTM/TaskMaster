@@ -44,9 +44,20 @@ import me.saket.swipe.SwipeableActionsBox
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ItemProject(item: TaskDTO, context: Context, navController: NavController, viewModel: TaskViewModel = getViewModel(), completed: Boolean = false, projectTitle: String, projectId: Int?) {
+fun ItemProject(
+    item: TaskDTO,
+    context: Context,
+    navController: NavController,
+    viewModel: TaskViewModel = getViewModel(),
+    completed: Boolean = false,
+    projectTitle: String,
+    projectId: Int?
+) {
 
     var showDialog by remember {
+        mutableStateOf(false)
+    }
+    var showErrorWindow by remember {
         mutableStateOf(false)
     }
     val taskCompleted: SwipeAction
@@ -66,24 +77,36 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
         )
     }, background = MaterialTheme.colorScheme.surface
     )
-    taskCompleted = SwipeAction(onSwipe = {
-        val vibrationEffect1: VibrationEffect =
-            VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-        vibrator.cancel()
-        vibrator.vibrate(vibrationEffect1)
-        val newStatus = if (item.status == 2) 1 else 2
-        viewModel.updateStatus(item.id!!, newStatus, item.name!!, item.parent!!)
-    }, icon = {
-        val iconResId = if (completed) R.drawable.cancel_icon else R.drawable.done_icon
-        Icon(
-            modifier = Modifier.padding(25.dp),
-            painter = painterResource(id = iconResId),
-            tint = Color.Black,
-            contentDescription = null
-        )
-    }, background = if (completed) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant
+    taskCompleted = SwipeAction(
+        onSwipe = {
+            val vibrationEffect1: VibrationEffect =
+                VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+            vibrator.cancel()
+            vibrator.vibrate(vibrationEffect1)
+            var newStatus = item.status
+            if (item.status == 1 || item.status == 2) {
+                if (item.status == 2){
+                    newStatus = 1
+                }else if(item.status == 1){
+                    newStatus = 2
+                }
+            } else if (item.status == 3) {
+                showErrorWindow = !showErrorWindow
+            }
+            viewModel.updateStatus(item.id!!, newStatus!!, item.name!!, item.parent!!)
+        },
+        icon = {
+            val iconResId = if (completed) R.drawable.cancel_icon else R.drawable.done_icon
+            Icon(
+                modifier = Modifier.padding(25.dp),
+                painter = painterResource(id = iconResId),
+                tint = Color.Black,
+                contentDescription = null
+            )
+        },
+        background = if (completed) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant
     )
-    if ( showDialog ){
+    if (showDialog) {
         Dialog(onDismissRequest = { showDialog = !showDialog }) {
             ActionNotificationTemplate(
                 onConfirmation = { showDialog = !showDialog },
@@ -91,6 +114,17 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
                 title = "Удаление задачи",
                 id = item.id!!,
                 parent = item.parent!!
+            )
+        }
+    }
+    if (showErrorWindow) {
+        Dialog(onDismissRequest = { showErrorWindow = !showErrorWindow }) {
+            ActionNotificationTemplate(
+                buttonDisplay = false,
+                onDismissRequest = { },
+                onConfirmation = { },
+                title = "Ошибка",
+                text = "Задаче с статусом \"В ожидании\" не может быть присвоен статус \"Готово\""
             )
         }
     }
@@ -102,7 +136,17 @@ fun ItemProject(item: TaskDTO, context: Context, navController: NavController, v
             .padding(vertical = 8.dp, horizontal = 7.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(25.dp))
-            .clickable { navController.navigate(NavigationItem.ProjectSubTask.passIdAndTitle(id = item.id!!.toInt(), projectTitle, item.name!!, item.content ?: "Описание отсутствует", projectId!!)) }
+            .clickable {
+                navController.navigate(
+                    NavigationItem.ProjectSubTask.passIdAndTitle(
+                        id = item.id!!.toInt(),
+                        projectTitle,
+                        item.name!!,
+                        item.content ?: "Описание отсутствует",
+                        projectId!!
+                    )
+                )
+            }
     ) {
         SwipeableActionsBox(
             endActions = listOf(delete),

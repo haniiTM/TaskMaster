@@ -13,7 +13,7 @@ import shared
     //    MARK: Props
     private let projectListUseCase = KoinHelper().getProjectListUseCase()
 
-    @Published private(set) var projectList = [ProjectInfo]()
+    @Published private(set) var projectList = [TaskInfo]()
     @Published private(set) var userRoleListSignal = [TypeOfActivityDTO]()
     @Published private(set) var userListSignal = [PersonDTO]()
 

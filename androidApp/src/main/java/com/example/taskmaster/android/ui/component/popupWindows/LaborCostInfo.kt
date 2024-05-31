@@ -27,18 +27,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.taskmaster.android.ui.screens.manHours_screen.ManHoursViewModel
 import com.example.taskmaster.data.network.models.ManHoursDTO
+import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun LaborCostInfo(number: String, item: ManHoursDTO) {
+fun LaborCostInfo(
+    taskId : Int,
+    item: ManHoursDTO,
+    viewModel: ManHoursViewModel = getViewModel()
+) {
     val linearGradient =
         Brush.verticalGradient(
             listOf(
@@ -62,6 +71,7 @@ fun LaborCostInfo(number: String, item: ManHoursDTO) {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         return sdf.parse(this)
     }
+
     val defaultDate = "01/01/1970"
 
 
@@ -73,6 +83,8 @@ fun LaborCostInfo(number: String, item: ManHoursDTO) {
     val mYear: Int = calendar.get(Calendar.YEAR)
     val mMonth: Int = calendar.get(Calendar.MONTH) + 1
     val mDayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
     Box(
         modifier = Modifier
             .width(332.dp)
@@ -100,10 +112,12 @@ fun LaborCostInfo(number: String, item: ManHoursDTO) {
                 onValueChange = { newValue -> comment = newValue },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(90.dp),
+                    .height(90.dp).focusRequester(focusRequester),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
+                    unfocusedContainerColor = Color.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
                 ),
                 shape = RoundedCornerShape(0.dp),
                 placeholder = {
@@ -121,7 +135,9 @@ fun LaborCostInfo(number: String, item: ManHoursDTO) {
                     .background(Color.White)
             ) {
                 Text(
-                    text = "${mDayOfMonth.toString().padStart(2, '0')}/${mMonth.toString().padStart(2, '0')}/${mYear}",
+                    text = "${mDayOfMonth.toString().padStart(2, '0')}/${
+                        mMonth.toString().padStart(2, '0')
+                    }/${mYear}",
                     color = Color.Black,
                     modifier = Modifier.weight(.5f),
                     textAlign = TextAlign.Center
@@ -141,7 +157,12 @@ fun LaborCostInfo(number: String, item: ManHoursDTO) {
             }
             Divider(color = Color.Black)
             Button(
-                onClick = { },
+                onClick = {
+                    if (item.id != null) {
+                        viewModel.updateManHours(item.id!!, comment!!, taskId = taskId)
+                        focusManager.clearFocus()
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(35.dp),

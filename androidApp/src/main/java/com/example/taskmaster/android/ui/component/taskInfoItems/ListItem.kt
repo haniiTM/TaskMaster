@@ -1,6 +1,5 @@
 package com.example.taskmaster.android.ui.component.taskInfoItems
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -165,7 +164,7 @@ fun ListItem(
     )
     if (showLaborCostInfo) {
         Dialog(onDismissRequest = { showLaborCostInfo = !showLaborCostInfo }) {
-            LaborCostInfo(name ?: "", itemManHours!!)
+            LaborCostInfo(taskId = taskId!!, item = itemManHours!!)
         }
     }
 }

@@ -32,6 +32,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -55,10 +56,9 @@ dependencies {
     implementation("io.github.aakira:napier:${napier}")
     implementation("androidx.navigation:navigation-compose:${navigation}")
     implementation("com.google.accompanist:accompanist-navigation-animation:${accompanist}")
-    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
-
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.35.1-alpha")
 
     //implementation(libs.androidx.navigation.runtime.ktx)
-    implementation ("com.google.accompanist:accompanist-navigation-animation:0.20.0")
     debugImplementation(libs.compose.ui.tooling)
 }

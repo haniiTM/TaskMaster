@@ -1,6 +1,5 @@
 package com.example.taskmaster.android.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,12 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
+import com.example.taskmaster.android.ui.RefreshableScreen
 import com.example.taskmaster.android.ui.component.commonTemplate.ButtonTemplate
 import com.example.taskmaster.android.ui.component.commonTemplate.Header
 import com.example.taskmaster.android.ui.component.commonTemplate.UnifiedTextBox
 import com.example.taskmaster.android.ui.component.projectTemplate.CompletedTasksContainer
 import com.example.taskmaster.android.ui.component.projectTemplate.UncompletedTasksContainer
 import com.example.taskmaster.android.ui.component.taskInfoItems.TaskDescription
+import kotlinx.coroutines.delay
 
 @Composable
 fun ProjectSubTaskScreen(
@@ -39,84 +40,97 @@ fun ProjectSubTaskScreen(
     var showSearchLine by remember {
         mutableStateOf(false)
     }
-    Box {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Header(
-                text = title ?: "Заголовок отсутствует",
-                actionIcons = listOf(
-                    R.drawable.users_icon
-                ),
-                navController = navController,
-                actionTitle = listOf("Пользователи"),
-                projectId = projectId,
-                activeMenu = true,
-                onShowSearchLineChange = { showSearchLine = !showSearchLine }
-            )
-            if (showSearchLine) {
-                Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
-                    UnifiedTextBox(
-                        value = searchText,
-                        onValueChange = { newValue -> searchText = newValue },
-                        roundedDownLeftAngle = 15,
-                        roundedDownRightAngle = 15,
-                        roundedTopRightAngle = 15,
-                        roundedTopLeftAngle = 15,
-                        placeholder = "Поиск",
-                        icon = R.drawable.clear_icon,
-                        clearUnit = { searchText = "" }
-                    )
+    var isRefreshing by remember { mutableStateOf(false) }
+    suspend fun refresh() {
+        isRefreshing = true
+        delay(2000)
+        isRefreshing = false
+    }
+    RefreshableScreen(
+        isRefreshing = isRefreshing,
+        onRefresh = { refresh() }
+    ) {
+        Box {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Header(
+                    text = title ?: "Заголовок отсутствует",
+                    actionIcons = listOf(
+                        R.drawable.users_icon
+                    ),
+                    navController = navController,
+                    actionTitle = listOf("Пользователи"),
+                    projectId = projectId,
+                    activeMenu = true,
+                    onShowSearchLineChange = { showSearchLine = !showSearchLine }
+                )
+                if (showSearchLine) {
+                    Box(modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 10.dp)) {
+                        UnifiedTextBox(
+                            value = searchText,
+                            onValueChange = { newValue -> searchText = newValue },
+                            roundedDownLeftAngle = 15,
+                            roundedDownRightAngle = 15,
+                            roundedTopRightAngle = 15,
+                            roundedTopLeftAngle = 15,
+                            placeholder = "Поиск",
+                            icon = R.drawable.clear_icon,
+                            clearUnit = { searchText = "" }
+                        )
+                    }
                 }
-            }
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                item {
-                    ButtonTemplate(
-                        id = id,
-                        navController = navController,
-                        text = taskTitle!!,
-                        width = 232,
-                        rotateAngle = 0f,
-                        title = title ?: "Заголовок отсутствует",
-                        iconItem = R.drawable.arrow_circle_right_icon
-                    )
-                    TaskDescription(
-                        description = taskDescription,
-                        taskId = id ?: 0,
-                        onValueChange = { newValue -> description = newValue })
-                    ButtonTemplate(
-                        navController = navController,
-                        text = "Вложения",
-                        width = 232,
-                        rotateAngle = 0f,
-                        title = title ?: "Заголовок не получен",
-                        id = id
-                    )
-                }
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    item {
+                        ButtonTemplate(
+                            id = id,
+                            navController = navController,
+                            text = taskTitle!!,
+                            width = 232,
+                            rotateAngle = 0f,
+                            title = title ?: "Заголовок отсутствует",
+                            iconItem = R.drawable.arrow_circle_right_icon
+                        )
+                        TaskDescription(
+                            description = taskDescription,
+                            taskId = id ?: 0,
+                            onValueChange = { newValue -> description = newValue })
+                        ButtonTemplate(
+                            navController = navController,
+                            text = "Вложения",
+                            width = 232,
+                            rotateAngle = 0f,
+                            title = title ?: "Заголовок не получен",
+                            id = id
+                        )
+                    }
 
-                item {
-                    UncompletedTasksContainer(
-                        title = "Задачи",
-                        buttonTitle = "Добавить задачу",
-                        navController = navController,
-                        id = id,
-                        projectTitle = title ?: "Заголовок отсутствует",
-                        searchText = searchText,
-                        projectId = projectId
-                    )
-                }
+                    item {
+                        UncompletedTasksContainer(
+                            title = "Задачи",
+                            buttonTitle = "Добавить задачу",
+                            navController = navController,
+                            id = id,
+                            projectTitle = title ?: "Заголовок отсутствует",
+                            searchText = searchText,
+                            projectId = projectId,
+                            listUpdate = isRefreshing
+                        )
+                    }
 
-                item {
-                    CompletedTasksContainer(
-                        title = "Выполнено",
-                        buttonTitle = "",
-                        navController = navController,
-                        id = id,
-                        projectTitle = title ?: "Заголовок отсутствует",
-                        searchText = searchText,
-                        projectId = projectId
-                    )
+                    item {
+                        CompletedTasksContainer(
+                            title = "Выполнено",
+                            buttonTitle = "",
+                            navController = navController,
+                            id = id,
+                            projectTitle = title ?: "Заголовок отсутствует",
+                            searchText = searchText,
+                            projectId = projectId,
+                            listUpdate = isRefreshing
+                        )
+                    }
                 }
             }
         }

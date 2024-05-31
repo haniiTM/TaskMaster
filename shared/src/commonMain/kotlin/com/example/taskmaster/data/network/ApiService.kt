@@ -77,5 +77,10 @@ interface ApiService {
     suspend fun deleteFile(descriptionId: Int, fileId: Int)
     // Получение оповещений
     suspend fun getNotification(): MutableList<Notification?>
+
+    suspend fun updateManHours(id: Int, comment: String)
+
+    // Обновление задачи
+    suspend fun updateTask(taskDTO: TaskDTO, taskId: Int): Boolean
 }
 

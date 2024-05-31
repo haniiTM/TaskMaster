@@ -21,36 +21,23 @@ struct TaskCardView: View {
     }
 
     /// Initializes the view with default realization.
-    init(_ parentId: UInt16, model: TaskInfo, viewModel: TaskCardViewModelProtocol) {
+    init(_ parentId: UInt16, model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol) {
         controller = TaskCardController(parentId, model: model, viewModel: viewModel)
     }
 
     //    MARK: Body
     var body: some View {
-        TemplateTaskCardView(controller: controller) { ViewBody }
+        ProjectCardView(controller: controller, contextItems: { ContextItem })
     }
 
-    @ViewBuilder
-    private var ViewBody: some View {
-        //        Text(controller.taskNumberTitle)
-        //            .font(.footnote)
-
-        Text(controller.taskTitle)
-            .multilineTextAlignment(.leading)
-
-        HStack {
-            Text(controller.timerTitle)
-                .font(.footnote)
-                .multilineTextAlignment(.leading)
-
-            Spacer()
-
-            //            if controller.isUrgent {
-            //                Image(systemName: controller.urgentImageName)
-            //            }
+    private var ContextItem: some View {
+        Button(
+            action: {
+                Task { await controller.changeStatus() }
+            }
+        ) {
+            Label(controller.isCompleted ? "Продолжить" : "Выполнить",
+                  systemImage: controller.isCompleted ? "checkmark.circle.badge.xmark" : "checkmark.circle")
         }
-
-        Text(controller.participiantsTitle)
-            .font(.footnote)
     }
 }

@@ -8,4 +8,4 @@
 
 import Foundation
 
-protocol TaskListViewModelProtocol: ProjectListViewModelProtocol {}
+protocol TaskListViewModelProtocol: ProjectListViewModelProtocol, TaskCardViewModelProtocol {}

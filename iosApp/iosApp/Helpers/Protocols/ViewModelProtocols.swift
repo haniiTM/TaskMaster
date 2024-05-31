@@ -6,9 +6,13 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-protocol TaskCardViewModelProtocol {
+protocol ProjectCardViewModelProtocol {
     func deleteCard(_ id: UInt16) async
     func updateDataSource(_ parentId: UInt16) async
+}
+
+protocol TaskCardViewModelProtocol: ProjectCardViewModelProtocol {
+    func updateTaskStatus(_ id: UInt16, title: String, statusId: UInt8) async
 }
 
 protocol Searchable {

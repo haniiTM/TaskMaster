@@ -43,9 +43,13 @@ fun UncompletedTasksContainer(
     viewModel: TaskViewModel = getViewModel(),
     projectTitle: String,
     searchText: String,
-    projectId: Int?
+    projectId: Int?,
+    listUpdate: Boolean
 ) {
     LaunchedEffect(key1 = true) {
+        viewModel.getUnfulfilleddTask(id!!.toInt())
+    }
+    if(listUpdate){
         viewModel.getUnfulfilleddTask(id!!.toInt())
     }
     val uncompletedTasks = viewModel.stateUnfulfilleddTask.value.itemTaskState
