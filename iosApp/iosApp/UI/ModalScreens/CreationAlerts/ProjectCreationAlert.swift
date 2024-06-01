@@ -10,10 +10,10 @@ import SwiftUI
 
 struct ProjectCreationAlert: View {
     @ObservedObject private var viewModel: ProjectListViewModel
-    @ObservedObject private var alertManager: ProjectListAlertManager
+    @ObservedObject private var alertManager: ProjectListStateManager
     @State private var text = ""
 
-    init(alertManager: ProjectListAlertManager, viewModel: ProjectListViewModel) {
+    init(alertManager: ProjectListStateManager, viewModel: ProjectListViewModel) {
         self.alertManager = alertManager
         self.viewModel = viewModel
     }

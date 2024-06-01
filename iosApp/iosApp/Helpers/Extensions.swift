@@ -22,3 +22,28 @@ extension Array where Element == TaskDTO? {
         return taskList
     }
 }
+
+extension String {
+    func getIconByRole() -> String {
+        var icon = ""
+
+        switch self {
+        case "Backend":
+            icon = "terminal"
+        case "Frontend":
+            icon = "globe"
+        case "Тестирование":
+            icon = "wrench.and.screwdriver"
+        case "UI/UX дизайн":
+            icon = "paintbrush.pointed"
+        case "Проектный менеджмент":
+            icon = "star"
+        case "Админ":
+            icon = "crown"
+        default:
+            icon = "exclamationmark.triangle"
+        }
+
+        return icon
+    }
+}

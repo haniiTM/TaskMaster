@@ -24,9 +24,9 @@ struct LaborCostCreationButton: View {
     }
 
     /// Initializes the view with default realization.
-    init() {
+    init(_ stateManger: TaskInfoStateManager) {
         title = ActionButtonsConstants.Strings.Titles.laborCostTitle
-        action = LaborCostCreationButtonAction()
+        action = LaborCostCreationButtonAction(stateManger)
     }
 
     //    MARK: Body

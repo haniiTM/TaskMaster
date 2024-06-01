@@ -11,6 +11,9 @@ final class SubTaskCardController: SubTaskCardControllerProtocol {
     private let parentId: UInt16
     private let viewModel: TaskCardViewModelProtocol
     let model: any TaskInfoProtocol
+    var isCompleted: Bool {
+        model.statusId == 1
+    }
 
     //    MARK: Init
     init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
@@ -25,6 +28,20 @@ final class SubTaskCardController: SubTaskCardControllerProtocol {
     func remove() async {
         Task {
             await viewModel.deleteCard(model.id)
+            await viewModel.updateDataSource(parentId)
+        }
+    }
+
+    func changeStatus() async {
+        Task {
+            var statusId: UInt8 = 3
+            if model.statusId == 1 || model.statusId == 2 {
+                statusId = model.statusId == 1 ? 2 : 1
+            }
+
+            await viewModel.updateTaskStatus(model.id,
+                                             title: model.title,
+                                             statusId: statusId)
             await viewModel.updateDataSource(parentId)
         }
     }

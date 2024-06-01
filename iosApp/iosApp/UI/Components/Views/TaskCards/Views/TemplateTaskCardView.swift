@@ -8,15 +8,16 @@
 
 import SwiftUI
 
-struct TemplateTaskCardView<Content: View>: View {
+struct TemplateTaskCardView<Content: View, ContextItems: View>: View {
     //    MARK: Props
-    private let controller: TaskCardActions
     @ViewBuilder private let content: () -> Content
+    @ViewBuilder private let contextItems: () -> ContextItems
 
     //    MARK: Init
-    init(controller: TaskCardActions, @ViewBuilder content: @escaping () -> Content) {
-        self.controller = controller
+    init(@ViewBuilder content: @escaping () -> Content,
+         @ViewBuilder contextItems: @escaping () -> ContextItems) {
         self.content = content
+        self.contextItems = contextItems
     }
 
     //    MARK: Body
@@ -40,14 +41,7 @@ struct TemplateTaskCardView<Content: View>: View {
             )
         }
         .contextMenu {
-            Button(
-                role: .destructive,
-                action: {
-                    Task { await controller.remove() }
-                }
-            ) {
-                Label("Удалить", systemImage: "trash")
-            }
+            contextItems()
         }
     }
 }

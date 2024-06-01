@@ -6,7 +6,5 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-protocol TaskCardControllerProtocol: TaskCardActions,
-                                     TaskTitleProvider,
-                                     TimerTitleProvider,
-                                     ParticipiantsTitleProvider {}
+protocol TaskCardControllerProtocol: ProjectCardControllerProtocol,
+                                     Changeable {}
