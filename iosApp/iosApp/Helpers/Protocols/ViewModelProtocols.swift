@@ -10,11 +10,8 @@ import SwiftUI
 import shared
 
 protocol ProjectCardViewModelProtocol: ObservableObject {
-    var userListSignal: [PersonDTO] { get }
-
     func deleteCard(_ id: UInt16) async
     func updateDataSource(_ parentId: UInt16) async
-    func updateUserList() async
 }
 
 protocol TaskCardViewModelProtocol: ProjectCardViewModelProtocol {
@@ -27,4 +24,16 @@ protocol Searchable {
 
 protocol UserSearchable {
     func searchUser() async
+}
+
+protocol UserListable: ObservableObject {
+    var userListSignal: [PersonDTO] { get }
+}
+
+protocol ProjectUserListUpdater {
+    func updateUserList() async
+}
+
+protocol TaskUserListUpdater {
+    func updateUserList(_ parentId: UInt16) async
 }

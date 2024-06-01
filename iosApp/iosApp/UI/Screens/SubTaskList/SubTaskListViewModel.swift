@@ -11,10 +11,10 @@ import shared
 @MainActor final class SubTaskListViewModel: ObservableObject, SubTaskListViewModelProtocol {
     @Published private(set) var userListSignal = [PersonDTO]()
 
-    func updateUserList() async {
-
+    func updateUserList(_ parentId: UInt16) async {
+        
     }
-    
+
     //    MARK: Props
     private let subTaskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedSubTaskListSignal = [TaskInfo]()

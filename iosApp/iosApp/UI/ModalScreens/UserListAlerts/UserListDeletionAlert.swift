@@ -39,7 +39,8 @@ struct UserListDeletionAlert: View {
         UserListAlertTemplate(
             title,
             viewModel: viewModel,
-            action: {
+            onAppear: viewModel.updateUserList,
+            onConfirm: {
                 Task { await deleteUser() }
             }
         ) { user in

@@ -11,9 +11,12 @@ import SwiftUI
 struct UserListAlert: View {
     @ObservedObject private var viewModel: TaskListViewModel
     private let stateManager: TaskListStateManager
+    private let projectId: UInt16
 
-    init(_ stateManager: TaskListStateManager,
+    init(_ projectId: UInt16,
+         stateManager: TaskListStateManager,
          viewModel: TaskListViewModel) {
+        self.projectId = projectId
         self.stateManager = stateManager
         self.viewModel = viewModel
     }
@@ -22,11 +25,18 @@ struct UserListAlert: View {
         UserListAlertTemplate(
             "Добавить пользователя",
             viewModel: viewModel,
-            action: {
-                stateManager.isUserListVisible.toggle()
-            }
+            onAppear: onAppear,
+            onConfirm: onConfirm
         ) { user in
             DeletableUserCard(user)
         }
+    }
+
+    private func onAppear() async {
+        await viewModel.updateUserList(projectId)
+    }
+
+    private func onConfirm() {
+        stateManager.isUserListVisible.toggle()
     }
 }
