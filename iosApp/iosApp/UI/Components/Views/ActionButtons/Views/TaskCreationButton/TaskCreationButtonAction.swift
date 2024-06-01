@@ -7,9 +7,9 @@
 //
 
 struct TaskCreationButtonAction: Openable {
-    private let stateManager: TaskListAlertManager
+    private let stateManager: TaskListStateManager
 
-    init(stateManager: TaskListAlertManager) {
+    init(stateManager: TaskListStateManager) {
         self.stateManager = stateManager
     }
 

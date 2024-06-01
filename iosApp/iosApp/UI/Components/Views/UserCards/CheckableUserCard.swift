@@ -1,5 +1,5 @@
 //
-//  UserCard.swift
+//  CheckableUserCard.swift
 //  TaskMaster
 //
 //  Created by  user on 29-05-2024.
@@ -9,9 +9,9 @@
 import SwiftUI
 import shared
 
-struct UserCard: View {
-    @State var isChecked = false
+struct CheckableUserCard: View {
     @Binding var userIdList: [KotlinInt]
+    @State var isChecked = false
     let user: PersonDTO
 
     var body: some View {

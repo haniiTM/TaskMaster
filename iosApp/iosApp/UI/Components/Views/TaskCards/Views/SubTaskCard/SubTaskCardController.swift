@@ -9,7 +9,7 @@
 final class SubTaskCardController: SubTaskCardControllerProtocol {
     //    MARK: Props
     private let parentId: UInt16
-    private let viewModel: TaskCardViewModelProtocol
+    private let viewModel: any TaskCardViewModelProtocol
     let model: any TaskInfoProtocol
     var isCompleted: Bool {
         model.statusId == 1

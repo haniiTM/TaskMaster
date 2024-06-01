@@ -9,6 +9,9 @@
 import shared
 
 @MainActor final class TaskListViewModel: ObservableObject, TaskListViewModelProtocol {
+    @Published private(set) var userListSignal = [PersonDTO]()
+    func updateUserList() async {}
+
     //    MARK: Props
     private let taskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()

@@ -9,15 +9,15 @@
 import SwiftUI
 import shared
 
-struct UserListAlertTemplate<Content: View>: View {
-    @ObservedObject private var viewModel: ProjectListViewModel
+struct UserListAlertTemplate<Content: View, T: ProjectListViewModelProtocol>: View {
+    @ObservedObject private var viewModel: T
 
     private let title: String
     private let action: () -> Void
     private var content: (PersonDTO) -> Content
 
     init(_ title: String,
-         viewModel: ProjectListViewModel,
+         viewModel: T,
          action: @escaping () -> Void,
          content: @escaping (PersonDTO) -> Content) {
         self.title = title

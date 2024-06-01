@@ -8,6 +8,7 @@
 
 import SwiftUI
 
-final class TaskInfoStateManager: ObservableObject {
+final class TaskInfoStateManager: TaskListStateManagerProtocol {
     @Published var isCreationAlertShown = false
+    @Published var isUserListVisible = false
 }

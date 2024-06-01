@@ -1,5 +1,5 @@
 //
-//  TaskListAlertManager.swift
+//  TaskListStateManager.swift
 //  TaskMaster
 //
 //  Created by  user on 22-05-2024.
@@ -8,6 +8,11 @@
 
 import SwiftUI
 
-final class TaskListAlertManager: ObservableObject {
+protocol TaskListStateManagerProtocol: ObservableObject {
+    var isUserListVisible: Bool { get set }
+}
+
+final class TaskListStateManager: TaskListStateManagerProtocol {
     @Published var addTaskState = false
+    @Published var isUserListVisible = false
 }

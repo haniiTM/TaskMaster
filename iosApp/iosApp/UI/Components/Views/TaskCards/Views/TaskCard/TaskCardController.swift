@@ -12,13 +12,13 @@ final class TaskCardController: TaskCardControllerProtocol {
     //    MARK: Props
     private let parentId: UInt16
     let model: any TaskInfoProtocol
-    private let viewModel: TaskCardViewModelProtocol
+    private let viewModel: any TaskCardViewModelProtocol
     var isCompleted: Bool {
         model.statusId == 1
     }
 
     //    MARK: Init
-    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol) {
+    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
         parentId = projectId
         self.model = model
         self.viewModel = viewModel
