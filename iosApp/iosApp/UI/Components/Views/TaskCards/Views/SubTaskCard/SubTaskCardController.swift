@@ -34,7 +34,15 @@ final class SubTaskCardController: SubTaskCardControllerProtocol {
 
     func changeStatus() async {
         Task {
-            
+            var statusId: UInt8 = 3
+            if model.statusId == 1 || model.statusId == 2 {
+                statusId = model.statusId == 1 ? 2 : 1
+            }
+
+            await viewModel.updateTaskStatus(model.id,
+                                             title: model.title,
+                                             statusId: statusId)
+            await viewModel.updateDataSource(parentId)
         }
     }
 }
