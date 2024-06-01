@@ -11,7 +11,7 @@ import shared
 
 struct TaskCreationAlert: View {
     @ObservedObject private var viewModel: TaskListViewModel
-    @ObservedObject private var alertManager: TaskListAlertManager
+    @ObservedObject private var alertManager: TaskListStateManager
 
     private let parentId: UInt16
     @State private var title = ""
@@ -19,7 +19,7 @@ struct TaskCreationAlert: View {
     @State private var categoryMenuTitle = "Выбор категории"
     @State private var categoryId: UInt8 = 0
 
-    init(_ parentId: UInt16, alertManager: TaskListAlertManager, viewModel: TaskListViewModel) {
+    init(_ parentId: UInt16, alertManager: TaskListStateManager, viewModel: TaskListViewModel) {
         self.parentId = parentId
         self.alertManager = alertManager
         self.viewModel = viewModel

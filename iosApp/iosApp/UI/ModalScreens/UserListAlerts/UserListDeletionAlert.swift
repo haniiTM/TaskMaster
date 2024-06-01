@@ -12,12 +12,16 @@ import shared
 struct UserListDeletionAlert: View {
     @ObservedObject private var viewModel: ProjectListViewModel
     @State private var userIdList = [KotlinInt]()
-    private let action: () -> Void
-    private let stateManager: ProjectListStateManager
 
-    init(_ stateManager: ProjectListStateManager,
+    private let stateManager: ProjectListStateManager
+    private let title: String
+    private let action: () -> Void
+
+    init(_ title: String,
+         stateManager: ProjectListStateManager,
          viewModel: ProjectListViewModel,
          action: @escaping () -> Void) {
+        self.title = title
         self.stateManager = stateManager
         self.viewModel = viewModel
         self.action = action
@@ -27,18 +31,19 @@ struct UserListDeletionAlert: View {
          viewModel: ProjectListViewModel) {
         self.stateManager = stateManager
         self.viewModel = viewModel
+        title = "Удалить"
         action = {}
     }
 
     var body: some View {
         UserListAlertTemplate(
-            "Удалить",
+            title,
             viewModel: viewModel,
             action: {
                 Task { await deleteUser() }
             }
         ) { user in
-            UserCard(userIdList: $userIdList, user: user)
+            CheckableUserCard(userIdList: $userIdList, user: user)
         }
     }
 

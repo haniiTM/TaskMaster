@@ -27,7 +27,7 @@ struct TaskCreationButton: View {
     }
 
     /// Initializes the view with default realization.
-    init(stateManager: TaskListAlertManager) {
+    init(stateManager: TaskListStateManager) {
         title = ActionButtonsConstants.Strings.Titles.taskTitle
         imageName = ActionButtonsConstants.Strings.ImageNames.taskImageName
         action = TaskCreationButtonAction(stateManager: stateManager)

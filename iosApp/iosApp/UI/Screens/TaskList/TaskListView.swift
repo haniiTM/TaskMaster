@@ -11,7 +11,7 @@ import SwiftUI
 struct TaskListView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskListViewModel()
-    @StateObject private var stateManager = TaskListAlertManager()
+    @StateObject private var stateManager = TaskListStateManager()
     private let model: ProjectInfo
 
     //    MARK: Init
@@ -23,14 +23,24 @@ struct TaskListView: View {
     var body: some View {
         ViewBody
             .task { await viewModel.updateDataSource(model.id) }
+            .sheet(isPresented: $stateManager.addTaskState) {
+                TaskCreationAlert(model.id, alertManager: stateManager, viewModel: viewModel)
+            }
+            .sheet(isPresented: $stateManager.isUserListVisible) {
+                UserListAlert(stateManager, viewModel: viewModel)
+            }
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(model.title, viewModel: viewModel) {
-            NavigationLink(destination: EstimationCalendarView(model, viewModel: viewModel)) {
+        ProjectFrameView(model.title,
+                         stateManager: stateManager,
+                         viewModel: viewModel) {
+            NavigationLink(destination: EstimationCalendarView(model,
+                                                               stateManager:  stateManager,
+                                                               viewModel: viewModel)) {
                 EstimatesScreenInfoButton()
             }
-            .tint(.primary)
+                                                               .tint(.primary)
 
             TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
                 ForEach(viewModel.unCompletedTaskListSignal) { task in
@@ -49,8 +59,6 @@ struct TaskListView: View {
                     }.tint(.primary)
                 }
             }
-        }.sheet(isPresented: $stateManager.addTaskState) {
-            TaskCreationAlert(model.id, alertManager: stateManager, viewModel: viewModel)
         }
     }
 }

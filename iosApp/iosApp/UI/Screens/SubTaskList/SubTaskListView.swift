@@ -31,14 +31,18 @@ struct SubTaskListView: View {
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(title, viewModel: viewModel) {
+        ProjectFrameView(title,
+                         stateManager: stateManager,
+                         viewModel: viewModel) {
             NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.tint(.primary)
 
             DescriptionBody
 
-            NavigationLink(destination: AttachmentListView(title, taskId: model.id)) {
+            NavigationLink(destination: AttachmentListView(title, 
+                                                           taskId: model.id,
+                                                          stateManager: stateManager)) {
                 AttachmentsScreenInfoButton()
             }.tint(.primary)
 

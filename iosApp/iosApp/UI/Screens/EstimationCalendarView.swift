@@ -8,22 +8,29 @@
 
 import SwiftUI
 
-struct EstimationCalendarView: View {
+struct EstimationCalendarView<T: TaskListStateManagerProtocol>: View {
     //    MARK: Props
     private let projectId: UInt16
     private let projectTitle: String
     private let viewModel: Searchable
+    private let stateManager: T
 
     //    MARK: Init
-    init(_ model: ProjectInfo, viewModel: Searchable) {
+    init(_ model: ProjectInfo,
+         stateManager: T,
+         viewModel: Searchable) {
         projectId = model.id
         projectTitle = model.title
+
+        self.stateManager = stateManager
         self.viewModel = viewModel
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(projectTitle, viewModel: viewModel) {
+        ProjectFrameView(projectTitle,
+                         stateManager: stateManager,
+                         viewModel: viewModel) {
             CalendarSection("Календарный план")
             CalendarSection("Расчет трудозатрат")
         }

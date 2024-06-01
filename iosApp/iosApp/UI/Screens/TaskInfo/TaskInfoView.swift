@@ -86,7 +86,9 @@ struct TaskInfoView: View {
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(projectTitle, viewModel: viewModel) {
+        ProjectFrameView(projectTitle,
+                         stateManager: stateManager,
+                         viewModel: viewModel) {
             TaskInfoCard
 
             LaborCostCreationButton(stateManager)
