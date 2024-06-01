@@ -27,7 +27,9 @@ struct TaskListView: View {
                 TaskCreationAlert(model.id, alertManager: stateManager, viewModel: viewModel)
             }
             .sheet(isPresented: $stateManager.isUserListVisible) {
-                UserListAlert(stateManager, viewModel: viewModel)
+                UserListAlert(model.id,
+                              stateManager: stateManager,
+                              viewModel: viewModel)
             }
     }
 

@@ -10,12 +10,16 @@ import SwiftUI
 import shared
 
 struct DeletableUserCard: View {
-    //    @ObservedObject private var viewModel: TaskListViewModel
+    @ObservedObject private var viewModel: TaskListViewModel
     private let user: PersonDTO
+    private let projectId: UInt16
 
-    init(_ user: PersonDTO/*, viewModel: TaskListViewModel*/) {
+    init(_ user: PersonDTO,
+         projectId: UInt16,
+         viewModel: TaskListViewModel) {
         self.user = user
-        //        self.viewModel = viewModel
+        self.projectId = projectId
+        self.viewModel = viewModel
     }
 
     var body: some View {
@@ -45,6 +49,8 @@ struct DeletableUserCard: View {
     }
 
     private func deleteUser() async {
-        //        await viewModel.deleteUserFromProject()
+        let uInt16Id = user.id as? UInt16 ?? 0
+        await viewModel.deleteProjectUser(uInt16Id, projectId: projectId)
+        await viewModel.updateUserList(projectId)
     }
 }
