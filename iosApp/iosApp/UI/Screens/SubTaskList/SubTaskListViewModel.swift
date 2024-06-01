@@ -70,9 +70,9 @@ import shared
 
     func updateTaskStatus(_ id: UInt16, title: String, statusId: UInt8) async {
         do {
-//            try await taskListUseCase.updateStatus(taskId: .init(id),
-//                                                   statusId: .init(statusId),
-//                                                   nameTask: title)
+            try await subTaskListUseCase.updateStatus(taskId: .init(id),
+                                                   statusId: .init(statusId),
+                                                   nameTask: title)
         } catch {
             print(error.localizedDescription)
         }
