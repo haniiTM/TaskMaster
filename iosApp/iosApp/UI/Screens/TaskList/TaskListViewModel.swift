@@ -9,13 +9,13 @@
 import shared
 
 @MainActor final class TaskListViewModel: ObservableObject, TaskListViewModelProtocol {
-    @Published private(set) var userListSignal = [PersonDTO]()
 
     //    MARK: Props
     private let taskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedTaskListSignal = [TaskInfo]()
     @Published private(set) var completedTaskListSignal = [TaskInfo]()
     @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
+    @Published private(set) var userListSignal = [PersonDTO]()
 
     //    MARK: Methods
     func updateDataSource(_ parentId: UInt16) async {
@@ -97,6 +97,15 @@ import shared
             }
 
             userListSignal = unwrappedUserList
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func deleteProjectUser(_ userId: UInt16, projectId: UInt16) async {
+        do {
+            try await taskListUseCase.deleteProjectUser(projectId: .init(projectId),
+                                                        userId: .init(userId))
         } catch {
             print(error.localizedDescription)
         }

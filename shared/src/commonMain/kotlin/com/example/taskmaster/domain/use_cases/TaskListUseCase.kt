@@ -38,4 +38,8 @@ class TaskListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun getProjectUserList(projectId: Int): MutableList<PersonDTO?> {
         return apiService.fetchPersonInProject(projectId)
     }
+
+    suspend fun deleteProjectUser(projectId: Int, userId: Int) {
+        return apiService.deletePersonFromProject(projectId, userId)
+    }
 }

@@ -28,7 +28,7 @@ struct UserListAlert: View {
             onAppear: onAppear,
             onConfirm: onConfirm
         ) { user in
-            DeletableUserCard(user)
+            DeletableUserCard(user, projectId: projectId, viewModel: viewModel)
         }
     }
 
