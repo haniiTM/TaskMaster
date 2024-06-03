@@ -24,7 +24,7 @@ struct UserListAlert: View {
     var body: some View {
         UserListAlertTemplate(
             "Добавить пользователя",
-            viewModel: viewModel,
+            userList: viewModel.userListSignal,
             onAppear: onAppear,
             onConfirm: onConfirm
         ) { user in
@@ -38,5 +38,6 @@ struct UserListAlert: View {
 
     private func onConfirm() {
         stateManager.isUserListVisible.toggle()
+        stateManager.isAddUserToProjectAlertVisible.toggle()
     }
 }

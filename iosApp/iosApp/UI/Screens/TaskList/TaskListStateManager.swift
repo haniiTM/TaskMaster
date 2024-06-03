@@ -15,4 +15,5 @@ protocol TaskListStateManagerProtocol: ObservableObject {
 final class TaskListStateManager: TaskListStateManagerProtocol {
     @Published var addTaskState = false
     @Published var isUserListVisible = false
+    @Published var isAddUserToProjectAlertVisible = false
 }

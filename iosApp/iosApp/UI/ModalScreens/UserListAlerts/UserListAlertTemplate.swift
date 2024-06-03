@@ -9,21 +9,20 @@
 import SwiftUI
 import shared
 
-struct UserListAlertTemplate<Content: View, T: UserListable>: View {
-    @ObservedObject private var viewModel: T
-
+struct UserListAlertTemplate<Content: View>: View {
     private let title: String
+    private let userList: [PersonDTO]
     private let onAppear: () async -> Void
     private let onConfirm: () -> Void
     private var content: (PersonDTO) -> Content
 
     init(_ title: String,
-         viewModel: T,
+         userList: [PersonDTO],
          onAppear: @escaping () async -> Void,
          onConfirm: @escaping () -> Void,
          content: @escaping (PersonDTO) -> Content) {
         self.title = title
-        self.viewModel = viewModel
+        self.userList = userList
         self.onAppear = onAppear
         self.onConfirm = onConfirm
         self.content = content
@@ -36,7 +35,7 @@ struct UserListAlertTemplate<Content: View, T: UserListable>: View {
 
     private var ViewBody: some View {
         VStack(spacing: 0) {
-            List(viewModel.userListSignal, id: \.id) { user in
+            List(userList, id: \.id) { user in
                 content(user)
             }
             .listStyle(.grouped)
