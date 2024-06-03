@@ -13,9 +13,12 @@ struct UserListAdditionAlert: View {
     @ObservedObject private var viewModel: TaskListViewModel
     @State private var userIdList = [KotlinInt]()
     private let stateManager: TaskListStateManager
+    private let parentId: UInt16
 
-    init(_ stateManager: TaskListStateManager,
+    init(_ parentId: UInt16,
+         stateManager: TaskListStateManager,
          viewModel: TaskListViewModel) {
+        self.parentId = parentId
         self.stateManager = stateManager
         self.viewModel = viewModel
     }
@@ -23,19 +26,22 @@ struct UserListAdditionAlert: View {
     var body: some View {
         UserListAlertTemplate(
             "Добавить",
-            userList: [.init(id: 0, surname: "Abobich", name: "Abob", patronymic: nil, role: "Тестирование")],
-            onAppear: {},
+            userList: viewModel.freeFromProjectUserListSignal,
+            onAppear: onAppear,
             onConfirm: {
-                //                Task { await deleteUser() }
-                addUserList()
+                Task { await onConfirm() }
             }
         ) { user in
             CheckableUserCard(userIdList: $userIdList, user: user)
         }
     }
 
-    private func addUserList() /*async*/ {
-        //        await viewModel.deleteUser(userIdList)
+    private func onAppear() async {
+        await viewModel.updateFreeFromProjectUserList(parentId)
+    }
+
+    private func onConfirm() async {
+        await viewModel.linkUserListToProject(parentId, userIdList: userIdList)
         stateManager.isAddUserToProjectAlertVisible.toggle()
     }
 }

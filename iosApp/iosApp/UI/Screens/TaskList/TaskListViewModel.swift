@@ -16,6 +16,7 @@ import shared
     @Published private(set) var completedTaskListSignal = [TaskInfo]()
     @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
     @Published private(set) var userListSignal = [PersonDTO]()
+    @Published private(set) var freeFromProjectUserListSignal = [PersonDTO]()
 
     //    MARK: Methods
     func updateDataSource(_ parentId: UInt16) async {
@@ -106,6 +107,42 @@ import shared
         do {
             try await taskListUseCase.deleteProjectUser(projectId: .init(projectId),
                                                         userId: .init(userId))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func updateFreeFromProjectUserList(_ parentId: UInt16) async {
+        do {
+            guard
+                let optionalUserList = try await taskListUseCase.getFreeFromProjectUserList(projectId: .init(parentId)) as? [PersonDTO?]
+            else { return }
+
+            var unwrappedUserList = [PersonDTO]()
+
+            optionalUserList.forEach { user in
+                guard let user = user else { return }
+
+                unwrappedUserList.append(user)
+            }
+
+            freeFromProjectUserListSignal = unwrappedUserList
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func linkUserListToProject(_ projectId: UInt16, userIdList: [KotlinInt]) async {
+        do {
+            let urp = UserRoleProjectDTO(id: nil,
+                                         userid: .init(array: userIdList),
+                                         projectid: .init(int: .init(projectId)),
+                                         type_of_activityid: nil,
+                                         score: nil,
+                                         current_task_id: nil,
+                                         creater_project: nil)
+
+            try await taskListUseCase.linkUserToProject(urp: urp)
         } catch {
             print(error.localizedDescription)
         }
