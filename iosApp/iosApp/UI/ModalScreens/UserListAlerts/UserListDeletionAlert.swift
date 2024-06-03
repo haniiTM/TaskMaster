@@ -12,33 +12,18 @@ import shared
 struct UserListDeletionAlert: View {
     @ObservedObject private var viewModel: ProjectListViewModel
     @State private var userIdList = [KotlinInt]()
-
     private let stateManager: ProjectListStateManager
-    private let title: String
-    private let action: () -> Void
-
-    init(_ title: String,
-         stateManager: ProjectListStateManager,
-         viewModel: ProjectListViewModel,
-         action: @escaping () -> Void) {
-        self.title = title
-        self.stateManager = stateManager
-        self.viewModel = viewModel
-        self.action = action
-    }
 
     init(_ stateManager: ProjectListStateManager,
          viewModel: ProjectListViewModel) {
         self.stateManager = stateManager
         self.viewModel = viewModel
-        title = "Удалить"
-        action = {}
     }
 
     var body: some View {
         UserListAlertTemplate(
-            title,
-            viewModel: viewModel,
+            "Удалить",
+            userList: viewModel.userListSignal,
             onAppear: viewModel.updateUserList,
             onConfirm: {
                 Task { await deleteUser() }
