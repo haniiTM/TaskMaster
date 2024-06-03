@@ -4,6 +4,7 @@ import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.TaskDTO
 import com.example.taskmaster.data.network.models.TypeOfActivityDTO
+import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import org.koin.core.component.KoinComponent
 
 class TaskListUseCase(private val apiService: ApiService) : KoinComponent {
@@ -41,5 +42,13 @@ class TaskListUseCase(private val apiService: ApiService) : KoinComponent {
 
     suspend fun deleteProjectUser(projectId: Int, userId: Int) {
         return apiService.deletePersonFromProject(projectId, userId)
+    }
+
+    suspend fun getFreeFromProjectUserList(projectId: Int): MutableList<PersonDTO?> {
+        return apiService.fetchPersonFreeFromProject(projectId)
+    }
+
+    suspend fun linkUserToProject(urp: UserRoleProjectDTO): Boolean {
+        return apiService.linkUserTaskOrProject(urp)
     }
 }

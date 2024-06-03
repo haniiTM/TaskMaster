@@ -32,7 +32,9 @@ struct TaskListView: View {
                               viewModel: viewModel)
             }
             .sheet(isPresented: $stateManager.isAddUserToProjectAlertVisible) {
-                UserListAdditionAlert(stateManager, viewModel: viewModel)
+                UserListAdditionAlert(model.id,
+                                      stateManager: stateManager,
+                                      viewModel: viewModel)
             }
     }
 
