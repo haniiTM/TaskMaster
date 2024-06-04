@@ -10,38 +10,29 @@ import SwiftUI
 import shared
 
 struct UserListAdditionAlert: View {
-    @ObservedObject private var viewModel: TaskListViewModel
-    @State private var userIdList = [KotlinInt]()
-    private let stateManager: TaskListStateManager
-    private let parentId: UInt16
+    @Binding private var userIdList: [KotlinInt]
+    private let userList: [PersonDTO]
+    private let onAppear: () async -> Void
+    private let onConfirm: () -> Void
 
-    init(_ parentId: UInt16,
-         stateManager: TaskListStateManager,
-         viewModel: TaskListViewModel) {
-        self.parentId = parentId
-        self.stateManager = stateManager
-        self.viewModel = viewModel
+    init(_ userList: [PersonDTO],
+         userIdList: Binding<[KotlinInt]>,
+         onAppear: @escaping () async -> Void,
+         onConfirm: @escaping () -> Void) {
+        self.userList = userList
+        self._userIdList = userIdList
+        self.onAppear = onAppear
+        self.onConfirm = onConfirm
     }
 
     var body: some View {
         UserListAlertTemplate(
             "Добавить",
-            userList: viewModel.freeFromProjectUserListSignal,
+            userList: userList,
             onAppear: onAppear,
-            onConfirm: {
-                Task { await onConfirm() }
-            }
+            onConfirm: { onConfirm() }
         ) { user in
             CheckableUserCard(userIdList: $userIdList, user: user)
         }
-    }
-
-    private func onAppear() async {
-        await viewModel.updateFreeFromProjectUserList(parentId)
-    }
-
-    private func onConfirm() async {
-        await viewModel.linkUserListToProject(parentId, userIdList: userIdList)
-        stateManager.isAddUserToProjectAlertVisible.toggle()
     }
 }
