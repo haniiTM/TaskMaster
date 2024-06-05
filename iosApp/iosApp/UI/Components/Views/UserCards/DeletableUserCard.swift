@@ -9,14 +9,14 @@
 import SwiftUI
 import shared
 
-struct DeletableUserCard: View {
-    @ObservedObject private var viewModel: TaskListViewModel
+struct DeletableUserCard<ViewModel: UserDeletable & TaskUserListUpdater>: View {
+    @ObservedObject private var viewModel: ViewModel
     private let user: PersonDTO
     private let projectId: UInt16
 
     init(_ user: PersonDTO,
          projectId: UInt16,
-         viewModel: TaskListViewModel) {
+         viewModel: ViewModel) {
         self.user = user
         self.projectId = projectId
         self.viewModel = viewModel
@@ -50,7 +50,7 @@ struct DeletableUserCard: View {
 
     private func deleteUser() async {
         let uInt16Id = user.id as? UInt16 ?? 0
-        await viewModel.deleteProjectUser(uInt16Id, projectId: projectId)
+        await viewModel.deleteUser(uInt16Id, parentId: projectId)
         await viewModel.updateUserList(projectId)
     }
 }

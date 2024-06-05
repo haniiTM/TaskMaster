@@ -39,7 +39,7 @@ struct AddUserToProjectAlert: View {
     }
 
     private func onConfirm() async {
-        await viewModel.linkUserListToProject(parentId, userIdList: userIdList)
-        stateManager.isAddUserToProjectAlertVisible.toggle()
+        await viewModel.addUser(parentId, userIdList: userIdList)
+        stateManager.isUserAdditionAlertVisible.toggle()
     }
 }

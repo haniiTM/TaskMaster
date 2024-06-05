@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-final class TaskInfoStateManager: TaskListStateManagerProtocol {
+final class TaskInfoStateManager: UserListVisible {
     @Published var isCreationAlertShown = false
     @Published var isUserListVisible = false
 }

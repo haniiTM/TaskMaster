@@ -8,16 +8,16 @@
 
 import SwiftUI
 
-struct ProjectFrameView<Content: View, T: TaskListStateManagerProtocol>: View {
+struct ProjectFrameView<Content: View, StateManager: UserListVisible>: View {
     // MARK: Props
     private let title: String
-    private let stateManager: T
+    private let stateManager: StateManager
     private let viewModel: Searchable
     @ViewBuilder private let content: () -> Content
 
     // MARK: Init
     init(_ title: String,
-         stateManager: T,
+         stateManager: StateManager,
          viewModel: Searchable,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title

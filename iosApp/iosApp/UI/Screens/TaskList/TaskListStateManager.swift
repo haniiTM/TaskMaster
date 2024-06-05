@@ -11,5 +11,5 @@ import SwiftUI
 final class TaskListStateManager: TaskListStateManagerProtocol {
     @Published var addTaskState = false
     @Published var isUserListVisible = false
-    @Published var isAddUserToProjectAlertVisible = false
+    @Published var isUserAdditionAlertVisible = false
 }

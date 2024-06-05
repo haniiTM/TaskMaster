@@ -25,7 +25,7 @@ struct AddUserToTaskAlert: View {
 
     var body: some View {
         UserListAdditionAlert(
-//            viewModel.freeFromProjectUserListSignal,
+            //            viewModel.freeFromProjectUserListSignal,
             [PersonDTO(id: 0, surname: "abobich", name: "abob", patronymic: "abobov", role: "Тестирование")],
             userIdList: $userIdList,
             onAppear: onAppear,
@@ -36,11 +36,11 @@ struct AddUserToTaskAlert: View {
     }
 
     private func onAppear() async {
-//        await viewModel.updateFreeFromProjectUserList(parentId)
+        //        await viewModel.updateFreeFromProjectUserList(parentId)
     }
 
     private func onConfirm() async {
-//        await viewModel.linkUserListToProject(parentId, userIdList: userIdList)
-        stateManager.isUserListVisible.toggle()
+        //        await viewModel.linkUserListToProject(parentId, userIdList: userIdList)
+        stateManager.isUserAdditionAlertVisible.toggle()
     }
 }

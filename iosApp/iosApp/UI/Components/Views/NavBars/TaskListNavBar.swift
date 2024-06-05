@@ -8,15 +8,15 @@
 
 import SwiftUI
 
-struct TaskListNavBar<Content: View, T: TaskListStateManagerProtocol>: View {
-    @ObservedObject private var stateManager: T
+struct TaskListNavBar<Content: View, StateManager: UserListVisible>: View {
+    @ObservedObject private var stateManager: StateManager
     @ViewBuilder private let content: () -> Content
 
     private let title: String
     private let viewModel: Searchable
 
     init(_ title: String,
-         stateManager: T,
+         stateManager: StateManager,
          viewModel: Searchable,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title

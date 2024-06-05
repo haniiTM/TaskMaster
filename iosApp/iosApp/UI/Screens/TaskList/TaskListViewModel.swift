@@ -103,9 +103,9 @@ import shared
         }
     }
 
-    func deleteProjectUser(_ userId: UInt16, projectId: UInt16) async {
+    func deleteUser(_ userId: UInt16, parentId: UInt16) async {
         do {
-            try await taskListUseCase.deleteProjectUser(projectId: .init(projectId),
+            try await taskListUseCase.deleteProjectUser(projectId: .init(parentId),
                                                         userId: .init(userId))
         } catch {
             print(error.localizedDescription)
@@ -132,11 +132,11 @@ import shared
         }
     }
 
-    func linkUserListToProject(_ projectId: UInt16, userIdList: [KotlinInt]) async {
+    func addUser(_ parentId: UInt16, userIdList: [KotlinInt]) async {
         do {
             let urp = UserRoleProjectDTO(id: nil,
                                          userid: .init(array: userIdList),
-                                         projectid: .init(int: .init(projectId)),
+                                         projectid: .init(int: .init(parentId)),
                                          type_of_activityid: nil,
                                          score: nil,
                                          current_task_id: nil,
