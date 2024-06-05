@@ -8,4 +8,4 @@
 
 import Foundation
 
-protocol TaskListViewModelProtocol: TaskCardViewModelProtocol, Searchable, UserListable, TaskUserListUpdater {}
+protocol TaskListViewModelProtocol: TaskCardViewModelProtocol, Searchable, UserListable, TaskUserListUpdater, UserAppendable, UserDeletable {}

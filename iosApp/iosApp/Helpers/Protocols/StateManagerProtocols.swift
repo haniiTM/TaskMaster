@@ -8,6 +8,12 @@
 
 import SwiftUI
 
-protocol TaskListStateManagerProtocol: ObservableObject {
+protocol UserListVisible: ObservableObject {
     var isUserListVisible: Bool { get set }
 }
+
+protocol UserAdditionAlertVisible: ObservableObject {
+    var isUserAdditionAlertVisible: Bool { get set }
+}
+
+protocol TaskListStateManagerProtocol: UserListVisible, UserAdditionAlertVisible {}

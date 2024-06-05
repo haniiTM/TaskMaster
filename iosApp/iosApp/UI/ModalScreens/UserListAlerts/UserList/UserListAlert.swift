@@ -7,15 +7,16 @@
 //
 
 import SwiftUI
+import shared
 
-struct UserListAlert: View {
-    @ObservedObject private var viewModel: TaskListViewModel
-    private let stateManager: TaskListStateManager
+struct UserListAlert<ViewModel: UserListable & TaskUserListUpdater & UserDeletable, StateManager: UserListVisible & UserAdditionAlertVisible>: View {
+    @ObservedObject private var viewModel: ViewModel
+    private let stateManager: StateManager
     private let projectId: UInt16
 
     init(_ projectId: UInt16,
-         stateManager: TaskListStateManager,
-         viewModel: TaskListViewModel) {
+         stateManager: StateManager,
+         viewModel: ViewModel) {
         self.projectId = projectId
         self.stateManager = stateManager
         self.viewModel = viewModel
@@ -24,7 +25,8 @@ struct UserListAlert: View {
     var body: some View {
         UserListAlertTemplate(
             "Добавить пользователя",
-            userList: viewModel.userListSignal,
+            //            userList: viewModel.userListSignal,
+            userList: [PersonDTO(id: 0, surname: "abobich", name: "abob", patronymic: "abobov", role: "Тестирование")],
             onAppear: onAppear,
             onConfirm: onConfirm
         ) { user in
@@ -38,6 +40,6 @@ struct UserListAlert: View {
 
     private func onConfirm() {
         stateManager.isUserListVisible.toggle()
-        stateManager.isAddUserToProjectAlertVisible.toggle()
+        stateManager.isUserAdditionAlertVisible.toggle()
     }
 }

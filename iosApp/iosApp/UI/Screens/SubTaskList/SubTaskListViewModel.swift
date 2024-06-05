@@ -10,9 +10,14 @@ import shared
 
 @MainActor final class SubTaskListViewModel: ObservableObject, SubTaskListViewModelProtocol {
     @Published private(set) var userListSignal = [PersonDTO]()
-
     func updateUserList(_ parentId: UInt16) async {
-        
+
+    }
+    func deleteUser(_ userId: UInt16, parentId: UInt16) async {
+
+    }
+    func addUser(_ parentId: UInt16, userIdList: [KotlinInt]) async {
+
     }
 
     //    MARK: Props
@@ -77,8 +82,8 @@ import shared
     func updateTaskStatus(_ id: UInt16, title: String, statusId: UInt8) async {
         do {
             try await subTaskListUseCase.updateStatus(taskId: .init(id),
-                                                   statusId: .init(statusId),
-                                                   nameTask: title)
+                                                      statusId: .init(statusId),
+                                                      nameTask: title)
         } catch {
             print(error.localizedDescription)
         }

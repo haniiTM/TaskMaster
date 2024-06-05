@@ -30,10 +30,18 @@ protocol UserListable: ObservableObject {
     var userListSignal: [PersonDTO] { get }
 }
 
+protocol UserAppendable {
+    func addUser(_ parentId: UInt16, userIdList: [KotlinInt]) async
+}
+
+protocol UserDeletable: ObservableObject {
+    func deleteUser(_ userId: UInt16, parentId: UInt16) async
+}
+
 protocol ProjectUserListUpdater {
     func updateUserList() async
 }
 
-protocol TaskUserListUpdater {
+protocol TaskUserListUpdater: ObservableObject {
     func updateUserList(_ parentId: UInt16) async
 }

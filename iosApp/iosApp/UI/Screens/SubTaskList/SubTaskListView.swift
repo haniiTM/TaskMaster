@@ -29,7 +29,10 @@ struct SubTaskListView: View {
         ViewBody
             .task { await viewModel.updateDataSource(model.id) }
             .sheet(isPresented: $stateManager.isUserListVisible, content: {
-                AddUserToTaskAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+                UserListAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+            })
+            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible, content: {
+               AddUserToTaskAlert(model.id, stateManager: stateManager, viewModel: viewModel)
             })
     }
 
