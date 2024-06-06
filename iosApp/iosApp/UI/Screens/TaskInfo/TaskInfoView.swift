@@ -83,6 +83,12 @@ struct TaskInfoView: View {
             .task {
                 await viewModel.getTaskInfo(taskId)
             }
+            .sheet(isPresented: $stateManager.isCreationAlertShown) {
+                LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
+            }
+            .sheet(isPresented: $stateManager.isTimeSpentAlertVisible) {
+                TimeSpentEditAlert(stateManager: stateManager, viewModel: viewModel)
+            }
     }
 
     private var ViewBody: some View {
@@ -92,8 +98,6 @@ struct TaskInfoView: View {
             TaskInfoCard
 
             LaborCostCreationButton(stateManager)
-        }.sheet(isPresented: $stateManager.isCreationAlertShown) {
-            LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
         }
     }
 
@@ -104,10 +108,14 @@ struct TaskInfoView: View {
                     Text(viewModel.taskInfo.title)
                     Divider()
 
-                    TextRow(participantTitle, viewModel.taskInfo.participiantsValue.description)
+                    ButtonRow(participantTitle,
+                              viewModel.taskInfo.participiantsValue.description)
+                    {}
                     Divider()
 
-                    TextRow(hoursDaysSpentTitle, viewModel.taskInfo.allocatedTime.description)
+                    ButtonRow(hoursDaysSpentTitle,
+                              viewModel.taskInfo.allocatedTime.description)
+                    { stateManager.isTimeSpentAlertVisible.toggle() }
                     Divider()
 
                     TextRow(timeEstimationTitle, viewModel.taskInfo.timerValue.description)
@@ -116,13 +124,19 @@ struct TaskInfoView: View {
                     TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
                     Divider()
 
-                    TextRow(dependenceTitle, viewModel.taskInfo.taskDependsOn.name)
+                    MenuRow(dependenceTitle,
+                            viewModel.taskInfo.taskDependsOn.name)
+                    { Text("hello there") }
                     Divider()
 
-                    TextRow(categoryTitle, viewModel.taskInfo.categoryId.description)
+                    MenuRow(categoryTitle,
+                            viewModel.taskInfo.categoryId.description.decodeCategory())
+                    { Text("hello there") }
                     Divider()
 
-                    TextRow(taskStatusTitle, viewModel.taskInfo.statusId.description)
+                    MenuRow(taskStatusTitle,
+                            viewModel.taskInfo.statusId.description.decodeTaskStatus())
+                    { Text("hello there") }
                 }.padding(.top, 8)
             }
             .padding(8)
@@ -147,6 +161,14 @@ struct TaskInfoView: View {
     }
 
     //    MARK: Methods
+    private func ButtonRow(_ leadingValue: String, _ trailingValue: String, action: @escaping () -> Void) -> some View {
+        Button {
+            action()
+        } label: {
+            TextRow(leadingValue, trailingValue)
+        }
+    }
+
     private func TextRow(_ leadingValue: String, _ trailingValue: String) -> some View {
         HStack {
             Text(leadingValue)
@@ -154,16 +176,34 @@ struct TaskInfoView: View {
             Spacer()
 
             Text(trailingValue)
-        }
+        }.foregroundColor(.primary)
+    }
+}
+
+struct MenuRow<Content: View>: View {
+    private let leadingValue: String
+    private let trailingValue: String
+    private let content: () -> Content
+
+    init(_ leadingValue: String,
+         _ trailingValue: String,
+         content: @escaping () -> Content) {
+        self.leadingValue = leadingValue
+        self.trailingValue = trailingValue
+        self.content = content
     }
 
-    private func ImageRow(_ leadingValue: String, _ trailingValue: String) -> some View {
-        HStack {
-            Text(leadingValue)
+    var body: some View {
+        Menu {
+            content()
+        } label: {
+            HStack {
+                Text(leadingValue)
 
-            Spacer()
+                Spacer()
 
-            Image(systemName: trailingValue)
+                Text(trailingValue)
+            }.foregroundColor(.primary)
         }
     }
 }

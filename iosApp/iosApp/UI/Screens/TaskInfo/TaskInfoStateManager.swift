@@ -11,4 +11,5 @@ import SwiftUI
 final class TaskInfoStateManager: UserListVisible {
     @Published var isCreationAlertShown = false
     @Published var isUserListVisible = false
+    @Published var isTimeSpentAlertVisible = false
 }
