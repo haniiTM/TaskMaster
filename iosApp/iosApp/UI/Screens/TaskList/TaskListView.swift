@@ -32,7 +32,7 @@ struct TaskListView: View {
                               viewModel: viewModel)
             }
             .sheet(isPresented: $stateManager.isUserAdditionAlertVisible) {
-                AddUserToProjectAlert(model.id,
+                UserListAdditionAlert(model.id,
                                       stateManager: stateManager,
                                       viewModel: viewModel)
             }
@@ -51,7 +51,7 @@ struct TaskListView: View {
 
             TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
                 ForEach(viewModel.unCompletedTaskListSignal) { task in
-                    NavigationLink(destination: SubTaskListView(model.title, model: task)) {
+                    NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
                         TaskCardView(model.id, model: task, viewModel: viewModel)
                     }.tint(.primary)
                 }
@@ -61,7 +61,7 @@ struct TaskListView: View {
 
             CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
                 ForEach(viewModel.completedTaskListSignal) { task in
-                    NavigationLink(destination: SubTaskListView(model.title, model: task)) {
+                    NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
                         TaskCardView(model.id, model: task, viewModel: viewModel)
                     }.tint(.primary)
                 }

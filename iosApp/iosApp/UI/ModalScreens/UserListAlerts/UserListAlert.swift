@@ -9,7 +9,8 @@
 import SwiftUI
 import shared
 
-struct UserListAlert<ViewModel: UserListable & TaskUserListUpdater & UserDeletable, StateManager: UserListVisible & UserAdditionAlertVisible>: View {
+struct UserListAlert<ViewModel: UserListable & TaskUserListUpdater & UserDeletable,
+                     StateManager: UserListVisible & UserAdditionAlertVisible>: View {
     @ObservedObject private var viewModel: ViewModel
     private let stateManager: StateManager
     private let projectId: UInt16
@@ -25,8 +26,7 @@ struct UserListAlert<ViewModel: UserListable & TaskUserListUpdater & UserDeletab
     var body: some View {
         UserListAlertTemplate(
             "Добавить пользователя",
-            //            userList: viewModel.userListSignal,
-            userList: [PersonDTO(id: 0, surname: "abobich", name: "abob", patronymic: "abobov", role: "Тестирование")],
+            userList: viewModel.userListSignal,
             onAppear: onAppear,
             onConfirm: onConfirm
         ) { user in
