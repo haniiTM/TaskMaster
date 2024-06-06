@@ -96,6 +96,7 @@
 		CE9ADA822C08E133004FA041 /* ProjectInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9ADA812C08E133004FA041 /* ProjectInfoProtocol.swift */; };
 		CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */; };
 		CEB16A1C2BF9EE4E0066BE40 /* TemplateNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */; };
+		CEB26F2D2C1219EE00A48B84 /* TimeSpentEditAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */; };
 		CEB30E162C0F6A88000B1139 /* StateManagerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB30E152C0F6A88000B1139 /* StateManagerProtocols.swift */; };
 		CEB4305E2C0B3A3700C6D149 /* DeletableUserCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */; };
 		CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */; };
@@ -219,6 +220,7 @@
 		CE9ADA812C08E133004FA041 /* ProjectInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoProtocol.swift; sourceTree = "<group>"; };
 		CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 		CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateNavBar.swift; sourceTree = "<group>"; };
+		CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSpentEditAlert.swift; sourceTree = "<group>"; };
 		CEB30E152C0F6A88000B1139 /* StateManagerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagerProtocols.swift; sourceTree = "<group>"; };
 		CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletableUserCard.swift; sourceTree = "<group>"; };
 		CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAlert.swift; sourceTree = "<group>"; };
@@ -750,6 +752,7 @@
 				CEE483992BFF55F4005A9596 /* SubTaskCreationAlert.swift */,
 				CED72D1E2C048BCF00518AC1 /* LaborCostCreationAlert.swift */,
 				CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */,
+				CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */,
 			);
 			path = CreationAlerts;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 				2864E6CA2BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift in Sources */,
 				288455E72BD2DF0D00DF64E5 /* EstimatesScreenInfoButtonAction.swift in Sources */,
 				2894CEBC2BD926C100B8AB1C /* TaskCardsExtensions.swift in Sources */,
+				CEB26F2D2C1219EE00A48B84 /* TimeSpentEditAlert.swift in Sources */,
 				28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */,

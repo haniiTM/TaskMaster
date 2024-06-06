@@ -36,6 +36,9 @@ struct UserListAlertTemplate<Content: View>: View {
     private var ViewBody: some View {
         VStack(spacing: 0) {
             List(userList, id: \.id) { user in
+                if userList.isEmpty {
+                    Text("Пользователи отсутствуют")
+                }
                 content(user)
             }
             .listStyle(.grouped)
