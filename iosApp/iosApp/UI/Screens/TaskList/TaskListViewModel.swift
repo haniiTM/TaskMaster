@@ -112,10 +112,10 @@ import shared
         }
     }
 
-    func updateFreeFromProjectUserList(_ parentId: UInt16) async {
+    func updateFreeFromProjectUserList(_ projectId: UInt16) async {
         do {
             guard
-                let optionalUserList = try await taskListUseCase.getFreeFromProjectUserList(projectId: .init(parentId)) as? [PersonDTO?]
+                let optionalUserList = try await taskListUseCase.getFreeFromProjectUserList(projectId: .init(projectId)) as? [PersonDTO?]
             else { return }
 
             var unwrappedUserList = [PersonDTO]()

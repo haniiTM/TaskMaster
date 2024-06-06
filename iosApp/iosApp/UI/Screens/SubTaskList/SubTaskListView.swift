@@ -15,11 +15,13 @@ struct SubTaskListView: View {
 
     @State private var descriptionState: String
     private let title: String
+    private let projectId: UInt16
     private let model: TaskInfo
 
     //    MARK: Init
-    init(_ title: String, model: TaskInfo) {
+    init(_ title: String, projectId: UInt16, model: TaskInfo) {
         self.title = title
+        self.projectId = projectId
         self.model = model
         descriptionState = model.description
     }
@@ -29,10 +31,12 @@ struct SubTaskListView: View {
         ViewBody
             .task { await viewModel.updateDataSource(model.id) }
             .sheet(isPresented: $stateManager.isUserListVisible, content: {
-                UserListAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+                UserListAlert(projectId, stateManager: stateManager, viewModel: viewModel)
             })
             .sheet(isPresented: $stateManager.isUserAdditionAlertVisible, content: {
-               AddUserToTaskAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+                UserListAdditionAlert(projectId,
+                                      stateManager: stateManager,
+                                      viewModel: viewModel)
             })
     }
 
@@ -46,9 +50,9 @@ struct SubTaskListView: View {
 
             DescriptionBody
 
-            NavigationLink(destination: AttachmentListView(title, 
+            NavigationLink(destination: AttachmentListView(title,
                                                            taskId: model.id,
-                                                          stateManager: stateManager)) {
+                                                           stateManager: stateManager)) {
                 AttachmentsScreenInfoButton()
             }.tint(.primary)
 

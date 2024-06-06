@@ -8,4 +8,6 @@
 
 import Foundation
 
-protocol ProjectListViewModelProtocol: ProjectCardViewModelProtocol, Searchable, UserListable, ProjectUserListUpdater {}
+protocol ProjectListViewModelProtocol: ProjectCardViewModelProtocol,
+                                       Searchable,
+                                       ProjectUserListUpdater {}
