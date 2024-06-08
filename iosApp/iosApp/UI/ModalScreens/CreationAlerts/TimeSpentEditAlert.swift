@@ -8,20 +8,23 @@
 
 import SwiftUI
 
-struct TimeSpentEditAlert: View {
-    @ObservedObject private var viewModel: TaskInfoViewModel
+struct TimeEditAlert: View {
     @ObservedObject private var stateManager: TaskInfoStateManager
-    @State private var text = "0"
+    @Binding private var text: String
+    private let action: () async -> Void
 
-    init(stateManager: TaskInfoStateManager, viewModel: TaskInfoViewModel) {
+    init(_ text: Binding<String>,
+         stateManager: TaskInfoStateManager,
+         action: @escaping () async -> Void) {
+        self._text = text
         self.stateManager = stateManager
-        self.viewModel = viewModel
+        self.action = action
     }
 
     var body: some View {
         TemplateCreationAlert("Сохранить")
         { ViewBody } action: {
-            Task { await editSpentTime(text) }
+            Task { await editSpentTime() }
         }
     }
 
@@ -32,7 +35,8 @@ struct TimeSpentEditAlert: View {
         }
     }
 
-    private func editSpentTime(_ text: String) async {
-        stateManager.isTimeSpentAlertVisible.toggle()
+    private func editSpentTime() async {
+        await action()
+        stateManager.isTimeEditAlertVisible.toggle()
     }
 }

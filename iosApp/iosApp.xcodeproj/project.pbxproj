@@ -94,6 +94,7 @@
 		28EA9D042BD590C700B31497 /* SubTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9D032BD590C700B31497 /* SubTaskListView.swift */; };
 		A2E9582C95F18A8536F1E55A /* Pods_TaskMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */; };
 		CE9ADA822C08E133004FA041 /* ProjectInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9ADA812C08E133004FA041 /* ProjectInfoProtocol.swift */; };
+		CEAFAC202C145E810060B86C /* TaskInfoViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFAC1F2C145E810060B86C /* TaskInfoViewModelProtocol.swift */; };
 		CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */; };
 		CEB16A1C2BF9EE4E0066BE40 /* TemplateNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */; };
 		CEB26F2D2C1219EE00A48B84 /* TimeSpentEditAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */; };
@@ -218,6 +219,7 @@
 		91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TaskMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC99261B95ABAE38EAD8C7A /* Pods-TaskMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaskMaster.release.xcconfig"; path = "Target Support Files/Pods-TaskMaster/Pods-TaskMaster.release.xcconfig"; sourceTree = "<group>"; };
 		CE9ADA812C08E133004FA041 /* ProjectInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoProtocol.swift; sourceTree = "<group>"; };
+		CEAFAC1F2C145E810060B86C /* TaskInfoViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModelProtocol.swift; sourceTree = "<group>"; };
 		CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 		CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateNavBar.swift; sourceTree = "<group>"; };
 		CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSpentEditAlert.swift; sourceTree = "<group>"; };
@@ -358,20 +360,6 @@
 			path = LoginItems;
 			sourceTree = "<group>";
 		};
-		2864E6CF2BD412D800504DE0 /* Routes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Routes;
-			sourceTree = "<group>";
-		};
-		2864E6D02BD412DD00504DE0 /* Transitions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Transitions;
-			sourceTree = "<group>";
-		};
 		28750F0F2BD144D000E3006D /* TaskSectionBGs */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,8 +375,6 @@
 				287638EC2BB1ADB200B55DBF /* Screens */,
 				289BFD372BD1914C00099EAE /* ModalScreens */,
 				287638EA2BB1ADA000B55DBF /* Components */,
-				2864E6CF2BD412D800504DE0 /* Routes */,
-				2864E6D02BD412DD00504DE0 /* Transitions */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -631,6 +617,7 @@
 				28E796172BD9B34600D402E4 /* TaskInfoView.swift */,
 				CED72D202C04B4BF00518AC1 /* TaskInfoStateManager.swift */,
 				CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */,
+				CEAFAC1F2C145E810060B86C /* TaskInfoViewModelProtocol.swift */,
 				CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */,
 			);
 			path = TaskInfo;
@@ -960,6 +947,7 @@
 				CEE4839C2BFFA8AD005A9596 /* StartView.swift in Sources */,
 				2864E6CC2BD3EE2900504DE0 /* Box.swift in Sources */,
 				28EA9D022BD5813B00B31497 /* TaskListViewModelProtocol.swift in Sources */,
+				CEAFAC202C145E810060B86C /* TaskInfoViewModelProtocol.swift in Sources */,
 				287638FA2BB1B87B00B55DBF /* Logo.swift in Sources */,
 				288455E12BD2DE6400DF64E5 /* ScreenInfoButtonAction.swift in Sources */,
 				2864E6C32BD3DACB00504DE0 /* LoginScreenModel.swift in Sources */,

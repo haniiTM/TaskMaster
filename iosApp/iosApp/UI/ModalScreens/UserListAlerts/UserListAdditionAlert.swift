@@ -9,7 +9,7 @@
 import SwiftUI
 import shared
 
-struct UserListAdditionAlert<ViewModel: FreeFromProjectUserListUpdater & UserAppendable,
+struct UserListAdditionAlert<ViewModel: FreeFromParentUserListUpdater & UserAppendable,
                              StateManager: UserAdditionAlertVisible>: View {
     @ObservedObject private var viewModel: ViewModel
     private let stateManager: StateManager
@@ -28,7 +28,7 @@ struct UserListAdditionAlert<ViewModel: FreeFromProjectUserListUpdater & UserApp
     var body: some View {
         UserListAlertTemplate(
             "Добавить",
-            userList: viewModel.freeFromProjectUserListSignal,
+            userList: viewModel.freeFromParentUserListSignal,
             onAppear: onAppear,
             onConfirm: {
                 Task { await onConfirm() }
@@ -39,7 +39,7 @@ struct UserListAdditionAlert<ViewModel: FreeFromProjectUserListUpdater & UserApp
     }
 
     private func onAppear() async {
-        await viewModel.updateFreeFromProjectUserList(parentId)
+        await viewModel.updateFreeFromParentUserList(parentId)
     }
 
     private func onConfirm() async {

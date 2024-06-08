@@ -46,8 +46,8 @@ protocol UserAppendable {
     func addUser(_ parentId: UInt16, userIdList: [KotlinInt]) async
 }
 
-protocol FreeFromProjectUserListUpdater: ObservableObject {
-    var freeFromProjectUserListSignal: [PersonDTO] { get }
+protocol FreeFromParentUserListUpdater: ObservableObject {
+    var freeFromParentUserListSignal: [PersonDTO] { get }
 
-    func updateFreeFromProjectUserList(_ projectId: UInt16) async
+    func updateFreeFromParentUserList(_ projectId: UInt16) async
 }
