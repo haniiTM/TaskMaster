@@ -49,14 +49,14 @@ class DetailedTaskInfo: ProjectInfo {
 }
 
 struct TaskDependsOn {
-    var id: UInt8 = 0
+    var id: UInt16 = 0
     var name: String = "-"
 
     init(_ task: TaskDependenceOn?) {
         //        guard let task = task else { return  }
 
         //        if let unwrappedTask = task {
-        id = task?.id as? UInt8 ?? self.id
+        id = task?.id as? UInt16 ?? self.id
         name = task?.name ?? self.name
         //        } else {
         //            id = 0

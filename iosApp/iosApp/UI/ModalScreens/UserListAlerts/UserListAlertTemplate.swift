@@ -36,20 +36,27 @@ struct UserListAlertTemplate<Content: View>: View {
     private var ViewBody: some View {
         VStack(spacing: 0) {
             List(userList, id: \.id) { user in
-                if userList.isEmpty {
-                    Text("Пользователи отсутствуют")
-                }
                 content(user)
             }
             .listStyle(.grouped)
             .frame(height: 165)
 
             Button(action: onConfirm, label: {
-                Text(title)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .border(Color.primary.opacity(0.1))
+                VStack(spacing: 0) {
+                    if userList.isEmpty {
+                        Text("Пользователи отсутствуют")
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(.ultraThinMaterial)
+                    }
+
+                    Text(title)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(Color(uiColor: .secondarySystemBackground))
+                        .border(Color.primary.opacity(0.1))
+                }
             })
         }
         .padding(.horizontal)

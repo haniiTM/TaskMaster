@@ -13,4 +13,4 @@ protocol TaskListViewModelProtocol: TaskCardViewModelProtocol,
                                     TaskUserListUpdater,
                                     UserAppendable,
                                     UserDeletable,
-                                    FreeFromProjectUserListUpdater {}
+                                    FreeFromParentUserListUpdater {}
