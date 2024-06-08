@@ -13,3 +13,9 @@ protocol Openable {
 protocol Removable {
     func remove() async
 }
+
+protocol Changeable {
+    var isCompleted: Bool { get }
+
+    func changeStatus() async
+}

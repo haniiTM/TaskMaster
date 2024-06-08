@@ -6,6 +6,16 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
+import SwiftUI
+
 struct LaborCostCreationButtonAction: Openable {
-    func open() {}
+    @ObservedObject private var stateManager: TaskInfoStateManager
+    
+    init(_ stateManager: TaskInfoStateManager) {
+        self.stateManager = stateManager
+    }
+    
+    func open() {
+        stateManager.isCreationAlertShown.toggle()
+    }
 }

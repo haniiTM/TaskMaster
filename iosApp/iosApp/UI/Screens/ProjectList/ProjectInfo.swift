@@ -8,7 +8,7 @@
 
 import shared
 
-class ProjectInfo: TaskInfoProtocol {
+class ProjectInfo: ProjectInfoProtocol {
     var id: UInt16 = 0
     var title: String = "Нет названия"
     var timerValue: UInt16 = 0

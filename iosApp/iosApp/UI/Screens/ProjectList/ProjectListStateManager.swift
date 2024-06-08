@@ -1,5 +1,5 @@
 //
-//  ProjectListAlertManager.swift
+//  ProjectListStateManager.swift
 //  TaskMaster
 //
 //  Created by  user on 21-05-2024.
@@ -8,6 +8,8 @@
 
 import SwiftUI
 
-final class ProjectListAlertManager: ObservableObject {
+final class ProjectListStateManager: ObservableObject {
     @Published var addProjectState = false
+    @Published var addUserState = false
+    @Published var deleteUserState = false
 }
