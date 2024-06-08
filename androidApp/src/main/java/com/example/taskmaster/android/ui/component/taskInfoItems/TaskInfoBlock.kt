@@ -105,6 +105,12 @@ fun TaskInfoBlock(
         mutableStateOf(taskDependenceOn)
     }
 
+    val heightModifier = if (canAddManHours == true) {
+        Modifier.height(296.dp)
+    } else {
+        Modifier.height(264.dp)
+    }
+
     var selectedTask: TaskDTO? by remember { mutableStateOf(null) }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
@@ -119,7 +125,7 @@ fun TaskInfoBlock(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(296.dp)
+                    .then(heightModifier)
             ) {
                 Box(
                     modifier = Modifier
@@ -150,16 +156,17 @@ fun TaskInfoBlock(
                     triggerRefresh = triggerRefresh,
                     buttonEnable = true
                 )
-                InfoBlockButtonTemplate(
-                    categoryText = "Затрачиваемые часы / день",
-                    param = spentTime,
-                    id = id,
-                    projectId = projectId,
-                    timeUnifiedTextFieldKey = true,
-                    triggerRefresh = triggerRefresh,
-                    buttonEnable = true
-                )
-
+                if(canAddManHours == true) {
+                    InfoBlockButtonTemplate(
+                        categoryText = "Затрачиваемые часы / день",
+                        param = spentTime,
+                        id = id,
+                        projectId = projectId,
+                        timeUnifiedTextFieldKey = true,
+                        triggerRefresh = triggerRefresh,
+                        buttonEnable = true
+                    )
+                }
                 InfoBlockButtonTemplate(
                     categoryText = "Оценка времени",
                     param = scope,
