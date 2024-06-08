@@ -158,7 +158,7 @@ fun TaskInfoBlock(
                 )
                 if(canAddManHours == true) {
                     InfoBlockButtonTemplate(
-                        categoryText = "Затрачиваемые часы",
+                        categoryText = "Затрачиваемые часы / день",
                         param = spentTime,
                         id = id,
                         projectId = projectId,
