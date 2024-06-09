@@ -15,7 +15,7 @@ struct ProjectCardView<ContextItems: View>: View {
 
     //    MARK: Init
     init(model: any TaskInfoProtocol,
-         viewModel: ProjectCardViewModelProtocol,
+         viewModel: any ProjectCardViewModelProtocol,
          @ViewBuilder contextItems: @escaping () -> ContextItems) {
         controller = ProjectCardController(model.id, model: model, viewModel: viewModel)
         self.contextItems = contextItems

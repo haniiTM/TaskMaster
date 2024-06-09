@@ -1,15 +1,15 @@
 //
-//  SubTaskListStateManager.swift
+//  TaskListStateManager.swift
 //  TaskMaster
 //
-//  Created by  user on 23-05-2024.
+//  Created by  user on 22-05-2024.
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
 import SwiftUI
 
-final class SubTaskListStateManager: TaskListStateManagerProtocol {
-    @Published var isCreationAlertShown = false
+final class TaskListStateManager: TaskListStateManagerProtocol {
+    @Published var addTaskState = false
     @Published var isUserListVisible = false
     @Published var isUserAdditionAlertVisible = false
 }

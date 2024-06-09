@@ -15,11 +15,13 @@ struct SubTaskListView: View {
 
     @State private var descriptionState: String
     private let title: String
+    private let projectId: UInt16
     private let model: TaskInfo
 
     //    MARK: Init
-    init(_ title: String, model: TaskInfo) {
+    init(_ title: String, projectId: UInt16, model: TaskInfo) {
         self.title = title
+        self.projectId = projectId
         self.model = model
         descriptionState = model.description
     }
@@ -28,17 +30,31 @@ struct SubTaskListView: View {
     var body: some View {
         ViewBody
             .task { await viewModel.updateDataSource(model.id) }
+            .sheet(isPresented: $stateManager.isUserListVisible) {
+                UserListAlert(projectId, stateManager: stateManager, viewModel: viewModel)
+            }
+            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible) {
+                UserListAdditionAlert(projectId,
+                                      stateManager: stateManager,
+                                      viewModel: viewModel)
+            }
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(title, viewModel: viewModel) {
-            NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
+        ProjectFrameView(title,
+                         stateManager: stateManager,
+                         viewModel: viewModel) {
+            NavigationLink(destination: TaskInfoView(title,
+                                                     projectId: projectId,
+                                                     taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.tint(.primary)
 
             DescriptionBody
 
-            NavigationLink(destination: AttachmentListView(title, taskId: model.id)) {
+            NavigationLink(destination: AttachmentListView(title,
+                                                           taskId: model.id,
+                                                           stateManager: stateManager)) {
                 AttachmentsScreenInfoButton()
             }.tint(.primary)
 

@@ -91,8 +91,6 @@ struct LaborCostCreationAlert: View {
                                     projectid: nil,
                                     activityid: activityid)
 
-        print(laborCost)
-
         await viewModel.createLaborCost(taskId, laborCost: laborCost)
         await viewModel.getTaskInfo(taskId)
         

@@ -8,18 +8,20 @@
 
 import SwiftUI
 
-struct TaskListNavBar<Content: View>: View {
+struct TaskListNavBar<Content: View, StateManager: UserListVisible>: View {
+    @ObservedObject private var stateManager: StateManager
     @ViewBuilder private let content: () -> Content
 
     private let title: String
     private let viewModel: Searchable
 
-    init(title: String,
+    init(_ title: String,
+         stateManager: StateManager,
          viewModel: Searchable,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.stateManager = stateManager
         self.viewModel = viewModel
-
         self.content = content
     }
 
@@ -32,7 +34,7 @@ struct TaskListNavBar<Content: View>: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Button(action: {}) {
+        Button(action: { stateManager.isUserListVisible.toggle() }) {
             Label("Пользователи", systemImage: "person.crop.rectangle.stack")
         }
     }

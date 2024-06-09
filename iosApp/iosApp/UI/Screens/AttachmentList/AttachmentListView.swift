@@ -8,26 +8,33 @@
 
 import SwiftUI
 
-struct AttachmentListView: View {
+struct AttachmentListView<T: TaskListStateManagerProtocol>: View {
     //    MARK: Props
     @StateObject private var viewModel = AttachmentListViewModel()
+    @ObservedObject private var stateManager: T
+
     private let taskId: UInt16
     private let projectTitle: String
 
     //    MARK: Init
-    init(_ projectTitle: String, taskId: UInt16) {
+    init(_ projectTitle: String,
+         taskId: UInt16,
+         stateManager: T) {
         self.taskId = taskId
         self.projectTitle = projectTitle
+        self.stateManager = stateManager
     }
 
     //    MARK: Body
     var body: some View {
-        ProjectFrameView(projectTitle, viewModel: viewModel) {
+        ProjectFrameView(projectTitle,
+                         stateManager: stateManager,
+                         viewModel: viewModel) {
             ViewBody
         }
-        .task {
-            await viewModel.updateDataSource(taskId)
-        }
+                         .task {
+                             await viewModel.updateDataSource(taskId)
+                         }
     }
 
     @ViewBuilder

@@ -46,4 +46,42 @@ extension String {
 
         return icon
     }
+
+    func decodeCategory() -> String {
+        var categoryTitle = ""
+
+        switch self {
+        case "1":
+            categoryTitle = "Backend"
+        case "2":
+            categoryTitle = "Frontend"
+        case "3":
+            categoryTitle = "Тестирование"
+        case "4":
+            categoryTitle = "UI/UX дизайн"
+        case "5":
+            categoryTitle = "Проектный менеджмент"
+        default:
+            categoryTitle = "-"
+        }
+
+        return categoryTitle
+    }
+
+    func decodeTaskStatus() -> String {
+        var statusTitle = ""
+
+        switch self {
+        case "1":
+            statusTitle = "Готово"
+        case "2":
+            statusTitle = "В работе"
+        case "3":
+            statusTitle = "В ожидании"
+        default:
+            statusTitle = "-"
+        }
+
+        return statusTitle
+    }
 }

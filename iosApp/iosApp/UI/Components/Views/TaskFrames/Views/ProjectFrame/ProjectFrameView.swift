@@ -8,22 +8,29 @@
 
 import SwiftUI
 
-struct ProjectFrameView<Content: View>: View {
+struct ProjectFrameView<Content: View, StateManager: UserListVisible>: View {
     // MARK: Props
     private let title: String
+    private let stateManager: StateManager
     private let viewModel: Searchable
     @ViewBuilder private let content: () -> Content
 
     // MARK: Init
-    init(_ title: String, viewModel: Searchable, @ViewBuilder content: @escaping () -> Content) {
+    init(_ title: String,
+         stateManager: StateManager,
+         viewModel: Searchable,
+         @ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.stateManager = stateManager
         self.viewModel = viewModel
         self.content = content
     }
 
     // MARK: Body
     var body: some View {
-        TaskListNavBar(title: title, viewModel: viewModel){
+        TaskListNavBar(title,
+                       stateManager: stateManager,
+                       viewModel: viewModel) {
             TemplateTaskFrame(content: content)
         }
     }

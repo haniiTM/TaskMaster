@@ -6,7 +6,10 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-protocol ProjectCardViewModelProtocol {
+import SwiftUI
+import shared
+
+protocol ProjectCardViewModelProtocol: ObservableObject {
     func deleteCard(_ id: UInt16) async
     func updateDataSource(_ parentId: UInt16) async
 }
@@ -21,4 +24,30 @@ protocol Searchable {
 
 protocol UserSearchable {
     func searchUser() async
+}
+
+protocol UserListable: ObservableObject {
+    var userListSignal: [PersonDTO] { get }
+}
+
+protocol ProjectUserListUpdater: UserListable {
+    func updateUserList() async
+}
+
+protocol TaskUserListUpdater: UserListable {
+    func updateUserList(_ parentId: UInt16) async
+}
+
+protocol UserDeletable: ObservableObject {
+    func deleteUser(_ userId: UInt16, parentId: UInt16) async
+}
+
+protocol UserAppendable {
+    func addUser(_ parentId: UInt16, userIdList: [KotlinInt]) async
+}
+
+protocol FreeFromParentUserListUpdater: ObservableObject {
+    var freeFromParentUserListSignal: [PersonDTO] { get }
+
+    func updateFreeFromParentUserList(_ projectId: UInt16) async
 }
