@@ -30,21 +30,23 @@ struct SubTaskListView: View {
     var body: some View {
         ViewBody
             .task { await viewModel.updateDataSource(model.id) }
-            .sheet(isPresented: $stateManager.isUserListVisible, content: {
+            .sheet(isPresented: $stateManager.isUserListVisible) {
                 UserListAlert(projectId, stateManager: stateManager, viewModel: viewModel)
-            })
-            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible, content: {
+            }
+            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible) {
                 UserListAdditionAlert(projectId,
                                       stateManager: stateManager,
                                       viewModel: viewModel)
-            })
+            }
     }
 
     private var ViewBody: some View {
         ProjectFrameView(title,
                          stateManager: stateManager,
                          viewModel: viewModel) {
-            NavigationLink(destination: TaskInfoView(title, taskId: model.id)) {
+            NavigationLink(destination: TaskInfoView(title,
+                                                     projectId: projectId,
+                                                     taskId: model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.tint(.primary)
 

@@ -8,14 +8,14 @@
 
 import shared
 
-@MainActor final class SubTaskListViewModel: ObservableObject, SubTaskListViewModelProtocol {
+@MainActor final class SubTaskListViewModel: SubTaskListViewModelProtocol {
     //    MARK: Props
     private let subTaskListUseCase = KoinHelper().getTaskListUseCase()
     @Published private(set) var unCompletedSubTaskListSignal = [TaskInfo]()
     @Published private(set) var completedSubTaskListSignal = [TaskInfo]()
     @Published private(set) var categoryListSignal = [TypeOfActivityDTO]()
     @Published private(set) var userListSignal = [PersonDTO]()
-    @Published private(set) var freeFromProjectUserListSignal: [PersonDTO] = []
+    @Published private(set) var freeFromParentUserListSignal: [PersonDTO] = []
 
     //    MARK: Methods
     func updateDataSource(_ id: UInt16) async {
@@ -125,7 +125,7 @@ import shared
         }
     }
 
-    func updateFreeFromProjectUserList(_ projectId: UInt16) async {
+    func updateFreeFromParentUserList(_ projectId: UInt16) async {
         do {
             guard
                 let optionalUserList = try await subTaskListUseCase.getFreeFromProjectUserList(projectId: .init(projectId)) as? [PersonDTO?]
@@ -139,7 +139,7 @@ import shared
                 unwrappedUserList.append(user)
             }
 
-            freeFromProjectUserListSignal = unwrappedUserList
+            freeFromParentUserListSignal = unwrappedUserList
         } catch {
             print(error.localizedDescription)
         }

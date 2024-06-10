@@ -7,12 +7,17 @@
 //
 
 import SwiftUI
+import shared
 
 struct TaskInfoView: View {
     //    MARK: Props
     @StateObject private var viewModel = TaskInfoViewModel()
     @StateObject private var stateManager = TaskInfoStateManager()
 
+    @State private var action: () async -> Void = {}
+    @State private var timeEditText = ""
+
+    private let projectId: UInt16
     private let taskId: UInt16
 
     private let projectTitle: String
@@ -43,10 +48,14 @@ struct TaskInfoView: View {
     private let laborCostTitle: String
 
     //    MARK: Init
-    init(_ projectTitle: String, taskId: UInt16) {
+    init(_ projectTitle: String,
+         projectId: UInt16,
+         taskId: UInt16) {
         let model = DetailedTaskInfo()
 
+        self.projectId = projectId
         self.taskId = taskId
+
         self.projectTitle = projectTitle
         taskTitle = model.title
 
@@ -86,8 +95,18 @@ struct TaskInfoView: View {
             .sheet(isPresented: $stateManager.isCreationAlertShown) {
                 LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
             }
-            .sheet(isPresented: $stateManager.isTimeSpentAlertVisible) {
-                TimeSpentEditAlert(stateManager: stateManager, viewModel: viewModel)
+            .sheet(isPresented: $stateManager.isUserListVisible) {
+                UserListAlert(taskId, stateManager: stateManager, viewModel: viewModel)
+            }
+            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible) {
+                UserListAdditionAlert(taskId,
+                                      stateManager: stateManager,
+                                      viewModel: viewModel)
+            }
+            .sheet(isPresented: $stateManager.isTimeEditAlertVisible) {
+                TimeEditAlert($timeEditText,
+                              stateManager: stateManager)
+                { await action() }
             }
     }
 
@@ -108,35 +127,12 @@ struct TaskInfoView: View {
                     Text(viewModel.taskInfo.title)
                     Divider()
 
-                    ButtonRow(participantTitle,
-                              viewModel.taskInfo.participiantsValue.description)
-                    {}
-                    Divider()
-
-                    ButtonRow(hoursDaysSpentTitle,
-                              viewModel.taskInfo.allocatedTime.description)
-                    { stateManager.isTimeSpentAlertVisible.toggle() }
-                    Divider()
-
-                    TextRow(timeEstimationTitle, viewModel.taskInfo.timerValue.description)
-                    Divider()
+                    ButtonRowView
 
                     TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
                     Divider()
 
-                    MenuRow(dependenceTitle,
-                            viewModel.taskInfo.taskDependsOn.name)
-                    { Text("hello there") }
-                    Divider()
-
-                    MenuRow(categoryTitle,
-                            viewModel.taskInfo.categoryId.description.decodeCategory())
-                    { Text("hello there") }
-                    Divider()
-
-                    MenuRow(taskStatusTitle,
-                            viewModel.taskInfo.statusId.description.decodeTaskStatus())
-                    { Text("hello there") }
+                    MenuRowView
                 }.padding(.top, 8)
             }
             .padding(8)
@@ -158,6 +154,108 @@ struct TaskInfoView: View {
                     )
             }.tint(.primary)
         }.padding()
+    }
+
+    @ViewBuilder
+    private var ButtonRowView: some View {
+        ButtonRow(participantTitle,
+                  viewModel.taskInfo.participiantsValue.description)
+        { stateManager.isUserListVisible.toggle() }
+        Divider()
+
+        ButtonRow(hoursDaysSpentTitle,
+                  viewModel.taskInfo.allocatedTime.description)
+        {
+            timeEditText = viewModel.taskInfo.allocatedTime.description
+            action = {
+                await viewModel.updateHoursSpent(taskId, hours: timeEditText)
+                await viewModel.getTaskInfo(taskId)
+            }
+
+            stateManager.isTimeEditAlertVisible.toggle()
+        }
+        Divider()
+
+        ButtonRow(timeEstimationTitle,
+                  viewModel.taskInfo.timerValue.description)
+        {
+            timeEditText = viewModel.taskInfo.timerValue.description
+            action = {
+                await viewModel.updateEstimatedTime(taskId, hours: timeEditText)
+                await viewModel.getTaskInfo(taskId)
+            }
+            stateManager.isTimeEditAlertVisible.toggle()
+        }
+        Divider()
+    }
+
+    @ViewBuilder
+    private var MenuRowView: some View {
+        MenuRow(
+            dependenceTitle,
+            viewModel.taskInfo.taskDependsOn.name,
+            action: {
+                await viewModel.updateTaskListForDependency(projectId: projectId,
+                                                            taskId: taskId)
+            }
+        ) {
+            Button("-") {
+                Task {
+                    await viewModel.deleteDependency(viewModel.taskInfo.taskDependsOn.id)
+                    await viewModel.getTaskInfo(taskId)
+                }
+            }
+
+            ForEach(viewModel.taskListForDependency, id: \.id) { task in
+                Button(task.name ?? "-") {
+                    Task {
+                        await viewModel.addDependency(taskDependent: taskId,
+                                                      taskDependsOn: task.id)
+                        await viewModel.getTaskInfo(taskId)
+                    }
+                }
+            }
+        }
+        Divider()
+
+        MenuRow(categoryTitle,
+                viewModel.taskInfo.categoryId.description.decodeCategory(),
+                action: { await viewModel.updateTypeOfActivityList() })
+        {
+            Text("-")
+
+            ForEach(viewModel.typeOfActivityList, id: \.id) { activity in
+                Button(activity.name) {
+                    Task {
+                        let taskDto = TaskDTO()
+                        taskDto.typeofactivityid = .init(value: activity.id)
+
+                        await viewModel.updateTask(taskId, taskDTO: taskDto)
+                        await viewModel.getTaskInfo(taskId)
+                    }
+                }
+            }
+        }
+        Divider()
+
+        MenuRow(taskStatusTitle,
+                viewModel.taskInfo.statusId.description.decodeTaskStatus(),
+                action: { await viewModel.updateStatusList() })
+        {
+            Text("-")
+
+            ForEach(viewModel.statusList, id: \.id) { status in
+                Button(status.name) {
+                    Task {
+                        let taskDto = TaskDTO()
+                        taskDto.status = .init(value: status.id)
+
+                        await viewModel.updateTask(taskId, taskDTO: taskDto)
+                        await viewModel.getTaskInfo(taskId)
+                    }
+                }
+            }
+        }
     }
 
     //    MARK: Methods
@@ -183,19 +281,26 @@ struct TaskInfoView: View {
 struct MenuRow<Content: View>: View {
     private let leadingValue: String
     private let trailingValue: String
-    private let content: () -> Content
+
+    @ViewBuilder private let content: () -> Content
+    private let action: () async -> Void
 
     init(_ leadingValue: String,
          _ trailingValue: String,
-         content: @escaping () -> Content) {
+
+         action: @escaping () async -> Void,
+         @ViewBuilder content: @escaping () -> Content) {
         self.leadingValue = leadingValue
         self.trailingValue = trailingValue
+
+        self.action = action
         self.content = content
     }
 
+    @ViewBuilder
     var body: some View {
         Menu {
-            content()
+            content().task { await action() }
         } label: {
             HStack {
                 Text(leadingValue)

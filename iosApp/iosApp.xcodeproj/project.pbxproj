@@ -94,6 +94,7 @@
 		28EA9D042BD590C700B31497 /* SubTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9D032BD590C700B31497 /* SubTaskListView.swift */; };
 		A2E9582C95F18A8536F1E55A /* Pods_TaskMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */; };
 		CE9ADA822C08E133004FA041 /* ProjectInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9ADA812C08E133004FA041 /* ProjectInfoProtocol.swift */; };
+		CEAFAC202C145E810060B86C /* TaskInfoViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFAC1F2C145E810060B86C /* TaskInfoViewModelProtocol.swift */; };
 		CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */; };
 		CEB16A1C2BF9EE4E0066BE40 /* TemplateNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */; };
 		CEB26F2D2C1219EE00A48B84 /* TimeSpentEditAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */; };
@@ -101,6 +102,7 @@
 		CEB4305E2C0B3A3700C6D149 /* DeletableUserCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */; };
 		CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */; };
 		CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */; };
+		CEB57A3E2C1602E6008CE87F /* CalculationTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB57A3D2C1602E6008CE87F /* CalculationTableView.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
 		CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */; };
 		CEBB132A2C05E9EC0017B33D /* LaborCostInfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */; };
@@ -218,6 +220,7 @@
 		91C75E95E630CECBD0DA4ACD /* Pods_TaskMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TaskMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEC99261B95ABAE38EAD8C7A /* Pods-TaskMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaskMaster.release.xcconfig"; path = "Target Support Files/Pods-TaskMaster/Pods-TaskMaster.release.xcconfig"; sourceTree = "<group>"; };
 		CE9ADA812C08E133004FA041 /* ProjectInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoProtocol.swift; sourceTree = "<group>"; };
+		CEAFAC1F2C145E810060B86C /* TaskInfoViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModelProtocol.swift; sourceTree = "<group>"; };
 		CEAFCA442BF69C3C00D34C86 /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 		CEB16A1B2BF9EE4E0066BE40 /* TemplateNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateNavBar.swift; sourceTree = "<group>"; };
 		CEB26F2C2C1219EE00A48B84 /* TimeSpentEditAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSpentEditAlert.swift; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 		CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletableUserCard.swift; sourceTree = "<group>"; };
 		CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAlert.swift; sourceTree = "<group>"; };
 		CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAdditionAlert.swift; sourceTree = "<group>"; };
+		CEB57A3D2C1602E6008CE87F /* CalculationTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationTableView.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
 		CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
 		CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostInfoAlert.swift; sourceTree = "<group>"; };
@@ -358,20 +362,6 @@
 			path = LoginItems;
 			sourceTree = "<group>";
 		};
-		2864E6CF2BD412D800504DE0 /* Routes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Routes;
-			sourceTree = "<group>";
-		};
-		2864E6D02BD412DD00504DE0 /* Transitions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Transitions;
-			sourceTree = "<group>";
-		};
 		28750F0F2BD144D000E3006D /* TaskSectionBGs */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,8 +377,6 @@
 				287638EC2BB1ADB200B55DBF /* Screens */,
 				289BFD372BD1914C00099EAE /* ModalScreens */,
 				287638EA2BB1ADA000B55DBF /* Components */,
-				2864E6CF2BD412D800504DE0 /* Routes */,
-				2864E6D02BD412DD00504DE0 /* Transitions */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -410,7 +398,7 @@
 				28EA9CF32BD5508E00B31497 /* ProjectList */,
 				28EA9CFC2BD5811300B31497 /* TaskList */,
 				28EA9D052BD590CE00B31497 /* SubTaskList */,
-				28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */,
+				CEB57A3C2C1602A0008CE87F /* EstimationCalendar */,
 				28E796192BD9B34C00D402E4 /* TaskInfo */,
 				28E796102BD9A93F00D402E4 /* LaborCostList */,
 				28E795FB2BD9674A00D402E4 /* AttachmentList */,
@@ -631,6 +619,7 @@
 				28E796172BD9B34600D402E4 /* TaskInfoView.swift */,
 				CED72D202C04B4BF00518AC1 /* TaskInfoStateManager.swift */,
 				CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */,
+				CEAFAC1F2C145E810060B86C /* TaskInfoViewModelProtocol.swift */,
 				CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */,
 			);
 			path = TaskInfo;
@@ -730,6 +719,15 @@
 				CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */,
 			);
 			path = UserCards;
+			sourceTree = "<group>";
+		};
+		CEB57A3C2C1602A0008CE87F /* EstimationCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */,
+				CEB57A3D2C1602E6008CE87F /* CalculationTableView.swift */,
+			);
+			path = EstimationCalendar;
 			sourceTree = "<group>";
 		};
 		CEC085FA2BF79B2600BBBEC2 /* Helpers */ = {
@@ -908,6 +906,7 @@
 				2864E6BD2BD3B51800504DE0 /* ProjectFrameAction.swift in Sources */,
 				288455F22BD2E72600DF64E5 /* TemplateTaskFrame.swift in Sources */,
 				2864E6C12BD3D3CF00504DE0 /* LoginScreenConstants.swift in Sources */,
+				CEB57A3E2C1602E6008CE87F /* CalculationTableView.swift in Sources */,
 				2864E6CA2BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift in Sources */,
 				288455E72BD2DF0D00DF64E5 /* EstimatesScreenInfoButtonAction.swift in Sources */,
 				2894CEBC2BD926C100B8AB1C /* TaskCardsExtensions.swift in Sources */,
@@ -960,6 +959,7 @@
 				CEE4839C2BFFA8AD005A9596 /* StartView.swift in Sources */,
 				2864E6CC2BD3EE2900504DE0 /* Box.swift in Sources */,
 				28EA9D022BD5813B00B31497 /* TaskListViewModelProtocol.swift in Sources */,
+				CEAFAC202C145E810060B86C /* TaskInfoViewModelProtocol.swift in Sources */,
 				287638FA2BB1B87B00B55DBF /* Logo.swift in Sources */,
 				288455E12BD2DE6400DF64E5 /* ScreenInfoButtonAction.swift in Sources */,
 				2864E6C32BD3DACB00504DE0 /* LoginScreenModel.swift in Sources */,

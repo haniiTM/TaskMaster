@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-final class TaskInfoStateManager: UserListVisible {
+final class TaskInfoStateManager: UserListVisible, UserAdditionAlertVisible {
     @Published var isCreationAlertShown = false
     @Published var isUserListVisible = false
-    @Published var isTimeSpentAlertVisible = false
+    @Published var isUserAdditionAlertVisible = false
+    @Published var isTimeEditAlertVisible = false
 }

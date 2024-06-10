@@ -13,12 +13,12 @@ struct UserListAlert<ViewModel: UserListable & TaskUserListUpdater & UserDeletab
                      StateManager: UserListVisible & UserAdditionAlertVisible>: View {
     @ObservedObject private var viewModel: ViewModel
     private let stateManager: StateManager
-    private let projectId: UInt16
+    private let parentId: UInt16
 
-    init(_ projectId: UInt16,
+    init(_ parentId: UInt16,
          stateManager: StateManager,
          viewModel: ViewModel) {
-        self.projectId = projectId
+        self.parentId = parentId
         self.stateManager = stateManager
         self.viewModel = viewModel
     }
@@ -30,12 +30,12 @@ struct UserListAlert<ViewModel: UserListable & TaskUserListUpdater & UserDeletab
             onAppear: onAppear,
             onConfirm: onConfirm
         ) { user in
-            DeletableUserCard(user, projectId: projectId, viewModel: viewModel)
+            DeletableUserCard(user, projectId: parentId, viewModel: viewModel)
         }
     }
 
     private func onAppear() async {
-        await viewModel.updateUserList(projectId)
+        await viewModel.updateUserList(parentId)
     }
 
     private func onConfirm() {
