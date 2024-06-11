@@ -85,3 +85,19 @@ extension String {
         return statusTitle
     }
 }
+
+extension String {
+    func toGanttDate() -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: self) ?? .init()
+    }
+}
+
+extension Date {
+    func toGanttString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yy"
+        return formatter.string(from: self)
+    }
+}
