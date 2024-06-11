@@ -42,9 +42,7 @@ struct TaskListView: View {
         ProjectFrameView(model.title,
                          stateManager: stateManager,
                          viewModel: viewModel) {
-            NavigationLink(destination: EstimationCalendarView(model,
-                                                               stateManager:  stateManager,
-                                                               viewModel: viewModel)) {
+            NavigationLink(destination: EstimationTableView(model)) {
                 EstimatesScreenInfoButton()
             }
                                                                .tint(.primary)

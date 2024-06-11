@@ -1,5 +1,5 @@
 //
-//  EstimationCalendarView.swift
+//  EstimationTableView.swift
 //  TaskMaster
 //
 //  Created by evilgen on 25.04.2024.
@@ -8,22 +8,18 @@
 
 import SwiftUI
 
-struct EstimationCalendarView<T: TaskListStateManagerProtocol>: View {
+struct EstimationTableView: View {
     //    MARK: Props
+    @ObservedObject private var viewModel = EstimationTableViewModel()
+    @ObservedObject private var stateManager = EstimationTableStateManager()
+
     private let projectId: UInt16
     private let projectTitle: String
-    private let viewModel: Searchable
-    private let stateManager: T
 
     //    MARK: Init
-    init(_ model: ProjectInfo,
-         stateManager: T,
-         viewModel: Searchable) {
+    init(_ model: ProjectInfo) {
         projectId = model.id
         projectTitle = model.title
-
-        self.stateManager = stateManager
-        self.viewModel = viewModel
     }
 
     //    MARK: Body
@@ -73,14 +69,7 @@ struct EstimationCalendarView<T: TaskListStateManagerProtocol>: View {
                 )
             }
 
-            Text("Calendar")
-                .font(.title)
-                .frame(maxWidth: .infinity)
-                .padding(70)
-                .background(
-                    Color(uiColor: .secondarySystemBackground),
-                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                )
+            GanttTableView(projectId: projectId)
         }.padding(.horizontal)
     }
 }
