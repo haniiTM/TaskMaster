@@ -103,6 +103,9 @@
 		CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */; };
 		CEB458152C1835BD0036F73B /* EstimationTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458142C1835BD0036F73B /* EstimationTableViewModel.swift */; };
 		CEB458172C1840FA0036F73B /* EstimationTableStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458162C1840FA0036F73B /* EstimationTableStateManager.swift */; };
+		CEB458192C18671C0036F73B /* LaborCostTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458182C18671C0036F73B /* LaborCostTableView.swift */; };
+		CEB4581C2C187AF60036F73B /* TableComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4581B2C187AF60036F73B /* TableComponents.swift */; };
+		CEB4581F2C187B530036F73B /* EstimationTableViewTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */; };
 		CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */; };
 		CEB57A3E2C1602E6008CE87F /* GanttTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
@@ -231,6 +234,9 @@
 		CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAlert.swift; sourceTree = "<group>"; };
 		CEB458142C1835BD0036F73B /* EstimationTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableViewModel.swift; sourceTree = "<group>"; };
 		CEB458162C1840FA0036F73B /* EstimationTableStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableStateManager.swift; sourceTree = "<group>"; };
+		CEB458182C18671C0036F73B /* LaborCostTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostTableView.swift; sourceTree = "<group>"; };
+		CEB4581B2C187AF60036F73B /* TableComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableComponents.swift; sourceTree = "<group>"; };
+		CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableViewTemplate.swift; sourceTree = "<group>"; };
 		CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAdditionAlert.swift; sourceTree = "<group>"; };
 		CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttTableView.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
@@ -725,13 +731,32 @@
 			path = UserCards;
 			sourceTree = "<group>";
 		};
+		CEB4581A2C187AD50036F73B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4581B2C187AF60036F73B /* TableComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		CEB4581D2C187B350036F73B /* TableViews */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */,
+				CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */,
+				CEB458182C18671C0036F73B /* LaborCostTableView.swift */,
+			);
+			path = TableViews;
+			sourceTree = "<group>";
+		};
 		CEB57A3C2C1602A0008CE87F /* EstimationTable */ = {
 			isa = PBXGroup;
 			children = (
 				28E796202BD9D8CA00D402E4 /* EstimationTableView.swift */,
 				CEB458142C1835BD0036F73B /* EstimationTableViewModel.swift */,
 				CEB458162C1840FA0036F73B /* EstimationTableStateManager.swift */,
-				CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */,
+				CEB4581D2C187B350036F73B /* TableViews */,
+				CEB4581A2C187AD50036F73B /* Components */,
 			);
 			path = EstimationTable;
 			sourceTree = "<group>";
@@ -917,6 +942,7 @@
 				288455E72BD2DF0D00DF64E5 /* EstimatesScreenInfoButtonAction.swift in Sources */,
 				2894CEBC2BD926C100B8AB1C /* TaskCardsExtensions.swift in Sources */,
 				CEB26F2D2C1219EE00A48B84 /* TimeSpentEditAlert.swift in Sources */,
+				CEB458192C18671C0036F73B /* LaborCostTableView.swift in Sources */,
 				28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */,
@@ -972,10 +998,12 @@
 				28750F112BD1450100E3006D /* TaskSectionBG.swift in Sources */,
 				28407DE82BD16976004B275D /* LaborCostCreationButton.swift in Sources */,
 				288BA0BD2BD6354E000E3A82 /* SubTaskListViewModel.swift in Sources */,
+				CEB4581F2C187B530036F73B /* EstimationTableViewTemplate.swift in Sources */,
 				CED884B02C073FD900617B3D /* UserListDeletionAlert.swift in Sources */,
 				2864E6B02BD3949700504DE0 /* GradientBG.swift in Sources */,
 				28E796212BD9D8CA00D402E4 /* EstimationTableView.swift in Sources */,
 				CED72D212C04B4BF00518AC1 /* TaskInfoStateManager.swift in Sources */,
+				CEB4581C2C187AF60036F73B /* TableComponents.swift in Sources */,
 				289BFD2B2BD18AD200099EAE /* SubTaskCardView.swift in Sources */,
 				28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */,
 				CED37B392BFD1E4400F9629D /* ProjectListStateManager.swift in Sources */,

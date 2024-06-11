@@ -10,8 +10,8 @@ import SwiftUI
 
 struct EstimationTableView: View {
     //    MARK: Props
-    @ObservedObject private var viewModel = EstimationTableViewModel()
-    @ObservedObject private var stateManager = EstimationTableStateManager()
+    @StateObject private var viewModel = EstimationTableViewModel()
+    @StateObject private var stateManager = EstimationTableStateManager()
 
     private let projectId: UInt16
     private let projectTitle: String
@@ -27,13 +27,22 @@ struct EstimationTableView: View {
         ProjectFrameView(projectTitle,
                          stateManager: stateManager,
                          viewModel: viewModel) {
-            CalendarSection("Календарный план")
-            CalendarSection("Расчет трудозатрат")
+            CalendarSection(title: "Календарный план") {
+                GanttTableView(projectId: projectId, viewModel: viewModel)
+            }
+
+            CalendarSection(title: "Расчет трудозатрат") {
+                LaborCostTableView(projectId: projectId, viewModel: viewModel)
+            }
         }
     }
+}
 
-    //    MARK: Methods
-    private func CalendarSection(_ title: String) -> some View {
+struct CalendarSection<Content: View>: View {
+    let title: String
+    let content: () -> Content
+
+    var body: some View {
         VStack(spacing: 24) {
             Text(title).font(.title3)
 
@@ -69,7 +78,7 @@ struct EstimationTableView: View {
                 )
             }
 
-            GanttTableView(projectId: projectId)
+            content()
         }.padding(.horizontal)
     }
 }

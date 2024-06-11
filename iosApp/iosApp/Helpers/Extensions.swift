@@ -23,18 +23,6 @@ extension Array where Element == TaskDTO? {
     }
 }
 
-extension Array where Element: Equatable {
-    func distinct() -> [Element] {
-        var result = [Element]()
-        for value in self {
-            if !result.contains(value) {
-                result.append(value)
-            }
-        }
-        return result
-    }
-}
-
 extension String {
     func getIconByRole() -> String {
         var icon = ""
