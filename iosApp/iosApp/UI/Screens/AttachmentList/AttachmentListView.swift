@@ -8,39 +8,43 @@
 
 import SwiftUI
 
-struct AttachmentListView<T: TaskListStateManagerProtocol>: View {
+struct AttachmentListView: View {
     //    MARK: Props
     @StateObject private var viewModel = AttachmentListViewModel()
-    @ObservedObject private var stateManager: T
+    @StateObject private var stateManager = AttachmentListStateManager()
 
     private let taskId: UInt16
     private let projectTitle: String
 
     //    MARK: Init
     init(_ projectTitle: String,
-         taskId: UInt16,
-         stateManager: T) {
+         taskId: UInt16)
+    {
         self.taskId = taskId
         self.projectTitle = projectTitle
-        self.stateManager = stateManager
     }
 
     //    MARK: Body
     var body: some View {
+        viewBody
+            .task {
+                await viewModel.updateDataSource(taskId)
+            }
+    }
+
+    private var viewBody: some View {
         ProjectFrameView(projectTitle,
                          stateManager: stateManager,
-                         viewModel: viewModel) {
-            ViewBody
-        }
-                         .task {
-                             await viewModel.updateDataSource(taskId)
-                         }
+                         viewModel: viewModel)
+        { attachmentList }
     }
 
     @ViewBuilder
-    private var ViewBody: some View {
-        ForEach(viewModel.attachmentListSignal, id: \.id) { attachment in
-            AttachmentCardView(attachment.comment ?? "Вложение №\(attachment.id ?? 0)")
+    private var attachmentList: some View {
+        ForEach(viewModel.attachmentList, id: \.id) { attachment in
+            AttachmentCardView(attachment,
+                               taskId: taskId,
+                               viewModel: viewModel)
         }.padding(.horizontal, 40)
 
         AttachmentCreationButton()

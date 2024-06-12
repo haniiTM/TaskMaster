@@ -106,6 +106,8 @@
 		CEB458192C18671C0036F73B /* LaborCostTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458182C18671C0036F73B /* LaborCostTableView.swift */; };
 		CEB4581C2C187AF60036F73B /* TableComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4581B2C187AF60036F73B /* TableComponents.swift */; };
 		CEB4581F2C187B530036F73B /* EstimationTableViewTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */; };
+		CEB458212C18A3DD0036F73B /* AttachmentListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458202C18A3DD0036F73B /* AttachmentListStateManager.swift */; };
+		CEB458232C18B5FD0036F73B /* AttachmentCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */; };
 		CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */; };
 		CEB57A3E2C1602E6008CE87F /* GanttTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
@@ -237,6 +239,8 @@
 		CEB458182C18671C0036F73B /* LaborCostTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostTableView.swift; sourceTree = "<group>"; };
 		CEB4581B2C187AF60036F73B /* TableComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableComponents.swift; sourceTree = "<group>"; };
 		CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableViewTemplate.swift; sourceTree = "<group>"; };
+		CEB458202C18A3DD0036F73B /* AttachmentListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListStateManager.swift; sourceTree = "<group>"; };
+		CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCardController.swift; sourceTree = "<group>"; };
 		CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAdditionAlert.swift; sourceTree = "<group>"; };
 		CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttTableView.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
@@ -587,6 +591,7 @@
 				28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */,
 				28E795F92BD966B000D402E4 /* AttachmentListView.swift */,
 				28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */,
+				CEB458202C18A3DD0036F73B /* AttachmentListStateManager.swift */,
 				28E796052BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift */,
 				28E7960B2BD973CD00D402E4 /* AttachmentCard */,
 			);
@@ -606,6 +611,7 @@
 			isa = PBXGroup;
 			children = (
 				28E795FC2BD9679800D402E4 /* AttachmentCardView.swift */,
+				CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */,
 				28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */,
 			);
 			path = AttachmentCard;
@@ -951,6 +957,7 @@
 				28609D042BD15A42005D2D01 /* ScreenInfoButton.swift in Sources */,
 				2864E6AE2BD38F7600504DE0 /* TaskCardsProtocols.swift in Sources */,
 				28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */,
+				CEB458212C18A3DD0036F73B /* AttachmentListStateManager.swift in Sources */,
 				CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */,
 				CEBB132E2C06253F0017B33D /* UserCreationAlert.swift in Sources */,
 				CED37B352BFCFC0500F9629D /* ProjectListNavBar.swift in Sources */,
@@ -968,6 +975,7 @@
 				28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */,
 				CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */,
 				2864E6B82BD3B4D900504DE0 /* MainFrameAction.swift in Sources */,
+				CEB458232C18B5FD0036F73B /* AttachmentCardController.swift in Sources */,
 				28407DEA2BD1698B004B275D /* TaskCreationButton.swift in Sources */,
 				CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */,
 				28E796122BD9A95100D402E4 /* LaborCostListViewModel.swift in Sources */,

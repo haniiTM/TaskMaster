@@ -53,8 +53,7 @@ struct SubTaskListView: View {
             DescriptionBody
 
             NavigationLink(destination: AttachmentListView(title,
-                                                           taskId: model.id,
-                                                           stateManager: stateManager)) {
+                                                           taskId: model.id)) {
                 AttachmentsScreenInfoButton()
             }.tint(.primary)
 
