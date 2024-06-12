@@ -29,31 +29,44 @@ final class AttachmentListViewModel: ObservableObject, Searchable {
         }
     }
 
-    func deleteAttachment(taskId: UInt16,
-                          attachmentId: KotlinInt,
-                          descriptionId: KotlinInt) async {
+    func deleteAttachment(_ attachment: FileDTO,
+                          taskId: UInt16) async {
         do {
-            try await attachmentListUseCase.deleteAttachment(attachmentId: .init(attachmentId),
-                                                             descriptionId: .init(descriptionId))
+            let attachmentId = Int32(attachment.id ?? 0)
+            let descriptionId = Int32(attachment.descriptionId ?? 0)
+            try await attachmentListUseCase.deleteAttachment(attachmentId: attachmentId,
+                                                             descriptionId: descriptionId)
             await updateDataSource(taskId)
         } catch {
             print(error.localizedDescription)
         }
     }
 
-    func downloadAttachment(taskId: UInt16,
-                            attachmentId: KotlinInt) async {
+    func downloadAttachment(_ attachmentDto: FileDTO,
+                            taskId: UInt16) async {
         do {
             let documentDirectory = FileManager.default.urls(for: .documentDirectory,
                                                              in: .userDomainMask).first!
 
-            let imageName = documentDirectory.appendingPathComponent("myImage.png")
+            guard
+                let attachmentId = attachmentDto.id,
+                let attachmentName = attachmentDto.orig_filename,
+                let attachmentType = attachmentDto.type
+            else { return }
 
-            let urlString = "https://raw.githubusercontent.com/programmingwithswift/HowToSaveFileFromUrl/master/testFile.png"
+            let attachmentPath = documentDirectory.appendingPathComponent(attachmentName +
+                                                                          "." +
+                                                                          attachmentType)
 
-            guard let imageUrl = URL(string: urlString) else { return }
+            let urlString = "http://5.35.85.206:8080/description/download/\(taskId)/\(attachmentId)"
 
-            let urlRequest = URLRequest(url: imageUrl)
+            guard
+                let attachmentUrl = URL(string: urlString),
+                let token = userToken
+            else { return }
+
+            var urlRequest = URLRequest(url: attachmentUrl)
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
             let session = URLSession.shared
 
@@ -61,13 +74,7 @@ final class AttachmentListViewModel: ObservableObject, Searchable {
 
             let imageData = try Data(contentsOf: tempFileUrl)
 
-            try imageData.write(to: imageName)
-
-            if FileManager.default.fileExists(atPath: imageName.path) {
-                print("Image successfully saved at \(imageName.path)")
-            } else {
-                print("Failed to save image")
-            }
+            try imageData.write(to: attachmentPath)
         } catch {
             print(error.localizedDescription)
         }

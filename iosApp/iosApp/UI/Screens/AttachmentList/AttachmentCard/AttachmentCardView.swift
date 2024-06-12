@@ -11,23 +11,19 @@ import shared
 
 struct AttachmentCardView: View {
     //    MARK: Props
-    private let attachment: FileDTO
+    private let controller: AttachmentCardController
     private let title: String
     private let imageName: String
-    private let controller: AttachmentCardController
 
     //    MARK: Init
     init(_ attachment: FileDTO,
          taskId: UInt16,
          viewModel: AttachmentListViewModel)
     {
-        self.attachment = attachment
+        controller = AttachmentCardController(attachment, taskId: taskId, viewModel: viewModel)
+        
         title = "\(attachment.orig_filename ?? .init()).\(attachment.type ?? .init())"
         imageName = Constants.Strings.ImageNames.extraActionsImageName
-        controller = AttachmentCardController(viewModel: viewModel,
-                                              taskId: taskId,
-                                              attachmentId: attachment.id ?? 0,
-                                              descriptionId: attachment.descriptionId ?? 0)
     }
 
     //    MARK: Body

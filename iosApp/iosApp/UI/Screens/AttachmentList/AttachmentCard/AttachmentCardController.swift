@@ -11,28 +11,24 @@ import shared
 
 struct AttachmentCardController {
     @ObservedObject private var viewModel: AttachmentListViewModel
+    private let attachment: FileDTO
     private let taskId: UInt16
-    private let attachmentId: KotlinInt
-    private let descriptionId: KotlinInt
 
-    init(viewModel: AttachmentListViewModel,
+    init(_ attachment: FileDTO,
          taskId: UInt16,
-         attachmentId: KotlinInt,
-         descriptionId: KotlinInt) {
+         viewModel: AttachmentListViewModel) {
         self.viewModel = viewModel
         self.taskId = taskId
-        self.attachmentId = attachmentId
-        self.descriptionId = descriptionId
+        self.attachment = attachment
     }
 
     func download() async {
-        await viewModel.downloadAttachment(taskId: taskId,
-                                           attachmentId: attachmentId)
+        await viewModel.downloadAttachment(attachment,
+                                           taskId: taskId)
     }
 
     func delete() async {
-        await viewModel.deleteAttachment(taskId: taskId,
-                                         attachmentId: attachmentId,
-                                         descriptionId: descriptionId)
+        await viewModel.deleteAttachment(attachment,
+                                         taskId: taskId)
     }
 }
