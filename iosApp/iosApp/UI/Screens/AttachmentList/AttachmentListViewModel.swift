@@ -63,8 +63,11 @@ final class AttachmentListViewModel: ObservableObject, Searchable {
 
             try imageData.write(to: imageName)
 
-            print("imgTempURL: " + tempFileUrl.absoluteString)
-            print("imgURL: " + imageName.absoluteString)
+            if FileManager.default.fileExists(atPath: imageName.path) {
+                print("Image successfully saved at \(imageName.path)")
+            } else {
+                print("Failed to save image")
+            }
         } catch {
             print(error.localizedDescription)
         }

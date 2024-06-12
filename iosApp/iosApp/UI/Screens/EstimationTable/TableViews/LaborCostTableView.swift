@@ -20,7 +20,7 @@ struct LaborCostTableView: View {
         let uniqueDateList = Array(Set(dateList)).sorted()
 
         let uniqueTaskIdList = Array(Set(laborCostList.compactMap { $0.taskId }))
-        let laborList = uniqueTaskIdList.map { taskId  in
+        let laborList = uniqueTaskIdList.map { taskId  -> (Int32, String) in
             let hoursSpent = laborCostList.first { $0.taskId == taskId }?.hoursSpent ?? "-"
             return (taskId, hoursSpent)
         }.sorted { $0.0 < $1.0 }
