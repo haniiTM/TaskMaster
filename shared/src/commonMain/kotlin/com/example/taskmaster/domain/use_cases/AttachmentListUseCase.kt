@@ -12,4 +12,8 @@ class AttachmentListUseCase(private val apiService: ApiService) : KoinComponent 
     suspend fun deleteAttachment(attachmentId: Int, descriptionId: Int) {
         return apiService.deleteFile(descriptionId, attachmentId)
     }
+
+    suspend fun addAttachment(taskId: Int, title: String, data: ByteArray) {
+        return apiService.sendFile(title, taskId, data)
+    }
 }

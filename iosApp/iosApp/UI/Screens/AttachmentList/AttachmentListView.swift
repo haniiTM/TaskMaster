@@ -30,6 +30,18 @@ struct AttachmentListView: View {
             .task {
                 await viewModel.updateDataSource(taskId)
             }
+            .fileImporter(
+                isPresented: $stateManager.isFileImporterVisible,
+                allowedContentTypes: [.pdf]
+            ) { result in
+                switch result {
+                case .success(let url):
+                    Task { await viewModel.addAttachment(url, taskId) }
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
     }
 
     private var viewBody: some View {
@@ -47,6 +59,6 @@ struct AttachmentListView: View {
                                viewModel: viewModel)
         }.padding(.horizontal, 40)
 
-        AttachmentCreationButton()
+        AttachmentCreationButton(stateManager)
     }
 }

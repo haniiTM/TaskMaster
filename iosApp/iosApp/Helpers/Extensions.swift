@@ -101,3 +101,16 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+extension KotlinByteArray {
+    convenience init(_ data: Data) {
+        let array = data.map { NSNumber(value: $0) }
+
+        self.init(size: .init(data.count))
+
+        for (i, v) in array.enumerated() {
+            self.set(index: .init(i),
+                     value: v.int8Value)
+        }
+    }
+}

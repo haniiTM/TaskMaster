@@ -80,5 +80,22 @@ final class AttachmentListViewModel: ObservableObject, Searchable {
         }
     }
 
+    func addAttachment(
+        _ url: URL,
+        _ taskId: UInt16
+    ) async {
+        do {
+            let title = url.lastPathComponent
+            let data = try Data(contentsOf: url)
+
+            try await attachmentListUseCase.addAttachment(taskId: .init(taskId),
+                                                          title: title,
+                                                          data: .init(data))
+            await updateDataSource(taskId)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
     func search() async {}
 }

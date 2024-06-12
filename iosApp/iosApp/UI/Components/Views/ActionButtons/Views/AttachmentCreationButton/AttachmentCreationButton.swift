@@ -15,10 +15,10 @@ struct AttachmentCreationButton: View {
     private let action: Openable
 
     //    MARK: Init
-    init() {
+    init(_ stateManager: AttachmentListStateManager) {
         title = ActionButtonsConstants.Strings.Titles.attachmentTitle
         imageName = ActionButtonsConstants.Strings.ImageNames.attachmentImageName
-        action = AttachmentCreationButtonAction()
+        action = AttachmentCreationButtonAction(stateManager)
     }
 
     //    MARK: Body
