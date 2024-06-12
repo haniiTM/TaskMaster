@@ -32,7 +32,7 @@ struct AttachmentListView: View {
             }
             .fileImporter(
                 isPresented: $stateManager.isFileImporterVisible,
-                allowedContentTypes: [.pdf]
+                allowedContentTypes: [.item]
             ) { result in
                 switch result {
                 case .success(let url):
