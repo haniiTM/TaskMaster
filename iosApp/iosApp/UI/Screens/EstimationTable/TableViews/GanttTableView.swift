@@ -28,7 +28,7 @@ struct GanttTableView: View {
             .sorted { $0.0 < $1.0 }
 
         let hoursGanttData = ganttList.flatMap { task in
-            task.execution_date.map { dateString in
+            task.execution_date.map { dateString -> (Date, String, Int32) in
                 let date = dateString as? String ?? .init()
                 return (date.toGanttDate(), String(task.haveExecuter), task.taskId)
             }

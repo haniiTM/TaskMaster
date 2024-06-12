@@ -7,18 +7,23 @@
 //
 
 import SwiftUI
+import shared
 
 struct AttachmentCardView: View {
     //    MARK: Props
+    private let controller: AttachmentCardController
     private let title: String
     private let imageName: String
-    private let action: Openable
 
     //    MARK: Init
-    init(_ title: String) {
-        self.title = title
+    init(_ attachment: FileDTO,
+         taskId: UInt16,
+         viewModel: AttachmentListViewModel)
+    {
+        controller = AttachmentCardController(attachment, taskId: taskId, viewModel: viewModel)
+        
+        title = "\(attachment.orig_filename ?? .init()).\(attachment.type ?? .init())"
         imageName = Constants.Strings.ImageNames.extraActionsImageName
-        action = AttachmentCreationButtonAction()
     }
 
     //    MARK: Body
@@ -28,7 +33,23 @@ struct AttachmentCardView: View {
 
             Spacer()
 
-            Button(action: { action.open() }) {
+            Menu {
+                Button {
+                    Task {
+                        await controller.download()
+                    }
+                } label: {
+                    Label("Скачать", systemImage: "square.and.arrow.down")
+                }
+
+                Button(role: .destructive) {
+                    Task {
+                        await controller.delete()
+                    }
+                } label: {
+                    Label("Удалить", systemImage: "delete.left")
+                }
+            } label: {
                 Image(systemName: imageName)
             }
         }
