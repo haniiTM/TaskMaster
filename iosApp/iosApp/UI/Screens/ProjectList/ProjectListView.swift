@@ -13,17 +13,33 @@ struct ProjectListView: View {
     @StateObject private var viewModel = ProjectListViewModel()
     @StateObject private var stateManager = ProjectListStateManager()
 
+    @State private var isSearching = false
+    @State private var searchText = ""
+    private var filteredItems: [TaskInfo] {
+        searchText.isEmpty
+
+        ? viewModel.projectList
+            .reversed()
+
+        : viewModel.projectList
+            .filter {
+                $0.title.localizedCaseInsensitiveContains(searchText)
+            }
+    }
+
     //    MARK: Body
     var body: some View {
         ViewBody
             .task {
                 await viewModel.updateDataSource(0)
             }
+            .searchable(text: $searchText,
+                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var ViewBody: some View {
         MainFrameView(viewModel: viewModel, alertManager: stateManager) {
-            ForEach(viewModel.projectList.reversed()) { project in
+            ForEach(filteredItems) { project in
                 NavigationLink(destination: TaskListView(project)) {
                     ProjectCardView(model: project, viewModel: viewModel) { EmptyView() }
                 }
