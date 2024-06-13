@@ -13,4 +13,12 @@ class EstimationTableUseCase(private val apiService: ApiService) : KoinComponent
     suspend fun getLaborCostReport(projectId: Int): MutableList<ManHoursReportDTO?> {
         return apiService.fetchReportManHours(projectId)
     }
+
+    suspend fun getGanttTableName(projectId: Int): String? {
+        return apiService.downloadFile(projectId)
+    }
+
+    suspend fun getLaborCostTableName(projectId: Int): String? {
+        return apiService.downloadFileForManHours(projectId)
+    }
 }
