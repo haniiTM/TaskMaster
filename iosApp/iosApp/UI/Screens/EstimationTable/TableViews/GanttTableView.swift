@@ -21,7 +21,7 @@ struct GanttTableView: View {
 
         let ganttDatesAsDates = ganttDatesAsString
             .map { ($0 as? String ?? .init()).toGanttDate() }
-            .sorted()
+        let uniqueGanttDateList = Array(Set(ganttDatesAsDates)).sorted()
 
         let ganttValue = ganttList
             .map { ($0.taskId, String($0.haveExecuter)) }
@@ -34,7 +34,7 @@ struct GanttTableView: View {
             }
         }
 
-        EstimationTableViewTemplate(soloData: ganttDatesAsDates,
+        EstimationTableViewTemplate(soloData: uniqueGanttDateList,
                                     pairData: ganttValue,
                                     tripleData: hoursGanttData)
         { await viewModel.updateGanttList(projectId) }
