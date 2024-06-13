@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import shared
 
 struct AttachmentListView: View {
     //    MARK: Props
@@ -15,6 +16,18 @@ struct AttachmentListView: View {
 
     private let taskId: UInt16
     private let projectTitle: String
+
+    @State private var isSearching = false
+    @State private var searchText = ""
+    private var filteredItems: [FileDTO] {
+        searchText.isEmpty
+        ? viewModel.attachmentList
+        : viewModel.attachmentList
+            .filter {
+                $0.orig_filename?.localizedCaseInsensitiveContains(searchText)
+                ?? false
+            }
+    }
 
     //    MARK: Init
     init(_ projectTitle: String,
@@ -42,6 +55,8 @@ struct AttachmentListView: View {
                     print(error.localizedDescription)
                 }
             }
+            .searchable(text: $searchText,
+                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var viewBody: some View {
@@ -53,7 +68,7 @@ struct AttachmentListView: View {
 
     @ViewBuilder
     private var attachmentList: some View {
-        ForEach(viewModel.attachmentList, id: \.id) { attachment in
+        ForEach(filteredItems, id: \.id) { attachment in
             AttachmentCardView(attachment,
                                taskId: taskId,
                                viewModel: viewModel)

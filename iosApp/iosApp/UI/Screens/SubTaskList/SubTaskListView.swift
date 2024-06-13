@@ -18,6 +18,34 @@ struct SubTaskListView: View {
     private let projectId: UInt16
     private let model: TaskInfo
 
+    @State private var isSearching = false
+    @State private var searchText = ""
+    private var filteredItems: (
+        unCompletedTaskList: [TaskInfo],
+        completedTaskList: [TaskInfo]
+    ) {
+        searchText.isEmpty
+        ? (
+            viewModel.unCompletedSubTaskListSignal
+                .reversed(),
+
+            viewModel.completedSubTaskListSignal
+                .reversed()
+        )
+
+        : (
+            viewModel.unCompletedSubTaskListSignal
+                .filter {
+                    $0.title.localizedCaseInsensitiveContains(searchText)
+                },
+
+            viewModel.completedSubTaskListSignal
+                .filter {
+                    $0.title.localizedCaseInsensitiveContains(searchText)
+                }
+        )
+    }
+
     //    MARK: Init
     init(_ title: String, projectId: UInt16, model: TaskInfo) {
         self.title = title
@@ -38,6 +66,11 @@ struct SubTaskListView: View {
                                       stateManager: stateManager,
                                       viewModel: viewModel)
             }
+            .sheet(isPresented: $stateManager.isCreationAlertShown) {
+                SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+            }
+            .searchable(text: $searchText,
+                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var ViewBody: some View {
@@ -58,7 +91,7 @@ struct SubTaskListView: View {
             }.tint(.primary)
 
             SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
-                ForEach(viewModel.unCompletedSubTaskListSignal) { subTask in
+                ForEach(filteredItems.unCompletedTaskList) { subTask in
                     SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
 
@@ -66,12 +99,10 @@ struct SubTaskListView: View {
             }
 
             CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
-                ForEach(viewModel.completedSubTaskListSignal) { subTask in
+                ForEach(filteredItems.completedTaskList) { subTask in
                     SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
                 }
             }
-        }.sheet(isPresented: $stateManager.isCreationAlertShown) {
-            SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
         }
     }
 
