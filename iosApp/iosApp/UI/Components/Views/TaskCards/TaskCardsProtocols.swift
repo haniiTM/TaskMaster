@@ -6,13 +6,15 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
+import SwiftUI
+
 // MARK: - General
 protocol TaskCardActions: Openable & Removable {}
 
 protocol CardInfoProtocol {
     var model: any TaskInfoProtocol { get }
 
-//    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol)
+    //    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: TaskCardViewModelProtocol)
 }
 
 protocol TaskTitleProvider: CardInfoProtocol {
@@ -43,4 +45,43 @@ protocol TaskNumberTitleProvider: CardInfoProtocol {
 
 protocol CategoriesTitleProvider: CardInfoProtocol {
     var categoriesTitle: String { get }
+}
+
+protocol CardDeletionAlertTitleProvider {
+    var cardDeletionAlertTitle: String { get }
+}
+
+protocol TaskCardDeletionAlertTitleProvider: CardDeletionAlertTitleProvider {}
+
+extension TaskCardDeletionAlertTitleProvider {
+    var cardDeletionAlertTitle: String { "задачи"}
+}
+
+protocol CardDeletionAlertBindingProvider {
+    var stateManager: any CardDeletionAlertPresentable { get }
+    var isCardDeletionAlertPresentedBinding: Binding<Bool> { get }
+}
+
+extension CardDeletionAlertBindingProvider {
+    var isCardDeletionAlertPresentedBinding: Binding<Bool> {
+        Binding(
+            get: { self.stateManager.isCardDeletionAlertPresented },
+            set: { self.stateManager.isCardDeletionAlertPresented = $0 }
+        )
+    }
+}
+
+protocol DestructiveAlertPresentable: CardDeletionAlertBindingProvider {
+    func showDeletionAlert()
+    func hideDeletionAlert()
+}
+
+extension DestructiveAlertPresentable {
+    func showDeletionAlert() {
+        stateManager.isCardDeletionAlertPresentedBinding.wrappedValue = true
+    }
+
+    func hideDeletionAlert() {
+        stateManager.isCardDeletionAlertPresentedBinding.wrappedValue = false
+    }
 }

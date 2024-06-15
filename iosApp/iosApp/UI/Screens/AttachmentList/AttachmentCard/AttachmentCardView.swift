@@ -17,17 +17,33 @@ struct AttachmentCardView: View {
 
     //    MARK: Init
     init(_ attachment: FileDTO,
-         taskId: UInt16,
-         viewModel: AttachmentListViewModel)
+         _ taskId: UInt16,
+         _ stateManager: AttachmentListStateManager,
+         _ viewModel: AttachmentListViewModel)
     {
-        controller = AttachmentCardController(attachment, taskId: taskId, viewModel: viewModel)
-        
+        controller = AttachmentCardController(attachment,
+                                              taskId,
+                                              stateManager,
+                                              viewModel)
+
         title = "\(attachment.orig_filename ?? .init()).\(attachment.type ?? .init())"
         imageName = Constants.Strings.ImageNames.extraActionsImageName
     }
 
     //    MARK: Body
     var body: some View {
+        attachmentCard
+            .alert(isPresented: controller.$isDeletionAlertPresented) {
+                DestructiveAlertTemplate(controller.deletionAlertTitle)
+                {
+                    Task { await controller.delete() }
+                } secondaryButtonAction: {
+                    controller.hideDeletionAlert()
+                }.body
+            }
+    }
+
+    private var attachmentCard: some View {
         HStack {
             Text(title)
 
@@ -43,9 +59,7 @@ struct AttachmentCardView: View {
                 }
 
                 Button(role: .destructive) {
-                    Task {
-                        await controller.delete()
-                    }
+                    controller.showDeletionAlert()
                 } label: {
                     Label("Удалить", systemImage: "delete.left")
                 }

@@ -8,23 +8,29 @@
 
 final class SubTaskCardController: SubTaskCardControllerProtocol {
     //    MARK: Props
-    private let parentId: UInt16
     private let viewModel: any TaskCardViewModelProtocol
+    var stateManager: any CardDeletionAlertPresentable
     let model: any TaskInfoProtocol
+
+    private let parentId: UInt16
     var isCompleted: Bool {
         model.statusId == 1
     }
+    var cardDeletionAlertTitle = "задачи"
 
     //    MARK: Init
-    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
-        self.parentId = projectId
+    init(_ projectId: UInt16,
+         _ model: any TaskInfoProtocol,
+         _ stateManager: any CardDeletionAlertPresentable,
+         _ viewModel: any TaskCardViewModelProtocol)
+    {
+        parentId = projectId
         self.model = model
+        self.stateManager = stateManager
         self.viewModel = viewModel
     }
 
     //    MARK: Methods
-    func open() {}
-
     func remove() async {
         Task {
             await viewModel.deleteCard(model.id)
@@ -45,4 +51,6 @@ final class SubTaskCardController: SubTaskCardControllerProtocol {
             await viewModel.updateDataSource(parentId)
         }
     }
+
+    func open() {}
 }

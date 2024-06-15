@@ -70,8 +70,9 @@ struct AttachmentListView: View {
     private var attachmentList: some View {
         ForEach(filteredItems, id: \.id) { attachment in
             AttachmentCardView(attachment,
-                               taskId: taskId,
-                               viewModel: viewModel)
+                               taskId,
+                               stateManager,
+                               viewModel)
         }.padding(.horizontal, 40)
 
         AttachmentCreationButton(stateManager)

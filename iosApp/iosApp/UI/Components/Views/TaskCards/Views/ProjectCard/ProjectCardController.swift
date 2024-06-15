@@ -8,23 +8,31 @@
 
 import SwiftUI
 
-final class ProjectCardController: ProjectCardControllerProtocol {
+final class ProjectCardController: ProjectCardControllerProtocol, CardDeletionAlertTitleProvider {
     //    MARK: Props
     private var viewModel: any ProjectCardViewModelProtocol
+    var stateManager: any CardDeletionAlertPresentable
     let model: any TaskInfoProtocol
 
+    var cardDeletionAlertTitle = "проекта"
+
     //    MARK: Init
-    init(_ projectId: UInt16, model: any TaskInfoProtocol, viewModel: any ProjectCardViewModelProtocol) {
+    init(_ projectId: UInt16,
+         _ model: any TaskInfoProtocol,
+         _ stateManager: any CardDeletionAlertPresentable,
+         _ viewModel: any ProjectCardViewModelProtocol)
+    {
         self.model = model
+        self.stateManager = stateManager
         self.viewModel = viewModel
     }
 
     //    MARK: Methods
-    func open() {}
-
     func remove() async {
         Task {
             await viewModel.deleteCard(model.id)
         }
     }
+
+    func open() {}
 }

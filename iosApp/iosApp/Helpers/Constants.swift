@@ -14,5 +14,11 @@ enum Constants {
             static let extraActionsImageName = "ellipsis"
             static let searchActionImageName = "rectangle.and.text.magnifyingglass"
         }
+
+        enum DestructiveAlertMessage {
+            static let warningTitle = "Вы уверены?"
+            static let confirmationActionTitle = "Да"
+            static let denialActionTitle = "Нет"
+        }
     }
 }

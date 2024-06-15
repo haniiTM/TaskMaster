@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ProjectListView: View {
     //    MARK: Props
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     @StateObject private var viewModel = ProjectListViewModel()
     @StateObject private var stateManager = ProjectListStateManager()
 
@@ -41,7 +43,7 @@ struct ProjectListView: View {
         MainFrameView(viewModel: viewModel, alertManager: stateManager) {
             ForEach(filteredItems) { project in
                 NavigationLink(destination: TaskListView(project)) {
-                    ProjectCardView(model: project, viewModel: viewModel) { EmptyView() }
+                    ProjectCardView(project, stateManager, viewModel) { EmptyView() }
                 }
                 .tint(.primary)
             }
@@ -55,5 +57,13 @@ struct ProjectListView: View {
         .sheet(isPresented: $stateManager.deleteUserState, content: {
             UserListDeletionAlert(stateManager, viewModel: viewModel)
         })
+        .alert(isPresented: $stateManager.isLogOutAlertPresented) {
+            DestructiveAlertTemplate("Выход из аккаунта") {
+                authViewModel.isAuthenticated = false
+            } secondaryButtonAction: {
+                stateManager.isLogOutAlertPresented = false
+            }.body
+            /*$stateManager.isLogOutAlertPresented)*/
+        }
     }
 }
