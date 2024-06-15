@@ -11,15 +11,28 @@ import shared
 
 struct LoginScreenView: View {
     //    MARK: Props
+    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject private var viewModel = LoginScreenViewModel()
 
+    @StateObject private var viewModel = LoginScreenViewModel()
     @State private var loginTextFieldState = "user1"
     @State private var passwordTextFieldState = "22"
+    @State private var isPasswordPresented = false
+    @State private var isErrorPresented = false
 
     //    MARK: Body
     var body: some View {
-        ViewBody
+        NavigationView {
+            ViewBody
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: { themeManager.isDarkThemeActive.toggle() }) {
+                            Image(systemName: colorScheme == .dark ? "sun.min" : "moon.circle")
+                        }
+                    }
+                }
+        }
     }
 
     private var ViewBody: some View {
@@ -28,8 +41,23 @@ struct LoginScreenView: View {
 
             VStack(spacing: LoginScreenConstants.Numbers.childVerticalSpacing) {
                 LoginActionsBody
+
+                errorTextBody
             }
         }.padding(LoginScreenConstants.Numbers.rootPadding)
+    }
+
+    private var LoginActionsBody: some View {
+        Group {
+            TextFieldsBody
+
+            loginButtonBody
+        }
+        .font(.subheadline)
+        .background(
+            Color(uiColor: .secondarySystemBackground),
+            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+        )
     }
 
     private var TextFieldsBody: some View {
@@ -38,48 +66,67 @@ struct LoginScreenView: View {
                 Text(LoginScreenConstants.Strings.loginTextFieldTitle)
             }
 
-            TextField(text: $passwordTextFieldState) {
-                Text(LoginScreenConstants.Strings.passwordTextFieldTitle)
-            }
+            secureFieldBody
         }
         .padding()
         .padding(.horizontal)
     }
 
-    private var LoginActionsBody: some View {
-        Group {
-            TextFieldsBody
-
-            Button(
-                action: {
-                    Task {
-                        let isAuthenticated = await viewModel.loginUser(name: loginTextFieldState,
-                                                                        password: passwordTextFieldState)
-
-                        if isAuthenticated {
-                            loginTextFieldState = ""
-                            passwordTextFieldState = ""
-                            authViewModel.isAuthenticated = true
-                        } else {
-                            print("Eror: incorrect login or password!")
-                        }
-                    }
-                },
-
-                label: {
-                    Text(LoginScreenConstants.Strings.loginButtonTitle)
-                        .tint(.primary)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .padding(.horizontal)
-                        .background(.ultraThinMaterial)
+    private var secureFieldBody: some View {
+        HStack {
+            if isPasswordPresented {
+                TextField(text: $passwordTextFieldState) {
+                    Text(LoginScreenConstants.Strings.passwordTextFieldTitle)
                 }
-            )
+            } else {
+                SecureField(text: $passwordTextFieldState) {
+                    Text(LoginScreenConstants.Strings.passwordTextFieldTitle)
+                }
+            }
+
+            Button {
+                isPasswordPresented.toggle()
+            } label: {
+                Image(systemName: isPasswordPresented ? "eye.slash" : "eye")
+            }
+
         }
-        .font(.subheadline)
-        .background(
-            Color(uiColor: .secondarySystemBackground),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+    }
+
+    private var loginButtonBody: some View {
+        Button(
+            action: {
+                Task {
+                    let isAuthenticated = await viewModel.loginUser(name: loginTextFieldState,
+                                                                    password: passwordTextFieldState)
+
+                    if isAuthenticated {
+                        isErrorPresented = false
+                        loginTextFieldState = ""
+                        passwordTextFieldState = ""
+                        authViewModel.isAuthenticated = true
+                    } else {
+                        isErrorPresented = true
+                    }
+                }
+            },
+
+            label: {
+                Text(LoginScreenConstants.Strings.loginButtonTitle)
+                    .tint(.primary)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .padding(.horizontal)
+                    .background(.ultraThinMaterial)
+            }
         )
+    }
+
+    @ViewBuilder
+    private var errorTextBody: some View {
+        if isErrorPresented {
+            Text("Неверный логин или пароль")
+                .foregroundColor(.pink)
+        }
     }
 }
