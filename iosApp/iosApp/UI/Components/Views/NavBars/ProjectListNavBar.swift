@@ -9,25 +9,25 @@
 import SwiftUI
 
 struct ProjectListNavBar<Content: View>: View {
-    @ViewBuilder private let content: () -> Content
     @ObservedObject private var stateManager: ProjectListStateManager
-
+    @Binding private var searchText: String
+    
+    @ViewBuilder private let content: () -> Content
     private let title: String
-    private let viewModel: Searchable
 
-    init(title: String,
-         viewModel: Searchable,
-         alertManager: ProjectListStateManager,
+    init(_ title: String,
+         _ searchText: Binding<String>,
+         _ stateManager: ProjectListStateManager,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title
-        self.viewModel = viewModel
-        self.stateManager = alertManager
+        self._searchText = searchText
+        self.stateManager = stateManager
         self.content = content
     }
 
     var body: some View {
-        TemplateNavBar(title: title,
-                       viewModel: viewModel,
+        TemplateNavBar(title,
+                       $searchText,
                        content: content,
                        navBarItems: { ViewBody })
     }

@@ -12,6 +12,7 @@ struct EstimationTableView: View {
     //    MARK: Props
     @StateObject private var viewModel = EstimationTableViewModel()
     @StateObject private var stateManager = EstimationTableStateManager()
+    @State private var searchText = ""
 
     private let projectId: UInt16
     private let projectTitle: String
@@ -29,8 +30,8 @@ struct EstimationTableView: View {
 
     private var tableView: some View {
         ProjectFrameView(projectTitle,
-                         stateManager: stateManager,
-                         viewModel: viewModel) {
+                         stateManager,
+                         $searchText) {
             CalendarSection(
                 title: "Календарный план"
             ) {

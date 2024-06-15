@@ -18,7 +18,6 @@ struct SubTaskListView: View {
     private let projectId: UInt16
     private let model: TaskInfo
 
-    @State private var isSearching = false
     @State private var searchText = ""
     private var filteredItems: (
         unCompletedTaskList: [TaskInfo],
@@ -69,14 +68,12 @@ struct SubTaskListView: View {
             .sheet(isPresented: $stateManager.isCreationAlertShown) {
                 SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
             }
-            .searchable(text: $searchText,
-                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var ViewBody: some View {
         ProjectFrameView(title,
-                         stateManager: stateManager,
-                         viewModel: viewModel) {
+                         stateManager,
+                         $searchText) {
             NavigationLink(destination: TaskInfoView(title,
                                                      projectId: projectId,
                                                      taskId: model.id)) {
@@ -86,11 +83,11 @@ struct SubTaskListView: View {
             DescriptionBody
 
             NavigationLink(destination: AttachmentListView(title,
-                                                           taskId: model.id)) {
+                                                           model.id)) {
                 AttachmentsScreenInfoButton()
             }.tint(.primary)
 
-            SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
+            SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
                 ForEach(filteredItems.unCompletedTaskList) { subTask in
                     SubTaskCardView(model.id,
                                     subTask,
@@ -101,7 +98,7 @@ struct SubTaskListView: View {
                 SubTaskCreationButton(stateManager: stateManager)
             }
 
-            CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
+            CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { subTask in
                     SubTaskCardView(model.id,
                                     subTask,

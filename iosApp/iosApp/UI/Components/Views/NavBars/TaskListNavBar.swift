@@ -10,24 +10,24 @@ import SwiftUI
 
 struct TaskListNavBar<Content: View, StateManager: UserListVisible>: View {
     @ObservedObject private var stateManager: StateManager
-    @ViewBuilder private let content: () -> Content
+    @Binding private var searchText: String
 
+    @ViewBuilder private let content: () -> Content
     private let title: String
-    private let viewModel: Searchable
 
     init(_ title: String,
-         stateManager: StateManager,
-         viewModel: Searchable,
+         _ stateManager: StateManager,
+         _ searchText: Binding<String>,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title
         self.stateManager = stateManager
-        self.viewModel = viewModel
+        self._searchText = searchText
         self.content = content
     }
 
     var body: some View {
-        TemplateNavBar(title: title,
-                       viewModel: viewModel,
+        TemplateNavBar(title,
+                       $searchText,
                        content: content,
                        navBarItems: { ViewBody })
     }

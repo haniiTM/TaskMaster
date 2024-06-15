@@ -16,6 +16,7 @@ struct TaskInfoView: View {
 
     @State private var action: () async -> Void = {}
     @State private var timeEditText = ""
+    @State private var searchText = ""
 
     private let projectId: UInt16
     private let taskId: UInt16
@@ -112,8 +113,8 @@ struct TaskInfoView: View {
 
     private var ViewBody: some View {
         ProjectFrameView(projectTitle,
-                         stateManager: stateManager,
-                         viewModel: viewModel) {
+                         stateManager,
+                         $searchText) {
             TaskInfoCard
 
             LaborCostCreationButton(stateManager)

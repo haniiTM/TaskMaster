@@ -15,7 +15,6 @@ struct ProjectListView: View {
     @StateObject private var viewModel = ProjectListViewModel()
     @StateObject private var stateManager = ProjectListStateManager()
 
-    @State private var isSearching = false
     @State private var searchText = ""
     private var filteredItems: [TaskInfo] {
         searchText.isEmpty
@@ -35,12 +34,12 @@ struct ProjectListView: View {
             .task {
                 await viewModel.updateDataSource(0)
             }
-            .searchable(text: $searchText,
-                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var ViewBody: some View {
-        MainFrameView(viewModel: viewModel, alertManager: stateManager) {
+        MainFrameView($searchText,
+                      stateManager)
+        {
             ForEach(filteredItems) { project in
                 NavigationLink(destination: TaskListView(project)) {
                     ProjectCardView(project, stateManager, viewModel) { EmptyView() }
@@ -63,7 +62,6 @@ struct ProjectListView: View {
             } secondaryButtonAction: {
                 stateManager.isLogOutAlertPresented = false
             }.body
-            /*$stateManager.isLogOutAlertPresented)*/
         }
     }
 }

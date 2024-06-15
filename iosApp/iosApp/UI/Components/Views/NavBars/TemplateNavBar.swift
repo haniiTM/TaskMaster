@@ -15,15 +15,16 @@ struct TemplateNavBar<Content: View, NavBarItems: View>: View {
     @ViewBuilder private let content: () -> Content
     @ViewBuilder private let navBarItems: () -> NavBarItems
 
+    @State private var isSearchPresented = false
+    @Binding private var searchText: String
     private let title: String
-    private let viewModel: Searchable
 
-    init(title: String,
-         viewModel: Searchable,
+    init(_ title: String,
+         _ searchText: Binding<String>,
          @ViewBuilder content: @escaping () -> Content,
          @ViewBuilder navBarItems: @escaping () -> NavBarItems) {
         self.title = title
-        self.viewModel = viewModel
+        self._searchText = searchText
 
         self.content = content
         self.navBarItems = navBarItems
@@ -42,7 +43,8 @@ struct TemplateNavBar<Content: View, NavBarItems: View>: View {
                         }
 
                         Button(action: {
-                            Task { await viewModel.search() }
+                            //                            Task { await viewModel.search() }
+                            isSearchPresented.toggle()
                         }) {
                             Label("Поиск", systemImage: Constants.Strings.ImageNames.searchActionImageName)
                         }
@@ -53,5 +55,22 @@ struct TemplateNavBar<Content: View, NavBarItems: View>: View {
                     }
                 }
             }
+            .if(isSearchPresented) { view in
+                view.searchable(text: $searchText,
+                                placement: .navigationBarDrawer(displayMode: .always))
+            }
+    }
+}
+
+extension View {
+    @ViewBuilder func `if`<Content: View>(
+        _ condition: Bool,
+        transform: (Self) -> Content
+    ) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
     }
 }

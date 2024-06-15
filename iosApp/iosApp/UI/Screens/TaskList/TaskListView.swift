@@ -14,7 +14,6 @@ struct TaskListView: View {
     @StateObject private var stateManager = TaskListStateManager()
     private let model: ProjectInfo
 
-    @State private var isSearching = false
     @State private var searchText = ""
     private var filteredItems: (
         unCompletedTaskList: [TaskInfo],
@@ -64,20 +63,18 @@ struct TaskListView: View {
                                       stateManager: stateManager,
                                       viewModel: viewModel)
             }
-            .searchable(text: $searchText,
-                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var ViewBody: some View {
         ProjectFrameView(model.title,
-                         stateManager: stateManager,
-                         viewModel: viewModel) {
+                         stateManager,
+                         $searchText) {
             NavigationLink(destination: EstimationTableView(model)) {
                 EstimatesScreenInfoButton()
             }
             .tint(.primary)
 
-            TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
+            TaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
                 ForEach(filteredItems.unCompletedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
                         TaskCardView(model.id,
@@ -90,7 +87,7 @@ struct TaskListView: View {
                 TaskCreationButton(stateManager: stateManager)
             }
 
-            CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
+            CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
                         TaskCardView(model.id,

@@ -10,25 +10,26 @@ import SwiftUI
 
 struct MainFrameView<Content: View>: View {
     //    MARK: Props
+    @Binding private var searchText: String
+    private let stateManager: ProjectListStateManager
     @ViewBuilder private let content: () -> Content
-    private let viewModel: Searchable
-    private let alertManager: ProjectListStateManager
 
     //    MARK: Init
-    init(viewModel: Searchable, alertManager: ProjectListStateManager, @ViewBuilder content: @escaping () -> Content) {
-        self.viewModel = viewModel
-        self.alertManager = alertManager
+    init(_ searchText: Binding<String>,
+         _ stateManager: ProjectListStateManager,
+         @ViewBuilder content: @escaping () -> Content) {
+        self._searchText = searchText
+        self.stateManager = stateManager
         self.content = content
     }
 
     //    MARK: Body
     var body: some View {
         NavigationView {
-            ProjectListNavBar(title: TaskFramesConstants.Strings.Titles.mainFrameTitle,
-                              viewModel: viewModel,
-                              alertManager: alertManager) {
-                TemplateTaskFrame(content: content)
-            }
+            ProjectListNavBar(TaskFramesConstants.Strings.Titles.mainFrameTitle,
+                              $searchText,
+                              stateManager)
+            { TemplateTaskFrame(content: content) }
         }
     }
 }

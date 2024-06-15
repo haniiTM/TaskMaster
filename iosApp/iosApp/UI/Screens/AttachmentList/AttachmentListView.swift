@@ -17,7 +17,6 @@ struct AttachmentListView: View {
     private let taskId: UInt16
     private let projectTitle: String
 
-    @State private var isSearching = false
     @State private var searchText = ""
     private var filteredItems: [FileDTO] {
         searchText.isEmpty
@@ -31,7 +30,7 @@ struct AttachmentListView: View {
 
     //    MARK: Init
     init(_ projectTitle: String,
-         taskId: UInt16)
+         _ taskId: UInt16)
     {
         self.taskId = taskId
         self.projectTitle = projectTitle
@@ -55,14 +54,12 @@ struct AttachmentListView: View {
                     print(error.localizedDescription)
                 }
             }
-            .searchable(text: $searchText,
-                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var viewBody: some View {
         ProjectFrameView(projectTitle,
-                         stateManager: stateManager,
-                         viewModel: viewModel)
+                         stateManager,
+                         $searchText)
         { attachmentList }
     }
 

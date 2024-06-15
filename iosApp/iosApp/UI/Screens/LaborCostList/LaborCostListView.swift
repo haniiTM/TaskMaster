@@ -18,7 +18,6 @@ struct LaborCostListView: View {
     private let taskId: UInt16
     private let projectTitle: String
 
-    @State private var isSearching = false
     @State private var searchText = ""
     private var filteredItems: [ManHoursDTO] {
         searchText.isEmpty
@@ -52,21 +51,22 @@ struct LaborCostListView: View {
             .sheet(isPresented: $stateManager.isInfoAlertShown) {
                 LaborCostInfoAlert(model, stateManager: stateManager)
             }
-            .searchable(text: $searchText,
-                        placement: .navigationBarDrawer(displayMode: .always))
     }
 
     private var ViewBody: some View {
-        //        ProjectFrameView(title) {
-        List(filteredItems, id: \.id) { laborCost in
-            Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {
-                model = laborCost
-                stateManager.isInfoAlertShown.toggle()
-            }
-            .padding(8)
-            .tint(.primary)
-        }.navigationTitle(projectTitle)
-        //            .padding()
-        //        }
+        TaskListNavBar(projectTitle,
+                       stateManager,
+                       $searchText)
+        {
+            List(filteredItems, id: \.id) { laborCost in
+                Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {
+                    model = laborCost
+                    stateManager.isInfoAlertShown.toggle()
+                }
+                .padding(8)
+                .tint(.primary)
+            }.navigationTitle(projectTitle)
+            //            .padding()
+        }
     }
 }

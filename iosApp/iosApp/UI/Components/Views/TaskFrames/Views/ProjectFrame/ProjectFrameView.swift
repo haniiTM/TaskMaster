@@ -10,27 +10,28 @@ import SwiftUI
 
 struct ProjectFrameView<Content: View, StateManager: UserListVisible>: View {
     // MARK: Props
-    private let title: String
     private let stateManager: StateManager
-    private let viewModel: Searchable
+    @Binding private var searchText: String
+
+    private let title: String
     @ViewBuilder private let content: () -> Content
 
     // MARK: Init
     init(_ title: String,
-         stateManager: StateManager,
-         viewModel: Searchable,
+         _ stateManager: StateManager,
+         _ searchText: Binding<String>,
          @ViewBuilder content: @escaping () -> Content) {
         self.title = title
         self.stateManager = stateManager
-        self.viewModel = viewModel
+        self._searchText = searchText
         self.content = content
     }
 
     // MARK: Body
     var body: some View {
         TaskListNavBar(title,
-                       stateManager: stateManager,
-                       viewModel: viewModel) {
+                       stateManager,
+                       $searchText) {
             TemplateTaskFrame(content: content)
         }
     }
