@@ -110,6 +110,7 @@
 		CEB458232C18B5FD0036F73B /* AttachmentCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */; };
 		CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */; };
 		CEB57A3E2C1602E6008CE87F /* GanttTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */; };
+		CEB73B4B2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB73B4A2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
 		CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */; };
 		CEBB132A2C05E9EC0017B33D /* LaborCostInfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */; };
@@ -243,6 +244,7 @@
 		CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCardController.swift; sourceTree = "<group>"; };
 		CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAdditionAlert.swift; sourceTree = "<group>"; };
 		CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttTableView.swift; sourceTree = "<group>"; };
+		CEB73B4A2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestructiveAlertTemplate.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
 		CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
 		CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostInfoAlert.swift; sourceTree = "<group>"; };
@@ -301,9 +303,9 @@
 			isa = PBXGroup;
 			children = (
 				287638FB2BB1ED3700B55DBF /* TemplateTaskCardView.swift */,
+				288455EA2BD2DF8200DF64E5 /* ProjectCard */,
 				288455E82BD2DF6D00DF64E5 /* TaskCard */,
 				288455E92BD2DF7400DF64E5 /* SubTaskCard */,
-				288455EA2BD2DF8200DF64E5 /* ProjectCard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -569,6 +571,7 @@
 			children = (
 				CED884AE2C07252A00617B3D /* UserListAlerts */,
 				CEC601082BFDFD000016DC0F /* CreationAlerts */,
+				CEB73B4C2C1C6C8C00F921F1 /* DestructiveAlerts */,
 			);
 			path = ModalScreens;
 			sourceTree = "<group>";
@@ -765,6 +768,14 @@
 				CEB4581A2C187AD50036F73B /* Components */,
 			);
 			path = EstimationTable;
+			sourceTree = "<group>";
+		};
+		CEB73B4C2C1C6C8C00F921F1 /* DestructiveAlerts */ = {
+			isa = PBXGroup;
+			children = (
+				CEB73B4A2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift */,
+			);
+			path = DestructiveAlerts;
 			sourceTree = "<group>";
 		};
 		CEC085FA2BF79B2600BBBEC2 /* Helpers */ = {
@@ -1035,6 +1046,7 @@
 				28E796082BD96F7E00D402E4 /* AttachmentListViewModel.swift in Sources */,
 				287638FC2BB1ED3700B55DBF /* TemplateTaskCardView.swift in Sources */,
 				CEB30E162C0F6A88000B1139 /* StateManagerProtocols.swift in Sources */,
+				CEB73B4B2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift in Sources */,
 				CEE483982BFF53E6005A9596 /* SubTaskListStateManager.swift in Sources */,
 				28EA9CF92BD5539300B31497 /* ProjectListModel.swift in Sources */,
 				288455EC2BD2DFD300DF64E5 /* TaskCardController.swift in Sources */,

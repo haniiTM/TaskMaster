@@ -92,7 +92,10 @@ struct SubTaskListView: View {
 
             SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
                 ForEach(filteredItems.unCompletedTaskList) { subTask in
-                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
+                    SubTaskCardView(model.id,
+                                    subTask,
+                                    stateManager,
+                                    viewModel)
                 }
 
                 SubTaskCreationButton(stateManager: stateManager)
@@ -100,7 +103,10 @@ struct SubTaskListView: View {
 
             CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { subTask in
-                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
+                    SubTaskCardView(model.id,
+                                    subTask,
+                                    stateManager,
+                                    viewModel)
                 }
             }
         }

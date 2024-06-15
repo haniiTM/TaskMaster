@@ -10,25 +10,45 @@ import SwiftUI
 
 struct ProjectCardView<ContextItems: View>: View {
     //    MARK: Props
-    private let controller: ProjectCardControllerProtocol
+    private let controller: any ProjectCardControllerProtocol
     @ViewBuilder private let contextItems: () -> ContextItems
 
     //    MARK: Init
-    init(model: any TaskInfoProtocol,
-         viewModel: any ProjectCardViewModelProtocol,
-         @ViewBuilder contextItems: @escaping () -> ContextItems) {
-        controller = ProjectCardController(model.id, model: model, viewModel: viewModel)
+    init(_ model: any TaskInfoProtocol,
+         _ stateManager: any CardDeletionAlertPresentable,
+         _ viewModel: any ProjectCardViewModelProtocol,
+
+         @ViewBuilder contextItems: @escaping () -> ContextItems)
+    {
+        controller = ProjectCardController(model.id,
+                                           model,
+                                           stateManager,
+                                           viewModel)
+
         self.contextItems = contextItems
     }
 
-    init(controller: ProjectCardControllerProtocol,
-         @ViewBuilder contextItems: @escaping () -> ContextItems) {
+    init(controller: any ProjectCardControllerProtocol,
+         @ViewBuilder contextItems: @escaping () -> ContextItems) 
+    {
         self.controller = controller
         self.contextItems = contextItems
     }
 
     //    MARK: Body
     var body: some View {
+        projectCard
+            .alert(isPresented: controller.isCardDeletionAlertPresentedBinding) {
+                DestructiveAlertTemplate("Удаление " + controller.cardDeletionAlertTitle)
+                {
+                    Task { await controller.remove() }
+                } secondaryButtonAction: {
+                    controller.hideDeletionAlert()
+                }.body
+            }
+    }
+
+    private var projectCard: some View {
         TemplateTaskCardView {
             ViewBody
         } contextItems: {
@@ -60,7 +80,7 @@ struct ProjectCardView<ContextItems: View>: View {
         Button(
             role: .destructive,
             action: {
-                Task { await controller.remove() }
+                controller.showDeletionAlert()
             }
         ) {
             Label("Удалить", systemImage: "trash")

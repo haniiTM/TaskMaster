@@ -11,15 +11,27 @@ import shared
 
 struct AttachmentCardController {
     @ObservedObject private var viewModel: AttachmentListViewModel
+    @ObservedObject private var stateManager: AttachmentListStateManager
     private let attachment: FileDTO
     private let taskId: UInt16
 
+    let deletionAlertTitle = "Удаленить вложение"
+    @Binding var isDeletionAlertPresented: Bool
+
     init(_ attachment: FileDTO,
-         taskId: UInt16,
-         viewModel: AttachmentListViewModel) {
-        self.viewModel = viewModel
-        self.taskId = taskId
+         _ taskId: UInt16,
+         _ stateManager: AttachmentListStateManager,
+         _ viewModel: AttachmentListViewModel) {
         self.attachment = attachment
+        self.taskId = taskId
+        self.stateManager = stateManager
+        self.viewModel = viewModel
+
+        _isDeletionAlertPresented = .init(get: {
+            stateManager.isDeletionAlertPresented
+        }, set: { value in
+            stateManager.isDeletionAlertPresented = value
+        })
     }
 
     func download() async {
@@ -30,5 +42,13 @@ struct AttachmentCardController {
     func delete() async {
         await viewModel.deleteAttachment(attachment,
                                          taskId: taskId)
+    }
+
+    func showDeletionAlert() {
+        stateManager.isDeletionAlertPresented = true
+    }
+
+    func hideDeletionAlert() {
+        stateManager.isDeletionAlertPresented = false
     }
 }

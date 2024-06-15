@@ -11,4 +11,5 @@ import SwiftUI
 class AttachmentListStateManager: ObservableObject, UserListVisible {
     @Published var isUserListVisible = false
     @Published var isFileImporterVisible = false
+    @Published var isDeletionAlertPresented = false
 }

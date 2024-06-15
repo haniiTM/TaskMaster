@@ -10,19 +10,25 @@ import SwiftUI
 
 struct TaskCardView: View {
     //    MARK: Props
-    private let controller: TaskCardControllerProtocol
+    private let controller: any TaskCardControllerProtocol
 
     //    MARK: Init
     /// Initializes the view with specified controller.
     /// - Parameters:
     ///   - controller: An object conforming to the TaskCardControllerProtocol that will serve as the controller for this view.
-    init(controller: TaskCardControllerProtocol) {
+    init(controller: any TaskCardControllerProtocol) {
         self.controller = controller
     }
 
     /// Initializes the view with default realization.
-    init(_ parentId: UInt16, model: any TaskInfoProtocol, viewModel: any TaskCardViewModelProtocol) {
-        controller = TaskCardController(parentId, model: model, viewModel: viewModel)
+    init(_ parentId: UInt16, 
+         _ model: any TaskInfoProtocol,
+         _ stateManager: any CardDeletionAlertPresentable,
+         _ viewModel: any TaskCardViewModelProtocol) {
+        controller = TaskCardController(parentId,
+                                        model,
+                                        stateManager,
+                                        viewModel)
     }
 
     //    MARK: Body

@@ -16,4 +16,18 @@ protocol UserAdditionAlertVisible: ObservableObject {
     var isUserAdditionAlertVisible: Bool { get set }
 }
 
-protocol TaskListStateManagerProtocol: UserListVisible, UserAdditionAlertVisible {}
+protocol TaskListStateManagerProtocol: UserListVisible, UserAdditionAlertVisible, CardDeletionAlertPresentable {}
+
+protocol CardDeletionAlertPresentable: ObservableObject {
+    var isCardDeletionAlertPresented: Bool { get set }
+    var isCardDeletionAlertPresentedBinding: Binding<Bool> { get }
+}
+
+extension CardDeletionAlertPresentable {
+    var isCardDeletionAlertPresentedBinding: Binding<Bool> {
+        Binding(
+            get: { self.isCardDeletionAlertPresented },
+            set: { self.isCardDeletionAlertPresented = $0 }
+        )
+    }
+}

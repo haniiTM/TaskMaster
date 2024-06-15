@@ -12,4 +12,5 @@ final class TaskListStateManager: TaskListStateManagerProtocol {
     @Published var addTaskState = false
     @Published var isUserListVisible = false
     @Published var isUserAdditionAlertVisible = false
+    @Published var isCardDeletionAlertPresented = false
 }

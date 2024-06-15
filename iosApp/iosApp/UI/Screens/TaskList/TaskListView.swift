@@ -80,7 +80,10 @@ struct TaskListView: View {
             TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
                 ForEach(filteredItems.unCompletedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
-                        TaskCardView(model.id, model: task, viewModel: viewModel)
+                        TaskCardView(model.id,
+                                     task,
+                                     stateManager,
+                                     viewModel)
                     }.tint(.primary)
                 }
 
@@ -90,7 +93,10 @@ struct TaskListView: View {
             CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
-                        TaskCardView(model.id, model: task, viewModel: viewModel)
+                        TaskCardView(model.id,
+                                     task,
+                                     stateManager,
+                                     viewModel)
                     }.tint(.primary)
                 }
             }

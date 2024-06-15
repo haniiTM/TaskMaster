@@ -9,4 +9,7 @@
 protocol ProjectCardControllerProtocol: TaskCardActions,
                                         TaskTitleProvider,
                                         TimerTitleProvider,
-                                        ParticipiantsTitleProvider {}
+                                        ParticipiantsTitleProvider,
+                                        CardDeletionAlertTitleProvider,
+                                        CardDeletionAlertBindingProvider,
+                                        DestructiveAlertPresentable {}

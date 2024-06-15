@@ -8,8 +8,11 @@
 
 import SwiftUI
 
-final class ProjectListStateManager: ObservableObject {
+final class ProjectListStateManager: CardDeletionAlertPresentable {
     @Published var addProjectState = false
     @Published var addUserState = false
     @Published var deleteUserState = false
+
+    @Published var isLogOutAlertPresented = false
+    @Published var isCardDeletionAlertPresented = false
 }
