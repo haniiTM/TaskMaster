@@ -32,7 +32,10 @@ struct ProjectListView: View {
     var body: some View {
         ViewBody
             .task {
-                await viewModel.updateDataSource(0)
+                await updateDataSource()
+            }
+            .refreshable {
+                Task { await updateDataSource() }
             }
     }
 
@@ -63,5 +66,9 @@ struct ProjectListView: View {
                 stateManager.isLogOutAlertPresented = false
             }.body
         }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(0)
     }
 }

@@ -661,10 +661,10 @@
 			isa = PBXGroup;
 			children = (
 				2864E6C62BD3DD6000504DE0 /* TaskInfo.swift */,
-				CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */,
 				28EA9CFD2BD5812700B31497 /* TaskListModel.swift */,
 				28EA9CFA2BD5810800B31497 /* TaskListView.swift */,
 				28EA9CFF2BD5812F00B31497 /* TaskListViewModel.swift */,
+				CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */,
 				28EA9D012BD5813B00B31497 /* TaskListViewModelProtocol.swift */,
 			);
 			path = TaskList;

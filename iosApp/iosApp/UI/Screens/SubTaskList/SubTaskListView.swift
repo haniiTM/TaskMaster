@@ -56,7 +56,10 @@ struct SubTaskListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
-            .task { await viewModel.updateDataSource(model.id) }
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
+            }
             .sheet(isPresented: $stateManager.isUserListVisible) {
                 UserListAlert(projectId, stateManager: stateManager, viewModel: viewModel)
             }
@@ -132,5 +135,9 @@ struct SubTaskListView: View {
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
         }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(model.id)
     }
 }

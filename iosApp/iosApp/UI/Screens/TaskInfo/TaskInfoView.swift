@@ -90,8 +90,9 @@ struct TaskInfoView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
-            .task {
-                await viewModel.getTaskInfo(taskId)
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
             }
             .sheet(isPresented: $stateManager.isCreationAlertShown) {
                 LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
@@ -276,6 +277,10 @@ struct TaskInfoView: View {
 
             Text(trailingValue)
         }.foregroundColor(.primary)
+    }
+
+    private func updateDataSource() async {
+        await viewModel.getTaskInfo(taskId)
     }
 }
 

@@ -12,7 +12,6 @@ struct EstimationTableViewTemplate: View {
     let soloData: [Date]
     let pairData: [(Int32, String)]
     let tripleData: [(Date, String, Int32)]
-    let action: () async -> Void
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -27,9 +26,6 @@ struct EstimationTableViewTemplate: View {
                     }
                 }
             }
-        }
-        .task {
-            await action()
         }
     }
 }

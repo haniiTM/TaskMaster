@@ -26,6 +26,10 @@ struct EstimationTableView: View {
     //    MARK: Body
     var body: some View {
         tableView
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
+            }
     }
 
     private var tableView: some View {
@@ -37,15 +41,20 @@ struct EstimationTableView: View {
             ) {
                 await viewModel.downloadGanttTable(projectId)
             } content: {
-                GanttTableView(projectId: projectId, viewModel: viewModel)
+                GanttTableView(projectId: projectId, ganttList: viewModel.ganttReportList)
             }
 
             CalendarSection(title: "Расчет трудозатрат") {
                 await viewModel.downloadLaborCostTable(projectId)
             } content: {
-                LaborCostTableView(projectId: projectId, viewModel: viewModel)
+                LaborCostTableView(projectId: projectId, laborCostList: viewModel.laborCostReportList)
             }
         }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateGanttList(projectId)
+        await viewModel.updateLaborCostReportList(projectId)
     }
 }
 
