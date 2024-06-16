@@ -6,11 +6,13 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import shared
 
-@MainActor final class LoginScreenViewModel: ObservableObject {
+@MainActor
+final class LoginScreenViewModel: ObservableObject {
     //    MARK: Props
+    @AppStorage("userToken") private var userToken: String?
     private let accessTokenDtoUseCase = KoinHelper().getAccessTokenDtoUseCase()
 
     //    MARK: Methods
@@ -21,6 +23,8 @@ import shared
                                                                               password: password),
                 let token = tokenDto.tokenLong
             else { return false }
+
+            userToken = token
 
             return token.isEmpty ? false : true
         } catch {

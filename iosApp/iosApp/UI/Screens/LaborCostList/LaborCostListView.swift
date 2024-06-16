@@ -18,6 +18,17 @@ struct LaborCostListView: View {
     private let taskId: UInt16
     private let projectTitle: String
 
+    @State private var searchText = ""
+    private var filteredItems: [ManHoursDTO] {
+        searchText.isEmpty
+        ? viewModel.laborCostList
+        : viewModel.laborCostList
+            .filter {
+                $0.comment?.localizedCaseInsensitiveContains(searchText)
+                ?? false
+            }
+    }
+
     //    MARK: Init
     init(_ projectTitle: String, taskId: UInt16) {
         self.taskId = taskId
@@ -43,16 +54,19 @@ struct LaborCostListView: View {
     }
 
     private var ViewBody: some View {
-        //        ProjectFrameView(title) {
-        List(viewModel.laborCostList, id: \.id) { laborCost in
-            Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {
-                model = laborCost
-                stateManager.isInfoAlertShown.toggle()
-            }
-            .padding(8)
-            .tint(.primary)
-        }.navigationTitle(projectTitle)
-        //            .padding()
-        //        }
+        TaskListNavBar(projectTitle,
+                       stateManager,
+                       $searchText)
+        {
+            List(filteredItems, id: \.id) { laborCost in
+                Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {
+                    model = laborCost
+                    stateManager.isInfoAlertShown.toggle()
+                }
+                .padding(8)
+                .tint(.primary)
+            }.navigationTitle(projectTitle)
+            //            .padding()
+        }
     }
 }

@@ -18,6 +18,33 @@ struct SubTaskListView: View {
     private let projectId: UInt16
     private let model: TaskInfo
 
+    @State private var searchText = ""
+    private var filteredItems: (
+        unCompletedTaskList: [TaskInfo],
+        completedTaskList: [TaskInfo]
+    ) {
+        searchText.isEmpty
+        ? (
+            viewModel.unCompletedSubTaskListSignal
+                .reversed(),
+
+            viewModel.completedSubTaskListSignal
+                .reversed()
+        )
+
+        : (
+            viewModel.unCompletedSubTaskListSignal
+                .filter {
+                    $0.title.localizedCaseInsensitiveContains(searchText)
+                },
+
+            viewModel.completedSubTaskListSignal
+                .filter {
+                    $0.title.localizedCaseInsensitiveContains(searchText)
+                }
+        )
+    }
+
     //    MARK: Init
     init(_ title: String, projectId: UInt16, model: TaskInfo) {
         self.title = title
@@ -38,12 +65,15 @@ struct SubTaskListView: View {
                                       stateManager: stateManager,
                                       viewModel: viewModel)
             }
+            .sheet(isPresented: $stateManager.isCreationAlertShown) {
+                SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
+            }
     }
 
     private var ViewBody: some View {
         ProjectFrameView(title,
-                         stateManager: stateManager,
-                         viewModel: viewModel) {
+                         stateManager,
+                         $searchText) {
             NavigationLink(destination: TaskInfoView(title,
                                                      projectId: projectId,
                                                      taskId: model.id)) {
@@ -53,26 +83,29 @@ struct SubTaskListView: View {
             DescriptionBody
 
             NavigationLink(destination: AttachmentListView(title,
-                                                           taskId: model.id,
-                                                           stateManager: stateManager)) {
+                                                           model.id)) {
                 AttachmentsScreenInfoButton()
             }.tint(.primary)
 
-            SubTaskSectionBG(isEmpty: viewModel.unCompletedSubTaskListSignal.isEmpty) {
-                ForEach(viewModel.unCompletedSubTaskListSignal) { subTask in
-                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
+            SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
+                ForEach(filteredItems.unCompletedTaskList) { subTask in
+                    SubTaskCardView(model.id,
+                                    subTask,
+                                    stateManager,
+                                    viewModel)
                 }
 
                 SubTaskCreationButton(stateManager: stateManager)
             }
 
-            CompletedTaskSectionBG(isEmpty: viewModel.completedSubTaskListSignal.isEmpty) {
-                ForEach(viewModel.completedSubTaskListSignal) { subTask in
-                    SubTaskCardView(model.id, model: subTask, viewModel: viewModel)
+            CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
+                ForEach(filteredItems.completedTaskList) { subTask in
+                    SubTaskCardView(model.id,
+                                    subTask,
+                                    stateManager,
+                                    viewModel)
                 }
             }
-        }.sheet(isPresented: $stateManager.isCreationAlertShown) {
-            SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
         }
     }
 

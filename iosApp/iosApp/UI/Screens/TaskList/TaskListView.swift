@@ -14,6 +14,33 @@ struct TaskListView: View {
     @StateObject private var stateManager = TaskListStateManager()
     private let model: ProjectInfo
 
+    @State private var searchText = ""
+    private var filteredItems: (
+        unCompletedTaskList: [TaskInfo],
+        completedTaskList: [TaskInfo]
+    ) {
+        searchText.isEmpty
+        ? (
+            viewModel.unCompletedTaskListSignal
+                .reversed(),
+
+            viewModel.completedTaskListSignal
+                .reversed()
+        )
+
+        : (
+            viewModel.unCompletedTaskListSignal
+                .filter {
+                    $0.title.localizedCaseInsensitiveContains(searchText)
+                },
+
+            viewModel.completedTaskListSignal
+                .filter {
+                    $0.title.localizedCaseInsensitiveContains(searchText)
+                }
+        )
+    }
+
     //    MARK: Init
     init(_ model: ProjectInfo) {
         self.model = model
@@ -40,29 +67,33 @@ struct TaskListView: View {
 
     private var ViewBody: some View {
         ProjectFrameView(model.title,
-                         stateManager: stateManager,
-                         viewModel: viewModel) {
-            NavigationLink(destination: EstimationCalendarView(model,
-                                                               stateManager:  stateManager,
-                                                               viewModel: viewModel)) {
+                         stateManager,
+                         $searchText) {
+            NavigationLink(destination: EstimationTableView(model)) {
                 EstimatesScreenInfoButton()
             }
-                                                               .tint(.primary)
+            .tint(.primary)
 
-            TaskSectionBG(isEmpty: viewModel.unCompletedTaskListSignal.isEmpty) {
-                ForEach(viewModel.unCompletedTaskListSignal) { task in
+            TaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
+                ForEach(filteredItems.unCompletedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
-                        TaskCardView(model.id, model: task, viewModel: viewModel)
+                        TaskCardView(model.id,
+                                     task,
+                                     stateManager,
+                                     viewModel)
                     }.tint(.primary)
                 }
 
                 TaskCreationButton(stateManager: stateManager)
             }
 
-            CompletedTaskSectionBG(isEmpty: viewModel.completedTaskListSignal.isEmpty) {
-                ForEach(viewModel.completedTaskListSignal) { task in
+            CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
+                ForEach(filteredItems.completedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
-                        TaskCardView(model.id, model: task, viewModel: viewModel)
+                        TaskCardView(model.id,
+                                     task,
+                                     stateManager,
+                                     viewModel)
                     }.tint(.primary)
                 }
             }

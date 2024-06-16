@@ -8,6 +8,7 @@
 
 import SwiftUI
 
-final class LaborCostListStateManager: ObservableObject {
+final class LaborCostListStateManager: UserListVisible {
     @Published var isInfoAlertShown = false
+    @Published var isUserListVisible = false
 }

@@ -85,3 +85,32 @@ extension String {
         return statusTitle
     }
 }
+
+extension String {
+    func toGanttDate() -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: self) ?? .init()
+    }
+}
+
+extension Date {
+    func toGanttString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yy"
+        return formatter.string(from: self)
+    }
+}
+
+extension KotlinByteArray {
+    convenience init(_ data: Data) {
+        let array = data.map { NSNumber(value: $0) }
+
+        self.init(size: .init(data.count))
+
+        for (i, v) in array.enumerated() {
+            self.set(index: .init(i),
+                     value: v.int8Value)
+        }
+    }
+}

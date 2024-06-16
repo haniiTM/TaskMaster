@@ -1,6 +1,8 @@
 package com.example.taskmaster.di
 
 import com.example.taskmaster.domain.use_cases.AccessTokenUseCase
+import com.example.taskmaster.domain.use_cases.AttachmentListUseCase
+import com.example.taskmaster.domain.use_cases.EstimationTableUseCase
 import com.example.taskmaster.domain.use_cases.LaborCostListUseCase
 import com.example.taskmaster.domain.use_cases.ProjectListUseCase
 import com.example.taskmaster.domain.use_cases.TaskInfoUseCase
@@ -18,6 +20,8 @@ actual fun platformModule() = module {
     single { TaskListUseCase(get()) }
     single { TaskInfoUseCase(get()) }
     single { LaborCostListUseCase(get()) }
+    single { EstimationTableUseCase(get()) }
+    single { AttachmentListUseCase(get()) }
 }
 
 object KoinHelper : KoinComponent {
@@ -26,4 +30,6 @@ object KoinHelper : KoinComponent {
     fun getTaskListUseCase() = get<TaskListUseCase>()
     fun getTaskInfoUseCase() = get<TaskInfoUseCase>()
     fun getLaborCostListUseCase() = get<LaborCostListUseCase>()
+    fun getEstimationTableUseCase() = get<EstimationTableUseCase>()
+    fun getAttachmentListUseCase() = get<AttachmentListUseCase>()
 }

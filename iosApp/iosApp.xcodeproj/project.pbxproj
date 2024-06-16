@@ -82,7 +82,7 @@
 		28E796142BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */; };
 		28E796162BD9A98F00D402E4 /* LaborCostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */; };
 		28E796182BD9B34600D402E4 /* TaskInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796172BD9B34600D402E4 /* TaskInfoView.swift */; };
-		28E796212BD9D8CA00D402E4 /* EstimationCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */; };
+		28E796212BD9D8CA00D402E4 /* EstimationTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E796202BD9D8CA00D402E4 /* EstimationTableView.swift */; };
 		28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF12BD5507C00B31497 /* ProjectListView.swift */; };
 		28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */; };
 		28EA9CF72BD5528200B31497 /* ProjectListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */; };
@@ -101,7 +101,16 @@
 		CEB30E162C0F6A88000B1139 /* StateManagerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB30E152C0F6A88000B1139 /* StateManagerProtocols.swift */; };
 		CEB4305E2C0B3A3700C6D149 /* DeletableUserCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */; };
 		CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */; };
+		CEB458152C1835BD0036F73B /* EstimationTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458142C1835BD0036F73B /* EstimationTableViewModel.swift */; };
+		CEB458172C1840FA0036F73B /* EstimationTableStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458162C1840FA0036F73B /* EstimationTableStateManager.swift */; };
+		CEB458192C18671C0036F73B /* LaborCostTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458182C18671C0036F73B /* LaborCostTableView.swift */; };
+		CEB4581C2C187AF60036F73B /* TableComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4581B2C187AF60036F73B /* TableComponents.swift */; };
+		CEB4581F2C187B530036F73B /* EstimationTableViewTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */; };
+		CEB458212C18A3DD0036F73B /* AttachmentListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458202C18A3DD0036F73B /* AttachmentListStateManager.swift */; };
+		CEB458232C18B5FD0036F73B /* AttachmentCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */; };
 		CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */; };
+		CEB57A3E2C1602E6008CE87F /* GanttTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */; };
+		CEB73B4B2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB73B4A2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift */; };
 		CEB7E56D2BF8AA5A002337B7 /* DetailedTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */; };
 		CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */; };
 		CEBB132A2C05E9EC0017B33D /* LaborCostInfoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */; };
@@ -204,7 +213,7 @@
 		28E796132BD9A97000D402E4 /* LaborCostListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListViewModelProtocol.swift; sourceTree = "<group>"; };
 		28E796152BD9A98F00D402E4 /* LaborCostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostListModel.swift; sourceTree = "<group>"; };
 		28E796172BD9B34600D402E4 /* TaskInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoView.swift; sourceTree = "<group>"; };
-		28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationCalendarView.swift; sourceTree = "<group>"; };
+		28E796202BD9D8CA00D402E4 /* EstimationTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableView.swift; sourceTree = "<group>"; };
 		28EA9CF12BD5507C00B31497 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		28EA9CF42BD5525700B31497 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		28EA9CF62BD5528200B31497 /* ProjectListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -226,7 +235,16 @@
 		CEB30E152C0F6A88000B1139 /* StateManagerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagerProtocols.swift; sourceTree = "<group>"; };
 		CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletableUserCard.swift; sourceTree = "<group>"; };
 		CEB4305F2C0B3B5400C6D149 /* UserListAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAlert.swift; sourceTree = "<group>"; };
+		CEB458142C1835BD0036F73B /* EstimationTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableViewModel.swift; sourceTree = "<group>"; };
+		CEB458162C1840FA0036F73B /* EstimationTableStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableStateManager.swift; sourceTree = "<group>"; };
+		CEB458182C18671C0036F73B /* LaborCostTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostTableView.swift; sourceTree = "<group>"; };
+		CEB4581B2C187AF60036F73B /* TableComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableComponents.swift; sourceTree = "<group>"; };
+		CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimationTableViewTemplate.swift; sourceTree = "<group>"; };
+		CEB458202C18A3DD0036F73B /* AttachmentListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentListStateManager.swift; sourceTree = "<group>"; };
+		CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCardController.swift; sourceTree = "<group>"; };
 		CEB4B2FF2C0DF7C200A6CB96 /* UserListAdditionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListAdditionAlert.swift; sourceTree = "<group>"; };
+		CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GanttTableView.swift; sourceTree = "<group>"; };
+		CEB73B4A2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestructiveAlertTemplate.swift; sourceTree = "<group>"; };
 		CEB7E56C2BF8AA5A002337B7 /* DetailedTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedTaskInfo.swift; sourceTree = "<group>"; };
 		CEB7E56E2BF8C964002337B7 /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
 		CEBB13292C05E9EC0017B33D /* LaborCostInfoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaborCostInfoAlert.swift; sourceTree = "<group>"; };
@@ -285,9 +303,9 @@
 			isa = PBXGroup;
 			children = (
 				287638FB2BB1ED3700B55DBF /* TemplateTaskCardView.swift */,
+				288455EA2BD2DF8200DF64E5 /* ProjectCard */,
 				288455E82BD2DF6D00DF64E5 /* TaskCard */,
 				288455E92BD2DF7400DF64E5 /* SubTaskCard */,
-				288455EA2BD2DF8200DF64E5 /* ProjectCard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -396,7 +414,7 @@
 				28EA9CF32BD5508E00B31497 /* ProjectList */,
 				28EA9CFC2BD5811300B31497 /* TaskList */,
 				28EA9D052BD590CE00B31497 /* SubTaskList */,
-				28E796202BD9D8CA00D402E4 /* EstimationCalendarView.swift */,
+				CEB57A3C2C1602A0008CE87F /* EstimationTable */,
 				28E796192BD9B34C00D402E4 /* TaskInfo */,
 				28E796102BD9A93F00D402E4 /* LaborCostList */,
 				28E795FB2BD9674A00D402E4 /* AttachmentList */,
@@ -553,6 +571,7 @@
 			children = (
 				CED884AE2C07252A00617B3D /* UserListAlerts */,
 				CEC601082BFDFD000016DC0F /* CreationAlerts */,
+				CEB73B4C2C1C6C8C00F921F1 /* DestructiveAlerts */,
 			);
 			path = ModalScreens;
 			sourceTree = "<group>";
@@ -575,6 +594,7 @@
 				28E796092BD96FDA00D402E4 /* AttachmentListModel.swift */,
 				28E795F92BD966B000D402E4 /* AttachmentListView.swift */,
 				28E796072BD96F7E00D402E4 /* AttachmentListViewModel.swift */,
+				CEB458202C18A3DD0036F73B /* AttachmentListStateManager.swift */,
 				28E796052BD96F0C00D402E4 /* AttachmentListViewModelProtocol.swift */,
 				28E7960B2BD973CD00D402E4 /* AttachmentCard */,
 			);
@@ -594,6 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				28E795FC2BD9679800D402E4 /* AttachmentCardView.swift */,
+				CEB458222C18B5FD0036F73B /* AttachmentCardController.swift */,
 				28E7960C2BD973DB00D402E4 /* AttachmentCardAction.swift */,
 			);
 			path = AttachmentCard;
@@ -717,6 +738,44 @@
 				CEB4305D2C0B3A3700C6D149 /* DeletableUserCard.swift */,
 			);
 			path = UserCards;
+			sourceTree = "<group>";
+		};
+		CEB4581A2C187AD50036F73B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4581B2C187AF60036F73B /* TableComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		CEB4581D2C187B350036F73B /* TableViews */ = {
+			isa = PBXGroup;
+			children = (
+				CEB4581E2C187B530036F73B /* EstimationTableViewTemplate.swift */,
+				CEB57A3D2C1602E6008CE87F /* GanttTableView.swift */,
+				CEB458182C18671C0036F73B /* LaborCostTableView.swift */,
+			);
+			path = TableViews;
+			sourceTree = "<group>";
+		};
+		CEB57A3C2C1602A0008CE87F /* EstimationTable */ = {
+			isa = PBXGroup;
+			children = (
+				28E796202BD9D8CA00D402E4 /* EstimationTableView.swift */,
+				CEB458142C1835BD0036F73B /* EstimationTableViewModel.swift */,
+				CEB458162C1840FA0036F73B /* EstimationTableStateManager.swift */,
+				CEB4581D2C187B350036F73B /* TableViews */,
+				CEB4581A2C187AD50036F73B /* Components */,
+			);
+			path = EstimationTable;
+			sourceTree = "<group>";
+		};
+		CEB73B4C2C1C6C8C00F921F1 /* DestructiveAlerts */ = {
+			isa = PBXGroup;
+			children = (
+				CEB73B4A2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift */,
+			);
+			path = DestructiveAlerts;
 			sourceTree = "<group>";
 		};
 		CEC085FA2BF79B2600BBBEC2 /* Helpers */ = {
@@ -895,10 +954,12 @@
 				2864E6BD2BD3B51800504DE0 /* ProjectFrameAction.swift in Sources */,
 				288455F22BD2E72600DF64E5 /* TemplateTaskFrame.swift in Sources */,
 				2864E6C12BD3D3CF00504DE0 /* LoginScreenConstants.swift in Sources */,
+				CEB57A3E2C1602E6008CE87F /* GanttTableView.swift in Sources */,
 				2864E6CA2BD3EDC700504DE0 /* LoginScreenViewModelProtocol.swift in Sources */,
 				288455E72BD2DF0D00DF64E5 /* EstimatesScreenInfoButtonAction.swift in Sources */,
 				2894CEBC2BD926C100B8AB1C /* TaskCardsExtensions.swift in Sources */,
 				CEB26F2D2C1219EE00A48B84 /* TimeSpentEditAlert.swift in Sources */,
+				CEB458192C18671C0036F73B /* LaborCostTableView.swift in Sources */,
 				28EA9CF22BD5507C00B31497 /* ProjectListView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CEB430602C0B3B5400C6D149 /* UserListAlert.swift in Sources */,
@@ -907,6 +968,7 @@
 				28609D042BD15A42005D2D01 /* ScreenInfoButton.swift in Sources */,
 				2864E6AE2BD38F7600504DE0 /* TaskCardsProtocols.swift in Sources */,
 				28DE0A3B2BCEE7C3001F819C /* TemplateActionButton.swift in Sources */,
+				CEB458212C18A3DD0036F73B /* AttachmentListStateManager.swift in Sources */,
 				CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */,
 				CEBB132E2C06253F0017B33D /* UserCreationAlert.swift in Sources */,
 				CED37B352BFCFC0500F9629D /* ProjectListNavBar.swift in Sources */,
@@ -924,6 +986,7 @@
 				28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */,
 				CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */,
 				2864E6B82BD3B4D900504DE0 /* MainFrameAction.swift in Sources */,
+				CEB458232C18B5FD0036F73B /* AttachmentCardController.swift in Sources */,
 				28407DEA2BD1698B004B275D /* TaskCreationButton.swift in Sources */,
 				CEB7E56F2BF8C964002337B7 /* TaskInfoViewModel.swift in Sources */,
 				28E796122BD9A95100D402E4 /* LaborCostListViewModel.swift in Sources */,
@@ -954,10 +1017,12 @@
 				28750F112BD1450100E3006D /* TaskSectionBG.swift in Sources */,
 				28407DE82BD16976004B275D /* LaborCostCreationButton.swift in Sources */,
 				288BA0BD2BD6354E000E3A82 /* SubTaskListViewModel.swift in Sources */,
+				CEB4581F2C187B530036F73B /* EstimationTableViewTemplate.swift in Sources */,
 				CED884B02C073FD900617B3D /* UserListDeletionAlert.swift in Sources */,
 				2864E6B02BD3949700504DE0 /* GradientBG.swift in Sources */,
-				28E796212BD9D8CA00D402E4 /* EstimationCalendarView.swift in Sources */,
+				28E796212BD9D8CA00D402E4 /* EstimationTableView.swift in Sources */,
 				CED72D212C04B4BF00518AC1 /* TaskInfoStateManager.swift in Sources */,
+				CEB4581C2C187AF60036F73B /* TableComponents.swift in Sources */,
 				289BFD2B2BD18AD200099EAE /* SubTaskCardView.swift in Sources */,
 				28750F132BD1454A00E3006D /* SubTaskSectionBG.swift in Sources */,
 				CED37B392BFD1E4400F9629D /* ProjectListStateManager.swift in Sources */,
@@ -981,6 +1046,7 @@
 				28E796082BD96F7E00D402E4 /* AttachmentListViewModel.swift in Sources */,
 				287638FC2BB1ED3700B55DBF /* TemplateTaskCardView.swift in Sources */,
 				CEB30E162C0F6A88000B1139 /* StateManagerProtocols.swift in Sources */,
+				CEB73B4B2C1C6BDD00F921F1 /* DestructiveAlertTemplate.swift in Sources */,
 				CEE483982BFF53E6005A9596 /* SubTaskListStateManager.swift in Sources */,
 				28EA9CF92BD5539300B31497 /* ProjectListModel.swift in Sources */,
 				288455EC2BD2DFD300DF64E5 /* TaskCardController.swift in Sources */,
@@ -989,6 +1055,7 @@
 				CEB16A1C2BF9EE4E0066BE40 /* TemplateNavBar.swift in Sources */,
 				2864E6B32BD39B0200504DE0 /* GradientBGConstants.swift in Sources */,
 				28EA9CFE2BD5812700B31497 /* TaskListModel.swift in Sources */,
+				CEB458172C1840FA0036F73B /* EstimationTableStateManager.swift in Sources */,
 				CEC085FE2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift in Sources */,
 				288455DE2BD2B10C00DF64E5 /* TaskCreationButtonAction.swift in Sources */,
 				CED37B322BFCF4FC00F9629D /* ViewModelProtocols.swift in Sources */,
@@ -996,6 +1063,7 @@
 				28EA9CFB2BD5810800B31497 /* TaskListView.swift in Sources */,
 				CE9ADA822C08E133004FA041 /* ProjectInfoProtocol.swift in Sources */,
 				288455E42BD2DEBE00DF64E5 /* AttachmentsScreenInfoButtonAction.swift in Sources */,
+				CEB458152C1835BD0036F73B /* EstimationTableViewModel.swift in Sources */,
 				CEC6010E2BFE6C960016DC0F /* TaskListStateManager.swift in Sources */,
 				28E796012BD96DA600D402E4 /* AttachmentCreationButton.swift in Sources */,
 				289BFD332BD18FBD00099EAE /* TaskSectionBGsConstants.swift in Sources */,
