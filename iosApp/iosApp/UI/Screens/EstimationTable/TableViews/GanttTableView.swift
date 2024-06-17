@@ -11,11 +11,9 @@ import shared
 
 struct GanttTableView: View {
     let projectId: UInt16
-    @ObservedObject var viewModel: EstimationTableViewModel
+    var ganttList: [CalendarPlan]
 
     var body: some View {
-        let ganttList = viewModel.ganttReportList
-
         let ganttDatesAsString = ganttList
             .flatMap { $0.execution_date }
 
@@ -37,6 +35,5 @@ struct GanttTableView: View {
         EstimationTableViewTemplate(soloData: uniqueGanttDateList,
                                     pairData: ganttValue,
                                     tripleData: hoursGanttData)
-        { await viewModel.updateGanttList(projectId) }
     }
 }

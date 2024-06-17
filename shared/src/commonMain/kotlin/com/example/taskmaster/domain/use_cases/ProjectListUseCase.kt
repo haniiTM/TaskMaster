@@ -1,6 +1,7 @@
 package com.example.taskmaster.domain.use_cases
 
 import com.example.taskmaster.data.network.ApiService
+import com.example.taskmaster.data.network.models.NotificationItem
 import com.example.taskmaster.data.network.models.PersonDTO
 import com.example.taskmaster.data.network.models.RegisterReceiveRemote
 import com.example.taskmaster.data.network.models.TaskDTO
@@ -34,5 +35,9 @@ class ProjectListUseCase(private val apiService: ApiService) : KoinComponent {
 
     suspend fun deleteUser(id: MutableList<Int>) {
         return apiService.deletePersonFromSystem(id)
+    }
+
+    suspend fun getNotificationTaskList(): MutableList<NotificationItem?> {
+        return apiService.getNotification()
     }
 }

@@ -49,7 +49,10 @@ struct TaskListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
-            .task { await viewModel.updateDataSource(model.id) }
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
+            }
             .sheet(isPresented: $stateManager.addTaskState) {
                 TaskCreationAlert(model.id, alertManager: stateManager, viewModel: viewModel)
             }
@@ -98,5 +101,9 @@ struct TaskListView: View {
                 }
             }
         }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(model.id)
     }
 }

@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct DestructiveAlertTemplate {
-    //    @Binding var isPresented: Bool
-
     private let title: String
     private let message: String
 
@@ -21,14 +19,12 @@ struct DestructiveAlertTemplate {
     private let secondaryButtonAction: () -> Void
 
     init(_ title: String,
-         //         _ isPresented: Binding<Bool>,
          primaryButtonAction: @escaping () -> Void,
          secondaryButtonAction: @escaping () -> Void)
     {
         self.title = title
         self.primaryButtonAction = primaryButtonAction
         self.secondaryButtonAction = secondaryButtonAction
-        //        self._isPresented = isPresented
 
         message = Constants.Strings.DestructiveAlertMessage.warningTitle
         primaryButtonTitle = Constants.Strings.DestructiveAlertMessage.confirmationActionTitle
@@ -36,9 +32,11 @@ struct DestructiveAlertTemplate {
     }
 
     var body: Alert {
-        .init(title: Text(title),
-              message: Text(message),
-              primaryButton: .destructive(Text(primaryButtonTitle)) { primaryButtonAction() },
-              secondaryButton: .cancel(Text(secondaryButtonTitle)) { /*isPresented = false*/ secondaryButtonAction() })
+        .init(
+            title: Text(title),
+            message: Text(message),
+            primaryButton: .destructive(Text(primaryButtonTitle)) { primaryButtonAction() },
+            secondaryButton: .cancel(Text(secondaryButtonTitle)) { secondaryButtonAction() }
+        )
     }
 }

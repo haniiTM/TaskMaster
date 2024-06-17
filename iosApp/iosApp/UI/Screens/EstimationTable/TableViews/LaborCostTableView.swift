@@ -11,11 +11,9 @@ import shared
 
 struct LaborCostTableView: View {
     let projectId: UInt16
-    @ObservedObject var viewModel: EstimationTableViewModel
+    let laborCostList: [ManHoursReportDTO]
 
     var body: some View {
-        let laborCostList = viewModel.laborCostReportList
-
         let dateList = laborCostList.compactMap { $0.createdAt?.toGanttDate() }
         let uniqueDateList = Array(Set(dateList)).sorted()
 
@@ -32,6 +30,5 @@ struct LaborCostTableView: View {
         EstimationTableViewTemplate(soloData: uniqueDateList,
                                     pairData: laborList,
                                     tripleData: hourList)
-        { await viewModel.updateLaborCostReportList(projectId) }
     }
 }

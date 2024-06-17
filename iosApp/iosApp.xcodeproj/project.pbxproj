@@ -118,6 +118,7 @@
 		CEBB132E2C06253F0017B33D /* UserCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBB132D2C06253F0017B33D /* UserCreationAlert.swift */; };
 		CEC085FC2BF79B3800BBBEC2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */; };
 		CEC085FE2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */; };
+		CEC5B6662C20A7100092FB2D /* NotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5B6652C20A7100092FB2D /* NotificationAlert.swift */; };
 		CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */; };
 		CEC6010C2BFE62D40016DC0F /* TaskCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6010B2BFE62D30016DC0F /* TaskCreationAlert.swift */; };
 		CEC6010E2BFE6C960016DC0F /* TaskListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */; };
@@ -252,6 +253,7 @@
 		CEBB132D2C06253F0017B33D /* UserCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreationAlert.swift; sourceTree = "<group>"; };
 		CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoProtocol.swift; sourceTree = "<group>"; };
+		CEC5B6652C20A7100092FB2D /* NotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlert.swift; sourceTree = "<group>"; };
 		CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCreationAlert.swift; sourceTree = "<group>"; };
 		CEC6010B2BFE62D30016DC0F /* TaskCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreationAlert.swift; sourceTree = "<group>"; };
 		CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListStateManager.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				CED884AE2C07252A00617B3D /* UserListAlerts */,
 				CEC601082BFDFD000016DC0F /* CreationAlerts */,
 				CEB73B4C2C1C6C8C00F921F1 /* DestructiveAlerts */,
+				CEC5B6652C20A7100092FB2D /* NotificationAlert.swift */,
 			);
 			path = ModalScreens;
 			sourceTree = "<group>";
@@ -661,10 +664,10 @@
 			isa = PBXGroup;
 			children = (
 				2864E6C62BD3DD6000504DE0 /* TaskInfo.swift */,
-				CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */,
 				28EA9CFD2BD5812700B31497 /* TaskListModel.swift */,
 				28EA9CFA2BD5810800B31497 /* TaskListView.swift */,
 				28EA9CFF2BD5812F00B31497 /* TaskListViewModel.swift */,
+				CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */,
 				28EA9D012BD5813B00B31497 /* TaskListViewModelProtocol.swift */,
 			);
 			path = TaskList;
@@ -975,6 +978,7 @@
 				289BFD2F2BD18F5F00099EAE /* ActionButtonsConstants.swift in Sources */,
 				CED37B3B2BFD1E8E00F9629D /* ProjectCreationAlert.swift in Sources */,
 				CEB4305E2C0B3A3700C6D149 /* DeletableUserCard.swift in Sources */,
+				CEC5B6662C20A7100092FB2D /* NotificationAlert.swift in Sources */,
 				288455F02BD2E04D00DF64E5 /* ProjectCardController.swift in Sources */,
 				CEAFCA452BF69C3C00D34C86 /* ProjectInfo.swift in Sources */,
 				2864E6BA2BD3B4F900504DE0 /* ProjectFrameView.swift in Sources */,

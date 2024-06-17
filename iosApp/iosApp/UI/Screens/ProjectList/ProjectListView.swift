@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ProjectListView: View {
     //    MARK: Props
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var userRoleManager: UserRoleManager
+    @EnvironmentObject var authManager: AuthManager
 
     @StateObject private var viewModel = ProjectListViewModel()
     @StateObject private var stateManager = ProjectListStateManager()
@@ -32,7 +33,10 @@ struct ProjectListView: View {
     var body: some View {
         ViewBody
             .task {
-                await viewModel.updateDataSource(0)
+                await updateDataSource()
+            }
+            .refreshable {
+                Task { await updateDataSource() }
             }
     }
 
@@ -56,12 +60,30 @@ struct ProjectListView: View {
         .sheet(isPresented: $stateManager.deleteUserState, content: {
             UserListDeletionAlert(stateManager, viewModel: viewModel)
         })
-        .alert(isPresented: $stateManager.isLogOutAlertPresented) {
-            DestructiveAlertTemplate("Выход из аккаунта") {
-                authViewModel.isAuthenticated = false
-            } secondaryButtonAction: {
-                stateManager.isLogOutAlertPresented = false
-            }.body
+        .alert(isPresented: $stateManager.isNotificationPresented) {
+            switch stateManager.activeAlert {
+            case .logOut:
+                DestructiveAlertTemplate("Выход из аккаунта") {
+                    authManager.isAuthenticated = false
+                } secondaryButtonAction: {
+                    stateManager.isNotificationPresented = false
+                }.body
+            case .notification:
+                NotificationAlert(viewModel.notificationItemList)
+                    .body
+            }
+        }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(0)
+        await viewModel.updateNotificationItemList()
+
+        if !viewModel.notificationItemList.isEmpty &&
+            !userRoleManager.isAdmin
+        {
+            stateManager.activeAlert = .notification
+            stateManager.isNotificationPresented = true
         }
     }
 }

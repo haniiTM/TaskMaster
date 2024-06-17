@@ -10,6 +10,7 @@ import SwiftUI
 import shared
 
 struct DeletableUserCard<ViewModel: UserDeletable & TaskUserListUpdater>: View {
+    @EnvironmentObject var userRoleManager: UserRoleManager
     @ObservedObject private var viewModel: ViewModel
     private let user: PersonDTO
     private let projectId: UInt16
@@ -34,16 +35,18 @@ struct DeletableUserCard<ViewModel: UserDeletable & TaskUserListUpdater>: View {
 
             Spacer()
 
-            Menu {
-                Button(role: .destructive, action: {
-                    Task {
-                        await deleteUser()
-                    }
-                }, label: {
-                    Label("Удалить", systemImage: "trash")
-                })
-            } label: {
-                Image(systemName: "ellipsis")
+            if userRoleManager.isAdmin {
+                Menu {
+                    Button(role: .destructive, action: {
+                        Task {
+                            await deleteUser()
+                        }
+                    }, label: {
+                        Label("Удалить", systemImage: "trash")
+                    })
+                } label: {
+                    Image(systemName: "ellipsis")
+                }
             }
         }
     }

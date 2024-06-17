@@ -10,6 +10,7 @@ import SwiftUI
 import shared
 
 struct UserListAlertTemplate<Content: View>: View {
+    @EnvironmentObject var userRoleManager: UserRoleManager
     private let title: String
     private let userList: [PersonDTO]
     private let onAppear: () async -> Void
@@ -41,7 +42,9 @@ struct UserListAlertTemplate<Content: View>: View {
             .listStyle(.grouped)
             .frame(height: 165)
 
-            Button(action: onConfirm, label: {
+            Button {
+                if userRoleManager.isAdmin { onConfirm() }
+            } label: {
                 VStack(spacing: 0) {
                     if userList.isEmpty {
                         Text("Пользователи отсутствуют")
@@ -51,13 +54,15 @@ struct UserListAlertTemplate<Content: View>: View {
                             .background(.ultraThinMaterial)
                     }
 
-                    Text(title)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(Color(uiColor: .secondarySystemBackground))
-                        .border(Color.primary.opacity(0.1))
+                    if userRoleManager.isAdmin {
+                        Text(title)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(Color(uiColor: .secondarySystemBackground))
+                            .border(Color.primary.opacity(0.1))
+                    }
                 }
-            })
+            }
         }
         .padding(.horizontal)
     }

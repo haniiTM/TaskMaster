@@ -90,8 +90,9 @@ struct TaskInfoView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
-            .task {
-                await viewModel.getTaskInfo(taskId)
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
             }
             .sheet(isPresented: $stateManager.isCreationAlertShown) {
                 LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
@@ -117,7 +118,9 @@ struct TaskInfoView: View {
                          $searchText) {
             TaskInfoCard
 
-            LaborCostCreationButton(stateManager)
+            if viewModel.taskInfo.canAddLaborCost {
+                LaborCostCreationButton(stateManager)
+            }
         }
     }
 
@@ -164,18 +167,20 @@ struct TaskInfoView: View {
         { stateManager.isUserListVisible.toggle() }
         Divider()
 
-        ButtonRow(hoursDaysSpentTitle,
-                  viewModel.taskInfo.allocatedTime.description)
-        {
-            timeEditText = viewModel.taskInfo.allocatedTime.description
-            action = {
-                await viewModel.updateHoursSpent(taskId, hours: timeEditText)
-                await viewModel.getTaskInfo(taskId)
+        if viewModel.taskInfo.canAddLaborCost {
+            ButtonRow(hoursDaysSpentTitle,
+                      viewModel.taskInfo.allocatedTime.description)
+            {
+                timeEditText = viewModel.taskInfo.allocatedTime.description
+                action = {
+                    await viewModel.updateHoursSpent(taskId, hours: timeEditText)
+                    await viewModel.getTaskInfo(taskId)
+                }
+                
+                stateManager.isTimeEditAlertVisible.toggle()
             }
-
-            stateManager.isTimeEditAlertVisible.toggle()
+            Divider()
         }
-        Divider()
 
         ButtonRow(timeEstimationTitle,
                   viewModel.taskInfo.timerValue.description)
@@ -276,6 +281,10 @@ struct TaskInfoView: View {
 
             Text(trailingValue)
         }.foregroundColor(.primary)
+    }
+
+    private func updateDataSource() async {
+        await viewModel.getTaskInfo(taskId)
     }
 }
 

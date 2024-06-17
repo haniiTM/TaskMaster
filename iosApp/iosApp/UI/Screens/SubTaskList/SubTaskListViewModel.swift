@@ -145,5 +145,14 @@ import shared
         }
     }
 
+    func updateTaskDesc(_ id: UInt16, _ desc: String) async {
+        do {
+            try await subTaskListUseCase.updateTaskDesc(id: .init(id),
+                                                        desc: desc)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
     func search() async {}
 }

@@ -16,6 +16,7 @@ import shared
     @Published private(set) var projectList = [TaskInfo]()
     @Published private(set) var userRoleListSignal = [TypeOfActivityDTO]()
     @Published private(set) var userListSignal = [PersonDTO]()
+    @Published private(set) var notificationItemList = [NotificationItem]()
 
     //    MARK: Methods
     func updateDataSource(_ parentId: UInt16) async {
@@ -99,6 +100,26 @@ import shared
     func deleteUser(_ idList: [KotlinInt]) async {
         do {
             try await projectListUseCase.deleteUser(id: .init(array: idList))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func updateNotificationItemList() async {
+        do {
+            guard
+                let unwrappedItemList = try await projectListUseCase.getNotificationTaskList() as? [NotificationItem?]
+            else { return }
+
+            var itemList = [NotificationItem]()
+
+            unwrappedItemList.forEach { item in
+                guard let item = item else { return }
+
+                itemList.append(item)
+            }
+
+            notificationItemList = itemList
         } catch {
             print(error.localizedDescription)
         }

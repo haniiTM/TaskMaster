@@ -8,4 +8,8 @@ class LaborCostListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun getLaborCostList(taskId: Int): MutableList<ManHoursDTO?> {
         return apiService.fetchManHours(taskId)
     }
+
+    suspend fun updateLaborCost(laborCostId: Int, laborCostDesc: String) {
+        return apiService.updateManHours(laborCostId, laborCostDesc)
+    }
 }

@@ -39,8 +39,9 @@ struct AttachmentListView: View {
     //    MARK: Body
     var body: some View {
         viewBody
-            .task {
-                await viewModel.updateDataSource(taskId)
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
             }
             .fileImporter(
                 isPresented: $stateManager.isFileImporterVisible,
@@ -73,5 +74,9 @@ struct AttachmentListView: View {
         }.padding(.horizontal, 40)
 
         AttachmentCreationButton(stateManager)
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(taskId)
     }
 }

@@ -45,11 +45,15 @@ struct LaborCostListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
-            .task {
-                await viewModel.updateDataSource(taskId)
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
             }
             .sheet(isPresented: $stateManager.isInfoAlertShown) {
-                LaborCostInfoAlert(model, stateManager: stateManager)
+                LaborCostInfoAlert(taskId,
+                                   model,
+                                   stateManager,
+                                   viewModel)
             }
     }
 
@@ -68,5 +72,9 @@ struct LaborCostListView: View {
             }.navigationTitle(projectTitle)
             //            .padding()
         }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(taskId)
     }
 }

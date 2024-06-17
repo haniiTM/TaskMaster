@@ -13,6 +13,7 @@ struct SubTaskListView: View {
     @StateObject private var viewModel = SubTaskListViewModel()
     @StateObject private var stateManager = SubTaskListStateManager()
 
+    @FocusState private var isFocused
     @State private var descriptionState: String
     private let title: String
     private let projectId: UInt16
@@ -56,7 +57,10 @@ struct SubTaskListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
-            .task { await viewModel.updateDataSource(model.id) }
+            .task { await updateDataSource() }
+            .refreshable {
+                Task { await updateDataSource() }
+            }
             .sheet(isPresented: $stateManager.isUserListVisible) {
                 UserListAlert(projectId, stateManager: stateManager, viewModel: viewModel)
             }
@@ -73,7 +77,8 @@ struct SubTaskListView: View {
     private var ViewBody: some View {
         ProjectFrameView(title,
                          stateManager,
-                         $searchText) {
+                         $searchText)
+        {
             NavigationLink(destination: TaskInfoView(title,
                                                      projectId: projectId,
                                                      taskId: model.id)) {
@@ -110,18 +115,24 @@ struct SubTaskListView: View {
     }
 
     private var DescriptionBody: some View {
-        //        TextEditor(text: $descriptionState)
         VStack(spacing: 8) {
-            Text(model.description)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-                .padding()
-                .padding(.bottom, 64)
-                .background(
-                    Color(uiColor: .secondarySystemBackground),
-                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                )
+            TextEditor(text: $descriptionState)
+                .frame(minHeight: 150)
+                .border(.ultraThickMaterial, width: 2)
+                .focused($isFocused)
 
-            Button(action: {}) {
+            Button {
+                Task {
+                    descriptionState = descriptionState.isEmpty
+                    ? "Описание отсутствует"
+                    : descriptionState
+
+                    isFocused = false
+
+                    await viewModel.updateTaskDesc(model.id,
+                                                   descriptionState)
+                }
+            } label: {
                 Text("Сохранить")
                     .frame(maxWidth: .infinity)
                     .padding(8)
@@ -132,5 +143,9 @@ struct SubTaskListView: View {
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
         }
+    }
+
+    private func updateDataSource() async {
+        await viewModel.updateDataSource(model.id)
     }
 }
