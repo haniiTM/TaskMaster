@@ -33,4 +33,16 @@ import shared
             print(error.localizedDescription)
         }
     }
+
+    func updateLaborCost(_ taskId: UInt16,
+                         _ laborCostId: UInt16,
+                         _ laborCostDesc: String) async {
+        do {
+            try await laborCostListUseCase.updateLaborCost(laborCostId: .init(laborCostId),
+                                                           laborCostDesc: laborCostDesc)
+            await updateDataSource(taskId)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }

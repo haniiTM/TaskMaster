@@ -10,15 +10,22 @@ import SwiftUI
 import shared
 
 struct LaborCostInfoAlert: View {
+    @ObservedObject private var viewModel: LaborCostListViewModel
     @ObservedObject private var stateManager: LaborCostListStateManager
 
-    private let id: UInt16
-    private let note: String
+    private let taskId: UInt16
+    private let laborCostId: UInt16
+    @State private var note: String
     private let date: String
     private let spentTime: String
 
-    init(_ model: ManHoursDTO, stateManager: LaborCostListStateManager) {
-        id = model.id as? UInt16 ?? 0
+    init(_ taskId: UInt16,
+         _ model: ManHoursDTO,
+         _ stateManager: LaborCostListStateManager,
+         _ viewModel: LaborCostListViewModel)
+    {
+        self.taskId = taskId
+        laborCostId = model.id as? UInt16 ?? 0
         note = model.comment ?? "Нет комментариев"
 
         let dateFormatter = DateFormatter()
@@ -37,11 +44,14 @@ struct LaborCostInfoAlert: View {
         spentTime = model.hours_spent ?? "??:??"
 
         self.stateManager = stateManager
+        self.viewModel = viewModel
     }
 
     var body: some View {
         TemplateCreationAlert("Сохранить")
-        { ViewBody } action: { saveChanges() }
+        { ViewBody } action: {
+            Task { await saveChanges() }
+        }
     }
 
     private var ViewBody: some View {
@@ -50,9 +60,9 @@ struct LaborCostInfoAlert: View {
 
     @ViewBuilder
     private var LaborCostInfoView: some View {
-        Text("Трудозатрата № \(id)")
+        Text("Трудозатрата № \(laborCostId)")
 
-        Text(note)
+        TextField(note, text: $note)
 
         HStack {
             Spacer()
@@ -72,7 +82,8 @@ struct LaborCostInfoAlert: View {
         }
     }
 
-    private func saveChanges() {
+    private func saveChanges() async {
+        await viewModel.updateLaborCost(taskId, laborCostId, note)
         stateManager.isInfoAlertShown.toggle()
     }
 }

@@ -50,7 +50,10 @@ struct LaborCostListView: View {
                 Task { await updateDataSource() }
             }
             .sheet(isPresented: $stateManager.isInfoAlertShown) {
-                LaborCostInfoAlert(model, stateManager: stateManager)
+                LaborCostInfoAlert(taskId,
+                                   model,
+                                   stateManager,
+                                   viewModel)
             }
     }
 
