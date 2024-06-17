@@ -50,7 +50,8 @@ struct ProjectListNavBar<Content: View>: View {
         }
 
         Button(role: .destructive) {
-            stateManager.isLogOutAlertPresented = true
+            stateManager.activeAlert = .logOut
+            stateManager.isNotificationPresented = true
         } label: {
             Label("Выйти", systemImage: "rectangle.portrait.and.arrow.right")
                 .tint(Color(uiColor: .systemPink))

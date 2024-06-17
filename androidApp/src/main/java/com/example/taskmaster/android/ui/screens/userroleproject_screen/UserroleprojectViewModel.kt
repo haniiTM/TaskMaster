@@ -1,16 +1,14 @@
 package com.example.taskmaster.android.ui.screens.userroleproject_screen
 
-import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmaster.data.network.ApiService
 import com.example.taskmaster.data.network.models.CalendarPlan
-import com.example.taskmaster.data.network.models.Notification
+import com.example.taskmaster.data.network.models.NotificationItem
 import com.example.taskmaster.data.network.models.UserRoleProjectDTO
 import kotlinx.coroutines.launch
-import java.io.File
 
 class UserroleprojectViewModel constructor(private val apiService: ApiService) : ViewModel() {
     // Смена кол-во часов, которые пользователь может выделять в день
@@ -91,7 +89,7 @@ class UserroleprojectViewModel constructor(private val apiService: ApiService) :
     }
 
     data class ItemStatesNotification (
-        val itemState: MutableList<Notification?> = mutableListOf(),
+        val itemState: MutableList<NotificationItem?> = mutableListOf(),
         val isLoading: Boolean = false
     )
 }

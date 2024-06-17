@@ -9,7 +9,7 @@ data class NotificationTask(
 )
 
 @Serializable
-data class Notification(
+data class NotificationItem(
     val listTask: MutableList<NotificationTask> = mutableListOf(),
     val projectName: String? = null
 )

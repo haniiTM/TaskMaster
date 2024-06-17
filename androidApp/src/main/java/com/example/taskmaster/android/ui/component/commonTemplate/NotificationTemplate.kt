@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.taskmaster.android.R
 import com.example.taskmaster.android.ui.navigation.NavigationItem
-import com.example.taskmaster.data.network.models.Notification
+import com.example.taskmaster.data.network.models.NotificationItem
 
 @Composable
 fun NotificationTemplate(
-    notificationTaskList: MutableList<Notification?>,
+    notificationTaskList: MutableList<NotificationItem?>,
     navController: NavController
 ) {
     val gradient = Brush.verticalGradient(
