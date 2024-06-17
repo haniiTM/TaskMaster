@@ -51,4 +51,8 @@ class TaskListUseCase(private val apiService: ApiService) : KoinComponent {
     suspend fun linkUserToProject(urp: UserRoleProjectDTO): Boolean {
         return apiService.linkUserTaskOrProject(urp)
     }
+
+    suspend fun updateTaskDesc(id: Int, desc: String) {
+        return apiService.updateDescriptionTask(id, desc)
+    }
 }
