@@ -15,11 +15,13 @@ struct SubTaskCardView: View {
     //    MARK: Init
     init(_ parentId: UInt16,
          _ model: TaskInfo,
+         _ isPendingTaskAlertPresented: Binding<Bool>,
          _ stateManager: any CardDeletionAlertPresentable,
          _ viewModel: any TaskCardViewModelProtocol)
     {
         controller = SubTaskCardController(parentId,
                                            model,
+                                           isPendingTaskAlertPresented,
                                            stateManager,
                                            viewModel)
     }

@@ -66,6 +66,10 @@ struct TaskListView: View {
                                       stateManager: stateManager,
                                       viewModel: viewModel)
             }
+            .alert(isPresented: $stateManager.isPendingTaskAlertPresented) {
+                .init(title: Text("Ошибка"),
+                      message: Text("Задаче с статусом \'В ожидании\' не может быть присвоен статус \'Готово\'"))
+            }
     }
 
     private var ViewBody: some View {
@@ -81,6 +85,7 @@ struct TaskListView: View {
                 ForEach(filteredItems.unCompletedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
                         TaskCardView(model.id,
+                                     $stateManager.isPendingTaskAlertPresented,
                                      task,
                                      stateManager,
                                      viewModel)
@@ -94,6 +99,7 @@ struct TaskListView: View {
                 ForEach(filteredItems.completedTaskList) { task in
                     NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
                         TaskCardView(model.id,
+                                     $stateManager.isPendingTaskAlertPresented,
                                      task,
                                      stateManager,
                                      viewModel)

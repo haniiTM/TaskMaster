@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct TaskListNavBar<Content: View, StateManager: UserListVisible>: View {
+    @EnvironmentObject var userRoleManager: UserRoleManager
     @ObservedObject private var stateManager: StateManager
     @Binding private var searchText: String
 
@@ -34,8 +35,10 @@ struct TaskListNavBar<Content: View, StateManager: UserListVisible>: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Button(action: { stateManager.isUserListVisible.toggle() }) {
-            Label("Пользователи", systemImage: "person.crop.rectangle.stack")
+        if userRoleManager.isAdmin {
+            Button(action: { stateManager.isUserListVisible.toggle() }) {
+                Label("Пользователи", systemImage: "person.crop.rectangle.stack")
+            }
         }
     }
 }

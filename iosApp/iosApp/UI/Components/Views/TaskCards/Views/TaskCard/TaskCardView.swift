@@ -22,10 +22,12 @@ struct TaskCardView: View {
 
     /// Initializes the view with default realization.
     init(_ parentId: UInt16, 
+         _ isPendingTaskAlertPresented: Binding<Bool>,
          _ model: any TaskInfoProtocol,
          _ stateManager: any CardDeletionAlertPresentable,
          _ viewModel: any TaskCardViewModelProtocol) {
         controller = TaskCardController(parentId,
+                                        isPendingTaskAlertPresented,
                                         model,
                                         stateManager,
                                         viewModel)

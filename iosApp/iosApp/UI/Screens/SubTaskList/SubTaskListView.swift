@@ -72,6 +72,10 @@ struct SubTaskListView: View {
             .sheet(isPresented: $stateManager.isCreationAlertShown) {
                 SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
             }
+            .alert(isPresented: $stateManager.isPendingTaskAlertPresented) {
+                .init(title: Text("Ошибка"),
+                      message: Text("Задаче с статусом \'В ожидании\' не может быть присвоен статус \'Готово\'"))
+            }
     }
 
     private var ViewBody: some View {
@@ -96,6 +100,7 @@ struct SubTaskListView: View {
                 ForEach(filteredItems.unCompletedTaskList) { subTask in
                     SubTaskCardView(model.id,
                                     subTask,
+                                    $stateManager.isPendingTaskAlertPresented,
                                     stateManager,
                                     viewModel)
                 }
@@ -107,6 +112,7 @@ struct SubTaskListView: View {
                 ForEach(filteredItems.completedTaskList) { subTask in
                     SubTaskCardView(model.id,
                                     subTask,
+                                    $stateManager.isPendingTaskAlertPresented,
                                     stateManager,
                                     viewModel)
                 }
