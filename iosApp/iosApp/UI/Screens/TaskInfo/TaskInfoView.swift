@@ -118,7 +118,9 @@ struct TaskInfoView: View {
                          $searchText) {
             TaskInfoCard
 
-            LaborCostCreationButton(stateManager)
+            if viewModel.taskInfo.canAddLaborCost {
+                LaborCostCreationButton(stateManager)
+            }
         }
     }
 
@@ -165,18 +167,20 @@ struct TaskInfoView: View {
         { stateManager.isUserListVisible.toggle() }
         Divider()
 
-        ButtonRow(hoursDaysSpentTitle,
-                  viewModel.taskInfo.allocatedTime.description)
-        {
-            timeEditText = viewModel.taskInfo.allocatedTime.description
-            action = {
-                await viewModel.updateHoursSpent(taskId, hours: timeEditText)
-                await viewModel.getTaskInfo(taskId)
+        if viewModel.taskInfo.canAddLaborCost {
+            ButtonRow(hoursDaysSpentTitle,
+                      viewModel.taskInfo.allocatedTime.description)
+            {
+                timeEditText = viewModel.taskInfo.allocatedTime.description
+                action = {
+                    await viewModel.updateHoursSpent(taskId, hours: timeEditText)
+                    await viewModel.getTaskInfo(taskId)
+                }
+                
+                stateManager.isTimeEditAlertVisible.toggle()
             }
-
-            stateManager.isTimeEditAlertVisible.toggle()
+            Divider()
         }
-        Divider()
 
         ButtonRow(timeEstimationTitle,
                   viewModel.taskInfo.timerValue.description)

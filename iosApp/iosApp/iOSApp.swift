@@ -3,8 +3,9 @@ import shared
 
 @main
 struct iOSApp: App {
-    @StateObject private var authViewModel = AuthViewModel()
+    @StateObject private var authManager = AuthManager()
     @StateObject private var themeManager = ThemeManager()
+    @StateObject private var userRoleManager = UserRoleManager()
 
     init() {
         AppModuleKt.doInitKoin()
@@ -15,17 +16,22 @@ struct iOSApp: App {
             StartView()
                 .tint(.init(uiColor: .systemBlue))
                 .preferredColorScheme(themeManager.isDarkThemeActive ? .dark : .light)
-                .environmentObject(authViewModel)
+                .environmentObject(authManager)
                 .environmentObject(themeManager)
+                .environmentObject(userRoleManager)
         }
     }
 }
 
 // MARK: - Environment Objects
-final class AuthViewModel: ObservableObject {
+final class AuthManager: ObservableObject {
     @Published var isAuthenticated = false
 }
 
 final class ThemeManager: ObservableObject {
     @Published var isDarkThemeActive = true
+}
+
+final class UserRoleManager: ObservableObject {
+    @Published var isAdmin = false
 }

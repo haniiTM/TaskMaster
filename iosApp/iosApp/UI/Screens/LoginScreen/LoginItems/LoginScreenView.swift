@@ -13,7 +13,8 @@ struct LoginScreenView: View {
     //    MARK: Props
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var themeManager: ThemeManager
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var userRoleManager: UserRoleManager
+    @EnvironmentObject var authManager: AuthManager
 
     @StateObject private var viewModel = LoginScreenViewModel()
     @State private var loginTextFieldState = "user1"
@@ -97,14 +98,15 @@ struct LoginScreenView: View {
         Button(
             action: {
                 Task {
-                    let isAuthenticated = await viewModel.loginUser(name: loginTextFieldState,
+                    let response = await viewModel.loginUser(name: loginTextFieldState,
                                                                     password: passwordTextFieldState)
 
-                    if isAuthenticated {
+                    if response.isValid {
                         isErrorPresented = false
                         loginTextFieldState = ""
                         passwordTextFieldState = ""
-                        authViewModel.isAuthenticated = true
+                        userRoleManager.isAdmin = response.isAdmin
+                        authManager.isAuthenticated = true
                     } else {
                         isErrorPresented = true
                     }

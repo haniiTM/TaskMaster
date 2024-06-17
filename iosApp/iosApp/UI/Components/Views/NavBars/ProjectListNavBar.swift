@@ -9,9 +9,10 @@
 import SwiftUI
 
 struct ProjectListNavBar<Content: View>: View {
+    @EnvironmentObject var userRoleManager: UserRoleManager
     @ObservedObject private var stateManager: ProjectListStateManager
     @Binding private var searchText: String
-    
+
     @ViewBuilder private let content: () -> Content
     private let title: String
 
@@ -34,16 +35,18 @@ struct ProjectListNavBar<Content: View>: View {
 
     @ViewBuilder
     private var ViewBody: some View {
-        Button(action: { stateManager.addUserState.toggle() }) {
-            Label("Добавить пользователя", systemImage: "person.crop.circle.badge.plus")
-        }
+        if userRoleManager.isAdmin {
+            Button(action: { stateManager.addUserState.toggle() }) {
+                Label("Добавить пользователя", systemImage: "person.crop.circle.badge.plus")
+            }
 
-        Button(action: { stateManager.deleteUserState.toggle() }) {
-            Label("Удалить пользователя", systemImage: "person.crop.circle.badge.minus")
-        }
+            Button(action: { stateManager.deleteUserState.toggle() }) {
+                Label("Удалить пользователя", systemImage: "person.crop.circle.badge.minus")
+            }
 
-        Button(action: { stateManager.addProjectState.toggle() }) {
-            Label("Добавить проект", systemImage: "plus.rectangle.on.rectangle")
+            Button(action: { stateManager.addProjectState.toggle() }) {
+                Label("Добавить проект", systemImage: "plus.rectangle.on.rectangle")
+            }
         }
 
         Button(role: .destructive) {

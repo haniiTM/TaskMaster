@@ -11,12 +11,10 @@ import shared
 class DetailedTaskInfo: ProjectInfo {
     var allocatedTime: UInt8 = 0
     var spentTime: String = "00:00"
-
     var taskDependsOn: TaskDependsOn = .init(nil)
-
     var categoryId: UInt8 = 0
-
     var statusId: UInt8 = 0
+    var canAddLaborCost = false
 
     //    let canAddManHours: String
     //    let projectId: String
@@ -37,8 +35,8 @@ class DetailedTaskInfo: ProjectInfo {
         self.taskDependsOn = taskDependsOn
 
         categoryId = task.typeofactivityid as? UInt8 ?? self.categoryId
-
         statusId = task.status as? UInt8 ?? self.statusId
+        canAddLaborCost = task.canAddManHours as? Bool ?? false
 
         super.init(id: id, title: title, timerValue: timerValue, participiantsValue: participiantsValue)
     }

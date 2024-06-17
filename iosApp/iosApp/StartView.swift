@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct StartView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authManager: AuthManager
 
     var body: some View {
-        if authViewModel.isAuthenticated {
+        if authManager.isAuthenticated {
             ProjectListView()
         } else {
             LoginScreenView()

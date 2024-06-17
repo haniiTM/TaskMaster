@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProjectListView: View {
     //    MARK: Props
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authManager: AuthManager
 
     @StateObject private var viewModel = ProjectListViewModel()
     @StateObject private var stateManager = ProjectListStateManager()
@@ -61,7 +61,7 @@ struct ProjectListView: View {
         })
         .alert(isPresented: $stateManager.isLogOutAlertPresented) {
             DestructiveAlertTemplate("Выход из аккаунта") {
-                authViewModel.isAuthenticated = false
+                authManager.isAuthenticated = false
             } secondaryButtonAction: {
                 stateManager.isLogOutAlertPresented = false
             }.body
