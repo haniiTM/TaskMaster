@@ -14,6 +14,7 @@ struct TaskCreationAlert: View {
     @ObservedObject private var alertManager: TaskListStateManager
 
     private let parentId: UInt16
+    @State private var isEmpty = true
     @State private var title = ""
     @State private var estimatedTime = ""
     @State private var categoryMenuTitle = "Выбор категории"
@@ -26,34 +27,44 @@ struct TaskCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Создать задачу")
+        TemplateCreationAlert("Новая задача",
+                              "Создать",
+                              $isEmpty)
         { ViewBody } action: {
-            Task { await addTask(title, estimatedTime: estimatedTime, categoryId: categoryId) }
+            Task { await addTask() }
         }
     }
 
     private var ViewBody: some View {
         TaskCreationForm
             .task { await viewModel.getCategoryList() }
+            .onChange(of: title) { _ in checkIfEmpty() }
+            .onChange(of: estimatedTime) { _ in checkIfEmpty() }
+            .onChange(of: categoryMenuTitle) { _ in checkIfEmpty() }
     }
 
     @ViewBuilder
     private var TaskCreationForm: some View {
-        TextField(text: $title) {
-            Text("Название задачи")
-                .padding()
-        }
+        CustomTextField("Название задачи",
+                        $title)
 
-        TextField(text: $estimatedTime) {
-            Text("Временная оценка")
-                .padding()
+        CustomTextField("Оценка времени",
+                        $estimatedTime)
+        .onChange(of: estimatedTime) { value in
+            estimatedTime = value.formatInput()
         }
 
         Menu {
-            ForEach(viewModel.categoryListSignal, id: \.id) { category in
-                Button(category.name) {
+            ForEach(viewModel.categoryListSignal.reversed(), id: \.id) { category in
+                Button {
                     categoryId = UInt8(category.id)
                     categoryMenuTitle = category.name
+                } label: {
+                    Label {
+                        Text(category.name)
+                    } icon: {
+                        Image(systemName: category.name.getIconByRole())
+                    }
                 }
             }
         } label: {
@@ -62,16 +73,22 @@ struct TaskCreationAlert: View {
 
                 Spacer()
 
+                if categoryMenuTitle == "Выбор категории" {
+                    Image(systemName: "exclamationmark.triangle")
+                        .tint(.pink)
+                }
+
                 Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
             }
         }.tint(.primary)
     }
 
-    private func addTask(_ title: String, estimatedTime: String, categoryId: UInt8) async {
+    private func addTask() async {
         let taskDto = TaskDTO()
         taskDto.name = title
 
-        let scope = Int32(estimatedTime) ?? 0
+        let formattedEstimatedTime = estimatedTime.replacingOccurrences(of: ":", with: "")
+        let scope = Int32(formattedEstimatedTime) ?? 0
         taskDto.scope = .init(int: scope)
 
         let typeofactivityid = Int32(categoryId)
@@ -79,5 +96,13 @@ struct TaskCreationAlert: View {
 
         await viewModel.createTask(parentId, taskDto: taskDto)
         alertManager.addTaskState.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty =
+        title.isEmpty ||
+        estimatedTime.isEmpty ||
+        estimatedTime.count < 5 ||
+        categoryMenuTitle == "Выбор категории"
     }
 }

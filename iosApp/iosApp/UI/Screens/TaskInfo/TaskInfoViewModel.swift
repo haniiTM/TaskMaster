@@ -75,6 +75,8 @@ import shared
             }
 
             userListSignal = unwrappedUserList
+
+            await getTaskInfo(parentId)
         } catch {
             print(error.localizedDescription)
         }
@@ -120,6 +122,7 @@ import shared
                                          creater_project: nil)
 
             try await taskInfoUseCase.addUserToTask(urp: urp)
+            await getTaskInfo(parentId)
         } catch {
             print(error.localizedDescription)
         }

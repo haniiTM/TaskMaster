@@ -6,6 +6,7 @@
 //  Copyright © 2024 TaskMaster. All rights reserved.
 //
 
+import SwiftUI
 import shared
 
 final class TaskCardController: TaskCardControllerProtocol {
@@ -13,7 +14,8 @@ final class TaskCardController: TaskCardControllerProtocol {
     private let viewModel: any TaskCardViewModelProtocol
     var stateManager: any CardDeletionAlertPresentable
     let model: any TaskInfoProtocol
-    
+
+    @Binding private var isPendingTaskAlertPresented: Bool
     private let parentId: UInt16
     var isCompleted: Bool {
         model.statusId == 1
@@ -22,11 +24,13 @@ final class TaskCardController: TaskCardControllerProtocol {
 
     //    MARK: Init
     init(_ projectId: UInt16,
+         _ isPendingTaskAlertPresented: Binding<Bool>,
          _ model: any TaskInfoProtocol,
          _ stateManager: any CardDeletionAlertPresentable,
          _ viewModel: any TaskCardViewModelProtocol)
     {
         parentId = projectId
+        self._isPendingTaskAlertPresented = isPendingTaskAlertPresented
         self.model = model
         self.stateManager = stateManager
         self.viewModel = viewModel
@@ -43,14 +47,17 @@ final class TaskCardController: TaskCardControllerProtocol {
     func changeStatus() async {
         Task {
             var statusId: UInt8 = 3
+            
             if model.statusId == 1 || model.statusId == 2 {
                 statusId = model.statusId == 1 ? 2 : 1
-            }
 
-            await viewModel.updateTaskStatus(model.id,
-                                             title: model.title,
-                                             statusId: statusId)
-            await viewModel.updateDataSource(parentId)
+                await viewModel.updateTaskStatus(model.id,
+                                                 title: model.title,
+                                                 statusId: statusId)
+                await viewModel.updateDataSource(parentId)
+            } else {
+                isPendingTaskAlertPresented = true
+            }
         }
     }
 

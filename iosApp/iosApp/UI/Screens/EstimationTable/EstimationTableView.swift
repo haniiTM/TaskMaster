@@ -41,13 +41,17 @@ struct EstimationTableView: View {
             ) {
                 await viewModel.downloadGanttTable(projectId)
             } content: {
-                GanttTableView(projectId: projectId, ganttList: viewModel.ganttReportList)
+                GanttTableView(projectTitle: projectTitle,
+                               projectId: projectId,
+                               ganttList: viewModel.ganttReportList)
             }
 
-            CalendarSection(title: "Расчет трудозатрат") {
+            CalendarSection(title: "Трудозатраты") {
                 await viewModel.downloadLaborCostTable(projectId)
             } content: {
-                LaborCostTableView(projectId: projectId, laborCostList: viewModel.laborCostReportList)
+                LaborCostTableView(projectTitle: projectTitle,
+                                   projectId: projectId,
+                                   laborCostList: viewModel.laborCostReportList)
             }
         }
     }
@@ -69,12 +73,15 @@ struct CalendarSection<Content: View>: View {
                 Text(title)
                     .font(.title3)
                     .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
+                    .minimumScaleFactor(0.5)
                     .padding(8)
                     .tint(.primary)
                     .background(
                         .ultraThinMaterial,
                         in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                     )
+
+                Spacer()
 
                 Button(
                     action: {

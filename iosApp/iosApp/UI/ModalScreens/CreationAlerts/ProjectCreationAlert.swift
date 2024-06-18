@@ -11,7 +11,9 @@ import SwiftUI
 struct ProjectCreationAlert: View {
     @ObservedObject private var viewModel: ProjectListViewModel
     @ObservedObject private var alertManager: ProjectListStateManager
+
     @State private var text = ""
+    @State private var isEmpty = true
 
     init(alertManager: ProjectListStateManager, viewModel: ProjectListViewModel) {
         self.alertManager = alertManager
@@ -19,21 +21,26 @@ struct ProjectCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Создать проект")
+        TemplateCreationAlert("Новый проект",
+                              "Создать",
+                              $isEmpty)
         { ViewBody } action: {
-            Task { await addProject(text) }
+            Task { await addProject() }
         }
     }
 
     private var ViewBody: some View {
-        TextField(text: $text) {
-            Text("Название проекта")
-                .padding()
-        }
+        CustomTextField("Название проекта",
+                        $text)
+        .onChange(of: text) { _ in checkIfEmpty() }
     }
 
-    private func addProject(_ title: String) async {
-        await viewModel.createProject(title)
+    private func addProject() async {
+        await viewModel.createProject(text)
         alertManager.addProjectState.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty = text.isEmpty
     }
 }

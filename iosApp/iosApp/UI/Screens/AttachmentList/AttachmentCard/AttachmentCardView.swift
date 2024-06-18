@@ -46,6 +46,7 @@ struct AttachmentCardView: View {
     private var attachmentCard: some View {
         HStack {
             Text(title)
+                .padding()
 
             Spacer()
 
@@ -65,9 +66,9 @@ struct AttachmentCardView: View {
                 }
             } label: {
                 Image(systemName: imageName)
+                    .padding()
             }
         }
-        .padding()
         .tint(.primary)
         .background(
             Color(uiColor: .secondarySystemBackground),

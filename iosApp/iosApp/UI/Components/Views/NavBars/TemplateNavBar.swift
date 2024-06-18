@@ -38,20 +38,24 @@ struct TemplateNavBar<Content: View, NavBarItems: View>: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
-                        Button(action: { themeManager.isDarkThemeActive.toggle() }) {
-                            Label("Сменить тему", systemImage: colorScheme == .dark ? "sun.min" : "moon.circle")
+                        Button {
+                            themeManager.isDarkThemeActive.toggle()
+                        } label: {
+                            Label("Сменить тему",
+                                  systemImage: colorScheme == .dark ? "sun.min" : "moon.circle")
                         }
 
-                        Button(action: {
-                            //                            Task { await viewModel.search() }
+                        Button {
                             isSearchPresented.toggle()
-                        }) {
-                            Label("Поиск", systemImage: Constants.Strings.ImageNames.searchActionImageName)
+                        } label: {
+                            Label("Поиск",
+                                  systemImage: Constants.Strings.ImageNames.searchActionImageName)
                         }
 
                         navBarItems()
                     } label: {
                         Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
+                            .padding()
                     }
                 }
             }

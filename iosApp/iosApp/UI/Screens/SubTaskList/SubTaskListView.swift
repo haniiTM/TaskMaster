@@ -72,6 +72,10 @@ struct SubTaskListView: View {
             .sheet(isPresented: $stateManager.isCreationAlertShown) {
                 SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
             }
+            .alert(isPresented: $stateManager.isPendingTaskAlertPresented) {
+                .init(title: Text("Ошибка"),
+                      message: Text("Задаче с статусом \'В ожидании\' не может быть присвоен статус \'Готово\'"))
+            }
     }
 
     private var ViewBody: some View {
@@ -80,8 +84,8 @@ struct SubTaskListView: View {
                          $searchText)
         {
             NavigationLink(destination: TaskInfoView(title,
-                                                     projectId: projectId,
-                                                     taskId: model.id)) {
+                                                     projectId,
+                                                     model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.tint(.primary)
 
@@ -94,10 +98,15 @@ struct SubTaskListView: View {
 
             SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
                 ForEach(filteredItems.unCompletedTaskList) { subTask in
-                    SubTaskCardView(model.id,
-                                    subTask,
-                                    stateManager,
-                                    viewModel)
+                    NavigationLink(destination: SubTaskListView(title,
+                                                                projectId: projectId,
+                                                                model: subTask)) {
+                        SubTaskCardView(model.id,
+                                        subTask,
+                                        $stateManager.isPendingTaskAlertPresented,
+                                        stateManager,
+                                        viewModel)
+                    }.tint(.primary)
                 }
 
                 SubTaskCreationButton(stateManager: stateManager)
@@ -105,10 +114,15 @@ struct SubTaskListView: View {
 
             CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { subTask in
-                    SubTaskCardView(model.id,
-                                    subTask,
-                                    stateManager,
-                                    viewModel)
+                    NavigationLink(destination: SubTaskListView(title,
+                                                                projectId: model.id,
+                                                                model: subTask)) {
+                        SubTaskCardView(model.id,
+                                        subTask,
+                                        $stateManager.isPendingTaskAlertPresented,
+                                        stateManager,
+                                        viewModel)
+                    }.tint(.primary)
                 }
             }
         }

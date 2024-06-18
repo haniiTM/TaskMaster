@@ -9,7 +9,7 @@
 import shared
 
 class DetailedTaskInfo: ProjectInfo {
-    var allocatedTime: UInt8 = 0
+    var allocatedTime: UInt16 = 0
     var spentTime: String = "00:00"
     var taskDependsOn: TaskDependsOn = .init(nil)
     var categoryId: UInt8 = 0
@@ -27,7 +27,7 @@ class DetailedTaskInfo: ProjectInfo {
         let title = task.name ?? "Задача"
         let participiantsValue = task.userCount as? UInt8 ?? 0
 
-        allocatedTime = task.spentTime as? UInt8 ?? self.allocatedTime
+        allocatedTime = task.spentTime as? UInt16 ?? self.allocatedTime
         let timerValue = task.score as? UInt16 ?? 0
         spentTime = task.spentedTime ?? self.spentTime
 

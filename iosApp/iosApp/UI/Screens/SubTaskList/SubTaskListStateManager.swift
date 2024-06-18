@@ -13,4 +13,5 @@ final class SubTaskListStateManager: TaskListStateManagerProtocol {
     @Published var isUserListVisible = false
     @Published var isUserAdditionAlertVisible = false
     @Published var isCardDeletionAlertPresented = false
+    @Published var isPendingTaskAlertPresented = false
 }

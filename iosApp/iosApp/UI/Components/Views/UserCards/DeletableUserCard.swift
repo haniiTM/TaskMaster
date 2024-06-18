@@ -45,7 +45,8 @@ struct DeletableUserCard<ViewModel: UserDeletable & TaskUserListUpdater>: View {
                         Label("Удалить", systemImage: "trash")
                     })
                 } label: {
-                    Image(systemName: "ellipsis")
+                    Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
+                        .padding()
                 }
             }
         }

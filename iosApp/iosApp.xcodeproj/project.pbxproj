@@ -119,6 +119,8 @@
 		CEC085FC2BF79B3800BBBEC2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */; };
 		CEC085FE2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */; };
 		CEC5B6662C20A7100092FB2D /* NotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5B6652C20A7100092FB2D /* NotificationAlert.swift */; };
+		CEC5B6682C2100380092FB2D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5B6672C2100380092FB2D /* CustomTextField.swift */; };
+		CEC5B66A2C2115D40092FB2D /* CustomMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC5B6692C2115D40092FB2D /* CustomMenu.swift */; };
 		CEC6010A2BFDFD280016DC0F /* TemplateCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */; };
 		CEC6010C2BFE62D40016DC0F /* TaskCreationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6010B2BFE62D30016DC0F /* TaskCreationAlert.swift */; };
 		CEC6010E2BFE6C960016DC0F /* TaskListStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */; };
@@ -254,6 +256,8 @@
 		CEC085FB2BF79B3800BBBEC2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CEC085FD2BF7DFA900BBBEC2 /* TaskInfoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoProtocol.swift; sourceTree = "<group>"; };
 		CEC5B6652C20A7100092FB2D /* NotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlert.swift; sourceTree = "<group>"; };
+		CEC5B6672C2100380092FB2D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		CEC5B6692C2115D40092FB2D /* CustomMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenu.swift; sourceTree = "<group>"; };
 		CEC601092BFDFD280016DC0F /* TemplateCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCreationAlert.swift; sourceTree = "<group>"; };
 		CEC6010B2BFE62D30016DC0F /* TaskCreationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreationAlert.swift; sourceTree = "<group>"; };
 		CEC6010D2BFE6C960016DC0F /* TaskListStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListStateManager.swift; sourceTree = "<group>"; };
@@ -438,6 +442,8 @@
 			isa = PBXGroup;
 			children = (
 				287638F92BB1B87B00B55DBF /* Logo.swift */,
+				CEC5B6672C2100380092FB2D /* CustomTextField.swift */,
+				CEC5B6692C2115D40092FB2D /* CustomMenu.swift */,
 				2864E6B12BD39AEC00504DE0 /* GradientBG */,
 				2864E6A92BD3803200504DE0 /* TaskFrames */,
 				CEB4305C2C0B398900C6D149 /* UserCards */,
@@ -987,6 +993,7 @@
 				CED884B22C078A2000617B3D /* CheckableUserCard.swift in Sources */,
 				28EA9D042BD590C700B31497 /* SubTaskListView.swift in Sources */,
 				28E796182BD9B34600D402E4 /* TaskInfoView.swift in Sources */,
+				CEC5B6682C2100380092FB2D /* CustomTextField.swift in Sources */,
 				28EA9CF52BD5525700B31497 /* ProjectListViewModel.swift in Sources */,
 				CEB4B3002C0DF7C200A6CB96 /* UserListAdditionAlert.swift in Sources */,
 				2864E6B82BD3B4D900504DE0 /* MainFrameAction.swift in Sources */,
@@ -1033,6 +1040,7 @@
 				28E7960A2BD96FDA00D402E4 /* AttachmentListModel.swift in Sources */,
 				2894CEC02BD92FDD00B8AB1C /* TaskCardControllerProtocol.swift in Sources */,
 				2864E6CE2BD409A900504DE0 /* LoginError.swift in Sources */,
+				CEC5B66A2C2115D40092FB2D /* CustomMenu.swift in Sources */,
 				289BFD272BD1801B00099EAE /* TaskCardsConstants.swift in Sources */,
 				CEC085FC2BF79B3800BBBEC2 /* Extensions.swift in Sources */,
 				289BFD2D2BD18B1500099EAE /* ProjectCardView.swift in Sources */,

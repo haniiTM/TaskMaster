@@ -25,13 +25,43 @@ struct iOSApp: App {
 
 // MARK: - Environment Objects
 final class AuthManager: ObservableObject {
-    @Published var isAuthenticated = false
+    @AppStorage("isAuthenticated") private var isAuthenticatedKey: Bool?
+
+    @Published var isAuthenticated = false {
+        didSet {
+            isAuthenticatedKey = isAuthenticated
+        }
+    }
+
+    init() {
+        isAuthenticated = isAuthenticatedKey ?? false
+    }
 }
 
 final class ThemeManager: ObservableObject {
-    @Published var isDarkThemeActive = true
+    @AppStorage("isDarkThemeActive") private var isDarkThemeActiveKey: Bool?
+
+    @Published var isDarkThemeActive = true {
+        didSet {
+            isDarkThemeActiveKey = isDarkThemeActive
+        }
+    }
+
+    init() {
+        isDarkThemeActive = isDarkThemeActiveKey ?? true
+    }
 }
 
 final class UserRoleManager: ObservableObject {
-    @Published var isAdmin = false
+    @AppStorage("isAdmin") private var isAdminKey: Bool?
+
+    @Published var isAdmin = false  {
+        didSet {
+            isAdminKey = isAdmin
+        }
+    }
+
+    init() {
+        isAdmin = isAdminKey ?? false
+    }
 }

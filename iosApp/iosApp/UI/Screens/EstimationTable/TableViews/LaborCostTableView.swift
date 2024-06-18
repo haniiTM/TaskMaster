@@ -10,6 +10,7 @@ import SwiftUI
 import shared
 
 struct LaborCostTableView: View {
+    let projectTitle: String
     let projectId: UInt16
     let laborCostList: [ManHoursReportDTO]
 
@@ -29,6 +30,8 @@ struct LaborCostTableView: View {
 
         EstimationTableViewTemplate(soloData: uniqueDateList,
                                     pairData: laborList,
-                                    tripleData: hourList)
+                                    tripleData: hourList,
+                                    projectTitle: projectTitle,
+                                    projectId: projectId)
     }
 }

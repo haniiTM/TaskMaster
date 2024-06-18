@@ -23,6 +23,10 @@ struct TableHeader: View {
             .frame(width: 100, height: 50)
             .padding(8)
             .border(.primary)
+            .background(
+                Color(uiColor: .secondarySystemBackground),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
         }
     }
 }
@@ -32,22 +36,24 @@ struct TableRow: View {
     let dateList: [Date]
     let hourDataList: [(Date, String, Int32)]
 
+    let projectTitle: String
+    let projectId: UInt16
+    let taskId: UInt16
+
     var body: some View {
         HStack(spacing: 0) {
-            Group {
-                FirstTableDataCell(text: data.0.description)
+            FirstTableDataCell(text: data.0.description,
+                               projectTitle: projectTitle,
+                               projectId: projectId,
+                               taskId: taskId)
 
-                ForEach(dateList, id: \.self) { date in
-                    let matchingEntry = hourDataList.first { $0.0 == date && $0.2 == data.0 }
-                    let matchingHour = matchingEntry?.1 ?? "-"
-                    let matchingHourColor: Color = (matchingEntry?.1 == "true") ? .green : .white
+            ForEach(dateList, id: \.self) { date in
+                let matchingEntry = hourDataList.first { $0.0 == date && $0.2 == data.0 }
+                let matchingHour = matchingEntry?.1 ?? "-"
+                let matchingHourColor: Color = (matchingEntry?.1 == "true") ? .green : .white
 
-                    TableDataCell(text: matchingHour, bgColor: matchingHourColor)
-                }
+                TableDataCell(text: matchingHour, bgColor: matchingHourColor)
             }
-            .frame(width: 100, height: 50)
-            .padding(8)
-            .border(.primary)
         }
     }
 }
@@ -62,9 +68,24 @@ struct TableHeaderCell: View {
 
 struct FirstTableDataCell: View {
     let text: String
+    let projectTitle: String
+    let projectId: UInt16
+    let taskId: UInt16
 
     var body: some View {
-        Text(text)
+        NavigationLink(destination: TaskInfoView(projectTitle,
+                                                 projectId,
+                                                 taskId)) {
+            Text(text)
+                .frame(width: 100, height: 50)
+                .padding(8)
+                .border(.primary)
+                .background(
+                    Color(uiColor: .secondarySystemBackground),
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                )
+        }
+        .tint(.primary)
     }
 }
 
@@ -75,7 +96,9 @@ struct TableDataCell: View {
     var body: some View {
         Text(text == "true" ? "" : text)
             .foregroundColor(.black)
-            .padding()
+            .frame(width: 100, height: 50)
+            .padding(8)
             .background(bgColor)
+            .border(.primary)
     }
 }

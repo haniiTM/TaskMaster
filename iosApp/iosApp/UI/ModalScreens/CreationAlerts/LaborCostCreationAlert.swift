@@ -17,8 +17,9 @@ struct LaborCostCreationAlert: View {
     @State private var date = Date()
     @State private var note = ""
     @State private var spentTime = ""
-    @State private var activityMenuTitle = "Деятельность"
+    @State private var activityMenuTitle = "Выбор деятельности"
     @State private var activityId: UInt8 = 0
+    @State private var isEmpty = true
 
     init(_ taskId: UInt16, stateManager: TaskInfoStateManager, viewModel: TaskInfoViewModel) {
         self.taskId = taskId
@@ -27,7 +28,9 @@ struct LaborCostCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Добавить трудозатрату")
+        TemplateCreationAlert("Новая трудозатрата",
+                              "Создать",
+                              $isEmpty)
         { ViewBody } action: {
             Task { await addLaborCost() }
         }
@@ -36,24 +39,27 @@ struct LaborCostCreationAlert: View {
     private var ViewBody: some View {
         LaborCostCreationForm
             .task { await viewModel.getActivityList() }
+            .onChange(of: date) { _ in checkIfEmpty() }
+            .onChange(of: note) { _ in checkIfEmpty() }
+            .onChange(of: spentTime) { _ in checkIfEmpty() }
+            .onChange(of: activityMenuTitle) { _ in checkIfEmpty() }
     }
 
     @ViewBuilder
     private var LaborCostCreationForm: some View {
         DatePicker("Дата", selection: $date, displayedComponents: .date)
 
-        TextField(text: $note) {
-            Text("Комментарий")
-                .padding()
-        }
+        CustomTextField("Комментарий",
+                        $note)
 
-        TextField(text: $spentTime) {
-            Text("Затраченное время")
-                .padding()
+        CustomTextField("Затраченное время",
+                        $spentTime)
+        .onChange(of: spentTime) { value in
+            spentTime = value.formatInput()
         }
 
         Menu {
-            ForEach(viewModel.activityListSignal, id: \.id) { activity in
+            ForEach(viewModel.activityListSignal.reversed(), id: \.id) { activity in
                 Button(activity.name ?? "-") {
                     activityId = UInt8(activity.id ?? 0)
                     activityMenuTitle = activity.name ?? "-"
@@ -64,6 +70,11 @@ struct LaborCostCreationAlert: View {
                 Text(activityMenuTitle)
 
                 Spacer()
+
+                if activityMenuTitle == "Выбор деятельности" {
+                    Image(systemName: "exclamationmark.triangle")
+                        .tint(.pink)
+                }
 
                 Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
             }
@@ -93,7 +104,15 @@ struct LaborCostCreationAlert: View {
 
         await viewModel.createLaborCost(taskId, laborCost: laborCost)
         await viewModel.getTaskInfo(taskId)
-        
+
         stateManager.isCreationAlertShown.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty =
+        note.isEmpty ||
+        spentTime.isEmpty ||
+        spentTime.count < 5 ||
+        activityMenuTitle == "Выбор деятельности"
     }
 }

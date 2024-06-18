@@ -94,6 +94,40 @@ extension String {
     }
 }
 
+extension String {
+    func formatInput() -> String {
+        var filtered = self.filter { "0123456789".contains($0) }
+
+        if filtered.countOccurrences(of: ":") > 1 {
+            filtered.removeLast()
+        }
+
+        if filtered.count > 2 && !filtered.contains(":") {
+            filtered.insert(":", at: filtered.index(filtered.startIndex, offsetBy: 2))
+        }
+
+        if filtered.count > 5 {
+            filtered = String(filtered.prefix(5))
+        }
+
+        let components = filtered.split(separator: ":")
+        if components.count == 2 {
+            let part1 = String(components[0]).prefix(2)
+            let part2 = String(components[1]).prefix(2)
+            return "\(part1):\(part2)"
+        } else if components.count == 1 && filtered.count > 2 {
+            let part1 = String(components[0]).prefix(2)
+            return "\(part1):"
+        }
+
+        return filtered
+    }
+
+    func countOccurrences(of character: Character) -> Int {
+        return self.filter { $0 == character }.count
+    }
+}
+
 extension Date {
     func toGanttString() -> String {
         let formatter = DateFormatter()

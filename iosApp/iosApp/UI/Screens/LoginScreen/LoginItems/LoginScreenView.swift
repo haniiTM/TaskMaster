@@ -27,9 +27,12 @@ struct LoginScreenView: View {
         NavigationView {
             ViewBody
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: { themeManager.isDarkThemeActive.toggle() }) {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            themeManager.isDarkThemeActive.toggle()
+                        } label: {
                             Image(systemName: colorScheme == .dark ? "sun.min" : "moon.circle")
+                                .padding()
                         }
                     }
                 }
@@ -99,7 +102,7 @@ struct LoginScreenView: View {
             action: {
                 Task {
                     let response = await viewModel.loginUser(name: loginTextFieldState,
-                                                                    password: passwordTextFieldState)
+                                                             password: passwordTextFieldState)
 
                     if response.isValid {
                         isErrorPresented = false
@@ -108,6 +111,7 @@ struct LoginScreenView: View {
                         userRoleManager.isAdmin = response.isAdmin
                         authManager.isAuthenticated = true
                     } else {
+                        passwordTextFieldState = ""
                         isErrorPresented = true
                     }
                 }

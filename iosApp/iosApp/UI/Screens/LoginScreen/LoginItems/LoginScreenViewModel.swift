@@ -26,8 +26,8 @@ final class LoginScreenViewModel: ObservableObject {
             else { return (false, false) }
 
             userToken = token
-
-            return (token.isEmpty ? false : true, userRole)
+            let isAuthenticated = token.isEmpty ? false : true
+            return (isAuthenticated, userRole)
         } catch {
             print(error.localizedDescription)
             return (false, false)
