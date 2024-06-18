@@ -12,7 +12,7 @@ enum TaskSectionBGsConstants {
     //    MARK: Strings
     enum Strings {
         static let taskSectionTitle = "Задачи"
-        static let subTaskSectionTitle = "Подзадачи"
+        static let subTaskSectionTitle = taskSectionTitle
         static let completedTaskSectionTitle = "Выполнено"
     }
 

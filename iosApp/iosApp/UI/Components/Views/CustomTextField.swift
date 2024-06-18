@@ -26,7 +26,7 @@ struct CustomTextField: View {
             }
 
             Image(systemName: text.isEmpty ? "exclamationmark.triangle" : "")
-                .tint(.pink)
+                .foregroundColor(.pink)
         }
     }
 }

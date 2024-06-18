@@ -27,7 +27,9 @@ struct TaskCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Создать задачу", $isEmpty)
+        TemplateCreationAlert("Новая задача",
+                              "Создать",
+                              $isEmpty)
         { ViewBody } action: {
             Task { await addTask() }
         }
@@ -46,14 +48,23 @@ struct TaskCreationAlert: View {
         CustomTextField("Название задачи",
                         $title)
 
-        CustomTextField("Временная оценка",
+        CustomTextField("Оценка времени",
                         $estimatedTime)
+        .onChange(of: estimatedTime) { value in
+            estimatedTime = value.formatInput()
+        }
 
         Menu {
-            ForEach(viewModel.categoryListSignal, id: \.id) { category in
-                Button(category.name) {
+            ForEach(viewModel.categoryListSignal.reversed(), id: \.id) { category in
+                Button {
                     categoryId = UInt8(category.id)
                     categoryMenuTitle = category.name
+                } label: {
+                    Label {
+                        Text(category.name)
+                    } icon: {
+                        Image(systemName: category.name.getIconByRole())
+                    }
                 }
             }
         } label: {
@@ -61,6 +72,11 @@ struct TaskCreationAlert: View {
                 Text(categoryMenuTitle)
 
                 Spacer()
+
+                if categoryMenuTitle == "Выбор категории" {
+                    Image(systemName: "exclamationmark.triangle")
+                        .tint(.pink)
+                }
 
                 Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
             }
@@ -71,7 +87,8 @@ struct TaskCreationAlert: View {
         let taskDto = TaskDTO()
         taskDto.name = title
 
-        let scope = Int32(estimatedTime) ?? 0
+        let formattedEstimatedTime = estimatedTime.replacingOccurrences(of: ":", with: "")
+        let scope = Int32(formattedEstimatedTime) ?? 0
         taskDto.scope = .init(int: scope)
 
         let typeofactivityid = Int32(categoryId)
@@ -82,6 +99,10 @@ struct TaskCreationAlert: View {
     }
 
     private func checkIfEmpty() {
-        isEmpty = title.isEmpty || estimatedTime.isEmpty || categoryMenuTitle == "Выбор категории"
+        isEmpty =
+        title.isEmpty ||
+        estimatedTime.isEmpty ||
+        estimatedTime.count < 5 ||
+        categoryMenuTitle == "Выбор категории"
     }
 }

@@ -11,14 +11,17 @@ import SwiftUI
 struct TemplateCreationAlert<Content: View>: View {
     @ViewBuilder private let content: () -> Content
     private let title: String
+    private let buttonTitle: String
     private let action: () -> Void
     @Binding private var isEmpty: Bool
 
     init(_ title: String,
+         _ buttonTitle: String,
          _ isEmpty: Binding<Bool>,
          @ViewBuilder content: @escaping () -> Content,
          action: @escaping () -> Void) {
         self.title = title
+        self.buttonTitle = buttonTitle
         self._isEmpty = isEmpty
         self.content = content
         self.action = action
@@ -26,7 +29,11 @@ struct TemplateCreationAlert<Content: View>: View {
 
     var body: some View {
         VStack {
-            VStack(spacing: 64) {
+            VStack {
+                Text(title)
+
+                Divider().background(.secondary)
+
                 VStack {
                     Group {
                         content()
@@ -39,20 +46,18 @@ struct TemplateCreationAlert<Content: View>: View {
                     )
                 }
 
-                VStack {
-                    Divider().background(.secondary)
+                Divider().background(.secondary)
 
-                    Button {
-                        if !isEmpty { action() }
-                    } label: {
-                        Text(title)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .padding(.horizontal)
-                            .foregroundColor(.white)
-                            .background(isEmpty ? Color.secondary : Color.accentColor,
-                                        in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-                    }
+                Button {
+                    if !isEmpty { action() }
+                } label: {
+                    Text(buttonTitle)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .padding(.horizontal)
+                        .foregroundColor(.white)
+                        .background(isEmpty ? Color.secondary : Color.accentColor,
+                                    in: RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
             }
             .padding()
@@ -61,5 +66,6 @@ struct TemplateCreationAlert<Content: View>: View {
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
         }
+        .padding(.horizontal)
     }
 }

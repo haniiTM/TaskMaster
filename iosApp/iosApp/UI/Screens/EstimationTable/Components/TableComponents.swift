@@ -23,6 +23,10 @@ struct TableHeader: View {
             .frame(width: 100, height: 50)
             .padding(8)
             .border(.primary)
+            .background(
+                Color(uiColor: .secondarySystemBackground),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
         }
     }
 }
@@ -34,7 +38,6 @@ struct TableRow: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Group {
                 FirstTableDataCell(text: data.0.description)
 
                 ForEach(dateList, id: \.self) { date in
@@ -44,10 +47,6 @@ struct TableRow: View {
 
                     TableDataCell(text: matchingHour, bgColor: matchingHourColor)
                 }
-            }
-            .frame(width: 100, height: 50)
-            .padding(8)
-            .border(.primary)
         }
     }
 }
@@ -65,6 +64,13 @@ struct FirstTableDataCell: View {
 
     var body: some View {
         Text(text)
+            .frame(width: 100, height: 50)
+            .padding(8)
+            .border(.primary)
+            .background(
+                Color(uiColor: .secondarySystemBackground),
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
     }
 }
 
@@ -75,7 +81,9 @@ struct TableDataCell: View {
     var body: some View {
         Text(text == "true" ? "" : text)
             .foregroundColor(.black)
-            .padding()
+            .frame(width: 100, height: 50)
+            .padding(8)
             .background(bgColor)
+            .border(.primary)
     }
 }

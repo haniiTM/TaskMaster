@@ -17,7 +17,7 @@ struct LaborCostCreationAlert: View {
     @State private var date = Date()
     @State private var note = ""
     @State private var spentTime = ""
-    @State private var activityMenuTitle = "Деятельность"
+    @State private var activityMenuTitle = "Выбор деятельности"
     @State private var activityId: UInt8 = 0
     @State private var isEmpty = true
 
@@ -28,7 +28,9 @@ struct LaborCostCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Добавить трудозатрату", $isEmpty)
+        TemplateCreationAlert("Новая трудозатрата",
+                              "Создать",
+                              $isEmpty)
         { ViewBody } action: {
             Task { await addLaborCost() }
         }
@@ -52,9 +54,12 @@ struct LaborCostCreationAlert: View {
 
         CustomTextField("Затраченное время",
                         $spentTime)
+        .onChange(of: spentTime) { value in
+            spentTime = value.formatInput()
+        }
 
         Menu {
-            ForEach(viewModel.activityListSignal, id: \.id) { activity in
+            ForEach(viewModel.activityListSignal.reversed(), id: \.id) { activity in
                 Button(activity.name ?? "-") {
                     activityId = UInt8(activity.id ?? 0)
                     activityMenuTitle = activity.name ?? "-"
@@ -65,6 +70,11 @@ struct LaborCostCreationAlert: View {
                 Text(activityMenuTitle)
 
                 Spacer()
+
+                if activityMenuTitle == "Выбор деятельности" {
+                    Image(systemName: "exclamationmark.triangle")
+                        .tint(.pink)
+                }
 
                 Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
             }
@@ -94,11 +104,15 @@ struct LaborCostCreationAlert: View {
 
         await viewModel.createLaborCost(taskId, laborCost: laborCost)
         await viewModel.getTaskInfo(taskId)
-        
+
         stateManager.isCreationAlertShown.toggle()
     }
 
     private func checkIfEmpty() {
-        isEmpty = note.isEmpty || spentTime.isEmpty || activityMenuTitle == "Деятельность"
+        isEmpty =
+        note.isEmpty ||
+        spentTime.isEmpty ||
+        spentTime.count < 5 ||
+        activityMenuTitle == "Выбор деятельности"
     }
 }

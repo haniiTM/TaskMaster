@@ -15,6 +15,7 @@ struct TaskInfoView: View {
     @StateObject private var stateManager = TaskInfoStateManager()
 
     @State private var action: () async -> Void = {}
+    @State private var timeEditTitle = ""
     @State private var timeEditText = ""
     @State private var searchText = ""
 
@@ -65,7 +66,7 @@ struct TaskInfoView: View {
         participantValue = model.participiantsValue.description
         //        participantAvatar = "person.crop.circle"
 
-        hoursDaysSpentTitle = "Затрачиваемые часы / день"
+        hoursDaysSpentTitle = "Затрачиваемые часы / день:"
         //        urgentImageName = TaskCardsConstants.Strings.ImageNames.urgentImageName
         hoursDaysSpentValue = model.allocatedTime.description
 
@@ -106,7 +107,8 @@ struct TaskInfoView: View {
                                       viewModel: viewModel)
             }
             .sheet(isPresented: $stateManager.isTimeEditAlertVisible) {
-                TimeEditAlert($timeEditText,
+                TimeEditAlert(timeEditTitle,
+                              $timeEditText,
                               stateManager: stateManager)
                 { await action() }
             }
@@ -173,26 +175,33 @@ struct TaskInfoView: View {
             {
                 timeEditText = viewModel.taskInfo.allocatedTime.description
                 action = {
-                    await viewModel.updateHoursSpent(taskId, hours: timeEditText)
+                    let formattedTime = timeEditText.replacingOccurrences(of: ":", with: "")
+                    await viewModel.updateHoursSpent(taskId, hours: formattedTime)
                     await viewModel.getTaskInfo(taskId)
                 }
-                
+
+                timeEditTitle = hoursDaysSpentTitle
                 stateManager.isTimeEditAlertVisible.toggle()
             }
             Divider()
         }
 
-        ButtonRow(timeEstimationTitle,
-                  viewModel.taskInfo.timerValue.description)
-        {
-            timeEditText = viewModel.taskInfo.timerValue.description
-            action = {
-                await viewModel.updateEstimatedTime(taskId, hours: timeEditText)
-                await viewModel.getTaskInfo(taskId)
+        if viewModel.taskInfo.canAddLaborCost {
+            ButtonRow(timeEstimationTitle,
+                      viewModel.taskInfo.timerValue.description)
+            {
+                timeEditText = viewModel.taskInfo.timerValue.description
+                action = {
+                    let formattedTime = timeEditText.replacingOccurrences(of: ":", with: "")
+                    await viewModel.updateEstimatedTime(taskId, hours: formattedTime)
+                    await viewModel.getTaskInfo(taskId)
+                }
+
+                timeEditTitle = timeEstimationTitle
+                stateManager.isTimeEditAlertVisible.toggle()
             }
-            stateManager.isTimeEditAlertVisible.toggle()
+            Divider()
         }
-        Divider()
     }
 
     @ViewBuilder

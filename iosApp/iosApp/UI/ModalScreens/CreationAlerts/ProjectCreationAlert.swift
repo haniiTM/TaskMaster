@@ -21,7 +21,8 @@ struct ProjectCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Создать проект",
+        TemplateCreationAlert("Новый проект",
+                              "Создать",
                               $isEmpty)
         { ViewBody } action: {
             Task { await addProject() }

@@ -49,7 +49,9 @@ struct LaborCostInfoAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Сохранить", $isEmpty)
+        TemplateCreationAlert("Трудозатрата № \(laborCostId)",
+                              "Сохранить",
+                              $isEmpty)
         { ViewBody } action: {
             Task { await saveChanges() }
         }
@@ -62,8 +64,6 @@ struct LaborCostInfoAlert: View {
 
     @ViewBuilder
     private var LaborCostInfoView: some View {
-        Text("Трудозатрата № \(laborCostId)")
-
         CustomTextField(note, $note)
 
         HStack {

@@ -15,7 +15,7 @@ enum ActionButtonsConstants {
         enum Titles {
             static let generalTitle = "Добавить "
             static let taskTitle = generalTitle + "задачу"
-            static let subTaskTitle = generalTitle + "подзадачу"
+            static let subTaskTitle = taskTitle
             static let laborCostTitle = generalTitle + "трудозатраты"
             static let attachmentTitle = generalTitle + "вложение"
         }

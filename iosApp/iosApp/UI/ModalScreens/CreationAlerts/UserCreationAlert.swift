@@ -21,7 +21,7 @@ struct UserCreationAlert: View {
     @State private var login = ""
     @State private var password = ""
 
-    @State private var roleTitle = "Роль"
+    @State private var roleTitle = "Выбор роли"
     @State private var roleId: UInt8 = 0
 
     init(_ stateManager: ProjectListStateManager, viewModel: ProjectListViewModel) {
@@ -30,7 +30,9 @@ struct UserCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Добавить пользователя", $isEmpty)
+        TemplateCreationAlert("Добавить пользователя",
+                              "Добавить",
+                              $isEmpty)
         { ViewBody } action: {
             Task { await createUser() }
         }
@@ -61,10 +63,16 @@ struct UserCreationAlert: View {
                         $password)
 
         Menu {
-            ForEach(viewModel.userRoleListSignal, id: \.id) { role in
-                Button(role.name) {
+            ForEach(viewModel.userRoleListSignal.reversed(), id: \.id) { role in
+                Button {
                     roleId = UInt8(role.id)
                     roleTitle = role.name
+                } label: {
+                    Label {
+                        Text(role.name)
+                    } icon: {
+                        Image(systemName: role.name.getIconByRole())
+                    }
                 }
             }
         } label: {
@@ -72,6 +80,11 @@ struct UserCreationAlert: View {
                 Text(roleTitle)
 
                 Spacer()
+
+                if roleTitle == "Выбор роли" {
+                    Image(systemName: "exclamationmark.triangle")
+                        .tint(.pink)
+                }
 
                 Image(systemName: "arrow.uturn.down.circle").scaleEffect(x: -1)
             }
@@ -89,6 +102,6 @@ struct UserCreationAlert: View {
     }
 
     private func checkIfEmpty() {
-        isEmpty = lastName.isEmpty || firstName.isEmpty || login.isEmpty || password.isEmpty || roleTitle == "Роль"
+        isEmpty = lastName.isEmpty || firstName.isEmpty || login.isEmpty || password.isEmpty || roleTitle == "Выбор роли"
     }
 }
