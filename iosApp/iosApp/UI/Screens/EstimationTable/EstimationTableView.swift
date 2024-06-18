@@ -41,13 +41,17 @@ struct EstimationTableView: View {
             ) {
                 await viewModel.downloadGanttTable(projectId)
             } content: {
-                GanttTableView(projectId: projectId, ganttList: viewModel.ganttReportList)
+                GanttTableView(projectTitle: projectTitle,
+                               projectId: projectId,
+                               ganttList: viewModel.ganttReportList)
             }
 
             CalendarSection(title: "Трудозатраты") {
                 await viewModel.downloadLaborCostTable(projectId)
             } content: {
-                LaborCostTableView(projectId: projectId, laborCostList: viewModel.laborCostReportList)
+                LaborCostTableView(projectTitle: projectTitle,
+                                   projectId: projectId,
+                                   laborCostList: viewModel.laborCostReportList)
             }
         }
     }

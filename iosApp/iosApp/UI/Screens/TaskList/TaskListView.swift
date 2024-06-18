@@ -97,7 +97,9 @@ struct TaskListView: View {
 
             CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
+                    NavigationLink(destination: SubTaskListView(model.title,
+                                                                projectId: model.id,
+                                                                model: task)) {
                         TaskCardView(model.id,
                                      $stateManager.isPendingTaskAlertPresented,
                                      task,

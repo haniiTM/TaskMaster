@@ -84,8 +84,8 @@ struct SubTaskListView: View {
                          $searchText)
         {
             NavigationLink(destination: TaskInfoView(title,
-                                                     projectId: projectId,
-                                                     taskId: model.id)) {
+                                                     projectId,
+                                                     model.id)) {
                 ScreenInfoButton(model.title, isUrgent: false)
             }.tint(.primary)
 
@@ -98,11 +98,15 @@ struct SubTaskListView: View {
 
             SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
                 ForEach(filteredItems.unCompletedTaskList) { subTask in
-                    SubTaskCardView(model.id,
-                                    subTask,
-                                    $stateManager.isPendingTaskAlertPresented,
-                                    stateManager,
-                                    viewModel)
+                    NavigationLink(destination: SubTaskListView(title,
+                                                                projectId: projectId,
+                                                                model: subTask)) {
+                        SubTaskCardView(model.id,
+                                        subTask,
+                                        $stateManager.isPendingTaskAlertPresented,
+                                        stateManager,
+                                        viewModel)
+                    }.tint(.primary)
                 }
 
                 SubTaskCreationButton(stateManager: stateManager)
@@ -110,11 +114,15 @@ struct SubTaskListView: View {
 
             CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
                 ForEach(filteredItems.completedTaskList) { subTask in
-                    SubTaskCardView(model.id,
-                                    subTask,
-                                    $stateManager.isPendingTaskAlertPresented,
-                                    stateManager,
-                                    viewModel)
+                    NavigationLink(destination: SubTaskListView(title,
+                                                                projectId: model.id,
+                                                                model: subTask)) {
+                        SubTaskCardView(model.id,
+                                        subTask,
+                                        $stateManager.isPendingTaskAlertPresented,
+                                        stateManager,
+                                        viewModel)
+                    }.tint(.primary)
                 }
             }
         }

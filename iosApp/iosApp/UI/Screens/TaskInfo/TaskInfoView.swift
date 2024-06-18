@@ -51,8 +51,8 @@ struct TaskInfoView: View {
 
     //    MARK: Init
     init(_ projectTitle: String,
-         projectId: UInt16,
-         taskId: UInt16) {
+         _ projectId: UInt16,
+         _ taskId: UInt16) {
         let model = DetailedTaskInfo()
 
         self.projectId = projectId

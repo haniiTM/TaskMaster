@@ -13,6 +13,9 @@ struct EstimationTableViewTemplate: View {
     let pairData: [(Int32, String)]
     let tripleData: [(Date, String, Int32)]
 
+    let projectTitle: String
+    let projectId: UInt16
+
     var body: some View {
         ScrollView(.horizontal) {
             LazyHStack {
@@ -22,7 +25,10 @@ struct EstimationTableViewTemplate: View {
                     ForEach(pairData, id: \.0) { data in
                         TableRow(data: data,
                                  dateList: soloData,
-                                 hourDataList: tripleData)
+                                 hourDataList: tripleData,
+                                 projectTitle: projectTitle,
+                                 projectId: projectId,
+                                 taskId: .init(data.0))
                     }
                 }
             }

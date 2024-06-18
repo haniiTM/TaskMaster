@@ -10,6 +10,7 @@ import SwiftUI
 import shared
 
 struct GanttTableView: View {
+    let projectTitle: String
     let projectId: UInt16
     var ganttList: [CalendarPlan]
 
@@ -34,6 +35,8 @@ struct GanttTableView: View {
 
         EstimationTableViewTemplate(soloData: uniqueGanttDateList,
                                     pairData: ganttValue,
-                                    tripleData: hoursGanttData)
+                                    tripleData: hoursGanttData,
+                                    projectTitle: projectTitle,
+                                    projectId: projectId)
     }
 }
