@@ -12,6 +12,7 @@ struct TimeEditAlert: View {
     @ObservedObject private var stateManager: TaskInfoStateManager
     @Binding private var text: String
     private let action: () async -> Void
+    @State private var isEmpty = true
 
     init(_ text: Binding<String>,
          stateManager: TaskInfoStateManager,
@@ -22,21 +23,24 @@ struct TimeEditAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Сохранить")
+        TemplateCreationAlert("Сохранить", $isEmpty)
         { ViewBody } action: {
             Task { await editSpentTime() }
         }
     }
 
     private var ViewBody: some View {
-        TextField(text: $text) {
-            Text(text)
-                .padding()
-        }
+        CustomTextField(text,
+                        $text)
+        .onChange(of: text) { _ in checkIfEmpty() }
     }
 
     private func editSpentTime() async {
         await action()
         stateManager.isTimeEditAlertVisible.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty = text.isEmpty
     }
 }

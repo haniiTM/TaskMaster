@@ -12,9 +12,14 @@ struct TemplateCreationAlert<Content: View>: View {
     @ViewBuilder private let content: () -> Content
     private let title: String
     private let action: () -> Void
+    @Binding private var isEmpty: Bool
 
-    init(_ title: String, @ViewBuilder content: @escaping () -> Content, action: @escaping () -> Void) {
+    init(_ title: String,
+         _ isEmpty: Binding<Bool>,
+         @ViewBuilder content: @escaping () -> Content,
+         action: @escaping () -> Void) {
         self.title = title
+        self._isEmpty = isEmpty
         self.content = content
         self.action = action
     }
@@ -37,13 +42,15 @@ struct TemplateCreationAlert<Content: View>: View {
                 VStack {
                     Divider().background(.secondary)
 
-                    Button(action: action) {
+                    Button {
+                        if !isEmpty { action() }
+                    } label: {
                         Text(title)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .padding(.horizontal)
                             .foregroundColor(.white)
-                            .background(.tint,
+                            .background(isEmpty ? Color.secondary : Color.accentColor,
                                         in: RoundedRectangle(cornerRadius: 8, style: .continuous))
                     }
                 }

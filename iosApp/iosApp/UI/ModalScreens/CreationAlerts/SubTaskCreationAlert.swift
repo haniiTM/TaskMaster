@@ -18,6 +18,7 @@ struct SubTaskCreationAlert: View {
     @State private var estimatedTime = ""
     @State private var categoryMenuTitle = "Выбор категории"
     @State private var categoryId: UInt8 = 0
+    @State private var isEmpty = true
 
     init(_ parentId: UInt16, stateManager: SubTaskListStateManager, viewModel: SubTaskListViewModel) {
         self.parentId = parentId
@@ -26,28 +27,27 @@ struct SubTaskCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Создать подзадачу")
+        TemplateCreationAlert("Создать подзадачу", $isEmpty)
         { ViewBody } action: {
-            Task { await addSubTask(title, estimatedTime: estimatedTime, categoryId: categoryId) }
+            Task { await addSubTask() }
         }
     }
 
     private var ViewBody: some View {
         SubTaskCreationForm
             .task { await viewModel.getCategoryList() }
+            .onChange(of: title) { _ in checkIfEmpty() }
+            .onChange(of: estimatedTime) { _ in checkIfEmpty() }
+            .onChange(of: categoryMenuTitle) { _ in checkIfEmpty() }
     }
 
     @ViewBuilder
     private var SubTaskCreationForm: some View {
-        TextField(text: $title) {
-            Text("Название подзадачи")
-                .padding()
-        }
+        CustomTextField("Название задачи",
+                        $title)
 
-        TextField(text: $estimatedTime) {
-            Text("Временная оценка")
-                .padding()
-        }
+        CustomTextField("Временная оценка",
+                        $estimatedTime)
 
         Menu {
             ForEach(viewModel.categoryListSignal, id: \.id) { category in
@@ -67,7 +67,7 @@ struct SubTaskCreationAlert: View {
         }.tint(.primary)
     }
 
-    private func addSubTask(_ title: String, estimatedTime: String, categoryId: UInt8) async {
+    private func addSubTask() async {
         let taskDto = TaskDTO()
         taskDto.name = title
 
@@ -79,5 +79,9 @@ struct SubTaskCreationAlert: View {
 
         await viewModel.createTask(parentId, taskDto: taskDto)
         stateManager.isCreationAlertShown.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty = title.isEmpty || estimatedTime.isEmpty || categoryMenuTitle == "Выбор категории"
     }
 }

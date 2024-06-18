@@ -18,6 +18,7 @@ struct LaborCostInfoAlert: View {
     @State private var note: String
     private let date: String
     private let spentTime: String
+    @State private var isEmpty = true
 
     init(_ taskId: UInt16,
          _ model: ManHoursDTO,
@@ -48,7 +49,7 @@ struct LaborCostInfoAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Сохранить")
+        TemplateCreationAlert("Сохранить", $isEmpty)
         { ViewBody } action: {
             Task { await saveChanges() }
         }
@@ -56,13 +57,14 @@ struct LaborCostInfoAlert: View {
 
     private var ViewBody: some View {
         LaborCostInfoView
+            .onChange(of: note) { _ in checkIfEmpty() }
     }
 
     @ViewBuilder
     private var LaborCostInfoView: some View {
         Text("Трудозатрата № \(laborCostId)")
 
-        TextField(note, text: $note)
+        CustomTextField(note, $note)
 
         HStack {
             Spacer()
@@ -85,5 +87,9 @@ struct LaborCostInfoAlert: View {
     private func saveChanges() async {
         await viewModel.updateLaborCost(taskId, laborCostId, note)
         stateManager.isInfoAlertShown.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty = note.isEmpty
     }
 }

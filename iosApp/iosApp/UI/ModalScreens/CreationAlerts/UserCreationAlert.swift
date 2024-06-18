@@ -13,6 +13,8 @@ struct UserCreationAlert: View {
     @ObservedObject private var viewModel: ProjectListViewModel
     @ObservedObject private var stateManager: ProjectListStateManager
 
+    @State private var isEmpty = true
+
     @State private var lastName = ""
     @State private var firstName = ""
 
@@ -28,7 +30,7 @@ struct UserCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Добавить пользователя")
+        TemplateCreationAlert("Добавить пользователя", $isEmpty)
         { ViewBody } action: {
             Task { await createUser() }
         }
@@ -37,29 +39,26 @@ struct UserCreationAlert: View {
     private var ViewBody: some View {
         UserCreationForm
             .task { await viewModel.updateUserRoleList() }
+            .onChange(of: lastName) { _ in checkIfEmpty() }
+            .onChange(of: firstName) { _ in checkIfEmpty() }
+            .onChange(of: login) { _ in checkIfEmpty() }
+            .onChange(of: password) { _ in checkIfEmpty() }
+            .onChange(of: roleTitle) { _ in checkIfEmpty() }
     }
 
     @ViewBuilder
     private var UserCreationForm: some View {
-        TextField(text: $lastName) {
-            Text("Фамилия")
-                .padding()
-        }
+        CustomTextField("Фамилия",
+                        $lastName)
 
-        TextField(text: $firstName) {
-            Text("Имя")
-                .padding()
-        }
+        CustomTextField("Имя",
+                        $firstName)
 
-        TextField(text: $login) {
-            Text("Логин")
-                .padding()
-        }
+        CustomTextField("Логин",
+                        $login)
 
-        TextField(text: $password) {
-            Text("Пароль")
-                .padding()
-        }
+        CustomTextField("Пароль",
+                        $password)
 
         Menu {
             ForEach(viewModel.userRoleListSignal, id: \.id) { role in
@@ -87,5 +86,9 @@ struct UserCreationAlert: View {
 
         await viewModel.createUser(user)
         stateManager.addUserState.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty = lastName.isEmpty || firstName.isEmpty || login.isEmpty || password.isEmpty || roleTitle == "Роль"
     }
 }

@@ -14,6 +14,7 @@ struct TaskCreationAlert: View {
     @ObservedObject private var alertManager: TaskListStateManager
 
     private let parentId: UInt16
+    @State private var isEmpty = true
     @State private var title = ""
     @State private var estimatedTime = ""
     @State private var categoryMenuTitle = "Выбор категории"
@@ -26,28 +27,27 @@ struct TaskCreationAlert: View {
     }
 
     var body: some View {
-        TemplateCreationAlert("Создать задачу")
+        TemplateCreationAlert("Создать задачу", $isEmpty)
         { ViewBody } action: {
-            Task { await addTask(title, estimatedTime: estimatedTime, categoryId: categoryId) }
+            Task { await addTask() }
         }
     }
 
     private var ViewBody: some View {
         TaskCreationForm
             .task { await viewModel.getCategoryList() }
+            .onChange(of: title) { _ in checkIfEmpty() }
+            .onChange(of: estimatedTime) { _ in checkIfEmpty() }
+            .onChange(of: categoryMenuTitle) { _ in checkIfEmpty() }
     }
 
     @ViewBuilder
     private var TaskCreationForm: some View {
-        TextField(text: $title) {
-            Text("Название задачи")
-                .padding()
-        }
+        CustomTextField("Название задачи",
+                        $title)
 
-        TextField(text: $estimatedTime) {
-            Text("Временная оценка")
-                .padding()
-        }
+        CustomTextField("Временная оценка",
+                        $estimatedTime)
 
         Menu {
             ForEach(viewModel.categoryListSignal, id: \.id) { category in
@@ -67,7 +67,7 @@ struct TaskCreationAlert: View {
         }.tint(.primary)
     }
 
-    private func addTask(_ title: String, estimatedTime: String, categoryId: UInt8) async {
+    private func addTask() async {
         let taskDto = TaskDTO()
         taskDto.name = title
 
@@ -79,5 +79,9 @@ struct TaskCreationAlert: View {
 
         await viewModel.createTask(parentId, taskDto: taskDto)
         alertManager.addTaskState.toggle()
+    }
+
+    private func checkIfEmpty() {
+        isEmpty = title.isEmpty || estimatedTime.isEmpty || categoryMenuTitle == "Выбор категории"
     }
 }
