@@ -35,7 +35,11 @@ struct TaskCardView: View {
 
     //    MARK: Body
     var body: some View {
-        ProjectCardView(controller: controller, contextItems: { ContextItem })
+        ProjectCardView(.task, controller) {
+            Task { await controller.changeStatus() }
+        } trailingAction: {
+            Task { await controller.remove() }
+        }
     }
 
     private var ContextItem: some View {
