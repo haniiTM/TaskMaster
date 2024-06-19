@@ -17,8 +17,8 @@ struct LoginScreenView: View {
     @EnvironmentObject var authManager: AuthManager
 
     @StateObject private var viewModel = LoginScreenViewModel()
-    @State private var loginTextFieldState = "user1"
-    @State private var passwordTextFieldState = "22"
+    @State private var loginTextFieldState = ""
+    @State private var passwordTextFieldState = ""
     @State private var isPasswordPresented = false
     @State private var isErrorPresented = false
 
