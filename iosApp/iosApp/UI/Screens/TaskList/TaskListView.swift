@@ -49,6 +49,7 @@ struct TaskListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
+            .navigationBarBackButtonHidden(true)
             .task { await updateDataSource() }
             .refreshable {
                 Task { await updateDataSource() }

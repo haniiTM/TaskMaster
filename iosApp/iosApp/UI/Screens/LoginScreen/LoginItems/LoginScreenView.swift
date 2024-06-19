@@ -25,17 +25,26 @@ struct LoginScreenView: View {
     //    MARK: Body
     var body: some View {
         NavigationView {
-            ViewBody
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            themeManager.isDarkThemeActive.toggle()
-                        } label: {
-                            Image(systemName: colorScheme == .dark ? "sun.min" : "moon.circle")
-                                .padding()
+            ZStack {
+                GradientBG()
+
+                ViewBody
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button {
+                                themeManager.isDarkThemeActive.toggle()
+                            } label: {
+                                colorScheme == .dark
+                                ? Image.lightThemeIcon
+                                : Image.darkThemeIcon
+                            }
+                            .foregroundColor(colorScheme == .dark
+                                             ? .white
+                                             : .black)
+                            .padding()
                         }
                     }
-                }
+            }
         }
     }
 
@@ -58,22 +67,21 @@ struct LoginScreenView: View {
             loginButtonBody
         }
         .font(.subheadline)
-        .background(
-            Color(uiColor: .secondarySystemBackground),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-        )
+        .foregroundColor(.black)
     }
 
+    @ViewBuilder
     private var TextFieldsBody: some View {
-        Group {
-            TextField(text: $loginTextFieldState) {
-                Text(LoginScreenConstants.Strings.loginTextFieldTitle)
-            }
-
-            secureFieldBody
+        TextField(text: $loginTextFieldState) {
+            Text(LoginScreenConstants.Strings.loginTextFieldTitle)
         }
-        .padding()
-        .padding(.horizontal)
+        .padding(12)
+        .background(.white)
+        .clipShape(TopRoundedCorners(radius: 8))
+
+        secureFieldBody
+            .padding(12)
+            .background(.white)
     }
 
     private var secureFieldBody: some View {
@@ -91,9 +99,8 @@ struct LoginScreenView: View {
             Button {
                 isPasswordPresented.toggle()
             } label: {
-                Image(systemName: isPasswordPresented ? "eye.slash" : "eye")
+                isPasswordPresented ? Image.crossedOutEyeIcon : Image.eyeIcon
             }
-
         }
     }
 
@@ -119,11 +126,11 @@ struct LoginScreenView: View {
 
             label: {
                 Text(LoginScreenConstants.Strings.loginButtonTitle)
-                    .tint(.primary)
                     .frame(maxWidth: .infinity)
-                    .padding()
+                    .padding(12)
                     .padding(.horizontal)
-                    .background(.ultraThinMaterial)
+                    .background(.white)
+                    .clipShape(BottomRoundedCorners(radius: 8))
             }
         )
     }
@@ -134,5 +141,31 @@ struct LoginScreenView: View {
             Text("Неверный логин или пароль")
                 .foregroundColor(.pink)
         }
+    }
+}
+
+struct TopRoundedCorners: Shape {
+    var radius: CGFloat = .infinity
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addRoundedRect(in: CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height),
+                            cornerSize: CGSize(width: radius, height: radius),
+                            style: .circular)
+        path.addRect(CGRect(x: rect.minX, y: rect.maxY - radius, width: rect.width, height: radius))
+        return path
+    }
+}
+
+struct BottomRoundedCorners: Shape {
+    var radius: CGFloat = .infinity
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addRoundedRect(in: CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height),
+                            cornerSize: CGSize(width: radius, height: radius),
+                            style: .circular)
+        path.addRect(CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: radius))
+        return path
     }
 }

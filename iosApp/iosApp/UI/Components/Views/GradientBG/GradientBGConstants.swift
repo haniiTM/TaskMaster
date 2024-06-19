@@ -12,6 +12,6 @@ enum GradientBGConstants {
     //    MARK: Numbers
     enum Numbers {
         static let startPoint: CGFloat = 0
-        static let endPoint: CGFloat = 0.8
+        static let endPoint: CGFloat = 0.5
     }
 }

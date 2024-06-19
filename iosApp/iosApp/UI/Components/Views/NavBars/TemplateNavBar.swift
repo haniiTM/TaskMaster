@@ -32,31 +32,48 @@ struct TemplateNavBar<Content: View, NavBarItems: View>: View {
 
     var body: some View {
         content()
-            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
-        //            .toolbarRole(.editor)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
+                ToolbarItem(placement: .principal) {
+                    HStack {
                         Button {
                             themeManager.isDarkThemeActive.toggle()
                         } label: {
-                            Label("Сменить тему",
-                                  systemImage: colorScheme == .dark ? "sun.min" : "moon.circle")
+                            colorScheme == .dark
+                            ? Image.lightThemeIcon
+                            : Image.darkThemeIcon
                         }
 
-                        Button {
-                            isSearchPresented.toggle()
-                        } label: {
-                            Label("Поиск",
-                                  systemImage: Constants.Strings.ImageNames.searchActionImageName)
-                        }
+                        Spacer()
 
-                        navBarItems()
-                    } label: {
-                        Image(systemName: Constants.Strings.ImageNames.extraActionsImageName)
-                            .padding()
+                        Text(title)
+                            .font(.headline)
+
+                        Spacer()
+
+                        HStack(spacing: 0) {
+                            Button {
+                                isSearchPresented.toggle()
+                            } label: {
+                                Image.search1Icon
+                            }
+
+                            Menu {
+                                navBarItems()
+                            } label: {
+                                Image.more
+                            }
+                        }
                     }
+                    .foregroundColor(.black)
+                    .padding(.horizontal)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .frame(height: 44)
                 }
             }
             .if(isSearchPresented) { view in
