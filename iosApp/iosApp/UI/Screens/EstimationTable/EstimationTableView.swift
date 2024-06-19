@@ -78,8 +78,12 @@ struct CalendarSection<Content: View>: View {
                     .padding(8)
                     .tint(.primary)
                     .background(
-                        .ultraThinMaterial,
+                        .white,
                         in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    )
+                    .background(
+                        .black,
+                        in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
                     )
 
                 Spacer()
@@ -96,11 +100,16 @@ struct CalendarSection<Content: View>: View {
                     Image(systemName: "square.and.arrow.down")
                 }
                 .padding(8)
-                .tint(.white)
+                .foregroundColor(.black)
                 .background(
-                    .tint,
+                    .white,
                     in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                 )
+                .background(
+                    .black,
+                    in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
+                )
+
             }
 
             content()

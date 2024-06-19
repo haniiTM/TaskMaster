@@ -38,7 +38,7 @@ struct TemplateCreationAlert<Content: View>: View {
 
             Divider().background(.secondary)
 
-            VStack {
+            VStack(spacing: 0) {
                 Group {
                     content()
                 }

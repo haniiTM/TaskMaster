@@ -148,36 +148,44 @@ struct TaskInfoView: View {
     private var TaskInfoCard: some View {
         VStack(spacing: 8) {
             VStack(spacing: 0) {
-                Group {
-                    Text(viewModel.taskInfo.title)
-                        .foregroundColor(.black)
-                    Divider()
-
-                    ButtonRowView
-
-                    TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
-                    Divider()
-
-                    MenuRowView
-                }
-                .padding(.top, 8)
-            }
-            .padding(8)
-            .background(
-                Color.white,
-                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-            )
-
-            NavigationLink(destination: LaborCostListView(projectTitle, taskId: taskId)) {
-                //                    Button(laborCostTitle) {}
-                Text(laborCostTitle)
+                Text(viewModel.taskInfo.title)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
-                    .padding(8)
-                    .background(
-                        .white,
-                        in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    )
-            }.foregroundColor(.black)
+                    .padding(10)
+                    .background(GradientBG())
+                    .clipShape(TopRoundedCorners(radius: 20))
+                Divider()
+
+                VStack(spacing: 0) {
+
+                    Group {
+
+                        ButtonRowView
+
+                        TextRow(timeSpentTitle, viewModel.taskInfo.spentTime)
+                        Divider()
+
+                        MenuRowView
+                        Divider()
+
+                        NavigationLink(destination: LaborCostListView(projectTitle, taskId: taskId)) {
+                            //                    Button(laborCostTitle) {}
+                            Text(laborCostTitle)
+                                .frame(maxWidth: .infinity)
+                                .background(
+                                    .white,
+                                    in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                )
+                        }.foregroundColor(.black)
+                    }
+                    .padding(.top, 8)
+                }
+                .padding(8)
+                .background(.white)
+                .clipShape(BottomRoundedCorners(radius: 20))
+            }
         }.padding()
     }
 

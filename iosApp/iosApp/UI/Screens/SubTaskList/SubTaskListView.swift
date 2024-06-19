@@ -135,7 +135,7 @@ struct SubTaskListView: View {
                     }.frame(minHeight: 250, maxHeight: 350)
                 }
             }
-            
+
             if stateManager.isUserListVisible {
                 AlertContainer($stateManager.isUserListVisible) {
                     UserListAlert(projectId,
@@ -171,6 +171,7 @@ struct SubTaskListView: View {
                 .onTapGesture {
                     isFocused = true // Explicitly set focus on tap
                 }
+                .clipShape(TopRoundedCorners(radius: 20))
 
             Divider().background(.black)
 
