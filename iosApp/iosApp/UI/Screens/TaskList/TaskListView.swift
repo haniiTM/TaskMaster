@@ -83,31 +83,50 @@ struct TaskListView: View {
             .tint(.primary)
 
             TaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
-                ForEach(filteredItems.unCompletedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
-                        TaskCardView(model.id,
-                                     $stateManager.isPendingTaskAlertPresented,
-                                     task,
-                                     stateManager,
-                                     viewModel)
-                    }.tint(.primary)
-                }
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        ForEach(filteredItems.unCompletedTaskList) { task in
+                            NavigationLink(destination: SubTaskListView(model.title, projectId: model.id, model: task)) {
+                                TaskCardView(model.id,
+                                             $stateManager.isPendingTaskAlertPresented,
+                                             task,
+                                             stateManager,
+                                             viewModel)
+                            }.tint(.primary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
+                        in: RoundedRectangle(cornerRadius: 25, style: .continuous)
+                    )
+                }.frame(minHeight: 250, maxHeight: 350)
+
 
                 TaskCreationButton(stateManager: stateManager)
             }
 
             CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
-                ForEach(filteredItems.completedTaskList) { task in
-                    NavigationLink(destination: SubTaskListView(model.title,
-                                                                projectId: model.id,
-                                                                model: task)) {
-                        TaskCardView(model.id,
-                                     $stateManager.isPendingTaskAlertPresented,
-                                     task,
-                                     stateManager,
-                                     viewModel)
-                    }.tint(.primary)
-                }
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        ForEach(filteredItems.completedTaskList) { task in
+                            NavigationLink(destination: SubTaskListView(model.title,
+                                                                        projectId: model.id,
+                                                                        model: task)) {
+                                TaskCardView(model.id,
+                                             $stateManager.isPendingTaskAlertPresented,
+                                             task,
+                                             stateManager,
+                                             viewModel)
+                            }.tint(.primary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
+                        in: RoundedRectangle(cornerRadius: 25, style: .continuous)
+                    )
+                }.frame(minHeight: 250, maxHeight: 350)
             }
         }
     }

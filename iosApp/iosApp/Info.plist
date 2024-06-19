@@ -56,5 +56,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>We need access to your documents to open PDF files.</string>
+    <key>NSFileProviderUsageDescription</key>
+    <string>We need access to your files to open PDF documents.</string>
 </dict>
 </plist>

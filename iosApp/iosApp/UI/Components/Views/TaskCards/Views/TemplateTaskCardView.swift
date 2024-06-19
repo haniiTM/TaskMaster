@@ -76,7 +76,7 @@ struct TemplateTaskCardView<Content: View>: View {
             .gesture(
                 DragGesture()
                     .onChanged { value in
-                        if (cardType == .task && value.translation.width > 5) || value.translation.width < -5 {
+                        if (cardType == .task && value.translation.width > 10) || value.translation.width < -10 {
                             offset = value.translation.width
                             if offset > 0 {
                                 backgroundColor = Color.green.opacity(Double(min(offset / 150, 1)))

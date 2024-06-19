@@ -29,16 +29,18 @@ struct TemplateTaskSectionBG<Content: View>: View {
     private var ViewBody: some View {
         VStack(spacing: TaskSectionBGsConstants.Numbers.sectionComponentsVerticalSpacing) {
             Text(title)
+                .foregroundColor(.black)
                 .font(.title3)
 
             VStack(spacing: TaskSectionBGsConstants.Numbers.contentComponentsVerticalSpacing) {
                 if isEmpty {
                     Text("Задачи отсутствуют")
+                        .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .padding(48)
                         .background(
-                            Color(uiColor: .secondarySystemBackground),
+                            Color.shadowGray,
                             in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                         )
                 }
@@ -50,8 +52,8 @@ struct TemplateTaskSectionBG<Content: View>: View {
         .frame(maxWidth: .infinity)
         .padding()
         .background(
-            .ultraThickMaterial,
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(lineWidth: 4)
+            Color.gray,
+            in: RoundedRectangle(cornerRadius: 25, style: .continuous)
         )
     }
 }
