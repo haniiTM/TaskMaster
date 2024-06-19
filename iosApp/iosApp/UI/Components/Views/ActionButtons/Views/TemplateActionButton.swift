@@ -30,11 +30,11 @@ struct TemplateActionButton<Content: View>: View {
                 content()
             }
         }
-        .padding()
-        .tint(.white)
+        .padding(12)
+        .foregroundColor(.black)
         .background(
-            .tint,
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .white,
+            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
         )
     }
 }

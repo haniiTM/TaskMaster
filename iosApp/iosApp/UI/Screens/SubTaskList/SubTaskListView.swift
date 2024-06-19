@@ -57,6 +57,7 @@ struct SubTaskListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
+            .navigationBarBackButtonHidden(true)
             .task { await updateDataSource() }
             .refreshable {
                 Task { await updateDataSource() }
@@ -97,43 +98,66 @@ struct SubTaskListView: View {
             }.tint(.primary)
 
             SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
-                ForEach(filteredItems.unCompletedTaskList) { subTask in
-                    NavigationLink(destination: SubTaskListView(title,
-                                                                projectId: projectId,
-                                                                model: subTask)) {
-                        SubTaskCardView(model.id,
-                                        subTask,
-                                        $stateManager.isPendingTaskAlertPresented,
-                                        stateManager,
-                                        viewModel)
-                    }.tint(.primary)
-                }
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        ForEach(filteredItems.unCompletedTaskList) { subTask in
+                            NavigationLink(destination: SubTaskListView(title,
+                                                                        projectId: projectId,
+                                                                        model: subTask)) {
+                                SubTaskCardView(model.id,
+                                                subTask,
+                                                $stateManager.isPendingTaskAlertPresented,
+                                                stateManager,
+                                                viewModel)
+                            }.tint(.primary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
+                        in: RoundedRectangle(cornerRadius: 25, style: .continuous)
+                    )
+                }.frame(minHeight: 250, maxHeight: 350)
 
                 SubTaskCreationButton(stateManager: stateManager)
             }
 
             CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
-                ForEach(filteredItems.completedTaskList) { subTask in
-                    NavigationLink(destination: SubTaskListView(title,
-                                                                projectId: model.id,
-                                                                model: subTask)) {
-                        SubTaskCardView(model.id,
-                                        subTask,
-                                        $stateManager.isPendingTaskAlertPresented,
-                                        stateManager,
-                                        viewModel)
-                    }.tint(.primary)
-                }
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        ForEach(filteredItems.completedTaskList) { subTask in
+                            NavigationLink(destination: SubTaskListView(title,
+                                                                        projectId: model.id,
+                                                                        model: subTask)) {
+                                SubTaskCardView(model.id,
+                                                subTask,
+                                                $stateManager.isPendingTaskAlertPresented,
+                                                stateManager,
+                                                viewModel)
+                            }.tint(.primary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
+                        in: RoundedRectangle(cornerRadius: 25, style: .continuous)
+                    )
+                }.frame(minHeight: 250, maxHeight: 350)
             }
         }
     }
 
     private var DescriptionBody: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 0) {
             TextEditor(text: $descriptionState)
                 .frame(minHeight: 150)
                 .border(.ultraThickMaterial, width: 2)
                 .focused($isFocused)
+                .onTapGesture {
+                    isFocused = true // Explicitly set focus on tap
+                }
+
+            Divider().background(.black)
 
             Button {
                 Task {
@@ -151,11 +175,9 @@ struct SubTaskListView: View {
                     .frame(maxWidth: .infinity)
                     .padding(8)
             }
-            .tint(.white)
-            .background(
-                .tint,
-                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-            )
+            .tint(.black)
+            .background(.white)
+            .clipShape(BottomRoundedCorners(radius: 20))
         }
     }
 

@@ -91,6 +91,7 @@ struct TaskInfoView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
+            .navigationBarBackButtonHidden(true)
             .task { await updateDataSource() }
             .refreshable {
                 Task { await updateDataSource() }
@@ -131,6 +132,7 @@ struct TaskInfoView: View {
             VStack(spacing: 0) {
                 Group {
                     Text(viewModel.taskInfo.title)
+                        .foregroundColor(.black)
                     Divider()
 
                     ButtonRowView
@@ -139,12 +141,12 @@ struct TaskInfoView: View {
                     Divider()
 
                     MenuRowView
-                }.padding(.top, 8)
+                    }
+                .padding(.top, 8)
             }
             .padding(8)
             .background(
-                .ultraThickMaterial,
-                //                Color(uiColor: .secondarySystemBackground),
+                Color.white,
                 in: RoundedRectangle(cornerRadius: 8, style: .continuous)
             )
 
@@ -154,11 +156,10 @@ struct TaskInfoView: View {
                     .frame(maxWidth: .infinity)
                     .padding(8)
                     .background(
-                        Color(uiColor: .secondarySystemBackground),
-                        //                        ultraThickMaterial,
+                        .white,
                         in: RoundedRectangle(cornerRadius: 8, style: .continuous)
                     )
-            }.tint(.primary)
+            }.foregroundColor(.black)
         }.padding()
     }
 
@@ -289,7 +290,7 @@ struct TaskInfoView: View {
             Spacer()
 
             Text(trailingValue)
-        }.foregroundColor(.primary)
+        }.foregroundColor(.black)
     }
 
     private func updateDataSource() async {
@@ -327,7 +328,7 @@ struct MenuRow<Content: View>: View {
                 Spacer()
 
                 Text(trailingValue)
-            }.foregroundColor(.primary)
+            }.foregroundColor(.black)
         }
     }
 }

@@ -26,6 +26,7 @@ struct EstimationTableView: View {
     //    MARK: Body
     var body: some View {
         tableView
+            .navigationBarBackButtonHidden(true)
             .task { await updateDataSource() }
             .refreshable {
                 Task { await updateDataSource() }

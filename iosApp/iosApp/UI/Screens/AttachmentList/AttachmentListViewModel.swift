@@ -86,6 +86,11 @@ final class AttachmentListViewModel: ObservableObject, Searchable {
     ) async {
         do {
             let title = url.lastPathComponent
+
+            guard
+                url.startAccessingSecurityScopedResource()
+            else { return }
+
             let data = try Data(contentsOf: url)
 
             try await attachmentListUseCase.addAttachment(taskId: .init(taskId),

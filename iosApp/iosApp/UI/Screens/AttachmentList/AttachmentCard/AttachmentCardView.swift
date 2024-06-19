@@ -69,10 +69,10 @@ struct AttachmentCardView: View {
                     .padding()
             }
         }
-        .tint(.primary)
+        .foregroundColor(.black)
         .background(
-            Color(uiColor: .secondarySystemBackground),
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            .white,
+            in: RoundedRectangle(cornerRadius: 15, style: .continuous)
         )
     }
 }

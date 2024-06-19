@@ -29,12 +29,13 @@ struct TemplateScreenInfoButton<Content: View>: View {
             //            Button(action: action.open) {
             HStack {
                 content()
+                    .foregroundColor(.black)
             }
             //            }
-            .padding()
+            .padding(8)
             .background(
-                .ultraThinMaterial,
-                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .white,
+                in: RoundedRectangle(cornerRadius: 10, style: .continuous)
             )
         }
         .padding(.horizontal, ScreenInfoButtonsConstants.Numbers.externalPadding)

@@ -1223,7 +1223,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = taskmaster.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = sebbia.taskMaster.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

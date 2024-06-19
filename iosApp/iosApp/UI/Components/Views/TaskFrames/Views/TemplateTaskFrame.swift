@@ -23,13 +23,17 @@ struct TemplateTaskFrame<Content: View>: View {
     }
 
     private var ViewBody: some View {
-        ScrollView {
-            VStack(spacing: TaskFramesConstants.Numbers.componentsVerticalSpacing) {
-                content()
+        ZStack {
+            GradientBG()
+
+            ScrollView {
+                VStack(spacing: TaskFramesConstants.Numbers.componentsVerticalSpacing) {
+                    content()
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .padding(.vertical)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .padding(.vertical)
         }
     }
 }

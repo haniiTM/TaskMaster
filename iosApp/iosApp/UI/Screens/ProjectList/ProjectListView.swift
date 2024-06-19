@@ -46,7 +46,7 @@ struct ProjectListView: View {
         {
             ForEach(filteredItems) { project in
                 NavigationLink(destination: TaskListView(project)) {
-                    ProjectCardView(project, stateManager, viewModel) { EmptyView() }
+                    ProjectCardView(project, stateManager, viewModel)
                 }
                 .tint(.primary)
             }

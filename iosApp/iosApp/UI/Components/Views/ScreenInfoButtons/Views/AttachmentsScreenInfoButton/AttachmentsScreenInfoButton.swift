@@ -39,12 +39,12 @@ struct AttachmentsScreenInfoButton: View {
 
     @ViewBuilder
     private var ViewBody: some View {
+        Spacer()
+
         Text(title)
             .lineLimit(ScreenInfoButtonsConstants.Numbers.lineLimit)
             .minimumScaleFactor(ScreenInfoButtonsConstants.Numbers.minimumScaleFactor)
 
         Spacer()
-
-        Image(systemName: imageName)
     }
 }

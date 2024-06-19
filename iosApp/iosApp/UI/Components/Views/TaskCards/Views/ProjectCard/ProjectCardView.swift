@@ -8,31 +8,36 @@
 
 import SwiftUI
 
-struct ProjectCardView<ContextItems: View>: View {
+struct ProjectCardView: View {
     //    MARK: Props
+    private let cardType: CardType
     private let controller: any ProjectCardControllerProtocol
-    @ViewBuilder private let contextItems: () -> ContextItems
+    private let leadingAction: () -> Void
+    private let trailingAction: () -> Void
 
     //    MARK: Init
     init(_ model: any TaskInfoProtocol,
          _ stateManager: any CardDeletionAlertPresentable,
-         _ viewModel: any ProjectCardViewModelProtocol,
-
-         @ViewBuilder contextItems: @escaping () -> ContextItems)
+         _ viewModel: any ProjectCardViewModelProtocol)
     {
         controller = ProjectCardController(model.id,
                                            model,
                                            stateManager,
                                            viewModel)
-
-        self.contextItems = contextItems
+        cardType = .project
+        leadingAction = {}
+        trailingAction = controller.showDeletionAlert
     }
 
-    init(controller: any ProjectCardControllerProtocol,
-         @ViewBuilder contextItems: @escaping () -> ContextItems) 
+    init(_ cardType: CardType,
+         _ controller: any ProjectCardControllerProtocol,
+         leadingAction: @escaping () -> Void,
+         trailingAction: @escaping () -> Void)
     {
+        self.cardType = cardType
         self.controller = controller
-        self.contextItems = contextItems
+        self.leadingAction = leadingAction
+        self.trailingAction = trailingAction
     }
 
     //    MARK: Body
@@ -49,10 +54,12 @@ struct ProjectCardView<ContextItems: View>: View {
     }
 
     private var projectCard: some View {
-        TemplateTaskCardView {
+        TemplateTaskCardView(cardType) {
+            leadingAction()
+        } trailingAction: {
+            trailingAction()
+        } content: {
             ViewBody
-        } contextItems: {
-            ContextItem
         }
     }
 
@@ -75,7 +82,7 @@ struct ProjectCardView<ContextItems: View>: View {
 
     @ViewBuilder
     private var ContextItem: some View {
-        contextItems()
+//        contextItems()
 
         Button(
             role: .destructive,

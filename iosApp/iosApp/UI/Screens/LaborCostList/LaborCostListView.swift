@@ -45,6 +45,8 @@ struct LaborCostListView: View {
     //    MARK: Body
     var body: some View {
         ViewBody
+            .navigationTitle(projectTitle)
+            .navigationBarBackButtonHidden(true)
             .task { await updateDataSource() }
             .refreshable {
                 Task { await updateDataSource() }
@@ -58,20 +60,35 @@ struct LaborCostListView: View {
     }
 
     private var ViewBody: some View {
-        TaskListNavBar(projectTitle,
-                       stateManager,
-                       $searchText)
-        {
-            List(filteredItems, id: \.id) { laborCost in
-                Button(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)") {
-                    model = laborCost
-                    stateManager.isInfoAlertShown.toggle()
+        ProjectFrameView(projectTitle,
+                         stateManager,
+                         $searchText)
+        { itemList }
+    }
+
+    private var itemList: some View {
+        VStack(spacing: 0) {
+            ForEach(filteredItems, id: \.id) { laborCost in
+                VStack(spacing: 0) {
+                    Button {
+                        model = laborCost
+                        stateManager.isInfoAlertShown.toggle()
+                    } label: {
+                        Text(laborCost.comment ?? "Трудозатрата \(laborCost.id ?? 0)")
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                            .padding(8)
+                            .background(.white)
+                    }
+
+                    Divider()
                 }
-                .padding(8)
-                .tint(.primary)
-            }.navigationTitle(projectTitle)
-            //            .padding()
+            }
         }
+        .background(
+            .white,
+            in: RoundedRectangle(cornerRadius: 15, style: .continuous)
+        )
     }
 
     private func updateDataSource() async {

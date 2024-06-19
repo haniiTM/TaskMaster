@@ -39,6 +39,7 @@ struct AttachmentListView: View {
     //    MARK: Body
     var body: some View {
         viewBody
+            .navigationBarBackButtonHidden(true)
             .task { await updateDataSource() }
             .refreshable {
                 Task { await updateDataSource() }

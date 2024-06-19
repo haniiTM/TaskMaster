@@ -13,7 +13,7 @@ enum ScreenInfoButtonsConstants {
     enum Strings {
         //    MARK: Titles
         enum Titles {
-            static let estimatesTitle = "Рассчет времени"
+            static let estimatesTitle = "Рассчет времени по трудозатратам"
             static let attachmentsTitle = "Вложения"
         }
 
