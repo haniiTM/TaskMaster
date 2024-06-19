@@ -38,39 +38,48 @@ struct ProjectListView: View {
             .refreshable {
                 Task { await updateDataSource() }
             }
+            .alert(isPresented: $stateManager.isNotificationPresented) {
+                switch stateManager.activeAlert {
+                case .logOut:
+                    DestructiveAlertTemplate("Выход из аккаунта") {
+                        authManager.isAuthenticated = false
+                    } secondaryButtonAction: {
+                        stateManager.isNotificationPresented = false
+                    }.body
+                case .notification:
+                    NotificationAlert(viewModel.notificationItemList)
+                        .body
+                }
+            }
     }
 
     private var ViewBody: some View {
-        MainFrameView($searchText,
-                      stateManager)
-        {
-            ForEach(filteredItems) { project in
-                NavigationLink(destination: TaskListView(project)) {
-                    ProjectCardView(project, stateManager, viewModel)
+        ZStack {
+            MainFrameView($searchText, stateManager) {
+                ForEach(filteredItems) { project in
+                    NavigationLink(destination: TaskListView(project)) {
+                        ProjectCardView(project, stateManager, viewModel)
+                    }
+                    .tint(.primary)
                 }
-                .tint(.primary)
             }
-        }
-        .sheet(isPresented: $stateManager.addProjectState) {
-            ProjectCreationAlert(alertManager: stateManager, viewModel: viewModel)
-        }
-        .sheet(isPresented: $stateManager.addUserState) {
-            UserCreationAlert(stateManager, viewModel: viewModel)
-        }
-        .sheet(isPresented: $stateManager.deleteUserState, content: {
-            UserListDeletionAlert(stateManager, viewModel: viewModel)
-        })
-        .alert(isPresented: $stateManager.isNotificationPresented) {
-            switch stateManager.activeAlert {
-            case .logOut:
-                DestructiveAlertTemplate("Выход из аккаунта") {
-                    authManager.isAuthenticated = false
-                } secondaryButtonAction: {
-                    stateManager.isNotificationPresented = false
-                }.body
-            case .notification:
-                NotificationAlert(viewModel.notificationItemList)
-                    .body
+
+            if stateManager.addProjectState {
+                AlertContainer($stateManager.addProjectState) {
+                    ProjectCreationAlert(alertManager: stateManager, viewModel: viewModel)
+                }
+            }
+
+            if stateManager.addUserState {
+                AlertContainer($stateManager.addUserState) {
+                    UserCreationAlert(stateManager, viewModel: viewModel)
+                }
+            }
+
+            if stateManager.deleteUserState {
+                AlertContainer($stateManager.deleteUserState) {
+                    UserListDeletionAlert(stateManager, viewModel: viewModel)
+                }
             }
         }
     }

@@ -51,19 +51,25 @@ struct LaborCostListView: View {
             .refreshable {
                 Task { await updateDataSource() }
             }
-            .sheet(isPresented: $stateManager.isInfoAlertShown) {
-                LaborCostInfoAlert(taskId,
-                                   model,
-                                   stateManager,
-                                   viewModel)
-            }
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(projectTitle,
-                         stateManager,
-                         $searchText)
-        { itemList }
+        ZStack {
+            ProjectFrameView(projectTitle,
+                             stateManager,
+                             $searchText)
+            { itemList }
+
+            if stateManager.isInfoAlertShown {
+                AlertContainer($stateManager.isInfoAlertShown) {
+                    LaborCostInfoAlert(taskId,
+                                       model,
+                                       stateManager,
+                                       viewModel)
+                }
+            }
+
+        }
     }
 
     private var itemList: some View {

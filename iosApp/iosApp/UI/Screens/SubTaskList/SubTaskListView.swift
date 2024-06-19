@@ -62,17 +62,6 @@ struct SubTaskListView: View {
             .refreshable {
                 Task { await updateDataSource() }
             }
-            .sheet(isPresented: $stateManager.isUserListVisible) {
-                UserListAlert(projectId, stateManager: stateManager, viewModel: viewModel)
-            }
-            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible) {
-                UserListAdditionAlert(projectId,
-                                      stateManager: stateManager,
-                                      viewModel: viewModel)
-            }
-            .sheet(isPresented: $stateManager.isCreationAlertShown) {
-                SubTaskCreationAlert(model.id, stateManager: stateManager, viewModel: viewModel)
-            }
             .alert(isPresented: $stateManager.isPendingTaskAlertPresented) {
                 .init(title: Text("Ошибка"),
                       message: Text("Задаче с статусом \'В ожидании\' не может быть присвоен статус \'Готово\'"))
@@ -80,69 +69,95 @@ struct SubTaskListView: View {
     }
 
     private var ViewBody: some View {
-        ProjectFrameView(title,
-                         stateManager,
-                         $searchText)
-        {
-            NavigationLink(destination: TaskInfoView(title,
-                                                     projectId,
-                                                     model.id)) {
-                ScreenInfoButton(model.title, isUrgent: false)
-            }.tint(.primary)
+        ZStack {
+            ProjectFrameView(title,
+                             stateManager,
+                             $searchText)
+            {
+                NavigationLink(destination: TaskInfoView(title,
+                                                         projectId,
+                                                         model.id)) {
+                    ScreenInfoButton(model.title, isUrgent: false)
+                }.tint(.primary)
 
-            DescriptionBody
+                DescriptionBody
 
-            NavigationLink(destination: AttachmentListView(title,
-                                                           model.id)) {
-                AttachmentsScreenInfoButton()
-            }.tint(.primary)
+                NavigationLink(destination: AttachmentListView(title,
+                                                               model.id)) {
+                    AttachmentsScreenInfoButton()
+                }.tint(.primary)
 
-            SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 16) {
-                        ForEach(filteredItems.unCompletedTaskList) { subTask in
-                            NavigationLink(destination: SubTaskListView(title,
-                                                                        projectId: projectId,
-                                                                        model: subTask)) {
-                                SubTaskCardView(model.id,
-                                                subTask,
-                                                $stateManager.isPendingTaskAlertPresented,
-                                                stateManager,
-                                                viewModel)
-                            }.tint(.primary)
+                SubTaskSectionBG(isEmpty: filteredItems.unCompletedTaskList.isEmpty) {
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 16) {
+                            ForEach(filteredItems.unCompletedTaskList) { subTask in
+                                NavigationLink(destination: SubTaskListView(title,
+                                                                            projectId: projectId,
+                                                                            model: subTask)) {
+                                    SubTaskCardView(model.id,
+                                                    subTask,
+                                                    $stateManager.isPendingTaskAlertPresented,
+                                                    stateManager,
+                                                    viewModel)
+                                }.tint(.primary)
+                            }
                         }
-                    }
-                    .padding()
-                    .background(
-                        filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
-                        in: RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    )
-                }.frame(minHeight: 250, maxHeight: 350)
+                        .padding()
+                        .background(
+                            filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
+                            in: RoundedRectangle(cornerRadius: 25, style: .continuous)
+                        )
+                    }.frame(minHeight: 250, maxHeight: 350)
 
-                SubTaskCreationButton(stateManager: stateManager)
+                    SubTaskCreationButton(stateManager: stateManager)
+                }
+
+                CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 16) {
+                            ForEach(filteredItems.completedTaskList) { subTask in
+                                NavigationLink(destination: SubTaskListView(title,
+                                                                            projectId: model.id,
+                                                                            model: subTask)) {
+                                    SubTaskCardView(model.id,
+                                                    subTask,
+                                                    $stateManager.isPendingTaskAlertPresented,
+                                                    stateManager,
+                                                    viewModel)
+                                }.tint(.primary)
+                            }
+                        }
+                        .padding()
+                        .background(
+                            filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
+                            in: RoundedRectangle(cornerRadius: 25, style: .continuous)
+                        )
+                    }.frame(minHeight: 250, maxHeight: 350)
+                }
+            }
+            
+            if stateManager.isUserListVisible {
+                AlertContainer($stateManager.isUserListVisible) {
+                    UserListAlert(projectId,
+                                  stateManager: stateManager,
+                                  viewModel: viewModel)
+                }
             }
 
-            CompletedTaskSectionBG(isEmpty: filteredItems.completedTaskList.isEmpty) {
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 16) {
-                        ForEach(filteredItems.completedTaskList) { subTask in
-                            NavigationLink(destination: SubTaskListView(title,
-                                                                        projectId: model.id,
-                                                                        model: subTask)) {
-                                SubTaskCardView(model.id,
-                                                subTask,
-                                                $stateManager.isPendingTaskAlertPresented,
-                                                stateManager,
-                                                viewModel)
-                            }.tint(.primary)
-                        }
-                    }
-                    .padding()
-                    .background(
-                        filteredItems.unCompletedTaskList.isEmpty ? .clear : .shadowGray,
-                        in: RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    )
-                }.frame(minHeight: 250, maxHeight: 350)
+            if stateManager.isUserAdditionAlertVisible {
+                AlertContainer($stateManager.isUserAdditionAlertVisible) {
+                    UserListAdditionAlert(projectId,
+                                          stateManager: stateManager,
+                                          viewModel: viewModel)
+                }
+            }
+
+            if stateManager.isCreationAlertShown {
+                AlertContainer($stateManager.isCreationAlertShown) {
+                    SubTaskCreationAlert(model.id,
+                                         stateManager: stateManager,
+                                         viewModel: viewModel)
+                }
             }
         }
     }

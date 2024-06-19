@@ -96,26 +96,44 @@ struct TaskInfoView: View {
             .refreshable {
                 Task { await updateDataSource() }
             }
-            .sheet(isPresented: $stateManager.isCreationAlertShown) {
-                LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
-            }
-            .sheet(isPresented: $stateManager.isUserListVisible) {
-                UserListAlert(taskId, stateManager: stateManager, viewModel: viewModel)
-            }
-            .sheet(isPresented: $stateManager.isUserAdditionAlertVisible) {
-                UserListAdditionAlert(taskId,
-                                      stateManager: stateManager,
-                                      viewModel: viewModel)
-            }
-            .sheet(isPresented: $stateManager.isTimeEditAlertVisible) {
-                TimeEditAlert(timeEditTitle,
-                              $timeEditText,
-                              stateManager: stateManager)
-                { await action() }
-            }
     }
 
     private var ViewBody: some View {
+        ZStack {
+            FrameBody
+
+            if stateManager.isCreationAlertShown {
+                AlertContainer($stateManager.isCreationAlertShown) {
+                    LaborCostCreationAlert(taskId, stateManager: stateManager, viewModel: viewModel)
+                }
+            }
+
+            if stateManager.isUserListVisible {
+                AlertContainer($stateManager.isUserListVisible) {
+                    UserListAlert(taskId, stateManager: stateManager, viewModel: viewModel)
+                }
+            }
+
+            if stateManager.isUserAdditionAlertVisible {
+                AlertContainer($stateManager.isUserAdditionAlertVisible) {
+                    UserListAdditionAlert(taskId,
+                                          stateManager: stateManager,
+                                          viewModel: viewModel)
+                }
+            }
+
+            if stateManager.isTimeEditAlertVisible {
+                AlertContainer($stateManager.isTimeEditAlertVisible) {
+                    TimeEditAlert(timeEditTitle,
+                                  $timeEditText,
+                                  stateManager: stateManager)
+                    { await action() }
+                }
+            }
+        }
+    }
+
+    private var FrameBody: some View {
         ProjectFrameView(projectTitle,
                          stateManager,
                          $searchText) {
@@ -141,7 +159,7 @@ struct TaskInfoView: View {
                     Divider()
 
                     MenuRowView
-                    }
+                }
                 .padding(.top, 8)
             }
             .padding(8)

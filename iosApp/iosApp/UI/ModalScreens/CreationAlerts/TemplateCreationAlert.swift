@@ -28,43 +28,38 @@ struct TemplateCreationAlert<Content: View>: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+            Text(title)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .background(GradientBG())
+                .clipShape(TopRoundedCorners(radius: 20))
+
+            Divider().background(.secondary)
+
             VStack {
-                Text(title)
-
-                Divider().background(.secondary)
-
-                VStack {
-                    Group {
-                        content()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding()
-                    .background(
-                        .secondary.opacity(0.4),
-                        in: RoundedRectangle(cornerRadius: 8, style: .continuous).stroke()
-                    )
+                Group {
+                    content()
                 }
-
-                Divider().background(.secondary)
-
-                Button {
-                    if !isEmpty { action() }
-                } label: {
-                    Text(buttonTitle)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .padding(.horizontal)
-                        .foregroundColor(.white)
-                        .background(isEmpty ? Color.secondary : Color.accentColor,
-                                    in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-                }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding(10)
+                .background(.white)
             }
-            .padding()
-            .background(
-                Color(uiColor: .secondarySystemBackground),
-                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-            )
+
+            Divider().background(.secondary)
+
+            Button {
+                if !isEmpty { action() }
+            } label: {
+                Text(buttonTitle)
+                    .frame(maxWidth: .infinity)
+                    .padding(12)
+                    .padding(.horizontal)
+                    .foregroundColor(isEmpty ? .gray : .black)
+                    .background(isEmpty ? .gray : .white)
+                    .clipShape(BottomRoundedCorners(radius: 20))
+            }
         }
         .padding(.horizontal)
     }
